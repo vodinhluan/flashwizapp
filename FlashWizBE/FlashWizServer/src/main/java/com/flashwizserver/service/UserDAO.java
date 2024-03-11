@@ -17,8 +17,8 @@ public class UserDAO {
 		return (List<User>) userRepo.findAll();
 	}
 
-	public void saveUser(User user) {
-		userRepo.save(user);
+	public User saveUser(User user) {
+		return userRepo.save(user);
 	}
 
 	public void deleteUser(User user) {
