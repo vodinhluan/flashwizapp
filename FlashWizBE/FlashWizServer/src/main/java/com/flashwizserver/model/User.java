@@ -1,5 +1,8 @@
 package com.flashwizserver.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +26,14 @@ public class User {
 	@Column(length=64, nullable=false)
 
 	public boolean enabled;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+			)
+	private Set<Role> roles = new HashSet();
 
 
 
@@ -67,6 +78,17 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void addRole(Role role) {
+		this.roles.add(role);
+	}
 
 
 
@@ -75,6 +97,7 @@ public class User {
 		return "User [Id=" + id 
 				+ ", Email=" + email 
 				+ ", Name= "+name
+				+ " , Roles=" + roles
 				+ "]";
 	}
 
