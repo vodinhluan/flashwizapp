@@ -195,3 +195,9 @@ Java Model Exception: Error in Java Model (code 969): FlashWizServer does not ex
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 16:36:05.098
 !MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 16:40:02.695
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 16:40:02.886
+!MESSAGE Classpath changed for project: FlashWizServer
