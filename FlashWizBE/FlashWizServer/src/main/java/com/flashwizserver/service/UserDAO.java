@@ -25,6 +25,10 @@ public class UserDAO {
 		userRepo.delete(user);
 	}
 
+	public User findById(Integer userId) {
+		 return userRepo.findById(userId).orElse(null);
+	}
+
 }
 
 

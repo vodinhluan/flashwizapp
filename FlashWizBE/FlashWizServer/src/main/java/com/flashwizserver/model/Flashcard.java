@@ -28,8 +28,9 @@ public class Flashcard {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	@ManyToMany(mappedBy = "flashcard")
+	@ManyToMany(mappedBy = "flashcards")
 	private List<Folder> folders;
+
 
 	public List<Folder> getFolders() {
 		return folders;

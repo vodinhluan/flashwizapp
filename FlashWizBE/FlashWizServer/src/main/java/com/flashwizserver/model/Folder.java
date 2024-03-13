@@ -22,14 +22,24 @@ public class Folder {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "folder_flashcard", joinColumns = @JoinColumn(name = "folder_id"), inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
-	private Set<Flashcard> flashcard = new HashSet<>();
+	@JoinTable(name = "folder_flashcard",
+	           joinColumns = @JoinColumn(name = "folder_id"),
+	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
+	private Set<Flashcard> flashcards = new HashSet<>();
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Set<Flashcard> getFlashcard() {
+		return flashcards;
+	}
+
+	public void setFlashcard(Set<Flashcard> flashcards) {
+		this.flashcards = flashcards;
 	}
 
 	public String getName() {
@@ -56,4 +66,5 @@ public class Folder {
 		this.user = user;
 	}
 
+	
 }
