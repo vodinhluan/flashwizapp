@@ -25,7 +25,6 @@ public class User {
 	public String password;
 	@Column(length=64, nullable=false)
 
-	public boolean enabled;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -72,12 +71,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isEnabled() {
-		return enabled;
-	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+
 	
 	public Set<Role> getRoles() {
 		return roles;

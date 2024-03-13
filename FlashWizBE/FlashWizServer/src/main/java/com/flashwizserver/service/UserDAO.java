@@ -28,6 +28,10 @@ public class UserDAO {
 	public User findById(Integer userId) {
 		 return userRepo.findById(userId).orElse(null);
 	}
+	
+	public int registerNewUserServiceMethod(String name, String email, String password ){
+        return userRepo.registerNewUser(name,email,password);
+    }
 
 }
 
