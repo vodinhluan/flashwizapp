@@ -18,17 +18,16 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goToSignIn(View view){
         Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-        startActivities(intent);
+        MainActivity.this.startActivity(intent);
         finish();
     }
     public void goToSignUp(View view){
         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-        startActivities(intent);
+        MainActivity.this.startActivity(intent);
         finish();
     }
 
-    private void startActivities(Intent intent) {
-    }
+
 
 
 }
