@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:padding="10dp"
     tools:context=".SignUpActivity">
 
@@ -53,7 +52,6 @@
                 android:layout_weight="1"
                 android:layout_height="55dp"
                 android:paddingLeft="10dp"
-
                 android:hint="Name"/>
 
 
@@ -114,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-
+            android:text="@string/go_to_sign_in"
             android:textSize="18sp"
             android:onClick="goToSigInAct"
             />

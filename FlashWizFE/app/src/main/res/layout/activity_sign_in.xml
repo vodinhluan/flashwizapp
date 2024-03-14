@@ -37,7 +37,7 @@
         android:layout_height="55dp"
         android:padding="10dp"
         android:layout_marginTop="10dp"
-        android:text="Email"
+        android:hint="Email"
         app:layout_constraintTop_toBottomOf="@id/sign_in_textView" />
     <EditText
         android:id="@+id/password"
@@ -45,7 +45,8 @@
         android:layout_height="60dp"
         android:padding="10dp"
         android:layout_marginTop="10dp"
-        android:text="Password"
+        android:hint="Password"
+        android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/email" />
 
 
@@ -60,11 +61,20 @@
         android:text="Sign In"
         android:textColor="@color/white"
         android:textSize="22sp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/go_to_sign_in"
+            android:textSize="18sp"
+            android:onClick="goToSigUpAct"
+            app:layout_constraintTop_toBottomOf="@id/sign_in_btn"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

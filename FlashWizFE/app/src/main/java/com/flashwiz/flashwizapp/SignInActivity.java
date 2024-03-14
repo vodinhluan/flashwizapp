@@ -75,15 +75,13 @@ public class SignInActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             // Get Values From Response Object:
-                            String first_name = (String) response.get("first_name");
-                            String last_name = (String) response.get("last_name");
+                            String name = (String) response.get("name");
                             String email = (String) response.get("email");
 
                             // Set Intent Actions:
                             Intent goToProfile = new Intent(SignInActivity.this, ProfileActivity.class);
                             // Pass Values To Profile Activity:
-                            goToProfile.putExtra("first_name", first_name);
-                            goToProfile.putExtra("last_name", last_name);
+                            goToProfile.putExtra("name", name);
                             goToProfile.putExtra("email", email);
                             // Start Activity:
                             startActivity(goToProfile);
