@@ -1,5 +1,6 @@
 package com.flashwiz.flashwizapp;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.flashwiz.flashwizapp.helpers.StringHelper;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +61,7 @@ public class SignInActivity extends AppCompatActivity {
         // Instantiate The Request Queue:
         RequestQueue queue = Volley.newRequestQueue(SignInActivity.this);
         // The URL Posting TO:
-        String url = "http://192.168.1.229:8000/user/register";
+        String url = "http://192.168.1.12:8000/user/login";
 
         // Set Parameters:
         HashMap<String, String> params = new HashMap<String, String>();
@@ -73,24 +73,7 @@ public class SignInActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            // Get Values From Response Object:
-                            String name = (String) response.get("name");
-                            String email = (String) response.get("email");
-
-                            // Set Intent Actions:
-                            Intent goToProfile = new Intent(SignInActivity.this, ProfileActivity.class);
-                            // Pass Values To Profile Activity:
-                            goToProfile.putExtra("name", name);
-                            goToProfile.putExtra("email", email);
-                            // Start Activity:
-                            startActivity(goToProfile);
-                            finish();
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            System.out.println(e.getMessage());
-                        }
-                        // End Of Try Block.
+                        Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override

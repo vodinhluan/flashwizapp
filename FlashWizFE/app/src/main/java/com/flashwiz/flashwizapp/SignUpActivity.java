@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         Log.d(TAG, "processFormFields: Sending registration request...");
         RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
-        String url = "http://192.168.1.11:8000/user/save"; // Update URL if needed
+        String url = "http://192.168.1.12:8000/user/save"; // Update URL if needed
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, getJsonObjectParams(),
                 new Response.Listener<JSONObject>() {
