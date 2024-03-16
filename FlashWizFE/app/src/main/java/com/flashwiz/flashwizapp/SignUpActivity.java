@@ -33,6 +33,7 @@ import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private static final int MY_SOCKET_TIMEOUT_MS = 60000;
     EditText name, email, password, confirm;
     Button sign_up_btn;
 
@@ -146,55 +147,43 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     // End Of Process Form Fields Method.
+
     public void processFormFields(){
         Log.d(TAG, "processFormFields: Validating form fields...");
-        // Check For Errors:
+        // Check for errors (same logic as before)
         if(!validateName() || !validateEmail() || !validatePasswordAndConfirm()){
             return;
         }
-        // End Of Check For Errors.
+
         Log.d(TAG, "processFormFields: Sending registration request...");
-        // Instantiate The Request Queue:
-
-        Log.d(TAG, "processFormFields: Instantiating RequestQueue...");
-
         RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
-        // The URL Posting TO:
-        String url = "http://192.168.1.229:8000/user/save";
-        Log.d(TAG, "processFormFields: Creating JsonObjectRequest...");
-        // JsonObject Request Object:
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                // Handle response here
-                // Example:
-                try {
-                    String status = response.getString("status");
-                    if(status.equalsIgnoreCase("success")){
-                        name.setText(null);
-                        email.setText(null);
-                        password.setText(null);
-                        confirm.setText(null);
-                        Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.e(TAG, "Error: " + error.getMessage());
-                Toast.makeText(SignUpActivity.this, "Registration Un-Successful", Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public byte[] getBody() {
-                // Convert JSONObject to byte array
-                return getJsonObjectParams().toString().getBytes();
-            }
+        String url = "http://192.168.1.11:8000/user/save"; // Update URL if needed
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, getJsonObjectParams(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.optString("status");
+                            if(status != null && status.equalsIgnoreCase("success")){
+                                Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(SignUpActivity.this, "Registration Unsuccessful", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(SignUpActivity.this, "Registration Unsuccessful", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Log.e(TAG, "Error: " + error.getMessage());
+                        Toast.makeText(SignUpActivity.this, "Registration Unsuccessful", Toast.LENGTH_LONG).show();
+                    }
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -203,15 +192,10 @@ public class SignUpActivity extends AppCompatActivity {
             }
         };
 
-        // Set the timeout for the request (e.g., 30 seconds):
-        int MY_SOCKET_TIMEOUT_MS = 60000; // 30 seconds
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        Log.d(TAG, "processFormFields: Adding JsonObjectRequest to queue...");
 
-        // End Of JsonObject Request Object.
+
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(MY_SOCKET_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
     }
 
@@ -224,7 +208,6 @@ public class SignUpActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, params.toString());
         return params;
     }
 

@@ -24,10 +24,18 @@ public class UserController {
 		return userDAO.listUser();
 	}
 
-	@PostMapping("/user/save") 
-	public void save(@RequestBody User user) {
-		userDAO.saveUser(user);
-	}
+	 @PostMapping("/user/save")
+	    public ResponseEntity<String> save(@RequestBody User user) {
+	        // Kiểm tra và lưu thông tin người dùng
+	        try {
+	            userDAO.saveUser(user);
+	            // Trả về phản hồi thành công nếu lưu thành công
+	            return ResponseEntity.ok("success");
+	        } catch (Exception e) {
+	            // Trả về phản hồi lỗi nếu có lỗi xảy ra
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error message: " + e.getMessage());
+	        }
+	    }
 	
 //	@PostMapping("/user/register")
 //    public ResponseEntity registerNewUser(@RequestParam("name") String name,
