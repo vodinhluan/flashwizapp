@@ -1,24 +1,32 @@
 package com.flashwiz.flashwizapp;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.flashwiz.flashwizapp.helpers.StringHelper;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,57 +71,162 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
     }
 
+//    public void processFormFields(){
+//        Log.d(TAG, "processFormFields: Validating form fields...");
+//        // Check For Errors:
+//        if(!validateName() || !validateEmail() || !validatePasswordAndConfirm()){
+//            return;
+//        }
+//        // End Of Check For Errors.
+//        Log.d(TAG, "processFormFields: Sending registration request...");
+//        // Instantiate The Request Queue:
+//
+//        Log.d(TAG, "processFormFields: Instantiating RequestQueue...");
+//
+//
+//        RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
+//        // The URL Posting TO:
+//        String url = "http://192.168.1.229:8000/user/save";
+//        Log.d(TAG, "processFormFields: Creating StringRequest...");
+//        // String Request Object:
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//
+//                if(response.equalsIgnoreCase("success")){
+//                    name.setText(null);
+//                    email.setText(null);
+//                    password.setText(null);
+//                    confirm.setText(null);
+//                    Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+//                }
+//                // End Of Response If Block.
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                System.out.println(error.getMessage());
+//                Toast.makeText(SignUpActivity.this, "Registration Un-Successful", Toast.LENGTH_LONG).show();
+//                Log.e(TAG, "Error: " + error.getMessage());
+//            }
+//        }){
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> headers = new HashMap<>();
+//                headers.put("Content-Type", "application/json");
+//                return headers;
+//            }
+//
+//
+//            @Nullable
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("email", email.getText().toString());
+//                params.put("password", password.getText().toString());
+//                params.put("name", name.getText().toString());
+//                Log.d(TAG, params.toString());
+//                return params;
+//            }
+//        };
+//
+//        // Set the timeout for the request (e.g., 30 seconds):
+//        int MY_SOCKET_TIMEOUT_MS = 60000; // 30 seconds
+//        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                MY_SOCKET_TIMEOUT_MS,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        Log.d(TAG, "processFormFields: Adding StringRequest to queue...");
+//
+//        // End Of String Request Object.
+//        queue.add(stringRequest);
+//    }
+
+
+    // End Of Process Form Fields Method.
     public void processFormFields(){
+        Log.d(TAG, "processFormFields: Validating form fields...");
         // Check For Errors:
         if(!validateName() || !validateEmail() || !validatePasswordAndConfirm()){
             return;
         }
         // End Of Check For Errors.
-
+        Log.d(TAG, "processFormFields: Sending registration request...");
         // Instantiate The Request Queue:
+
+        Log.d(TAG, "processFormFields: Instantiating RequestQueue...");
+
         RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
         // The URL Posting TO:
-        String url = "http://localhost:8000/user/register";
-
-
-
-        // String Request Object:
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        String url = "http://192.168.1.229:8000/user/save";
+        Log.d(TAG, "processFormFields: Creating JsonObjectRequest...");
+        // JsonObject Request Object:
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
-
-                if(response.equalsIgnoreCase("success")){
-                    name.setText(null);
-                    email.setText(null);
-                    password.setText(null);
-                    confirm.setText(null);
-                    Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+            public void onResponse(JSONObject response) {
+                // Handle response here
+                // Example:
+                try {
+                    String status = response.getString("status");
+                    if(status.equalsIgnoreCase("success")){
+                        name.setText(null);
+                        email.setText(null);
+                        password.setText(null);
+                        confirm.setText(null);
+                        Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                // End Of Response If Block.
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                System.out.println(error.getMessage());
+                Log.e(TAG, "Error: " + error.getMessage());
                 Toast.makeText(SignUpActivity.this, "Registration Un-Successful", Toast.LENGTH_LONG).show();
             }
-        }){
-            @Nullable
+        }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", name.getText().toString());
-                params.put("email", email.getText().toString());
-                params.put("password", password.getText().toString());
-                return params;
+            public byte[] getBody() {
+                // Convert JSONObject to byte array
+                return getJsonObjectParams().toString().getBytes();
             }
-        };// End Of String Request Object.
 
-        queue.add(stringRequest);
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        // Set the timeout for the request (e.g., 30 seconds):
+        int MY_SOCKET_TIMEOUT_MS = 60000; // 30 seconds
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Log.d(TAG, "processFormFields: Adding JsonObjectRequest to queue...");
+
+        // End Of JsonObject Request Object.
+        queue.add(jsonObjectRequest);
     }
-    // End Of Process Form Fields Method.
+
+    private JSONObject getJsonObjectParams() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("email", email.getText().toString());
+            params.put("password", password.getText().toString());
+            params.put("name", name.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, params.toString());
+        return params;
+    }
 
 
     public boolean validateName(){
