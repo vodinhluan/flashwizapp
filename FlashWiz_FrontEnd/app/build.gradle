@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.authmoduleyt'
+    namespace 'com.example.flashwiz_fe'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.authmoduleyt"
+        applicationId "com.example.flashwiz_fe"
         minSdk 24
         targetSdk 33
         versionCode 1
