@@ -391,6 +391,7 @@ org.eclipse.jdt.internal.compiler.problem.AbortCompilation: Pb(347) The type com
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 17:00:52.402
 !MESSAGE Classpath changed for project: FlashWizServer
+<<<<<<< Updated upstream
 !SESSION 2024-03-11 22:44:14.349 -----------------------------------------------
 eclipse.buildId=4.19.0.202306150758
 java.version=17.0.7
@@ -547,6 +548,30 @@ Binding(ALT+CTRL+SHIFT+T,
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-11 22:44:17.048
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
+=======
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 17:05:27.888
+!MESSAGE Classpath changed for project: FlashWizServer
+!SESSION 2024-03-11 21:17:19.874 -----------------------------------------------
+eclipse.buildId=4.19.0.202306150758
+java.version=17.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_VN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-03-11 21:17:28.030
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY org.eclipse.core.resources 2 10035 2024-03-11 21:18:05.866
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.jface 2 0 2024-03-11 21:18:10.505
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-11 21:18:10.505
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
@@ -554,7 +579,11 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< Updated upstream
 Binding(CTRL+SHIFT+T,
+=======
+Binding(COMMAND+SHIFT+T,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
@@ -562,6 +591,7 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< Updated upstream
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-11 22:44:17.048
 !MESSAGE A conflict occurred for ALT+CTRL+T:
 Binding(ALT+CTRL+T,
@@ -623,18 +653,33 @@ START:
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.7.v20230425-1502\jre\bin\javaw.exe
 -cp
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes;D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\lib\*
+=======
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-11 21:18:15.908
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/bin/java
+-cp
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/lib/*
+>>>>>>> Stashed changes
 -Dsts.lsp.client=eclipse
 -Dlsp.completions.indentation.enable=true
 -Xmx1024m
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:TieredStopAtLevel=1
 -Xlog:jni+resolve=off
+<<<<<<< Updated upstream
 -Dspring.config.location=file:D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes\application.properties
 -XX:ErrorFile=D:/Nhom20_Android/flashwizapp/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710171910381
+=======
+-Dspring.config.location=file:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes/application.properties
+-XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710166695907
+>>>>>>> Stashed changes
 org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
 --languageserver.hover-timeout=225
 END
 
+<<<<<<< Updated upstream
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:45:10.382
 !MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
 
@@ -642,6 +687,15 @@ END
 !MESSAGE Started org.springframework.tooling.boot.ls LS process 28556
 
 !ENTRY org.eclipse.lsp4e 4 0 2024-03-11 22:45:10.472
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:15.909
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-11 21:18:15.959
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 820
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-11 21:18:16.045
+>>>>>>> Stashed changes
 !MESSAGE org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
 !STACK 0
 java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
@@ -663,6 +717,7 @@ java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protoco
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
 
+<<<<<<< Updated upstream
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:45:15.088
 !MESSAGE Classpath changed for project: FlashWizServer
 
@@ -731,7 +786,10 @@ java.lang.NullPointerException: Cannot invoke "String.length()" because "typeSig
 !MESSAGE Classpath changed for project: FlashWizServer
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:47:59.995
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:51.488
 !MESSAGE Classpath changed for project: FlashWizServer
+<<<<<<< HEAD
 !SESSION 2024-03-12 12:45:33.256 -----------------------------------------------
 eclipse.buildId=4.19.0.202306150758
 java.version=17.0.7
@@ -3451,6 +3509,35 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springfra
 !ENTRY org.eclipse.core.resources 4 567 2024-03-14 14:13:08.971
 !MESSAGE Workspace restored, but some problems occurred.
 !SUBENTRY 1 org.eclipse.core.resources 4 567 2024-03-14 14:13:08.971
+=======
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:51.489
+!MESSAGE Boot project ADDED: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:51.490
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:51.492
+!MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 21:18:52.634
+>>>>>>> Stashed changes
+!MESSAGE Classpath changed for project: FlashWizServer
+!SESSION 2024-03-11 22:58:05.588 -----------------------------------------------
+eclipse.buildId=4.19.0.202306150758
+java.version=17.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_VN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-03-11 22:58:06.595
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY org.eclipse.core.resources 4 567 2024-03-11 22:58:09.895
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2024-03-11 22:58:09.895
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE Could not read metadata for '.org.eclipse.egit.core.cmp'.
 !STACK 1
 org.eclipse.core.internal.resources.ResourceException(/.org.eclipse.egit.core.cmp)[567]: java.lang.Exception: The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
@@ -3504,7 +3591,11 @@ org.eclipse.core.internal.resources.ResourceException(/.org.eclipse.egit.core.cm
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+<<<<<<< HEAD
 !SUBENTRY 2 org.eclipse.core.resources 4 567 2024-03-14 14:13:08.971
+=======
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2024-03-11 22:58:09.896
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
 !STACK 0
 java.lang.Exception: The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
@@ -3559,6 +3650,7 @@ java.lang.Exception: The project description file (.project) for '.org.eclipse.e
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.css.swt.theme 4 0 2024-03-14 14:13:20.838
 !MESSAGE /css/gef_dark.css
 !STACK 0
@@ -5814,6 +5906,11 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springfr
 !ENTRY org.eclipse.jface 2 0 2024-03-16 15:25:17.244
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-16 15:25:17.244
+=======
+!ENTRY org.eclipse.jface 2 0 2024-03-11 22:58:12.178
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-11 22:58:12.178
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE A conflict occurred for COMMAND+SHIFT+T:
 Binding(COMMAND+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
@@ -5832,6 +5929,7 @@ Binding(COMMAND+SHIFT+T,
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.ui 4 4 2024-03-16 15:25:19.666
 !MESSAGE Unable to create part
 !STACK 1
@@ -6411,6 +6509,9 @@ org.eclipse.core.runtime.CoreException: Cannot determine URI for '/FlashWizServe
 !MESSAGE Started Boot LS process
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-16 15:26:12.379
+=======
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-11 22:58:15.094
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
 START:
 /Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/bin/java
@@ -6423,11 +6524,16 @@ START:
 -XX:TieredStopAtLevel=1
 -Xlog:jni+resolve=off
 -Dspring.config.location=file:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes/application.properties
+<<<<<<< HEAD
 -XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710577572379
+=======
+-XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710172695094
+>>>>>>> 56f3585 ([NOTHING] test sth)
 org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
 --languageserver.hover-timeout=225
 END
 
+<<<<<<< HEAD
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 15:26:12.380
 !MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
 
@@ -6435,6 +6541,15 @@ END
 !MESSAGE Started org.springframework.tooling.boot.ls LS process 11584
 
 !ENTRY org.eclipse.lsp4e 4 0 2024-03-16 15:26:12.456
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:58:15.095
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-11 22:58:15.108
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 4857
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-11 22:58:15.134
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
 !STACK 0
 java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
@@ -6456,6 +6571,7 @@ java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protoco
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
 
+<<<<<<< HEAD
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 15:26:43.887
 !MESSAGE Classpath changed for project: FlashWizServer
 
@@ -6465,6 +6581,23 @@ java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protoco
 !ENTRY org.eclipse.jface 2 0 2024-03-16 15:27:02.241
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-16 15:27:02.242
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:58:15.829
+!MESSAGE Boot project ADDED: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:58:15.829
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 22:58:15.830
+!MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-11 23:02:19.412
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.jface 2 0 2024-03-11 23:02:36.418
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-11 23:02:36.418
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE A conflict occurred for COMMAND+SHIFT+C:
 Binding(COMMAND+SHIFT+C,
 	ParameterizedCommand(Command(org.eclipse.tm4e.languageconfiguration.toggleLineCommentCommand,Toggle Line Comment,
@@ -6482,6 +6615,7 @@ Binding(COMMAND+SHIFT+C,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+<<<<<<< HEAD
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 15:27:52.307
 !MESSAGE Classpath changed for project: FlashWizServer
@@ -6683,6 +6817,24 @@ Binding(ALT+CTRL+SHIFT+T,
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-16 17:20:28.641
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
+=======
+!SESSION 2024-03-13 17:20:40.900 -----------------------------------------------
+eclipse.buildId=4.19.0.202306150758
+java.version=17.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_VN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-03-13 17:20:42.038
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY org.eclipse.jface 2 0 2024-03-13 17:20:49.057
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-13 17:20:49.057
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+>>>>>>> 56f3585 ([NOTHING] test sth)
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
@@ -6690,7 +6842,11 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< HEAD
 Binding(CTRL+SHIFT+T,
+=======
+Binding(COMMAND+SHIFT+T,
+>>>>>>> 56f3585 ([NOTHING] test sth)
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
@@ -6698,6 +6854,7 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-16 17:20:28.641
 !MESSAGE A conflict occurred for ALT+CTRL+T:
 Binding(ALT+CTRL+T,
@@ -7255,18 +7412,33 @@ START:
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.7.v20230425-1502\jre\bin\javaw.exe
 -cp
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes;D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\lib\*
+=======
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-13 17:20:51.758
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/bin/java
+-cp
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/lib/*
+>>>>>>> 56f3585 ([NOTHING] test sth)
 -Dsts.lsp.client=eclipse
 -Dlsp.completions.indentation.enable=true
 -Xmx1024m
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:TieredStopAtLevel=1
 -Xlog:jni+resolve=off
+<<<<<<< HEAD
 -Dspring.config.location=file:D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes\application.properties
 -XX:ErrorFile=D:/Nhom20_Android/flashwizapp/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710584457001
+=======
+-Dspring.config.location=file:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes/application.properties
+-XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710325251758
+>>>>>>> 56f3585 ([NOTHING] test sth)
 org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
 --languageserver.hover-timeout=225
 END
 
+<<<<<<< HEAD
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 17:20:57.002
 !MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
 
@@ -7291,6 +7463,15 @@ java.nio.file.InvalidPathException: Illegal char <:> at index 42: /Users/luanvo/
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 
 !ENTRY org.eclipse.lsp4e 4 0 2024-03-16 17:20:57.081
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-13 17:20:51.759
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-13 17:20:51.887
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 14848
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-13 17:20:51.916
+>>>>>>> 56f3585 ([NOTHING] test sth)
 !MESSAGE org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
 !STACK 0
 java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
@@ -7312,6 +7493,7 @@ java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protoco
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
 
+<<<<<<< HEAD
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 17:21:19.755
 !MESSAGE Classpath changed for project: FlashWizServer
 
@@ -7338,3 +7520,99 @@ Binding(CTRL+SHIFT+C,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-13 17:20:52.305
+!MESSAGE Boot project ADDED: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-13 17:20:52.306
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-13 17:20:52.307
+!MESSAGE Started Boot LS process
+!SESSION 2024-03-16 14:03:38.830 -----------------------------------------------
+eclipse.buildId=4.19.0.202306150758
+java.version=17.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_VN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-03-16 14:03:39.973
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY org.eclipse.jface 2 0 2024-03-16 14:03:51.506
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-16 14:03:51.506
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.navigate.open.type"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.lsp4e.symbolinworkspace"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-16 14:03:54.379
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/bin/java
+-cp
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/lib/*
+-Dsts.lsp.client=eclipse
+-Dlsp.completions.indentation.enable=true
+-Xmx1024m
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:TieredStopAtLevel=1
+-Xlog:jni+resolve=off
+-Dspring.config.location=file:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes/application.properties
+-XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1710572634377
+org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
+--languageserver.hover-timeout=225
+END
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 14:03:54.379
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-16 14:03:54.408
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 5177
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-16 14:03:54.434
+!MESSAGE org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
+!STACK 0
+java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
+	at org.eclipse.osgi.internal.loader.BundleLoader.generateException(BundleLoader.java:541)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass0(BundleLoader.java:536)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:416)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:168)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.loadClass(EquinoxBundle.java:622)
+	at org.eclipse.lsp4e.LanguageServersRegistry$ExtensionLanguageServerDefinition.getServerInterface(LanguageServersRegistry.java:196)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$1(LanguageServerWrapper.java:291)
+	at java.base/java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:787)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1773)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 14:03:55.302
+!MESSAGE Boot project ADDED: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 14:03:55.302
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-16 14:03:55.304
+!MESSAGE Started Boot LS process
+>>>>>>> 56f3585 ([NOTHING] test sth)
