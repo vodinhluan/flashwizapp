@@ -1,11 +1,15 @@
 package com.flashwizserver.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.flashwizserver.model.User;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface UserRepository extends  CrudRepository<User, Integer> {
@@ -15,8 +19,16 @@ public interface UserRepository extends  CrudRepository<User, Integer> {
 
 	public Long countById(Integer id);
 
-
-	@Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")
+	
+	@Transactional
 	@Modifying
-	public void updateEnabledStatus(Integer id, boolean enabled);
+	@Query(value = "INSERT INTO USERS(name, email, password) VALUES(:name, :email, :password)", nativeQuery = true)
+	int registerNewUser(@Param("name") String name, @Param("email") String email, @Param("password") String password);
+	
+	@Query(value = "SELECT email FROM users WHERE email = :email ", nativeQuery = true)
+    List<String> checkUserEmail(@Param("email") String email);
+
+    @Query(value = "SELECT password FROM users WHERE email = :email", nativeQuery = true)
+    String checkUserPasswordByEmail(@Param("email") String email);
 }
+

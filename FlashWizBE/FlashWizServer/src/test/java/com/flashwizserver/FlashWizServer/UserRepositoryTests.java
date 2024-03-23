@@ -40,7 +40,6 @@ public class UserRepositoryTests {
 		User user = new User();
 		user.setId(5);
 		user.setEmail("testabbc@gmail.com");
-		user.setEnabled(true);
 		user.setName("John");
 		user.setPassword("123");
 		userRepository.save(user);
