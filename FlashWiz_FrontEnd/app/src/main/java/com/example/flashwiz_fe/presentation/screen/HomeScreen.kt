@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-//import com.example.flashwiz_fe.presentation.components.AddItemComponent
+import com.example.flashwiz_fe.presentation.components.AddItemComponent
 
 @Composable
 fun HomeScreen() {
@@ -44,7 +44,7 @@ fun HomeScreen() {
                     modifier = Modifier.padding(16.dp)
                 )
                 // Hiển thị AddItemComponent
-//                AddItemComponent(expanded = expanded)
+                AddItemComponent(expanded = expanded)
             }
         }
     }
