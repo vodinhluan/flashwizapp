@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f4150a9-1456-41ba-aaac-c87294c1d74f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/migrations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/androidTest/java/com/example/flashwiz_fe/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/AuthApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/data/AuthRepositoryImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/di/AppModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/domain/model/LoginInputValidationType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/domain/model/RegisterInputValidationType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/domain/repository/AuthRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/domain/use_case/ValidateLoginInputUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/domain/use_case/ValidateRegisterInputUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/FinalDestination.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/LoginScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/RegisterScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/components/AuthButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/components/BubbleAnimation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/components/HeaderBackground.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/components/NavDestinationHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/components/TextEntryModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/state/LoginState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/state/RegisterState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/viewmodel/LoginViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/presentation/viewmodel/RegisterViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/ui/theme/Color.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/ui/theme/Shape.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/ui/theme/Theme.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/ui/theme/Type.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/util/Navigation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/java/com/example/flashwiz_fe/util/StringExtension.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/app/src/test/java/com/example/flashwiz_fe/ExampleUnitTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../FlashWiz_FrontEnd/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ffff.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[27176ac1]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="M3-BottomNavigation" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="M3-BottomNavigation" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="M3-BottomNavigation" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="M3-BottomNavigation" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2dzGV3e2dm8qWIYmHMBWMBhpXJ9" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging dev",
+    "last_opened_file_path": "D:/M3-BottomNavigation-master"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Nhom20_Android\flashwizapp\FlashWizApp\M3-BottomNavigation-master\app\src\main\java\com\plcoding\m3_bottomnavigation\screen" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.plcoding.m3_bottomnavigation.presenter.components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="M3-BottomNavigation.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f4150a9-1456-41ba-aaac-c87294c1d74f" name="Changes" comment="" />
+      <created>1711003514228</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711003514228</updated>
+    </task>
+    <servers />
+  </component>
+</project>
