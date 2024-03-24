@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -18,11 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.flashwiz_fe.BottomNavigationItem
 import com.example.flashwiz_fe.presentation.components.BottomNavigationBar
+import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
 
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {

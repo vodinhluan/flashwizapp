@@ -17,13 +17,7 @@ import com.example.flashwiz_fe.ui.theme.FlashWizTheme
 import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.util.Navigation
 import dagger.hilt.android.AndroidEntryPoint
-data class BottomNavigationItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val hasNews: Boolean,
-    val badgeCount: Int? = null
-)
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
