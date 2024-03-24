@@ -2,6 +2,8 @@ package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,6 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flashwiz_fe.presentation.components.AddItemComponent
+import com.example.flashwiz_fe.presentation.components.SearchBar
+import com.example.flashwiz_fe.ui.theme.orange
 
 @Composable
 fun HomeScreen() {
@@ -28,7 +32,7 @@ fun HomeScreen() {
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .background(Color.DarkGray)
+                    .background(Color.Cyan)
                 ,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -46,6 +50,21 @@ fun HomeScreen() {
                 // Hiển thị AddItemComponent
                 AddItemComponent(expanded = expanded)
             }
+
+            // Search
+            SearchBar(
+                description = "Search",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp,0.dp,10.dp,5.dp),
+                hint = "Search",
+                textValue = "Search...",
+                textColor = Color.Black,
+                cursorColor = Color.LightGray,
+                onValueChanged = {},
+                trailingIcon = Icons.Filled.RemoveRedEye,
+                onTrailingIconClick = {}
+            )
         }
     }
 }
