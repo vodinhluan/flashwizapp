@@ -9,7 +9,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.flashwiz_fe.ui.theme.blue
+import com.example.flashwiz_fe.ui.theme.blueGray
+import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.orange
+import com.example.flashwiz_fe.ui.theme.purple
 import com.example.flashwiz_fe.ui.theme.whiteGrayOrange
 
 @Composable
@@ -17,6 +21,7 @@ fun HeaderBackground(
     leftColor: Color,
     rightColor: Color,
     modifier: Modifier = Modifier
+
 ) {
     val colorList = remember {
         listOf(leftColor,rightColor)
@@ -37,8 +42,9 @@ fun HeaderBackground(
 @Composable
 fun HeaderBackgroundPreview() {
     HeaderBackground(
-        leftColor = orange,
-        rightColor = whiteGrayOrange,
+
+        leftColor = blue,
+        rightColor = brightBlue,
         modifier = Modifier
             .fillMaxSize()
     )

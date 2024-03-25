@@ -13,42 +13,52 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.flashwiz_fe.ui.theme.blue
+import com.example.flashwiz_fe.ui.theme.blueGray
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.nightDark
 import com.example.flashwiz_fe.ui.theme.orange
 import com.example.flashwiz_fe.ui.theme.white
+import androidx.compose.ui.text.font.FontFamily
 
 @Composable
 fun TextEntryModule(
-    description:String,
-    hint:String,
+    description: String,
+    hint: String,
     leadingIcon: ImageVector,
-    textValue:String,
+    textValue: String,
     keyboardType: KeyboardType = KeyboardType.Ascii,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textColor: Color,
     cursorColor: Color,
-    onValueChanged:(String) -> Unit,
+    onValueChanged: (String) -> Unit,
     trailingIcon: ImageVector? = null,
-    onTrailingIconClick:(()->Unit)?,
+    onTrailingIconClick: (() -> Unit)?,
     modifier: Modifier = Modifier
 ) {
 
     Column(
         modifier = modifier
-    ){
+    ) {
         Text(
             text = description,
             color = textColor,
-            style = MaterialTheme.typography.body2
+            fontFamily = FontFamily.SansSerif,
+            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
         )
         TextField(
             modifier = Modifier
@@ -58,7 +68,8 @@ fun TextEntryModule(
                 .height(50.dp)
                 .shadow(3.dp, RoundedCornerShape(25.dp)),
             value = textValue,
-            colors = TextFieldDefaults.textFieldColors(
+            colors =
+            TextFieldDefaults.textFieldColors(
                 backgroundColor = white,
                 cursorColor = cursorColor,
                 focusedIndicatorColor = Color.Transparent,
@@ -75,14 +86,14 @@ fun TextEntryModule(
                 )
             },
             trailingIcon = {
-                if(trailingIcon != null){
+                if (trailingIcon != null) {
                     Icon(
                         imageVector = trailingIcon,
                         contentDescription = null,
                         tint = cursorColor,
                         modifier = Modifier
                             .clickable {
-                                if(onTrailingIconClick != null) onTrailingIconClick()
+                                if (onTrailingIconClick != null) onTrailingIconClick()
                             }
                     )
                 }
@@ -102,17 +113,17 @@ fun TextEntryModule(
 
 @Preview(showBackground = true)
 @Composable
-fun TextEntryModulePreview(){
+fun TextEntryModulePreview() {
     TextEntryModule(
         description = "Email address",
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp,0.dp,10.dp,5.dp),
+            .padding(10.dp, 0.dp, 10.dp, 5.dp),
         hint = "KApps@gmail.com",
         leadingIcon = Icons.Default.Email,
         textValue = "TextInput",
         textColor = Color.Black,
-        cursorColor = orange,
+        cursorColor = brightBlue,
         onValueChanged = {},
         trailingIcon = Icons.Filled.RemoveRedEye,
         onTrailingIconClick = {},
