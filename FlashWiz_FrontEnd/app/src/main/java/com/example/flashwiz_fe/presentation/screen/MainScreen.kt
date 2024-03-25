@@ -68,6 +68,7 @@ fun MainScreen() {
                 0 -> HomeScreen()
                 1 -> StatisticScreen()
                 2 -> AccountScreen()
+                else -> HomeScreen()
             }
         }
     }

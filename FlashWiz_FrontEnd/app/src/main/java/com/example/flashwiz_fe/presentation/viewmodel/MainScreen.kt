@@ -10,4 +10,5 @@ sealed class MainScreen(val title: String, val icon: ImageVector) {
     object Statistics : MainScreen("Statistics", Icons.Filled.List)
     object Home : MainScreen("Home", Icons.Filled.Home)
     object Account : MainScreen("Account", Icons.Filled.AccountCircle)
+
 }
