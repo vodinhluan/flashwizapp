@@ -1,6 +1,7 @@
 package com.flashwizserver.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,5 +31,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT password FROM users WHERE email = :email", nativeQuery = true)
     String checkUserPasswordByEmail(@Param("email") String email);
+    
+    
+    Optional<User> findByEmail(String email);
 }
 

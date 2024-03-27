@@ -38,21 +38,21 @@ public class UserRepositoryTests {
 		assertThat(savedUser.getId()).isGreaterThan(0);
 	}
 
-	//Mơi thêm
+	// New Code
 	@Test
     public void testCreateUser() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode("nam2020");
+        String password = passwordEncoder.encode("messi123");
+        String name = "leomessi";
          
-        User newUser = new User("nam@codejava.net", password, password);
+        User newUser = new User("leomessi@gmail.com", password, name);
         User savedUser = userRepository.save(newUser);
          
         assertThat(savedUser).isNotNull();
         assertThat(savedUser.getId()).isGreaterThan(0);
 		
-		
-		
 	}
+	
 	@Test
 	public void addUser() {
 		User user = new User();

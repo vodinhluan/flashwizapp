@@ -1,7 +1,11 @@
 package com.flashwizserver.model;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
@@ -13,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer id;
@@ -34,11 +38,7 @@ public class User {
 			)
 	private Set<Role> roles = new HashSet();
 
-
-
-	public User() {
-
-	}
+	public User() {}
 
 	public User(String email, String password, String name) {
 		super();
@@ -47,6 +47,8 @@ public class User {
 		this.name = name;
 
 	}
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -100,6 +102,42 @@ public class User {
 	@Transient
 	public String getFullName() {
 		return name+" "+id;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 
