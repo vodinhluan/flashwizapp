@@ -56,3 +56,4 @@ sealed class ScreenRoutes(val route:String){
     object RegisterScreen:ScreenRoutes("register_screen")
     object FinalDestination:ScreenRoutes("final_destination")
 }
+//

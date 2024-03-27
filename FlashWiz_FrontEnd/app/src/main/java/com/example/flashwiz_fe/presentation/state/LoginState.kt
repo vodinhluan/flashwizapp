@@ -10,3 +10,4 @@ data class LoginState(
     val isSuccessfullyLoggedIn:Boolean = false,
     val errorMessageLoginProcess:String? = null
 )
+//

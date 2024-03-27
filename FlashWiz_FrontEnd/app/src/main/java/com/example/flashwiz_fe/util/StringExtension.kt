@@ -15,3 +15,4 @@ fun String.containsSpecialChar():Boolean{
     val regex = Regex(".*[^A-Za-z\\d]+.*")
     return regex.matches(this)
 }
+//

@@ -60,7 +60,7 @@ fun LoginScreen(
                     .fillMaxSize()
             )
             Text(
-                text = "FlashWiz",
+                text = "FlashWizApp",
                 style = MaterialTheme.typography.h3,
                 fontFamily = FontFamily.Cursive ,
                 color = white,
@@ -218,3 +218,4 @@ fun LoginContainer(
 
     }
 }
+//
