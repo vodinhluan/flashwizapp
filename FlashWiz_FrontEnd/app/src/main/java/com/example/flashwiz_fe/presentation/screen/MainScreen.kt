@@ -19,6 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.flashwiz_fe.data.network.ApiService
+import com.example.flashwiz_fe.data.network.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
@@ -65,10 +67,10 @@ fun MainScreen() {
             }
         ) {
             when (selectedItemIndex) {
-                0 -> HomeScreen()
+                0 ->  HomeScreen(apiService = RetrofitInstance.apiService)
                 1 -> StatisticScreen()
                 2 -> AccountScreen()
-                else -> HomeScreen()
+                else -> HomeScreen(apiService = RetrofitInstance.apiService)
             }
         }
     }
