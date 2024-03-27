@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.flashwiz_fe.presentation.FinalDestination
-import com.example.flashwiz_fe.presentation.LoginScreen
-import com.example.flashwiz_fe.presentation.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.LoginScreen
+import com.example.flashwiz_fe.presentation.screen.MainScreen
+import com.example.flashwiz_fe.presentation.screen.RegisterScreen
 
 @Composable
 fun Navigation() {
@@ -19,7 +19,7 @@ fun Navigation() {
         composable(ScreenRoutes.LoginScreen.route){
             LoginScreen(
                 onLoginSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.FinalDestination.route){
+                    navController.navigate(ScreenRoutes.MainScreen.route){
                         popUpTo(0)
                     }
                 },
@@ -33,7 +33,7 @@ fun Navigation() {
         composable(ScreenRoutes.RegisterScreen.route){
             RegisterScreen(
                 onRegisterSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.FinalDestination.route){
+                    navController.navigate(ScreenRoutes.MainScreen.route){
                         popUpTo(0)
                     }
                 },
@@ -44,8 +44,8 @@ fun Navigation() {
                 }
             )
         }
-        composable(ScreenRoutes.FinalDestination.route){
-            FinalDestination()
+        composable(ScreenRoutes.MainScreen.route){
+            MainScreen()
         }
     }
 
@@ -54,6 +54,13 @@ fun Navigation() {
 sealed class ScreenRoutes(val route:String){
     object LoginScreen:ScreenRoutes("login_screen")
     object RegisterScreen:ScreenRoutes("register_screen")
+
     object FinalDestination:ScreenRoutes("final_destination")
+
+    object MainScreen:ScreenRoutes("main_screen")
+
 }
-//
+
+
+
+

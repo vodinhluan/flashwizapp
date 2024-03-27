@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -21,7 +22,8 @@ public class Folder {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	@ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "folder_flashcard",
 	           joinColumns = @JoinColumn(name = "folder_id"),
 	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))

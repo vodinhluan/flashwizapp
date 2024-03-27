@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation
+package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.presentation.components.*
 import com.example.flashwiz_fe.ui.theme.*
-//
+
 @Composable
 fun RegisterScreen(
     onRegisterSuccessNavigation: () -> Unit,

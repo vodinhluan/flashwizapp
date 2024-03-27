@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation
+package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -60,7 +60,7 @@ fun LoginScreen(
                     .fillMaxSize()
             )
             Text(
-                text = "FlashWizApp",
+                text = "FlashWiz",
                 style = MaterialTheme.typography.h3,
                 fontFamily = FontFamily.Cursive ,
                 color = white,
@@ -218,4 +218,4 @@ fun LoginContainer(
 
     }
 }
-//
+

@@ -5,4 +5,3 @@ enum class LoginInputValidationType {
     NoEmail,
     Valid
 }
-//

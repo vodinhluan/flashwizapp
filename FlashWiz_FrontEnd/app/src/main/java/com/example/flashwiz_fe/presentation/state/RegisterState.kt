@@ -12,4 +12,4 @@ data class RegisterState(
     val isSuccessfullyRegistered:Boolean = false,
     val errorMessageRegisterProcess:String? = null
 )
-//
+

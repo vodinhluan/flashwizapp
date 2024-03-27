@@ -10,11 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.flashwiz_fe.ui.theme.AuthModuleYTTheme
+import com.example.flashwiz_fe.ui.theme.FlashWizTheme
+import com.example.flashwiz_fe.ui.theme.FlashWizTheme
 import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.util.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,10 +26,9 @@ class MainActivity : ComponentActivity() {
         window.statusBarColor = gray.toArgb()
         window.navigationBarColor = gray.toArgb()
         setContent {
-            AuthModuleYTTheme {
+           FlashWizTheme {
                 Navigation()
             }
         }
     }
 }
-//git 

@@ -49,4 +49,3 @@ fun HeaderBackgroundPreview() {
             .fillMaxSize()
     )
 }
-//

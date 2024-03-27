@@ -35,4 +35,3 @@ class ValidateRegisterInputUseCase {
         return RegisterInputValidationType.Valid
     }
 }
-//

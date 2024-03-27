@@ -10,4 +10,3 @@ enum class RegisterInputValidationType {
     PasswordTooShort,
     Valid
 }
-//
