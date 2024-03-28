@@ -26,11 +26,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-	
+	@Bean
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(username -> userRepo.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User" + username + "khong tim thay"))
-				);
+			);
 	}
 	
 	@Bean
