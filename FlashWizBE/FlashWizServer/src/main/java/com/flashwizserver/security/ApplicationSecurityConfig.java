@@ -8,17 +8,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import com.flashwizserver.repository.UserRepository;
 
 @Configuration
 @EnableWebSecurity
-public class ApplicationSecurityConfig extends WebSecurityConfiguration {
+public class ApplicationSecurityConfig {
 	@Autowired private UserRepository userRepo;
 	
 	@Bean
@@ -26,25 +26,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(username -> userRepo.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User" + username + "khong tim thay"))
 			);
 	}
 	
+	
 	@Bean
 	public AuthenticationManager authenticationManager(
 	        AuthenticationConfiguration authConfig) throws Exception {
 	    return authConfig.getAuthenticationManager();
 	}
-	
 
+
+	
 	@Bean
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().anyRequest().permitAll();
-	}
+	  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    return http
+	        .csrf().disable()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        .and()
+	        .authorizeRequests().anyRequest().permitAll()
+	        .and().build();
+	  }
+
    
 }
