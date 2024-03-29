@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -52,14 +54,15 @@ fun LoginScreen(
             contentAlignment = Alignment.Center
         ){
             HeaderBackground(
-                leftColor = orange,
-                rightColor = whiteGrayOrange,
+                leftColor = blue,
+                rightColor = brightBlue,
                 modifier = Modifier
                     .fillMaxSize()
             )
             Text(
-                text = "Login",
-                style = MaterialTheme.typography.h4,
+                text = "FlashWiz",
+                style = MaterialTheme.typography.h3,
+                fontFamily = FontFamily.Cursive ,
                 color = white,
                 fontWeight = FontWeight.SemiBold
             )
@@ -92,12 +95,12 @@ fun LoginScreen(
                 .fillMaxWidth(0.9f)
                 .shadow(5.dp, RoundedCornerShape(15.dp))
                 .background(whiteGray, RoundedCornerShape(15.dp))
-                .padding(10.dp,15.dp,10.dp,5.dp)
+                .padding(10.dp, 15.dp, 10.dp, 5.dp)
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = whiteGrayOrange,
-            bubbleColor2 = orange,
+            bubbleColor1 = brightBlue,
+            bubbleColor2 = blue,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
@@ -110,17 +113,18 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.Center
         ){
             Text(
-                "No account yet?",
+                "Bạn chưa có tài khoản ?",
                 style = MaterialTheme.typography.body2
+
             )
             Text(
-                "Register",
+                "Đăng ký",
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .clickable {
                         onNavigateToRegisterScreen()
                     },
-                color = orange,
+                color = blue,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.body2
             )
@@ -145,16 +149,22 @@ fun LoginContainer(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Text(
+            text = "Đăng nhập",
+            color = gray,
+            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+        )
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
             description = "Email address",
-            hint = "KApps@gmail.com",
+            hint = "example@gmail.com",
             textValue = emailValue(),
-            textColor = gray,
-            cursorColor = orange,
+            textColor = darkGray,
+            cursorColor = brightBlue,
             onValueChanged = onEmailChanged,
             trailingIcon = null,
             onTrailingIconClick = null,
@@ -166,8 +176,8 @@ fun LoginContainer(
             description = "Password",
             hint = "Enter password",
             textValue = passwordValue(),
-            textColor = gray,
-            cursorColor = orange,
+            textColor = darkGray,
+            cursorColor = brightBlue,
             onValueChanged = onPasswordChanged,
             trailingIcon = Icons.Default.RemoveRedEye,
             onTrailingIconClick = {
@@ -176,17 +186,18 @@ fun LoginContainer(
             leadingIcon = Icons.Default.VpnKey,
             visualTransformation = if(isPasswordShown()){
                 VisualTransformation.None
-            }else PasswordVisualTransformation(),
+                }else PasswordVisualTransformation(),
             keyboardType = KeyboardType.Password
         )
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp) ,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             AuthButton(
                 text = "Login",
-                backgroundColor = orange,
+                backgroundColor = blue,
                 contentColor = white,
                 enabled = buttonEnabled(),
                 modifier = Modifier
@@ -194,12 +205,17 @@ fun LoginContainer(
                     .height(45.dp)
                     .shadow(5.dp, RoundedCornerShape(25.dp)),
                 isLoading = isLoading(),
-                onButtonClick = onLoginButtonClick
+                onButtonClick = onLoginButtonClick,
+
             )
             Text(
                 errorHint() ?: "",
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.body2
+
             )
+
         }
+
     }
 }
+

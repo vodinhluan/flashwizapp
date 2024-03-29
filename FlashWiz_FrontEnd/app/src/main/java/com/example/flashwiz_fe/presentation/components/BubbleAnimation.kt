@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.flashwiz_fe.ui.theme.blue
+import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.ui.theme.orange
 
@@ -114,8 +116,8 @@ fun BubbleAnimation(
 @Composable
 fun BubbleAnimationPreview() {
     BubbleAnimation(
-        bubbleColor1 = orange,
-        bubbleColor2 = gray,
+        bubbleColor1 = blue,
+        bubbleColor2 = brightBlue,
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)

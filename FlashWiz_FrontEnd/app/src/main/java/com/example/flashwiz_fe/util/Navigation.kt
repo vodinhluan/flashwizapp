@@ -54,5 +54,13 @@ fun Navigation() {
 sealed class ScreenRoutes(val route:String){
     object LoginScreen:ScreenRoutes("login_screen")
     object RegisterScreen:ScreenRoutes("register_screen")
+
+    object FinalDestination:ScreenRoutes("final_destination")
+
     object MainScreen:ScreenRoutes("main_screen")
+
 }
+
+
+
+

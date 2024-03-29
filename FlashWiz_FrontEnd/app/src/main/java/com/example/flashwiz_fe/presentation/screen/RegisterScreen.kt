@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -53,14 +54,15 @@ fun RegisterScreen(
             contentAlignment = Alignment.Center
         ){
             HeaderBackground(
-                leftColor = orange,
-                rightColor = whiteGrayOrange,
+                leftColor = blue,
+                rightColor = brightBlue,
                 modifier = Modifier
                     .fillMaxSize()
             )
             Text(
-                text = "Register",
-                style = MaterialTheme.typography.h4,
+                text = "FlashWiz",
+                style = MaterialTheme.typography.h3,
+                fontFamily = FontFamily.Cursive,
                 color = white,
                 fontWeight = FontWeight.SemiBold
             )
@@ -109,8 +111,8 @@ fun RegisterScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = whiteGrayOrange,
-            bubbleColor2 = orange,
+            bubbleColor1 = brightBlue,
+            bubbleColor2 = blue,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
@@ -123,7 +125,7 @@ fun RegisterScreen(
             horizontalArrangement = Arrangement.Center
         ){
             Text(
-                "Already have an account?",
+                "Đã có tài khoản?",
                 style = MaterialTheme.typography.body2,
             )
             Text(
@@ -132,8 +134,8 @@ fun RegisterScreen(
                     .clickable {
                         onNavigateToLoginScreen()
                     },
-                text = "Login",
-                color = orange,
+                text = "Đăng nhập",
+                color = blue,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.body2
             )
@@ -162,17 +164,23 @@ fun RegisterContainer(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Text(
+            text = "Đăng ký",
+            color = gray,
+            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+        )
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
             description = "Email address",
-            hint = "KApps@gmail.com",
+            hint = "flashwizex@gmail.com",
             leadingIcon = Icons.Default.Email,
             textValue = emailValue(),
-            textColor = gray,
-            cursorColor = orange,
+            textColor = darkGray,
+            cursorColor = brightBlue,
             onValueChanged = onEmailChanged,
             trailingIcon = null,
             onTrailingIconClick = null
@@ -185,8 +193,8 @@ fun RegisterContainer(
             hint = "Enter Password",
             leadingIcon = Icons.Default.VpnKey,
             textValue = passwordValue(),
-            textColor = gray,
-            cursorColor = orange,
+            textColor = darkGray,
+            cursorColor = brightBlue,
             onValueChanged = onPasswordChanged,
             keyboardType = KeyboardType.Password,
             visualTransformation = if(isPasswordShown()){
@@ -200,12 +208,12 @@ fun RegisterContainer(
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
-            description = "Password repeated",
-            hint = "Enter Password repeated",
+            description = "Confirm Password",
+            hint = "Confirm Password",
             leadingIcon = Icons.Default.VpnKey,
             textValue = passwordRepeatedValue(),
             textColor = gray,
-            cursorColor = orange,
+            cursorColor = brightBlue,
             onValueChanged = onPasswordRepeatedChanged,
             keyboardType = KeyboardType.Password,
             visualTransformation = if(isPasswordRepeatedShown()){
@@ -219,11 +227,11 @@ fun RegisterContainer(
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ){
             AuthButton(
                 text = "Register",
-                backgroundColor = orange,
+                backgroundColor = blue,
                 contentColor = white,
                 enabled = buttonEnabled(),
                 modifier = Modifier
@@ -235,7 +243,7 @@ fun RegisterContainer(
             )
             Text(
                 errorHint() ?: "",
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.body2
             )
         }
     }
