@@ -22,12 +22,12 @@ public class Folder {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-//    @JsonIgnore
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "folder_flashcard",
-//	           joinColumns = @JoinColumn(name = "folder_id"),
-//	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
-//	private Set<Flashcard> flashcards = new HashSet<>();
+    @JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "folder_flashcard",
+	           joinColumns = @JoinColumn(name = "folder_id"),
+	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
+	private Set<Flashcard> flashcards = new HashSet<>();
 	public Integer getId() {
 		return id;
 	}
@@ -36,13 +36,13 @@ public class Folder {
 		this.id = id;
 	}
 
-//	public Set<Flashcard> getFlashcard() {
-//		return flashcards;
-//	}
-//
-//	public void setFlashcard(Set<Flashcard> flashcards) {
-//		this.flashcards = flashcards;
-//	}
+	public Set<Flashcard> getFlashcard() {
+		return flashcards;
+	}
+
+	public void setFlashcard(Set<Flashcard> flashcards) {
+		this.flashcards = flashcards;
+	}
 
 	public String getName() {
 		return name;

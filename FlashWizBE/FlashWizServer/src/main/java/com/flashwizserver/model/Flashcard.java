@@ -3,6 +3,8 @@ package com.flashwizserver.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,9 +30,9 @@ public class Flashcard {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	@JsonIgnore
 	@ManyToMany(mappedBy = "flashcards")
 	private List<Folder> folders;
-
 
 	public List<Folder> getFolders() {
 		return folders;
