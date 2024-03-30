@@ -45,7 +45,6 @@ public class User implements UserDetails  {
 		this.email = email;
 		this.password = password;
 		this.name = name;
-
 	}
 	
 	
@@ -97,47 +96,56 @@ public class User implements UserDetails  {
 				+ "]";
 	}
 
-
-
-	@Transient
-	public String getFullName() {
-		return name+" "+id;
-	}
+	
 
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getUsername() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/dev
 		return this.email;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/dev
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/dev
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/dev
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
+=======
+>>>>>>> origin/dev
 		return true;
 	}
 

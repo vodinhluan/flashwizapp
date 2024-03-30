@@ -13,8 +13,9 @@ import androidx.compose.ui.unit.dp
 fun MenuItem(text: String) {
     Text(
         text = text,
-        modifier = Modifier
-            .padding(vertical = 8.dp, horizontal = 16.dp)
-            .clickable { /* Xử lý khi mục menu được chọn */ }
+        modifier = Modifier.run {
+            padding(vertical = 8.dp, horizontal = 16.dp)
+                .clickable(){}
+        }
     )
 }

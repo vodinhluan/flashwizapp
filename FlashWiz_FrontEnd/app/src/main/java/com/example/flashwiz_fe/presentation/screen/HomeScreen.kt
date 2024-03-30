@@ -66,7 +66,7 @@ fun HomeScreen(apiService: ApiService) {
                         textAlign = TextAlign.Left,
                         modifier = Modifier.padding(16.dp)
                     )
-                    // Hiển thị AddItemComponent
+                    // Hiển thị com.example.flashwiz_fe.presentation.components.AddItemComponent
                     AddItemComponent(expanded = expanded)
                 } else {
                     Row(
