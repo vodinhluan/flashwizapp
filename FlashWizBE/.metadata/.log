@@ -2889,6 +2889,7 @@ java.lang.InterruptedException
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-29 01:14:08.956
 !MESSAGE Classpath changed for project: FlashWizServer
+<<<<<<< Updated upstream
 !SESSION 2024-03-27 12:31:52.289 -----------------------------------------------
 eclipse.buildId=4.19.0.202306150758
 java.version=17.0.7
@@ -2925,6 +2926,117 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:550)
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:171)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+=======
+!SESSION 2024-03-30 15:18:22.336 -----------------------------------------------
+eclipse.buildId=4.19.0.202306150758
+java.version=17.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_VN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.springframework.boot.ide.branding.sts4 -keyring /Users/luanvo/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-03-30 15:18:23.311
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY org.eclipse.core.resources 4 567 2024-03-30 15:18:31.354
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2024-03-30 15:18:31.354
+!MESSAGE Could not read metadata for '.org.eclipse.egit.core.cmp'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(/.org.eclipse.egit.core.cmp)[567]: java.lang.Exception: The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:908)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:894)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:874)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:730)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1587)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2549)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2254)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:571)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:1)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:943)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:1)
+	at org.osgi.util.tracker.AbstractTracked.trackAdding(AbstractTracked.java:256)
+	at org.osgi.util.tracker.AbstractTracked.trackInitial(AbstractTracked.java:183)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:321)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:264)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:545)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:818)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:810)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:767)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1032)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:513)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:117)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:570)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:335)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:397)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass0(BundleLoader.java:496)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:416)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:168)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:153)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2024-03-30 15:18:31.356
+!MESSAGE The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+!STACK 0
+java.lang.Exception: The project description file (.project) for '.org.eclipse.egit.core.cmp' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:908)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:894)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:874)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:730)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1587)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2549)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2254)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:571)
+	at org.eclipse.core.resources.ResourcesPlugin$WorkspaceInitCustomizer.addingService(ResourcesPlugin.java:1)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:943)
+	at org.osgi.util.tracker.ServiceTracker$Tracked.customizerAdding(ServiceTracker.java:1)
+	at org.osgi.util.tracker.AbstractTracked.trackAdding(AbstractTracked.java:256)
+	at org.osgi.util.tracker.AbstractTracked.trackInitial(AbstractTracked.java:183)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:321)
+	at org.osgi.util.tracker.ServiceTracker.open(ServiceTracker.java:264)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:545)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:818)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:810)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:767)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1032)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:513)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:117)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:570)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:335)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:397)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass0(BundleLoader.java:496)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:416)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:168)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:153)
+>>>>>>> Stashed changes
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
 	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
 	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
@@ -2938,6 +3050,7 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 
+<<<<<<< Updated upstream
 !ENTRY org.eclipse.jface 2 0 2024-03-27 12:31:56.409
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-27 12:31:56.409
@@ -2961,6 +3074,13 @@ Binding(ALT+CTRL+SHIFT+T,
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-27 12:31:56.409
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
+=======
+!ENTRY org.eclipse.jface 2 0 2024-03-30 15:18:33.762
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-30 15:18:33.762
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
@@ -2968,7 +3088,11 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< Updated upstream
 Binding(CTRL+SHIFT+T,
+=======
+Binding(COMMAND+SHIFT+T,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
@@ -2976,6 +3100,7 @@ Binding(CTRL+SHIFT+T,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
+<<<<<<< Updated upstream
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-27 12:31:56.409
 !MESSAGE A conflict occurred for ALT+CTRL+T:
 Binding(ALT+CTRL+T,
@@ -3242,18 +3367,33 @@ START:
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.7.v20230425-1502\jre\bin\javaw.exe
 -cp
 D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes;D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\lib\*
+=======
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-30 15:18:36.769
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/bin/java
+-cp
+/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/lib/*
+>>>>>>> Stashed changes
 -Dsts.lsp.client=eclipse
 -Dlsp.completions.indentation.enable=true
 -Xmx1024m
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:TieredStopAtLevel=1
 -Xlog:jni+resolve=off
+<<<<<<< Updated upstream
 -Dspring.config.location=file:D:\Java\STS4\sts-4.19.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.47.0.202306150731\servers\spring-boot-language-server\BOOT-INF\classes\application.properties
 -XX:ErrorFile=D:/Nhom20_Android/flashwizapp/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1711517519350
+=======
+-Dspring.config.location=file:/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.springframework.tooling.boot.ls_1.47.0.202306150731/servers/spring-boot-language-server/BOOT-INF/classes/application.properties
+-XX:ErrorFile=/Users/luanvo/Desktop/FlashWizProject/FlashWizBE/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1711786716768
+>>>>>>> Stashed changes
 org.springframework.ide.vscode.boot.app.BootLanguageServerBootApp
 --languageserver.hover-timeout=225
 END
 
+<<<<<<< Updated upstream
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-27 12:31:59.352
 !MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
 
@@ -3261,6 +3401,15 @@ END
 !MESSAGE Started org.springframework.tooling.boot.ls LS process 19756
 
 !ENTRY org.eclipse.lsp4e 4 0 2024-03-27 12:31:59.430
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:18:36.769
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-30 15:18:36.796
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 3568
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-30 15:18:36.826
+>>>>>>> Stashed changes
 !MESSAGE org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
 !STACK 0
 java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protocol.spring.SpringModelLanguageServer cannot be found by org.springframework.tooling.boot.ls_1.47.0.202306150731
@@ -3282,6 +3431,7 @@ java.lang.ClassNotFoundException: org.springframework.ide.vscode.commons.protoco
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
 
+<<<<<<< Updated upstream
 !ENTRY org.eclipse.egit.ui 2 0 2024-03-27 12:32:00.710
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\Lenovo'. If this is
@@ -3303,6 +3453,22 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-27 12:32:20.661
 !MESSAGE A conflict occurred for CTRL+SHIFT+C:
 Binding(CTRL+SHIFT+C,
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:18:37.975
+!MESSAGE Boot project ADDED: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:18:37.976
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:18:37.976
+!MESSAGE Started Boot LS process
+
+!ENTRY org.eclipse.jface 2 0 2024-03-30 15:18:46.625
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-30 15:18:46.625
+!MESSAGE A conflict occurred for COMMAND+SHIFT+C:
+Binding(COMMAND+SHIFT+C,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.eclipse.tm4e.languageconfiguration.toggleLineCommentCommand,Toggle Line Comment,
 		,
 		Category(org.eclipse.tm4e.languageconfiguration.category,TM4E Language Configuration,null,true),
@@ -3310,6 +3476,7 @@ Binding(CTRL+SHIFT+C,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+<<<<<<< Updated upstream
 Binding(CTRL+SHIFT+C,
 	ParameterizedCommand(Command(org.springframework.tooling.boot.ls.ToggleComment,Toggle Comment,
 		,
@@ -3740,6 +3907,9 @@ Binding(CTRL+SHIFT+C,
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
 Binding(CTRL+SHIFT+C,
+=======
+Binding(COMMAND+SHIFT+C,
+>>>>>>> Stashed changes
 	ParameterizedCommand(Command(org.springframework.tooling.boot.ls.ToggleComment,Toggle Comment,
 		,
 		Category(org.springframework.ide.eclipse.commands,Spring Generic Text Editor,Spring Language Server Commands,true),
@@ -3748,6 +3918,7 @@ Binding(CTRL+SHIFT+C,
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
 
+<<<<<<< Updated upstream
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-27 12:36:04.167
 !MESSAGE Classpath changed for project: FlashWizServer
 !SESSION 2024-03-27 15:25:32.654 -----------------------------------------------
@@ -3778,6 +3949,81 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.setCSSTheme(PartRenderingEngine.java:1417)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.initializeStyling(PartRenderingEngine.java:1324)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1050)
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:24:39.760
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:26:22.837
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:28:16.314
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:39:16.447
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:48:17.248
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:48:28.266
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:50:52.588
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:56:21.752
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:56:32.477
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 15:59:48.598
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:00:18.750
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.jdt.ui 4 2 2024-03-30 16:01:02.566
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException: Invalid identifier : >csrfconfigurer<httpsecurity>1<
+	at org.eclipse.jdt.core.dom.SimpleName.setIdentifier(SimpleName.java:247)
+	at org.eclipse.jdt.core.dom.AST.newSimpleName(AST.java:2853)
+	at org.eclipse.jdt.internal.ui.text.correction.QuickAssistProcessor.getAddMethodDeclaration(QuickAssistProcessor.java:1717)
+	at org.eclipse.jdt.internal.ui.text.correction.QuickAssistProcessor.getAssists(QuickAssistProcessor.java:363)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeAssistCollector.safeRun(JavaCorrectionProcessor.java:404)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeCorrectionProcessorAccess.run(JavaCorrectionProcessor.java:341)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeCorrectionProcessorAccess.process(JavaCorrectionProcessor.java:330)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.collectAssists(JavaCorrectionProcessor.java:506)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.collectProposals(JavaCorrectionProcessor.java:291)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.computeQuickAssistProposals(JavaCorrectionProcessor.java:247)
+	at org.eclipse.jface.text.quickassist.QuickAssistAssistant$ContentAssistProcessor.computeCompletionProposals(QuickAssistAssistant.java:71)
+	at org.eclipse.jface.text.contentassist.ContentAssistant$2.lambda$0(ContentAssistant.java:2063)
+	at java.base/java.util.Collections$SingletonSet.forEach(Collections.java:4905)
+	at org.eclipse.jface.text.contentassist.ContentAssistant$2.run(ContentAssistant.java:2062)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jface.text.contentassist.ContentAssistant.computeCompletionProposals(ContentAssistant.java:2059)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.computeProposals(CompletionProposalPopup.java:577)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.lambda$0(CompletionProposalPopup.java:507)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.showProposals(CompletionProposalPopup.java:502)
+	at org.eclipse.jface.text.contentassist.ContentAssistant.showPossibleCompletions(ContentAssistant.java:1873)
+	at org.eclipse.jface.text.quickassist.QuickAssistAssistant.showPossibleQuickAssists(QuickAssistAssistant.java:113)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionAssistant.showPossibleQuickAssists(JavaCorrectionAssistant.java:194)
+	at org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor$AdaptedSourceViewer.doOperation(CompilationUnitEditor.java:201)
+	at org.eclipse.jdt.internal.ui.javaeditor.JavaSelectAnnotationRulerAction.runWithEvent(JavaSelectAnnotationRulerAction.java:101)
+	at org.eclipse.ui.texteditor.AbstractRulerActionDelegate.runWithEvent(AbstractRulerActionDelegate.java:112)
+	at org.eclipse.ui.internal.handlers.ActionDelegateHandlerProxy.execute(ActionDelegateHandlerProxy.java:281)
+	at org.eclipse.core.commands.Command.executeWithChecks(Command.java:488)
+	at org.eclipse.core.commands.ParameterizedCommand.executeWithChecks(ParameterizedCommand.java:485)
+	at org.eclipse.ui.actions.ContributedAction.runWithEvent(ContributedAction.java:176)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$1.triggerAction(AbstractTextEditor.java:3025)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$1.lambda$0(AbstractTextEditor.java:3039)
+	at org.eclipse.swt.widgets.Display.runTimers(Display.java:4601)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3980)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+>>>>>>> Stashed changes
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
@@ -3799,6 +4045,7 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 
+<<<<<<< Updated upstream
 !ENTRY org.eclipse.jface 2 0 2024-03-27 15:25:47.809
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
 !SUBENTRY 1 org.eclipse.jface 2 0 2024-03-27 15:25:47.809
@@ -4076,6 +4323,52 @@ java.io.FileNotFoundException: /icons/full/eview16/console_view.gif
 	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.createGui(PartRenderingEngine.java:712)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1083)
+=======
+!ENTRY org.eclipse.jdt.ui 4 4 2024-03-30 16:01:02.575
+!MESSAGE An error occurred while computing quick assists. Check log for details.
+!SUBENTRY 1 org.eclipse.jdt.ui 4 0 2024-03-30 16:01:02.575
+!MESSAGE Exception while processing quick fixes or quick assists
+!SUBENTRY 2 org.eclipse.jdt.ui 4 4 2024-03-30 16:01:02.575
+!MESSAGE Exception while processing quick fixes or quick assists
+!STACK 0
+java.lang.IllegalArgumentException: Invalid identifier : >csrfconfigurer<httpsecurity>1<
+	at org.eclipse.jdt.core.dom.SimpleName.setIdentifier(SimpleName.java:247)
+	at org.eclipse.jdt.core.dom.AST.newSimpleName(AST.java:2853)
+	at org.eclipse.jdt.internal.ui.text.correction.QuickAssistProcessor.getAddMethodDeclaration(QuickAssistProcessor.java:1717)
+	at org.eclipse.jdt.internal.ui.text.correction.QuickAssistProcessor.getAssists(QuickAssistProcessor.java:363)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeAssistCollector.safeRun(JavaCorrectionProcessor.java:404)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeCorrectionProcessorAccess.run(JavaCorrectionProcessor.java:341)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor$SafeCorrectionProcessorAccess.process(JavaCorrectionProcessor.java:330)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.collectAssists(JavaCorrectionProcessor.java:506)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.collectProposals(JavaCorrectionProcessor.java:291)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionProcessor.computeQuickAssistProposals(JavaCorrectionProcessor.java:247)
+	at org.eclipse.jface.text.quickassist.QuickAssistAssistant$ContentAssistProcessor.computeCompletionProposals(QuickAssistAssistant.java:71)
+	at org.eclipse.jface.text.contentassist.ContentAssistant$2.lambda$0(ContentAssistant.java:2063)
+	at java.base/java.util.Collections$SingletonSet.forEach(Collections.java:4905)
+	at org.eclipse.jface.text.contentassist.ContentAssistant$2.run(ContentAssistant.java:2062)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jface.text.contentassist.ContentAssistant.computeCompletionProposals(ContentAssistant.java:2059)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.computeProposals(CompletionProposalPopup.java:577)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.lambda$0(CompletionProposalPopup.java:507)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.jface.text.contentassist.CompletionProposalPopup.showProposals(CompletionProposalPopup.java:502)
+	at org.eclipse.jface.text.contentassist.ContentAssistant.showPossibleCompletions(ContentAssistant.java:1873)
+	at org.eclipse.jface.text.quickassist.QuickAssistAssistant.showPossibleQuickAssists(QuickAssistAssistant.java:113)
+	at org.eclipse.jdt.internal.ui.text.correction.JavaCorrectionAssistant.showPossibleQuickAssists(JavaCorrectionAssistant.java:194)
+	at org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor$AdaptedSourceViewer.doOperation(CompilationUnitEditor.java:201)
+	at org.eclipse.jdt.internal.ui.javaeditor.JavaSelectAnnotationRulerAction.runWithEvent(JavaSelectAnnotationRulerAction.java:101)
+	at org.eclipse.ui.texteditor.AbstractRulerActionDelegate.runWithEvent(AbstractRulerActionDelegate.java:112)
+	at org.eclipse.ui.internal.handlers.ActionDelegateHandlerProxy.execute(ActionDelegateHandlerProxy.java:281)
+	at org.eclipse.core.commands.Command.executeWithChecks(Command.java:488)
+	at org.eclipse.core.commands.ParameterizedCommand.executeWithChecks(ParameterizedCommand.java:485)
+	at org.eclipse.ui.actions.ContributedAction.runWithEvent(ContributedAction.java:176)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$1.triggerAction(AbstractTextEditor.java:3025)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$1.lambda$0(AbstractTextEditor.java:3039)
+	at org.eclipse.swt.widgets.Display.runTimers(Display.java:4601)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3980)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+>>>>>>> Stashed changes
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
@@ -4097,6 +4390,7 @@ java.io.FileNotFoundException: /icons/full/eview16/console_view.gif
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
 
+<<<<<<< Updated upstream
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-03-27 15:25:52.757
 !MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
 START:
@@ -4186,6 +4480,53 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.setCSSTheme(PartRenderingEngine.java:1417)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.initializeStyling(PartRenderingEngine.java:1324)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1050)
+=======
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:01:11.576
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:03:02.892
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:04:45.132
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:05:59.271
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:06:42.428
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:08:46.412
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:09:31.779
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:11:24.984
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.lsp4e 4 0 2024-03-30 16:11:25.098
+!MESSAGE org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Internal error.
+!STACK 0
+java.util.concurrent.ExecutionException: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Internal error.
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:396)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.operations.declaration.OpenDeclarationHyperlinkDetector.detectHyperlinks(OpenDeclarationHyperlinkDetector.java:68)
+	at org.eclipse.ui.texteditor.HyperlinkDetectorRegistry$HyperlinkDetectorDelegate.detectHyperlinks(HyperlinkDetectorRegistry.java:81)
+	at org.eclipse.jface.text.hyperlink.HyperlinkManager.findHyperlinks(HyperlinkManager.java:289)
+	at org.eclipse.jface.text.hyperlink.HyperlinkManager.findHyperlinks(HyperlinkManager.java:262)
+	at org.eclipse.jface.text.hyperlink.HyperlinkManager.mouseMove(HyperlinkManager.java:457)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:216)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4646)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1524)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1547)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1532)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:1325)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4413)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3989)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+>>>>>>> Stashed changes
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
@@ -4206,6 +4547,7 @@ java.io.FileNotFoundException: /css/gef_dark.css
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:659)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:596)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1467)
+<<<<<<< Updated upstream
 
 !ENTRY org.eclipse.jface 2 0 2024-03-28 13:59:25.375
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
@@ -4577,4 +4919,143 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !MESSAGE Classpath changed for project: FlashWizServer
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-28 14:08:43.247
+=======
+Caused by: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Internal error.
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleResponse(RemoteEndpoint.java:209)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:193)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$3(LanguageServerWrapper.java:282)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:194)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-03-30 16:12:32.758
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:13:35.514
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:25:03.652
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:29:58.912
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:41:44.498
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:42:07.002
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:42:14.103
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:47:40.304
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:48:49.256
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:49:41.457
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-03-30 16:52:36.624
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-03-30 16:53:57.987
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-03-30 16:56:44.025
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:56:46.097
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:56:57.233
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:58:16.990
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 16:58:55.166
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:02:27.790
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:02:47.794
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:16:30.918
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:16:42.337
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:16:43.047
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:16:48.309
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:16:48.569
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:36:06.914
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:42:42.127
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:49:34.775
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:50:10.533
+>>>>>>> Stashed changes
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:56:08.802
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-03-30 17:56:10.010
 !MESSAGE Classpath changed for project: FlashWizServer

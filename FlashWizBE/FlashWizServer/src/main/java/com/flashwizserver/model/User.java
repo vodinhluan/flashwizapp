@@ -96,13 +96,6 @@ public class User implements UserDetails  {
 				+ "]";
 	}
 
-
-
-	@Transient
-	public String getFullName() {
-		return name+" "+id;
-	}
-
 	
 
 	@Override

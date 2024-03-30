@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flashwizserver.security.JWTTokenUtil;
+
 import jakarta.validation.Valid;
 
 @RestController
 public class AuthApi {
 	@Autowired 
 	AuthenticationManager authManager;
+	
+	@Autowired
+	JWTTokenUtil jwtTokenUtil;
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
@@ -27,7 +32,7 @@ public class AuthApi {
 			
 			User user = (User) authentication.getPrincipal();
 			
-			String accessToken = "JWT Access Token Here";
+			String accessToken = jwtTokenUtil.generateAccessToken(user);
 			AuthResponse response = new AuthResponse(user.getEmail(), accessToken);
 			
 			return ResponseEntity.ok(response);
