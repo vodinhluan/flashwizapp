@@ -16,9 +16,12 @@ repositories {
 }
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> eb1cd946a2b726b6ac86bdfa71e1c6d73487fea3
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -30,10 +33,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.1.5'
+	implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.2.3'    
+	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.4.0-b180830.0359'
+	
+
     
     
-    
-    
+ 
 }
 
 tasks.named('test') {
