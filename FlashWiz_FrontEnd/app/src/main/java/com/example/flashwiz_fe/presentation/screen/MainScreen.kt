@@ -1,6 +1,5 @@
 package com.example.flashwiz_fe.presentation.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -19,18 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.flashwiz_fe.data.network.ApiService
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.data.network.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     val items = listOf(
-
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
@@ -67,10 +64,10 @@ fun MainScreen() {
             }
         ) {
             when (selectedItemIndex) {
-                0 ->  HomeScreen(apiService = RetrofitInstance.apiService)
+                0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.apiService)
                 1 -> StatisticScreen()
                 2 -> AccountScreen()
-                else -> HomeScreen(apiService = RetrofitInstance.apiService)
+                else -> HomeScreen(navController = navController, apiService = RetrofitInstance.apiService)
             }
         }
     }

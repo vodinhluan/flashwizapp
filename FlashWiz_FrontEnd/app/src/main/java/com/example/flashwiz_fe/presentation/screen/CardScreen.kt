@@ -54,7 +54,7 @@ fun CardScreen() {
                     modifier = Modifier.padding(16.dp)
                 )
                 // Hiển thị AddItemComponent
-                AddItemComponent(expanded = expanded)
+//                AddItemComponent(expanded = expanded)
             }
 
             TextEntryModule(

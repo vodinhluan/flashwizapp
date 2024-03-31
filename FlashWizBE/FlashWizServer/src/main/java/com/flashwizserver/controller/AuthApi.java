@@ -10,14 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-<<<<<<< HEAD:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/controller/AuthApi.java
 import com.flashwizserver.model.AuthRequest;
 import com.flashwizserver.model.AuthResponse;
 import com.flashwizserver.model.User;
-=======
 import com.flashwizserver.security.JWTTokenUtil;
->>>>>>> eb1cd946a2b726b6ac86bdfa71e1c6d73487fea3:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/model/AuthApi.java
+
 
 import jakarta.validation.Valid;
 

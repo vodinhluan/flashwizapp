@@ -119,13 +119,9 @@ fun TextEntryModulePreview() {
         description = "Email address",
         modifier = Modifier
             .fillMaxWidth()
-<<<<<<< Updated upstream
             .padding(10.dp, 0.dp, 10.dp, 5.dp),
-        hint = "KApps@gmail.com",
-=======
-            .padding(10.dp,0.dp,10.dp,5.dp),
+
         hint = "Your@gmail.com",
->>>>>>> Stashed changes
         leadingIcon = Icons.Default.Email,
         textValue = "TextInput",
         textColor = Color.Black,
