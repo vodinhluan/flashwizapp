@@ -5,10 +5,11 @@ import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.Email;
 
 public class AuthRequest {
-	@Email @Length(min = 5, max = 50)
+	@Email 
+	@Length(min = 5, max = 50)
 	private String email;
 	
-	@Length(min = 5, max = 10)
+	@Length(min = 5, max = 20)
 	private String password;
 	
 	public String getEmail() {
