@@ -21,7 +21,7 @@ public class FolderDAO {
 	
 	public Folder saveFolder(Folder folder) {
 		 if (folder.getDescriptions() == null) {
-			    folder.setDescriptions(""); // Set an empty string if descriptions is null
+			    folder.setDescriptions(""); 
 			  }
 		return folderRepo.save(folder);
 	}
@@ -31,9 +31,10 @@ public class FolderDAO {
 	}
 
 	public Folder findById(Integer folderId) {
-	    // Sử dụng phương thức findById của FolderRepository để truy vấn folder
 	    return folderRepo.findById(folderId).orElse(null);
 	  }
+
+
 
 }
 

@@ -8,10 +8,10 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("folder/get-all")
-    suspend fun getAllFolders(): List<Folder> // Folder là class đại diện cho một folder
+    suspend fun getAllFolders(): List<Folder>
     @POST("/folder/save")
     suspend fun saveFolder(
-        @Body folder: Folder, // Đối tượng Folder cần lưu
-        @Query("userId") userId: Int // userId của người dùng hiện tại
+        @Body folder: Folder,
+        @Query("userId") userId: Int
     ): Folder
 }

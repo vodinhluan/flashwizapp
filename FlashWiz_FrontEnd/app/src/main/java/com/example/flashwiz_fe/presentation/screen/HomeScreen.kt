@@ -34,13 +34,11 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController, apiService: ApiService) {
     var folders by remember { mutableStateOf<List<Folder>>(emptyList()) }
 
-    // Biến trạng thái để xác định xem detail screen có được hiển thị hay không
     var folderDetailShown by remember { mutableStateOf(false) }
-    // Dữ liệu của folder được chọn
+
     var selectedFolderName by remember { mutableStateOf("") }
     var selectedFolderCreateDate by remember { mutableStateOf("") }
 
-    // Biến trạng thái để kiểm soát hiển thị của thanh search và nút điều hướng
     var showSearchBarAndNavButton by remember { mutableStateOf(true) }
 
     Surface(
@@ -58,7 +56,6 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 if (!folderDetailShown) {
-                    // Hiển thị nội dung của màn hình Home
                     Text(
                         text = "HOME",
                         style = TextStyle(
@@ -69,7 +66,6 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                         textAlign = TextAlign.Left,
                         modifier = Modifier.padding(16.dp)
                     )
-                    // Hiển thị com.example.flashwiz_fe.presentation.components.AddItemComponent
                     AddItemComponent(navController = navController)
                 } else {
                     Row(
@@ -77,16 +73,14 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                             .background(Color.Cyan),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Nút điều hướng quay về trang Home
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
                             tint = Color.Black,
                             modifier = Modifier
                                 .clickable {
-                                    // Xử lý sự kiện khi nhấp vào nút quay về
-                                    folderDetailShown = false // Ẩn detail screen
-                                    showSearchBarAndNavButton = true // Hiển thị lại thanh search và nút điều hướng
+                                    folderDetailShown = false
+                                    showSearchBarAndNavButton = true
                                 }
                                 .padding(16.dp)
                         )
@@ -105,7 +99,6 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                 }
             }
 
-            // Hiển thị hoặc ẩn thanh search và nút điều hướng
             if (showSearchBarAndNavButton) {
                 // Search
                 SearchBar(
@@ -138,25 +131,23 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                         folderName = folder.name,
                         createdDate = folder.descriptions,
                         onItemClick = {
-                            // Khi người dùng nhấp vào một mục folder
                             selectedFolderName = folder.name
                             selectedFolderCreateDate = folder.descriptions
-                            folderDetailShown = true // Hiển thị detail screen
-                            showSearchBarAndNavButton = false // Ẩn thanh search và nút điều hướng
+                            folderDetailShown = true
+                            showSearchBarAndNavButton = false
                         }
                     )
-                    Spacer(modifier = Modifier.height(8.dp)) // Khoảng trống giữa các mục
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 
-            Spacer(modifier = Modifier.height(100.dp)) // Khoảng trống cho BottomNavigationBar
+            Spacer(modifier = Modifier.height(100.dp))
 
-            // Hiển thị detail screen nếu được chọn
+
             if (folderDetailShown) {
                 FolderDetailScreen(selectedFolderName, selectedFolderCreateDate) {
-                    // Khi người dùng nhấn nút điều hướng quay về trang Home
-                    showSearchBarAndNavButton = true // Hiển thị lại thanh search và nút điều hướng
-                    folderDetailShown = false // Ẩn detail screen
+                    showSearchBarAndNavButton = true
+                    folderDetailShown = false
                 }
             }
         }

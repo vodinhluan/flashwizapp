@@ -21,17 +21,17 @@ fun AddFolderDialogComponent() {
     var folderDescription by remember { mutableStateOf("") }
 
     AlertDialog(
-        onDismissRequest = { /* Xử lý khi Dialog bị hủy bỏ */ },
+        onDismissRequest = {  },
         title = { Text(text = "Add Folder") },
         buttons = {
             Row(
                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = { /* Xử lý khi nhấn nút hủy bỏ */ }) {
+                TextButton(onClick = {  }) {
                     Text(text = "Cancel")
                 }
-                TextButton(onClick = { /* Xử lý khi nhấn nút xác nhận */ }) {
+                TextButton(onClick = {  }) {
                     Text(text = "Add")
                 }
             }

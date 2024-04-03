@@ -24,10 +24,10 @@ public class Folder {
 	private User user;
     @JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "folder_flashcard",
-	           joinColumns = @JoinColumn(name = "folder_id"),
-	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
-	private Set<Flashcard> flashcards = new HashSet<>();
+//	@JoinTable(name = "folder_flashcard",
+//	           joinColumns = @JoinColumn(name = "folder_id"),
+//	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
+//	private Set<Flashcard> flashcards = new HashSet<>();
 	public Integer getId() {
 		return id;
 	}
@@ -35,12 +35,23 @@ public class Folder {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
+    private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
 
-	public Set<Flashcard> getFlashcard() {
+
+//	public Set<Flashcard> getFlashcard() {
+//		return flashcards;
+//	}
+//
+//	public void setFlashcard(Set<Flashcard> flashcards) {
+//		this.flashcards = flashcards;
+//	}
+
+	public List<Flashcard> getFlashcards() {
 		return flashcards;
 	}
 
-	public void setFlashcard(Set<Flashcard> flashcards) {
+	public void setFlashcards(List<Flashcard> flashcards) {
 		this.flashcards = flashcards;
 	}
 

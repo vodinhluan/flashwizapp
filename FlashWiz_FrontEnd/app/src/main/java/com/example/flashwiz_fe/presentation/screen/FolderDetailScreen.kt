@@ -43,9 +43,7 @@ fun FolderDetailScreen(folderName: String, createdDate: String, onNavigateUp: ()
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Hiển thị thông tin về thư mục
         Text(text = "Folder Name: $folderName")
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Created Date: $createdDate")
-        // Thêm thông tin khác về thư mục ở đây
     }}

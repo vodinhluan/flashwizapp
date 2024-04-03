@@ -42,7 +42,6 @@ fun CardScreen() {
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Hiển thị nội dung của màn hình Home
                 Text(
                     text = "CARD INFO",
                     style = TextStyle(
@@ -53,7 +52,6 @@ fun CardScreen() {
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-                // Hiển thị AddItemComponent
 //                AddItemComponent(expanded = expanded)
             }
 
