@@ -23,9 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.model.Folder
 import com.example.flashwiz_fe.data.network.ApiService
-import com.example.flashwiz_fe.presentation.components.AddItemComponent
-import com.example.flashwiz_fe.presentation.components.BackIconComponent
-import com.example.flashwiz_fe.presentation.components.SearchBar
+import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
+import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

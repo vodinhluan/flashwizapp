@@ -1,10 +1,11 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.home
 
 
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.example.flashwiz_fe.presentation.components.BottomNavigationIcon
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
 @Composable

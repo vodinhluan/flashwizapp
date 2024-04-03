@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCard
 import androidx.compose.material3.MaterialTheme
@@ -18,10 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.flashwiz_fe.presentation.components.AddItemComponent
-import com.example.flashwiz_fe.presentation.components.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.orange
-import com.example.flashwiz_fe.ui.theme.redOrange
+import com.example.flashwiz_fe.presentation.components.TextAreaComponent
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 
 @Composable
 fun CardScreen() {
@@ -42,7 +41,6 @@ fun CardScreen() {
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Hiển thị nội dung của màn hình Home
                 Text(
                     text = "CARD INFO",
                     style = TextStyle(
@@ -57,18 +55,47 @@ fun CardScreen() {
 //                AddItemComponent(expanded = expanded)
             }
 
-            TextEntryModule(
-                description = "Front Card",
-                hint = "Type something",
-                leadingIcon = Icons.Default.AddCard,
-                textValue = "",
-                textColor = Color.Black,
-                cursorColor = redOrange,
-                onValueChanged = {},
-                onTrailingIconClick = { /*TODO*/ })
+            // FRONT CARD
+            Text(
+                text = "FRONT CARD",
+                style = TextStyle(
+                    color = Color.Black,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
+            )
+
+            TextAreaComponent()
+
+            // BACK CARD
+            Text(
+                text = "BACK CARD",
+                style = TextStyle(
+                    color = Color.Black,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(5.dp)
+            )
+
+            TextAreaComponent()
+            CustomButtonComponent(
+                text = "Save This Card",
+                onClick = {},
+                modifier = Modifier.wrapContentSize(),
+                backgroundColor = Color.LightGray,
+                contentColor = Color.Blue,
+                borderColor = Color.Black
+
+            )
+
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

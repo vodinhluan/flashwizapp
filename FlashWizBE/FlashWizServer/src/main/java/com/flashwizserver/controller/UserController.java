@@ -33,30 +33,6 @@ public class UserController {
 		userDAO.saveUser(user);
 	}
 
-
-	 
-//	 @PostMapping("/user/login")
-//	    public ResponseEntity authenticateUser(@RequestBody User user){
-//
-//	        // Get User Email:
-//	        List<String> userEmail = userDAO.checkUserEmail(user.getEmail());
-//
-//	        // Check If Email Is Empty:
-//	        if(userEmail.isEmpty() || userEmail == null){
-//	            return new ResponseEntity("Email does not exist", HttpStatus.NOT_FOUND);
-//	        }
-//	        // End Of Check If Email Is Empty.
-//
-//	        // Get Hashed User Password:
-//	        String hashed_password = userDAO.checkUserPasswordByEmail(user.getEmail());
-//
-//	        // Validate User Password:
-//	        if(!BCrypt.checkpw(user.getPassword(), hashed_password)){
-//	            return new ResponseEntity("Incorrect username or password", HttpStatus.BAD_REQUEST);
-//	        }
-//
-//	        return new ResponseEntity(user, HttpStatus.OK);
-//	    }
 	
 	 @PostMapping("/user/register")
 	    public ResponseEntity registerNewUser(@RequestParam("name") String name,

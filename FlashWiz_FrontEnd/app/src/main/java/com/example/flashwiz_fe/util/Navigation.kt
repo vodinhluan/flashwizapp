@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.flashwiz_fe.presentation.screen.CardScreen
 import com.example.flashwiz_fe.presentation.screen.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
@@ -60,6 +61,10 @@ fun Navigation() {
                 }
             )
         }
+
+        composable(ScreenRoutes.AddCardScreen.route) {
+            CardScreen()
+        }
     }
 }
 
@@ -69,4 +74,6 @@ sealed class ScreenRoutes(val route: String) {
     object MainScreen : ScreenRoutes("main_screen")
     object HomeScreen : ScreenRoutes("home_screen")
     object AddFolderScreen : ScreenRoutes("add_folder_screen")
+
+    object AddCardScreen : ScreenRoutes("add_card_screen")
 }

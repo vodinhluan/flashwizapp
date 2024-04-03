@@ -1,4 +1,4 @@
-package com.flashwizserver.controller;
+package com.flashwizserver.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,11 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.flashwizserver.model.AuthRequest;
-import com.flashwizserver.model.AuthResponse;
-import com.flashwizserver.model.User;
-import com.flashwizserver.security.JWTTokenUtil;
 
+import com.flashwizserver.security.JWTTokenUtil;
 
 import jakarta.validation.Valid;
 
@@ -34,7 +31,6 @@ public class AuthApi {
 					);
 			
 			User user = (User) authentication.getPrincipal();
-//			User user = new User();
 			
 			String accessToken = jwtTokenUtil.generateAccessToken(user);
 			AuthResponse response = new AuthResponse(user.getEmail(), accessToken);
@@ -48,4 +44,3 @@ public class AuthApi {
 	
 	
 }
-

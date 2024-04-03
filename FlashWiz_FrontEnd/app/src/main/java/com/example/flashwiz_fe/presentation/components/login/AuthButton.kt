@@ -1,10 +1,9 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.login
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.ContentAlpha.disabled
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -12,8 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.ui.theme.blue
-import com.example.flashwiz_fe.ui.theme.brightBlue
-import com.example.flashwiz_fe.ui.theme.orange
 import com.example.flashwiz_fe.ui.theme.white
 import androidx.compose.material.MaterialTheme
 

@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.presentation.components.MenuItem
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
@@ -45,6 +45,10 @@ fun AddItemComponent(navController: NavController) {
                 // Danh sách các mục menu
                 MenuItem(text = "Add Folder") {
                     navController.navigate(ScreenRoutes.AddFolderScreen.route)
+                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
+                }
+                MenuItem(text = "Add Card") {
+                    navController.navigate(ScreenRoutes.AddCardScreen.route)
                     expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
                 }
                 // Các mục menu khác có thể được thêm ở đây

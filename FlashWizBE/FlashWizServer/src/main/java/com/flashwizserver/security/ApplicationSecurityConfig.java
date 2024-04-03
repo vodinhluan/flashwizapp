@@ -24,9 +24,14 @@ public class ApplicationSecurityConfig {
 	@Autowired
 	private UserRepository userRepo;
 
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
+//	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public BCryptPasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
