@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.model.Folder
-import com.example.flashwiz_fe.data.network.ApiService
+import com.example.flashwiz_fe.data.remote.ApiService
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import kotlinx.coroutines.Dispatchers

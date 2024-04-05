@@ -23,13 +23,17 @@ public class Flashcard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	
 	@Column(length = 128, nullable = false)
 	private String name;
+	
 	@Column(length = 128, nullable = false)
 	private String descriptions;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "flashcards")
 	private List<Folder> folders;

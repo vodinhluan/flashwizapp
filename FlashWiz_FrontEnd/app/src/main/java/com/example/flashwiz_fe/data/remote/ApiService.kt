@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.data.network
+package com.example.flashwiz_fe.data.remote
 
 import com.example.flashwiz_fe.data.model.Folder
 import retrofit2.http.Body

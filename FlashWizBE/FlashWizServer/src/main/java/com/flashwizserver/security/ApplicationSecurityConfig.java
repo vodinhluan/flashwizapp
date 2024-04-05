@@ -23,12 +23,7 @@ import com.flashwizserver.repository.UserRepository;
 public class ApplicationSecurityConfig {
 	@Autowired
 	private UserRepository userRepo;
-
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//	
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
@@ -63,7 +58,6 @@ public class ApplicationSecurityConfig {
 		return http.build();
 	}
 	
-// 					.requestMatchers("/auth/login").permitAll()
 
 
 
