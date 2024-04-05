@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 
@@ -82,15 +83,24 @@ fun CardScreen() {
             )
 
             TextAreaComponent()
-            CustomButtonComponent(
-                text = "Save This Card",
-                onClick = {},
-                modifier = Modifier.wrapContentSize(),
-                backgroundColor = Color.LightGray,
-                contentColor = Color.Blue,
-                borderColor = Color.Black
 
-            )
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                // SAVE BUTTON
+                CustomButtonComponent(
+                    text = "Save This Card",
+                    onClick = {},
+                    modifier = Modifier.wrapContentSize(),
+                    backgroundColor = Color.LightGray,
+                    contentColor = Color.Blue,
+                    borderColor = Color.Black
+                )
+
+            }
+
+
 
         }
     }
