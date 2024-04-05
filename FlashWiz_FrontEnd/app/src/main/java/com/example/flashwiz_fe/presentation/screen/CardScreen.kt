@@ -51,7 +51,6 @@ fun CardScreen() {
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-                // Hiển thị AddItemComponent
 //                AddItemComponent(expanded = expanded)
             }
 

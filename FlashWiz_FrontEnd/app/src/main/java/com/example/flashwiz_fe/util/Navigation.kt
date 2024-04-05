@@ -76,4 +76,5 @@ sealed class ScreenRoutes(val route: String) {
     object AddFolderScreen : ScreenRoutes("add_folder_screen")
 
     object AddCardScreen : ScreenRoutes("add_card_screen")
+    object AddFlashcardScreen : ScreenRoutes("add_flashcard_screen")
 }

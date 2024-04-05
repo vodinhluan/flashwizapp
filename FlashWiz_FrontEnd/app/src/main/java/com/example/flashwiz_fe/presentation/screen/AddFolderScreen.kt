@@ -30,7 +30,6 @@ fun AddFolderScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Icon để điều hướng quay lại
 
 
         Text(
@@ -63,16 +62,13 @@ fun AddFolderScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BackIconComponent(onNavigateBack)
-            // Nút "Add Folder"
             Button(
                 onClick = {
                     viewModel.addFolder(folderName, folderDescription) { isSuccess ->
                         if (isSuccess) {
-                            // Quay về trang HomeScreen khi thêm folder thành công
                             onNavigateBack()
                         } else {
-                            // Xử lý khi thêm folder không thành công
-                            // Ví dụ: hiển thị thông báo lỗi cho người dùng
+
                         }
                     }
                 }

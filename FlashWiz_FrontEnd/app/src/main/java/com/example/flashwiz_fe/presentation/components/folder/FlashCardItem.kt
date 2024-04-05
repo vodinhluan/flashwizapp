@@ -12,19 +12,19 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FlashcardItem(
+fun FlashCardItem(
     flashcardName: String,
-    createdDate: String,
-//    onItemClick: () -> Unit
+    flashcardDescriptions: String,
+    onItemClick: () -> Unit // Thêm onItemClick trở lại
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-//            .clickable(onClick = onItemClick),
-//        border = BorderStroke(1.dp, Color.LightGray),
-//        backgroundColor = MaterialTheme.colors.surface,
-//        elevation = 4.dp,
+            .clickable(onClick = onItemClick), // Thêm phản hồi khi click
+        border = BorderStroke(1.dp, Color.LightGray),
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 4.dp,
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -35,9 +35,8 @@ fun FlashcardItem(
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Created Date: $createdDate",
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.padding(bottom = 4.dp)
+                text = "Description: $flashcardDescriptions",
+                style = MaterialTheme.typography.body2
             )
         }
     }
