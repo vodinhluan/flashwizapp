@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemComponent(navController: NavController) {
+fun AddItemComponent(navController: NavController, itemType: String) {
     var expanded by remember { mutableStateOf(false) }
 
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
@@ -38,9 +38,12 @@ fun AddItemComponent(navController: NavController) {
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.align(Alignment.End)
             ) {
-                MenuItem(text = "Add Folder") {
-                    navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                    expanded = false
+                MenuItem(text = "Add $itemType") {
+                    when (itemType) {
+                        "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
+                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route)
+                    }
+                    expanded = false // Đóng menu dropdown sau khi thực hiện hành động
                 }
             }
         }

@@ -1,6 +1,7 @@
 package  com.example.flashwiz_fe.data.model
 
 data class Folder(
+//    val folderId: Int,
     val name: String,
     val descriptions: String,
     val userId: Int,

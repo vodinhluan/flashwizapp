@@ -2,6 +2,7 @@ package com.flashwizserver.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,9 @@ import com.flashwizserver.repository.FolderRepository;
 public class FolderDAO {
 	@Autowired
 	private FolderRepository folderRepo;
-	public List<Folder> listFolder() {
-		return (List<Folder>) folderRepo.findAll();
-	}
+	public List<Folder> getAllFolder() {
+        return (List<Folder>) folderRepo.findAll();
+    }
 	
 	public Folder saveFolder(Folder folder) {
 		 if (folder.getDescriptions() == null) {
@@ -33,6 +34,12 @@ public class FolderDAO {
 	public Folder findById(Integer folderId) {
 	    return folderRepo.findById(folderId).orElse(null);
 	  }
+
+	    public Folder getFolderById(Integer folderId) {
+	        // Triển khai logic lấy folder từ cơ sở dữ liệu dựa trên folderId
+	        Optional<Folder> optionalFolder = folderRepo.findById(folderId);
+	        return optionalFolder.orElse(null);
+	    }
 
 
 

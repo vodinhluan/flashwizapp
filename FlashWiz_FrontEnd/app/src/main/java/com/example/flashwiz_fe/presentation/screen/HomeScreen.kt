@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.presentation.screen
 
-import FolderItem
+import android.util.Log
+import com.example.flashwiz_fe.presentation.components.FolderItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,25 +22,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.model.Flashcard
 import com.example.flashwiz_fe.data.model.Folder
+import com.example.flashwiz_fe.data.model.FolderDetail
 import com.example.flashwiz_fe.data.network.ApiService
+import com.example.flashwiz_fe.data.network.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.AddItemComponent
-import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.components.SearchBar
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun HomeScreen(navController: NavController, apiService: ApiService) {
-    var folders by remember { mutableStateOf<List<Folder>>(emptyList()) }
-
-    var folderDetailShown by remember { mutableStateOf(false) }
-
-    var selectedFolderName by remember { mutableStateOf("") }
-    var selectedFolderCreateDate by remember { mutableStateOf("") }
-
-    var showSearchBarAndNavButton by remember { mutableStateOf(true) }
+    var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
+    var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
+    var flashcards by remember { mutableStateOf<List<Flashcard>>(emptyList()) } // Thêm trạng thái mới để lưu danh sách flashcard
+    var isDataLoaded by remember { mutableStateOf(false) } // Biến trạng thái để kiểm tra dữ liệu đã được tải xuống hay chưa
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +56,7 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                if (!folderDetailShown) {
+                if (selectedFolder == null) {
                     Text(
                         text = "HOME",
                         style = TextStyle(
@@ -66,7 +67,7 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                         textAlign = TextAlign.Left,
                         modifier = Modifier.padding(16.dp)
                     )
-                    AddItemComponent(navController = navController)
+                    AddItemComponent(navController = navController,"Folder")
                 } else {
                     Row(
                         modifier = Modifier.fillMaxWidth()
@@ -79,13 +80,12 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                             tint = Color.Black,
                             modifier = Modifier
                                 .clickable {
-                                    folderDetailShown = false
-                                    showSearchBarAndNavButton = true
+                                    selectedFolder = null
                                 }
                                 .padding(16.dp)
                         )
                         Text(
-                            text = "Folder Detail",
+                            text = "Flashcard",
                             style = TextStyle(
                                 color = Color.Black,
                                 fontSize = 24.sp,
@@ -94,66 +94,64 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController)
+                        AddItemComponent(navController = navController,"Flashcard")
                     }
                 }
             }
 
-            if (showSearchBarAndNavButton) {
-                // Search
-                SearchBar(
-                    description = "Search",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 0.dp, 10.dp, 5.dp),
-                    hint = "Search",
-                    textValue = "Search...",
-                    textColor = Color.Black,
-                    cursorColor = Color.LightGray,
-                    onValueChanged = {},
-                    trailingIcon = Icons.Filled.RemoveRedEye,
-                    onTrailingIconClick = {}
-                )
-            }
+            // Search
+            SearchBar(
+                description = "Search",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 0.dp, 10.dp, 5.dp),
+                hint = "Search",
+                textValue = "Search...",
+                textColor = Color.Black,
+                cursorColor = Color.LightGray,
+                onValueChanged = {},
+                trailingIcon = Icons.Filled.RemoveRedEye,
+                onTrailingIconClick = {}
+            )
 
             LaunchedEffect(Unit) {
-                GlobalScope.launch(Dispatchers.IO) {
-                    folders = apiService.getAllFolders()
-                }
+                folders = apiService.getAllFolders()
+                isDataLoaded = true // Đặt biến trạng thái là true khi dữ liệu đã được tải xuống
             }
 
             // Thanh scrollbar
-            LazyColumn(
-                modifier = Modifier.weight(1f)
-            ) {
-                items(folders) { folder ->
-                    FolderItem(
-                        folderName = folder.name,
-                        createdDate = folder.descriptions,
-                        onItemClick = {
-                            selectedFolderName = folder.name
-                            selectedFolderCreateDate = folder.descriptions
-                            folderDetailShown = true
-                            showSearchBarAndNavButton = false
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+            if (isDataLoaded) { // Chỉ hiển thị khi dữ liệu đã được tải xuống
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    items(folders) { folder ->
+                        FolderItem(
+                            folder = folder,
+                            onItemClick = { selectedFolderId ->
+                                selectedFolderId.let { folderId ->
+                                    selectedFolder = folders.find { it.id == folderId }
+                                    Log.d("FolderItemClicked", "Clicked on folder with ID: $folderId")
+                                }
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(16.dp)) // Thêm Spacer ở đây
 
-
-            if (folderDetailShown) {
-                FolderDetailScreen(selectedFolderName, selectedFolderCreateDate) {
-                    showSearchBarAndNavButton = true
-                    folderDetailShown = false
-                }
+            selectedFolder?.let { folder ->
+                FolderDetailScreen(
+                    folderId = folder.id, // Truyền folderId
+                    folderName = folder.name,
+                    description = folder.descriptions,
+                    onNavigateUp = {
+                        selectedFolder = null // Đặt selectedFolder về null khi quay lại
+                    }
+                )
             }
         }
     }
 }
-
-
-
 

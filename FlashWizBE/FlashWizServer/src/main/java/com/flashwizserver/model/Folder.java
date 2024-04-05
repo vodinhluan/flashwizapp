@@ -22,8 +22,8 @@ public class Folder {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-    @JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
+//    @JsonIgnore
+//	@ManyToMany(fetch = FetchType.LAZY)
 //	@JoinTable(name = "folder_flashcard",
 //	           joinColumns = @JoinColumn(name = "folder_id"),
 //	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
