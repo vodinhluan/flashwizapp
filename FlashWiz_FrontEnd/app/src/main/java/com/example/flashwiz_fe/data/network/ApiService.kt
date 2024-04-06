@@ -20,5 +20,10 @@ interface ApiService {
     ): Folder
     @GET("flashcard/get-by-folder/{folderId}")
     suspend fun getFlashcardsByFolderId(@Path("folderId") folderId: Int): List<Flashcard>
-
+    @POST("/flashcard/save")
+    suspend fun saveFlashcard(
+        @Body flashcard: Flashcard,
+        @Query("userId") userId: Int,
+        @Query("folderId") folderId: Int
+    ): Flashcard
 }

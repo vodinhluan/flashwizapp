@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.flashwiz_fe.presentation.screen.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.screen.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
@@ -60,8 +61,21 @@ fun Navigation() {
                 }
             )
         }
+
+        composable(ScreenRoutes.AddFlashcardScreen.route) {
+            AddFlashcardScreen(
+//                onAddFolder = { folderName, folderDescription ->
+//                    // Xử lý khi người dùng thêm thư mục ở đây
+//                },
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
+
+
 
 sealed class ScreenRoutes(val route: String) {
     object LoginScreen : ScreenRoutes("login_screen")

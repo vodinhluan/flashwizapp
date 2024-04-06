@@ -39,8 +39,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController, apiService: ApiService) {
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
-    var flashcards by remember { mutableStateOf<List<Flashcard>>(emptyList()) } // Thêm trạng thái mới để lưu danh sách flashcard
-    var isDataLoaded by remember { mutableStateOf(false) } // Biến trạng thái để kiểm tra dữ liệu đã được tải xuống hay chưa
+    var isDataLoaded by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
