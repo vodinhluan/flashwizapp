@@ -1,24 +1,21 @@
 package com.flashwizserver.model;
 
-<<<<<<< HEAD
+
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class AuthRequest {
-	private String email;
-	private String password;
-=======
-import org.hibernate.validator.constraints.Length;
-
 import jakarta.validation.constraints.Email;
 
+
+
 public class AuthRequest {
-	@Email @Length(min = 5, max = 50)
+	@Email 
+	@Length(min = 5, max = 50)
 	private String email;
 	
-	@Length(min = 5, max = 10)
+	@Length(min = 5, max = 20)
 	private String password;
 	
 	public String getEmail() {
@@ -27,7 +24,7 @@ public class AuthRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
->>>>>>> origin/dev
+
 	public String getPassword() {
 		return password;
 	}
@@ -35,8 +32,5 @@ public class AuthRequest {
 		this.password = password;
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/dev
+
 }

@@ -10,7 +10,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.RemoveRedEye
-import androidx.compose.material3.*
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,16 +20,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.model.Folder
 import com.example.flashwiz_fe.data.network.ApiService
-import com.example.flashwiz_fe.data.network.RetrofitInstance.apiService
-import com.example.flashwiz_fe.presentation.components.AddItemComponent
-import com.example.flashwiz_fe.presentation.components.SearchBar
+import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
+import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 @Composable
-fun HomeScreen(apiService: ApiService) {
+fun HomeScreen(navController: NavController, apiService: ApiService) {
     var folders by remember { mutableStateOf<List<Folder>>(emptyList()) }
 
     // Biến trạng thái để xác định xem detail screen có được hiển thị hay không
@@ -42,7 +44,7 @@ fun HomeScreen(apiService: ApiService) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
 
@@ -67,7 +69,7 @@ fun HomeScreen(apiService: ApiService) {
                         modifier = Modifier.padding(16.dp)
                     )
                     // Hiển thị com.example.flashwiz_fe.presentation.components.AddItemComponent
-                    AddItemComponent(expanded = expanded)
+                    AddItemComponent(navController = navController)
                 } else {
                     Row(
                         modifier = Modifier.fillMaxWidth()
@@ -97,7 +99,7 @@ fun HomeScreen(apiService: ApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(expanded = expanded)
+                        AddItemComponent(navController = navController)
                     }
                 }
             }
@@ -159,3 +161,7 @@ fun HomeScreen(apiService: ApiService) {
         }
     }
 }
+
+
+
+

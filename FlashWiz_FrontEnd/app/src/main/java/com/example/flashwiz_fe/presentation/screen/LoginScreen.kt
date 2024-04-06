@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,6 +22,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.components.*
+import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
+import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
 import com.example.flashwiz_fe.presentation.viewmodel.LoginViewModel
 import com.example.flashwiz_fe.ui.theme.*
 

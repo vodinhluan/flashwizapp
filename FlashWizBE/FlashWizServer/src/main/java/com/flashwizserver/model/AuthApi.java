@@ -19,22 +19,23 @@ import jakarta.validation.Valid;
 public class AuthApi {
 	@Autowired 
 	AuthenticationManager authManager;
-	
+
 	@Autowired
 	JWTTokenUtil jwtTokenUtil;
-	
+
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
 		try {
 			Authentication authentication = authManager.authenticate(
 					new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
 					);
-			
+
 			User user = (User) authentication.getPrincipal();
+
 			
 			String accessToken = jwtTokenUtil.generateAccessToken(user);
 			AuthResponse response = new AuthResponse(user.getEmail(), accessToken);
-			
+
 			return ResponseEntity.ok(response);
 			
 		} catch(BadCredentialsException ex) {

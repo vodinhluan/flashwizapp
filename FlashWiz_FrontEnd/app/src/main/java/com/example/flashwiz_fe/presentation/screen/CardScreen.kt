@@ -18,9 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.flashwiz_fe.presentation.components.AddItemComponent
-import com.example.flashwiz_fe.presentation.components.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.orange
+import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
 import com.example.flashwiz_fe.ui.theme.redOrange
 
 @Composable
@@ -54,7 +52,7 @@ fun CardScreen() {
                     modifier = Modifier.padding(16.dp)
                 )
                 // Hiển thị AddItemComponent
-                AddItemComponent(expanded = expanded)
+//                AddItemComponent(expanded = expanded)
             }
 
             TextEntryModule(

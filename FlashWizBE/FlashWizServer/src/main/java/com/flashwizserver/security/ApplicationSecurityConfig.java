@@ -25,35 +25,10 @@ public class ApplicationSecurityConfig {
 	private UserRepository userRepo;
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-<<<<<<< HEAD
-//	
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(username -> userRepo.findByEmail(username)
-//				.orElseThrow(() -> new UsernameNotFoundException("User" + username + "khong tim thay"))
-//			);
-//	}
-//	
-	
-	@Bean
-	public AuthenticationManager authenticationManager(
-	        AuthenticationConfiguration authConfig) throws Exception {
-	    return authConfig.getAuthenticationManager();
-	}
-	
-
-	 @Bean
-	    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	        http.csrf().disable()
-	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	                .and() // Chain multiple security configurations
-	                .authorizeRequests().anyRequest().permitAll();
-	        return http.build();
-	 }
-=======
 	@Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -87,5 +62,5 @@ public class ApplicationSecurityConfig {
 
 
 
->>>>>>> origin/dev
+
 }

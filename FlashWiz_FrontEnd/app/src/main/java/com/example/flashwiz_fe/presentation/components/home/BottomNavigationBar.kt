@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.home
 
 
 import androidx.compose.material3.NavigationBar

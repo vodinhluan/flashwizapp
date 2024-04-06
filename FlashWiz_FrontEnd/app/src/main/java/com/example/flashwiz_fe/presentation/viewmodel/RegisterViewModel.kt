@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val validateRegisterInputUseCase: ValidateRegisterInputUseCase,
@@ -21,6 +22,10 @@ class RegisterViewModel @Inject constructor(
 
     var registerState by mutableStateOf(RegisterState())
         private set
+    fun onNameInputChange(newValue: String){
+        registerState = registerState.copy(nameInput = newValue)
+        checkInputValidation()
+    }
 
     fun onEmailInputChange(newValue: String){
         registerState = registerState.copy(emailInput = newValue)
@@ -46,26 +51,54 @@ class RegisterViewModel @Inject constructor(
             isPasswordRepeatedShown = !registerState.isPasswordRepeatedShown
         )
     }
-
-    fun onRegisterClick(){
+//    Backup Register Code
+//    fun onRegisterClick(){
+//        registerState = registerState.copy(isLoading = true)
+//        viewModelScope.launch {
+//            registerState = try{
+//                val registerResult = authRepository.register(
+//                    name = registerState.nameInput,
+//                    email = registerState.emailInput,
+//                    password = registerState.passwordInput
+//                )
+//                registerState.copy(isSuccessfullyRegistered = registerResult)
+//            }catch(e: Exception){
+//                registerState.copy(errorMessageRegisterProcess = "Could not login")
+//            }finally {
+//                registerState = registerState.copy(isLoading = false)
+//            }
+//        }
+//    }
+    fun onRegisterClick() {
         registerState = registerState.copy(isLoading = true)
         viewModelScope.launch {
-            registerState = try{
-                val registerResult = authRepository.register(
+            try {
+                val result = authRepository.register(
+                    name = registerState.nameInput,
                     email = registerState.emailInput,
                     password = registerState.passwordInput
                 )
-                registerState.copy(isSuccessfullyRegistered = registerResult)
-            }catch(e: Exception){
-                registerState.copy(errorMessageRegisterProcess = "Could not login")
-            }finally {
-                registerState = registerState.copy(isLoading = false)
+                println("Giá trị result: $result")
+                registerState = registerState.copy(
+                    isSuccessfullyRegistered = result,
+                    isLoading = false
+                )
+                println("Giá trị isSuccessfullyRegistered: ${registerState.isSuccessfullyRegistered}")
+
+            } catch (e: Exception) {
+                registerState = registerState.copy(
+                    errorMessageRegisterProcess = "Không thể đăng ký",
+                    isLoading = false
+                )
             }
         }
     }
 
+
+
     private fun checkInputValidation(){
         val validationResult = validateRegisterInputUseCase(
+            registerState.nameInput,
             registerState.emailInput,
             registerState.passwordInput,
             registerState.passwordRepeatedInput
@@ -78,7 +111,7 @@ class RegisterViewModel @Inject constructor(
             RegisterInputValidationType.EmptyField -> {
                 registerState.copy(errorMessageInput = "Empty fields left", isInputValid = false)
             }
-            RegisterInputValidationType.NoEmail -> {
+            RegisterInputValidationType.NoValidEmail-> {
                 registerState.copy(errorMessageInput = "No valid email", isInputValid = false)
             }
             RegisterInputValidationType.PasswordTooShort -> {

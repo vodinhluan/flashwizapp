@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.login
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +10,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.flashwiz_fe.ui.theme.blue
-import com.example.flashwiz_fe.ui.theme.blueGray
 import com.example.flashwiz_fe.ui.theme.brightBlue
-import com.example.flashwiz_fe.ui.theme.orange
-import com.example.flashwiz_fe.ui.theme.purple
-import com.example.flashwiz_fe.ui.theme.whiteGrayOrange
 
 @Composable
 fun HeaderBackground(

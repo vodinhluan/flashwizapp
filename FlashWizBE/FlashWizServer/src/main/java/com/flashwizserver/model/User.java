@@ -106,46 +106,41 @@ public class User implements UserDetails  {
 
 	@Override
 	public String getUsername() {
-<<<<<<< HEAD
+
 		// TODO Auto-generated method stub
-=======
->>>>>>> origin/dev
+
 		return this.email;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-<<<<<<< HEAD
+
 		// TODO Auto-generated method stub
-=======
->>>>>>> origin/dev
+
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-<<<<<<< HEAD
+
 		// TODO Auto-generated method stub
-=======
->>>>>>> origin/dev
+
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-<<<<<<< HEAD
+
 		// TODO Auto-generated method stub
-=======
->>>>>>> origin/dev
+
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-<<<<<<< HEAD
+
 		// TODO Auto-generated method stub
-=======
->>>>>>> origin/dev
+
 		return true;
 	}
 

@@ -28,15 +28,12 @@ public class FolderController {
     }
 
     @PostMapping("/folder/save")
-    public Folder saveFolder(@RequestBody Folder folder, @RequestParam("userId") Integer userId) {
+    public ResponseEntity<Folder> saveFolder(@RequestBody Folder folder, @RequestParam("userId") Integer userId) {
         User user = new User();
         user.setId(userId);
-
         folder.setUser(user);
-
+        
         Folder savedFolder = folderDAO.saveFolder(folder);
-
-      return savedFolder;
-    }
-}
+        return ResponseEntity.ok(savedFolder);
+    }}
 
