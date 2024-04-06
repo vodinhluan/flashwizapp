@@ -15,19 +15,21 @@ public class Folder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	
 	@Column(length = 128, nullable = false)
 	private String name;
+	
 	@Column(length = 128, nullable = false)
 	private String descriptions;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-//    @JsonIgnore
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "folder_flashcard",
-//	           joinColumns = @JoinColumn(name = "folder_id"),
-//	           inverseJoinColumns = @JoinColumn(name = "flashcard_id"))
-//	private Set<Flashcard> flashcards = new HashSet<>();
+	
+	@OneToMany(mappedBy = "folder") 
+    private List<Flashcard> flashcards = new ArrayList<>(); 
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -35,17 +37,7 @@ public class Folder {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
-    private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
-
-
-//	public Set<Flashcard> getFlashcard() {
-//		return flashcards;
-//	}
-//
-//	public void setFlashcard(Set<Flashcard> flashcards) {
-//		this.flashcards = flashcards;
-//	}
+	
 
 	public List<Flashcard> getFlashcards() {
 		return flashcards;

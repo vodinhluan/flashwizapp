@@ -32,6 +32,10 @@ public class Card {
 //    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "flashcard_id") 
 //	private List<Flashcard> flashcards;
+	@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "flashcard_id") 
+    private Flashcard flashcard;
 
 	public Integer getId() {
 		return id;
@@ -64,4 +68,15 @@ public class Card {
 //	public void setFlashcards(List<Flashcard> flashcards) {
 //		this.flashcards = flashcards;
 //	}
+	public Flashcard getFlashcard() {
+		return flashcard;
+	}
+
+	public void setFlashcard(Flashcard flashcard) {
+		this.flashcard = flashcard;
+	}
+
+	
+	
+	
 }

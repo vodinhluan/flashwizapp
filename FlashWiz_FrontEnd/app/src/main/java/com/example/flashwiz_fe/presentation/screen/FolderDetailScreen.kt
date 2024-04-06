@@ -1,11 +1,13 @@
 package com.example.flashwiz_fe.presentation.screen
-import FlashCardItem
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+
+import FlashCardItem
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,23 +16,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.flashwiz_fe.data.model.Card
 import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.network.RetrofitInstance.apiService
-import com.example.flashwiz_fe.presentation.components.FolderItem
-import com.example.flashwiz_fe.presentation.components.SearchBar
+import com.example.flashwiz_fe.data.model.FlashcardDetail
+import com.example.flashwiz_fe.data.model.FolderDetail
+import com.example.flashwiz_fe.data.remote.RetrofitInstance.apiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
 @Composable
-fun FolderDetailScreen(folderId: Int, folderName: String, description: String, onNavigateUp: () -> Unit) {
+fun FolderDetailScreen(
+    folderId: Int,
+    folderName: String,
+    description: String,
+    onNavigateUp: () -> Unit
+
+) {
     // Tạo một list mutable state để lưu danh sách flashcard
-    var flashcards by remember { mutableStateOf<List<Flashcard>>(emptyList()) }
+    var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
+    var isDataLoaded by remember { mutableStateOf(false) }
+    var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
+    var isMenuCardDisplayed by remember { mutableStateOf(false) }
+
+    var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
 
     // Sử dụng LaunchedEffect để gọi API và lấy danh sách flashcard khi FolderDetailScreen được hiển thị
     LaunchedEffect(Unit) {
@@ -58,11 +67,31 @@ fun FolderDetailScreen(folderId: Int, folderName: String, description: String, o
         LazyColumn {
             items(flashcards) { flashcard ->
                 FlashCardItem(
-                    flashcardName = flashcard.name,
-                    flashcardDescriptions = flashcard.descriptions,
-                    onItemClick = { /* Xử lý sự kiện khi người dùng nhấp vào mục */ }
+                    flashcard = flashcard,
+                    onItemClick = { selectedFlashcardId ->
+                        selectedFlashcardId.let { flashcardId ->
+                            selectedFlashcard = flashcards.find { it.id == flashcardId }
+                            isMenuCardDisplayed = true // Hiển thị menu card khi bấm vào flashcard
+                            Log.d("FlashcardItemClicked", "Clicked on folder with ID: $flashcardId")
+                        }
+                    }
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        selectedFlashcard?.let { flashcard ->
+            FlashcardDetailScreen(
+                flashcardId = flashcard.id,
+                flashcardName = flashcard.name,
+                description = flashcard.descriptions,
+                onNavigateUp = {
+                    selectedFlashcard = null // Đặt selectedFolder về null khi quay lại
+                }
+            )
+        }
     }
+
 }

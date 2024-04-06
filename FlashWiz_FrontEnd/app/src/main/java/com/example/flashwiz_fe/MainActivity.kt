@@ -17,6 +17,7 @@ import com.example.flashwiz_fe.ui.theme.FlashWizTheme
 import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.util.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.home
 
 
 import androidx.compose.foundation.border
@@ -24,8 +24,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.ui.theme.orange
-import com.example.flashwiz_fe.ui.theme.redOrange
-import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun SearchBar(

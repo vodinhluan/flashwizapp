@@ -1,6 +1,5 @@
 package com.flashwizserver.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,32 +15,30 @@ import com.flashwizserver.repository.FolderRepository;
 public class FolderDAO {
 	@Autowired
 	private FolderRepository folderRepo;
+
 	public List<Folder> getAllFolder() {
-        return (List<Folder>) folderRepo.findAll();
-    }
-	
+		return (List<Folder>) folderRepo.findAll();
+	}
+
 	public Folder saveFolder(Folder folder) {
-		 if (folder.getDescriptions() == null) {
-			    folder.setDescriptions(""); 
-			  }
+		if (folder.getDescriptions() == null) {
+			folder.setDescriptions("");
+		}
 		return folderRepo.save(folder);
 	}
-	
+
 	public void deleteFolder(Folder folder) {
 		folderRepo.delete(folder);
 	}
 
 	public Folder findById(Integer folderId) {
-	    return folderRepo.findById(folderId).orElse(null);
-	  }
+		return folderRepo.findById(folderId).orElse(null);
+	}
 
-	    public Folder getFolderById(Integer folderId) {
-	        // Triển khai logic lấy folder từ cơ sở dữ liệu dựa trên folderId
-	        Optional<Folder> optionalFolder = folderRepo.findById(folderId);
-	        return optionalFolder.orElse(null);
-	    }
-
-
+	public Folder getFolderById(Integer folderId) {
+		// Triển khai logic lấy folder từ cơ sở dữ liệu dựa trên folderId
+		Optional<Folder> optionalFolder = folderRepo.findById(folderId);
+		return optionalFolder.orElse(null);
+	}
 
 }
-

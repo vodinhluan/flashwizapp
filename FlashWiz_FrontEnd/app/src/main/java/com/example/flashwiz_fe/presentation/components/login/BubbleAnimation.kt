@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components
+package com.example.flashwiz_fe.presentation.components.login
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -16,8 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.ui.theme.blue
 import com.example.flashwiz_fe.ui.theme.brightBlue
-import com.example.flashwiz_fe.ui.theme.gray
-import com.example.flashwiz_fe.ui.theme.orange
 
 @Composable
 fun BubbleAnimation(

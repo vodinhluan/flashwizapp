@@ -20,7 +20,6 @@ fun AddFolderScreen(
     onNavigateBack: () -> Unit
 ) {
     val viewModel: AddFolderViewModel = viewModel()
-
     var folderName by remember { mutableStateOf("") }
     var folderDescription by remember { mutableStateOf("") }
 
