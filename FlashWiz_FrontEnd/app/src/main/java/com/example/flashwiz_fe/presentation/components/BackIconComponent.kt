@@ -17,7 +17,7 @@ fun BackIconComponent(onBackClick: () -> Unit) {
         contentDescription = "Back",
         tint = Color.Black,
         modifier = Modifier
-            .clickable { onBackClick() } // Xử lý sự kiện khi nhấp vào biểu tượng quay lại
+            .clickable { onBackClick() }
             .padding(16.dp)
     )
 }

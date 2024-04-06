@@ -2,6 +2,18 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="CardScreenPreview">
+        <State />
+      </entry>
+      <entry key="PreviewCustomButtonComponent">
+        <State />
+      </entry>
+      <entry key="PreviewTextAreaEditorComponent (1)">
+        <State />
+      </entry>
+      <entry key="RichTextEditorPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

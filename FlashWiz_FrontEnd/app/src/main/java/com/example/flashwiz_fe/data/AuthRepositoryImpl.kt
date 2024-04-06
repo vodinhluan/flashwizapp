@@ -4,7 +4,10 @@ import com.example.flashwiz_fe.data.model.RegisterResponse
 import com.example.flashwiz_fe.data.network.RetrofitInstance
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
+<<<<<<< HEAD
 import retrofit2.Response
+=======
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
 class AuthRepositoryImpl : AuthRepository {
     private val apiService = RetrofitInstance.apiService
     override suspend fun login(email: String, password: String): Boolean {

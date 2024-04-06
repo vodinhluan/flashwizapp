@@ -10,9 +10,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+<<<<<<< HEAD:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/model/AuthApi.java
 
 import com.flashwizserver.security.JWTTokenUtil;
 
+=======
+
+import com.flashwizserver.model.AuthRequest;
+import com.flashwizserver.model.AuthResponse;
+import com.flashwizserver.model.User;
+import com.flashwizserver.security.JWTTokenUtil;
+
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/controller/AuthApi.java
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,7 +40,10 @@ public class AuthApi {
 					);
 
 			User user = (User) authentication.getPrincipal();
+<<<<<<< HEAD:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/model/AuthApi.java
 
+=======
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/controller/AuthApi.java
 			
 			String accessToken = jwtTokenUtil.generateAccessToken(user);
 			AuthResponse response = new AuthResponse(user.getEmail(), accessToken);
@@ -44,4 +56,8 @@ public class AuthApi {
 	}
 	
 	
+<<<<<<< HEAD:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/model/AuthApi.java
 }
+=======
+}
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907:FlashWizBE/FlashWizServer/src/main/java/com/flashwizserver/controller/AuthApi.java

@@ -10,7 +10,7 @@ import com.flashwizserver.repository.FlashcardRepository;
 
 @Service
 public class FlashcardDAO {
-	 @Autowired
+	 	@Autowired
 	    private FlashcardRepository flashcardRepository;
 
 	    public List<Flashcard> getAllFlashcards() {

@@ -24,7 +24,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+<<<<<<< HEAD
 import com.example.flashwiz_fe.presentation.components.*
+=======
+import com.example.flashwiz_fe.presentation.components.login.AuthButton
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper

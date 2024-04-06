@@ -14,12 +14,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+<<<<<<< HEAD
 import com.example.flashwiz_fe.data.network.RetrofitInstance
+=======
+import com.example.flashwiz_fe.data.remote.RetrofitInstance
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
@@ -47,7 +52,7 @@ fun MainScreen(navController: NavHostController) {
         )
     )
 
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),

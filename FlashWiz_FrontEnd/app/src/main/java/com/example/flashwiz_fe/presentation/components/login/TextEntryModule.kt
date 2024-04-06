@@ -41,7 +41,10 @@ fun TextEntryModule(
     trailingIcon: ImageVector? = null,
     onTrailingIconClick: (() -> Unit)?,
     modifier: Modifier = Modifier
+<<<<<<< HEAD
 
+=======
+>>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
 ) {
 
     Column(
@@ -111,8 +114,7 @@ fun TextEntryModulePreview() {
         description = "Email address",
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp, 0.dp, 10.dp, 5.dp),
-
+            .padding(10.dp,0.dp,10.dp,5.dp),
         hint = "Your@gmail.com",
         leadingIcon = Icons.Default.Email,
         textValue = "TextInput",

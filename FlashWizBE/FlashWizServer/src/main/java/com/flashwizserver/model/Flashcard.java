@@ -23,23 +23,30 @@ public class Flashcard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	
 	@Column(length = 128, nullable = false)
 	private String name;
+	
 	@Column(length = 128, nullable = false)
 	private String descriptions;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "flashcards")
-	private List<Folder> folders;
+	@ManyToOne
+	@JoinColumn(name = "folder_id")
+	private Folder folder;
 
-	public List<Folder> getFolders() {
-		return folders;
+	
+
+	public Folder getFolder() {
+		return folder;
 	}
 
-	public void setFolders(List<Folder> folders) {
-		this.folders = folders;
+	public void setFolder(Folder folder) {
+		this.folder = folder;
 	}
 
 	public Integer getId() {
