@@ -2,7 +2,7 @@ package com.example.flashwiz_fe.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flashwiz_fe.data.model.Folder
+import com.example.flashwiz_fe.domain.model.Folder
 import com.example.flashwiz_fe.data.remote.RetrofitInstance
 import kotlinx.coroutines.launch
 

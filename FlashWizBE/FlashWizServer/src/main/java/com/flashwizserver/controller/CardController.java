@@ -35,9 +35,5 @@ public class CardController {
         return cardRepository.save(card);
     }
     
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
-//        cardService.deleteCard(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+
 }

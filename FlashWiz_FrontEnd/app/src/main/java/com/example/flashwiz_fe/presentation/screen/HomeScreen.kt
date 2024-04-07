@@ -22,18 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.model.Folder
+import com.example.flashwiz_fe.domain.model.Flashcard
 import com.example.flashwiz_fe.data.remote.ApiService
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
-import com.example.flashwiz_fe.data.model.FolderDetail
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
+import com.example.flashwiz_fe.domain.model.FolderDetail
 
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @OptIn(DelicateCoroutinesApi::class)
 @Composable

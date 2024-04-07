@@ -41,7 +41,7 @@ fun AddItemComponent(navController: NavController, itemType: String) {
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
                         "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route)
+                        "Flashcard" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
                     }
                     expanded = false // Đóng menu dropdown sau khi thực hiện hành động
                 }

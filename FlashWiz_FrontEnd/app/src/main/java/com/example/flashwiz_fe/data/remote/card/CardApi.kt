@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.data.remote.card
 
-import com.example.flashwiz_fe.data.model.Card
+import com.example.flashwiz_fe.domain.model.Card
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -10,5 +11,5 @@ interface CardApi {
     suspend fun getAllCards(): List<Card>
 
     @POST("/card/save")
-    suspend fun saveCard(@Body card: Card): Card
+    suspend fun saveCard(@Body card: Card): Response<Card>
 }
