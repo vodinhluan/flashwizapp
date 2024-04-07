@@ -23,24 +23,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.model.Flashcard
+import com.example.flashwiz_fe.data.model.FlashcardDetail
 import com.example.flashwiz_fe.data.model.Folder
 import com.example.flashwiz_fe.data.remote.ApiService
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.data.model.FolderDetail
+import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.RetrofitInstance
 
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
-@OptIn(DelicateCoroutinesApi::class)
 @Composable
-fun HomeScreen(navController: NavController, apiService: ApiService) {
+fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
+    val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -51,41 +52,15 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .background(Color.Cyan),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                if (selectedFolder == null) {
-                    Text(
-                        text = "HOME",
-                        style = TextStyle(
-                            color = Color.Black,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        textAlign = TextAlign.Left,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    AddItemComponent(navController = navController,"Folder")
-                } else {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .background(Color.Cyan),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .clickable {
-                                    selectedFolder = null
-                                }
-                                .padding(16.dp)
-                        )
+            if (showHeaderState.value) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .background(Color.Cyan),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    if (selectedFolder == null) {
                         Text(
-                            text = "Flashcard",
+                            text = "HOME",
                             style = TextStyle(
                                 color = Color.Black,
                                 fontSize = 24.sp,
@@ -94,25 +69,53 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController,"Flashcard")
+                        AddItemComponent(navController = navController, "Folder")
+                    } else {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .background(Color.Cyan),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.Black,
+                                modifier = Modifier
+                                    .clickable {
+                                        selectedFolder = null
+                                    }
+                                    .padding(16.dp)
+                            )
+                            Text(
+                                text = "Flashcard",
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                textAlign = TextAlign.Left,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            AddItemComponent(navController = navController, "Flashcard")
+                        }
                     }
                 }
+                SearchBar(
+                    description = "Search",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp, 0.dp, 10.dp, 5.dp),
+                    hint = "Search",
+                    textValue = "Search...",
+                    textColor = Color.Black,
+                    cursorColor = Color.LightGray,
+                    onValueChanged = {},
+                    trailingIcon = Icons.Filled.RemoveRedEye,
+                    onTrailingIconClick = {}
+                )
             }
 
-            // Search
-            SearchBar(
-                description = "Search",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, 0.dp, 10.dp, 5.dp),
-                hint = "Search",
-                textValue = "Search...",
-                textColor = Color.Black,
-                cursorColor = Color.LightGray,
-                onValueChanged = {},
-                trailingIcon = Icons.Filled.RemoveRedEye,
-                onTrailingIconClick = {}
-            )
+
 
             LaunchedEffect(Unit) {
                 folders = apiService.getAllFolders()
@@ -138,20 +141,18 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp)) // Thêm Spacer ở đây
-
             selectedFolder?.let { folder ->
                 FolderDetailScreen(
-                    folderId = folder.id, // Truyền folderId
+                    folderId = folder.id,
                     folderName = folder.name,
                     description = folder.descriptions,
                     onNavigateUp = {
-                        selectedFolder = null // Đặt selectedFolder về null khi quay lại
-                    }
+                        selectedFolder = null
+                    },
+                    navController = navController,
+                    showHeader = showHeaderState // Truyền showHeaderState xuống FolderDetailScreen
                 )
             }
         }
     }
 }
-

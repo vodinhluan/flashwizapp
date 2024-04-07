@@ -64,10 +64,10 @@ fun MainScreen(navController: NavHostController) {
             }
         ) {
             when (selectedItemIndex) {
-                0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.apiService)
+                0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 1 -> StatisticScreen()
                 2 -> AccountScreen()
-                else -> HomeScreen(navController = navController, apiService = RetrofitInstance.apiService)
+                else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
             }
         }
     }

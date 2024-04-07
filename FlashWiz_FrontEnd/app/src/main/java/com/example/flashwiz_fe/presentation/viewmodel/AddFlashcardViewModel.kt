@@ -13,7 +13,7 @@ import com.example.flashwiz_fe.data.remote.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class AddFlashcardViewModel: ViewModel() {
-    private val flashcardService = RetrofitInstance.apiService
+    private val flashcardService = RetrofitInstance.flashcardApiService
 
     fun addFlashcard(name: String, description: String,folderId: Int, onResult: (Boolean) -> Unit) {
         val flashcard = Flashcard(name = name, descriptions = description, userId = 2,folderId = 3 )

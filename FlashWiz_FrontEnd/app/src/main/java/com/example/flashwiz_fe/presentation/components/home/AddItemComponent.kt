@@ -45,11 +45,11 @@ fun AddItemComponent(navController: NavController, itemType: String) {
                     }
                     expanded = false // Đóng menu dropdown sau khi thực hiện hành động
                 }
-                MenuItem(text = "Add Card") {
-                    navController.navigate(ScreenRoutes.AddCardScreen.route)
-                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
-                }
-                // Các mục menu khác có thể được thêm ở đây
+//                MenuItem(text = "Add Card") {
+//                    navController.navigate(ScreenRoutes.AddCardScreen.route)
+//                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
+//                }
+//                // Các mục menu khác có thể được thêm ở đây
             }
         }
     }

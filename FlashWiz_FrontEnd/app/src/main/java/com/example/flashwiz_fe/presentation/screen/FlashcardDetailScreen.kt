@@ -1,6 +1,10 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,7 +19,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 
 @Composable
@@ -25,30 +39,34 @@ fun FlashcardDetailScreen(
     description: String,
     onNavigateUp: () -> Unit
 ) {
-    // Khai báo mutable state để lưu danh sách card
     var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
 
-    // Sử dụng LaunchedEffect để gọi API và lấy danh sách card khi màn hình được hiển thị
     LaunchedEffect(Unit) {
-        // Gọi API để lấy danh sách card
-        cards = RetrofitInstance.apiService.getCardsByFlashcardId(flashcardId)
-        isDataLoaded = true // Đánh dấu là dữ liệu đã được tải xuống
+        cards = RetrofitInstance.cardApiService.getCardsByFlashcardId(flashcardId)
+        isDataLoaded = true
     }
 
-    // Hiển thị danh sách card trong một LazyColumn
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(cards) { card ->
-            // Hiển thị mỗi card bằng CardItemComponent
-            CardItemComponent(
-                question = card.back,
-                answer = card.front,
-                onFlashcardClicked = {
-                    // Xử lý sự kiện khi click vào card nếu cần
+    Column(modifier = Modifier.padding(16.dp)) {
+        // Tiêu đề và mô tả
+        Text(text = flashcardName, style = MaterialTheme.typography.h4)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = description, style = MaterialTheme.typography.body1)
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Danh sách các card hiển thị theo grid
+        if (isDataLoaded) {
+            LazyVerticalGrid(GridCells.Fixed(2)) {
+                items(cards) { card ->
+                    CardItemComponent(
+                        question = card.back,
+                        answer = card.front,
+                        onFlashcardClicked = {
+                            // Xử lý sự kiện khi click vào card nếu cần
+                        }
+                    )
                 }
-            )
+            }
         }
     }
 }

@@ -17,6 +17,15 @@ object RetrofitInstance {
         val apiService: ApiService by lazy {
             retrofit.create(ApiService::class.java)
         }
+    val folderApiService: FolderApiService by lazy {
+        retrofit.create(FolderApiService::class.java)
+    }
+    val flashcardApiService: FlashcardApiService by lazy {
+        retrofit.create(FlashcardApiService::class.java)
+    }
+    val cardApiService: CardApiService by lazy {
+        retrofit.create(CardApiService::class.java)
+    }
     }
 
 
