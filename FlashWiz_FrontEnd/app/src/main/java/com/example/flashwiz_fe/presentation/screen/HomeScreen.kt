@@ -44,7 +44,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth( ),
         color = Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
@@ -150,7 +150,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                         selectedFolder = null
                     },
                     navController = navController,
-                    showHeader = showHeaderState // Truyền showHeaderState xuống FolderDetailScreen
+                    showHeader = showHeaderState
                 )
             }
         }

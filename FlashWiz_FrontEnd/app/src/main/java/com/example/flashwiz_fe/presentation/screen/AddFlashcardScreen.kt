@@ -29,6 +29,7 @@ import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
 fun AddFlashcardScreen(
+
 onNavigateBack: () -> Unit
 ) {
     val viewModel: AddFlashcardViewModel = viewModel()

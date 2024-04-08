@@ -41,7 +41,7 @@ fun FolderDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController,
-    showHeader: MutableState<Boolean> // Thêm tham số showHeader kiểu MutableState<Boolean>
+    showHeader: MutableState<Boolean>
 ) {
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }

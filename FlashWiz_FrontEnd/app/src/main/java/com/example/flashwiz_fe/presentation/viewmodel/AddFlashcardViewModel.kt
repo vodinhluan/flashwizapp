@@ -21,9 +21,9 @@ class AddFlashcardViewModel: ViewModel() {
             try {
                 val response = flashcardService.saveFlashcard(flashcard, 2,3)
                 if (response.equals("ok")) {
-                    onResult(true) // Phản hồi thành công
+                    onResult(true)
                 } else {
-                    onResult(false) // Phản hồi thất bại
+                    onResult(false)
                 }
             } catch (e: Exception) {
                 onResult(false) // Xử lý exception

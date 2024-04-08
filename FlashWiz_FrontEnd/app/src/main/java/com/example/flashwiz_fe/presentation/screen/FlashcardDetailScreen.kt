@@ -31,7 +31,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
-
 @Composable
 fun FlashcardDetailScreen(
     flashcardId: Int,
@@ -47,7 +46,7 @@ fun FlashcardDetailScreen(
         isDataLoaded = true
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         // Tiêu đề và mô tả
         Text(text = flashcardName, style = MaterialTheme.typography.h4)
         Spacer(modifier = Modifier.height(8.dp))
@@ -56,7 +55,10 @@ fun FlashcardDetailScreen(
 
         // Danh sách các card hiển thị theo grid
         if (isDataLoaded) {
-            LazyVerticalGrid(GridCells.Fixed(2)) {
+            LazyVerticalGrid(
+                modifier = Modifier.weight(1f), // Chiếm toàn bộ không gian còn lại
+                columns = GridCells.Fixed(2)
+            ) {
                 items(cards) { card ->
                     CardItemComponent(
                         question = card.back,
@@ -70,3 +72,4 @@ fun FlashcardDetailScreen(
         }
     }
 }
+
