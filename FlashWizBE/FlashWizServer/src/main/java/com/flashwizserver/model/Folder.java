@@ -27,14 +27,20 @@ public class Folder {
 	private User user;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
     private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
    
 =======
+=======
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 	@OneToMany(mappedBy = "folder") 
     private List<Flashcard> flashcards = new ArrayList<>(); 
 
 
+<<<<<<< HEAD
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
+=======
 >>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 	public Integer getId() {
 		return id;
@@ -45,6 +51,10 @@ public class Folder {
 	}
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 =======
 
 >>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888

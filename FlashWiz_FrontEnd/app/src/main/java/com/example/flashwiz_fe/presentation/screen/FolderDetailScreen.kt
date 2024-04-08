@@ -2,12 +2,23 @@ package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.layout.*
 
+<<<<<<< HEAD
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+=======
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+<<<<<<< HEAD
+=======
+
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Text
@@ -20,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight

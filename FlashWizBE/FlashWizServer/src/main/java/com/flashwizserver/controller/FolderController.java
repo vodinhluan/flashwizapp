@@ -37,6 +37,18 @@ public class FolderController {
         
         Folder savedFolder = folderDAO.saveFolder(folder);
         return ResponseEntity.ok(savedFolder);
+<<<<<<< HEAD
+=======
+    }
+    @GetMapping("/folder/get-by-id/{folderId}")
+    public ResponseEntity<Folder> getFolderById(@PathVariable Integer folderId) {
+        Folder folder = folderDAO.getFolderById(folderId);
+        if (folder != null) {
+            return ResponseEntity.ok(folder);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
     }
     @GetMapping("/folder/get-by-id/{folderId}")
     public ResponseEntity<Folder> getFolderById(@PathVariable Integer folderId) {
@@ -53,4 +65,7 @@ public class FolderController {
 }
 
 
+<<<<<<< HEAD
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
+=======
 >>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888

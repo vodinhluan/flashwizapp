@@ -35,6 +35,9 @@ public class FolderDAO {
 		return folderRepo.findById(folderId).orElse(null);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 
 	public Folder getFolderById(Integer folderId) {
 		// Triển khai logic lấy folder từ cơ sở dữ liệu dựa trên folderId
@@ -43,6 +46,7 @@ public class FolderDAO {
 	}
 
 }
+<<<<<<< HEAD
 =======
 
 	public Folder getFolderById(Integer folderId) {
@@ -52,4 +56,6 @@ public class FolderDAO {
 	}
 
 }
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
+=======
 >>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888

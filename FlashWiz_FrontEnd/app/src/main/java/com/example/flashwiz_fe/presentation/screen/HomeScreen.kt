@@ -22,9 +22,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+<<<<<<< HEAD
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
+=======
+
+import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
+import com.example.flashwiz_fe.presentation.components.home.SearchBar
+import com.example.flashwiz_fe.domain.model.FolderDetail
+
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
 import com.example.flashwiz_fe.data.remote.FolderApiService
 
 
@@ -34,7 +42,11 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
     val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
+<<<<<<< HEAD
     var searchQuery by remember { mutableStateOf("") }
+=======
+
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
     Surface(
         modifier = Modifier.fillMaxWidth( ),
         color = Color.White
@@ -120,9 +132,13 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
+<<<<<<< HEAD
                     items(folders.filter {
                         it.name.contains(searchQuery, ignoreCase = true) || it.descriptions.contains(searchQuery, ignoreCase = true)
                     }) { folder ->
+=======
+                    items(folders) { folder ->
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
                         FolderItem(
                             folder = folder,
                             onItemClick = { selectedFolderId ->
@@ -137,7 +153,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 }
             }
             selectedFolder?.let { folder ->
+<<<<<<< HEAD
                 FolderDetailScreen(folderId = folder.id,
+=======
+                FolderDetailScreen(
+                    folderId = folder.id,
+>>>>>>> b96a23905502acf46685e6f51ff9c5a0f1ee9888
                     folderName = folder.name,
                     description = folder.descriptions,
                     onNavigateUp = {
