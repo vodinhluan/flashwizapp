@@ -76,14 +76,12 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
                 modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
             )
 
-            // FRONT CARD
             TextField(
                 value = cardState.value.frontText,
                 onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
                 label = { Text("") },
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
-
             )
 
             // BACK CARD
@@ -95,17 +93,18 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
                     fontWeight = FontWeight.Bold
                 ),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().padding(5.dp)
-
+                modifier = Modifier.fillMaxWidth()
+                    .padding(5.dp)
             )
 
             TextField(
                 value = cardState.value.backText,
                 onValueChange = { cardState.value = cardState.value.copy(backText = it) },
                 label = { Text("") },
+                maxLines = 5,
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
-
+                    .fillMaxWidth()
             )
 
             Row (
@@ -117,8 +116,8 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
                     text = "Save This Card",
                     onClick = {
                         val card = Card(
-                            frontText = cardState.value.frontText.trim(),
-                            backText = cardState.value.backText.trim()
+                            front = cardState.value.frontText.trim(),
+                            back = cardState.value.backText.trim()
                         )
                         cardViewModel.saveCard(card)
                     },
