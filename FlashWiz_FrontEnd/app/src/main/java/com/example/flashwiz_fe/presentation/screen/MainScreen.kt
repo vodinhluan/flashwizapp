@@ -1,6 +1,5 @@
 package com.example.flashwiz_fe.presentation.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -15,22 +14,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.flashwiz_fe.data.network.ApiService
-import com.example.flashwiz_fe.data.network.RetrofitInstance
-import com.example.flashwiz_fe.presentation.components.BottomNavigationBar
+import androidx.navigation.NavHostController
+import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     val items = listOf(
-
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
@@ -51,7 +47,7 @@ fun MainScreen() {
         )
     )
 
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -67,10 +63,10 @@ fun MainScreen() {
             }
         ) {
             when (selectedItemIndex) {
-                0 ->  HomeScreen(apiService = RetrofitInstance.apiService)
+                0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 1 -> StatisticScreen()
                 2 -> AccountScreen()
-                else -> HomeScreen(apiService = RetrofitInstance.apiService)
+                else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
             }
         }
     }

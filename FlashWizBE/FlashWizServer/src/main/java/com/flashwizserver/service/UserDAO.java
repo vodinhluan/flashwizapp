@@ -33,17 +33,13 @@ public class UserDAO {
         return userRepo.registerNewUser(name, email, password);
     }
 	
-	// login
 	public List<String> checkUserEmail(String email){
         return userRepo.checkUserEmail(email);
     }
-    // End Of Check User Email Services Method.
 
     public String checkUserPasswordByEmail(String email){
         return userRepo.checkUserPasswordByEmail(email);
     }
-    // End Of Check User Password Services Method.
-
    
 
 }

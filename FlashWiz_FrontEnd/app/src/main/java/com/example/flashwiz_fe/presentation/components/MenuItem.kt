@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun MenuItem(text: String) {
+fun MenuItem(text: String, onItemClick: () -> Unit) {
     Text(
         text = text,
         modifier = Modifier.run {
             padding(vertical = 8.dp, horizontal = 16.dp)
-                .clickable(){}
+                .clickable(onClick = onItemClick)
         }
     )
 }

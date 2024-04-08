@@ -8,8 +8,11 @@ class ValidateLoginInputUseCase() {
         if(email.isEmpty() || password.isEmpty()){
             return LoginInputValidationType.EmptyField
         }
-        if("@" !in email){
+        val emailPattern = Regex("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b")
+        if (!email.matches(emailPattern)) {
             return LoginInputValidationType.NoEmail
+
+
         }
         return LoginInputValidationType.Valid
     }
