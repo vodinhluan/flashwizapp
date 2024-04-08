@@ -1,15 +1,9 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.model.Folder
-import com.example.flashwiz_fe.data.model.FolderDetail
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
+import com.example.flashwiz_fe.domain.model.Flashcard
+import com.example.flashwiz_fe.data.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class AddFlashcardViewModel: ViewModel() {

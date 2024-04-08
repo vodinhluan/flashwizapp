@@ -1,6 +1,6 @@
 package com.example.flashwiz_fe.data.remote
 
-import com.example.flashwiz_fe.data.model.Card
+import com.example.flashwiz_fe.domain.model.Card
 import retrofit2.http.GET
 import retrofit2.http.Path
 

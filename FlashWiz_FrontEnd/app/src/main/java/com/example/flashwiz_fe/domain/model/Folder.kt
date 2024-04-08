@@ -1,4 +1,4 @@
-package  com.example.flashwiz_fe.data.model
+package  com.example.flashwiz_fe.domain.model
 
 data class Folder(
 //    val folderId: Int,

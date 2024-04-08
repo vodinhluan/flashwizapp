@@ -54,9 +54,6 @@ fun Navigation() {
         }
         composable(ScreenRoutes.AddFolderScreen.route) {
             AddFolderScreen(
-//                onAddFolder = { folderName, folderDescription ->
-//                    // Xử lý khi người dùng thêm thư mục ở đây
-//                },
                 onNavigateBack = {
                     navController.popBackStack()
                 }
@@ -65,16 +62,10 @@ fun Navigation() {
 
         composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
-//                onAddFolder = { folderName, folderDescription ->
-//                    // Xử lý khi người dùng thêm thư mục ở đây
-//                },
                 onNavigateBack = {
                     navController.popBackStack()
                 }
             )
-//            composable(ScreenRoutes.AddCardScreen.route) {
-//                CardScreen()
-//            }
         }
 
     }}

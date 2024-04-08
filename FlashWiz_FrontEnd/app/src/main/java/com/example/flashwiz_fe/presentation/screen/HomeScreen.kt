@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
-import com.example.flashwiz_fe.data.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.data.remote.FolderApiService
 
 

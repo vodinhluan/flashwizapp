@@ -11,12 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.model.FlashcardDetail
-
-import com.example.flashwiz_fe.data.model.FolderDetail
-
-
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -26,7 +21,7 @@ fun FlashCardItem(
     onItemClick: (Int) -> Unit,
 
 
-) {
+    ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

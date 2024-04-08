@@ -1,7 +1,7 @@
 package com.example.flashwiz_fe.data.remote
 
-import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.model.FlashcardDetail
+import com.example.flashwiz_fe.domain.model.Flashcard
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.data
 
-import com.example.flashwiz_fe.data.model.RegisterResponse
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
+import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import retrofit2.Response

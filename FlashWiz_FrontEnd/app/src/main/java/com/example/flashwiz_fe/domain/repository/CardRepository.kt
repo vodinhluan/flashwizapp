@@ -1,6 +1,6 @@
 package com.example.flashwiz_fe.domain.repository
 
-import com.example.flashwiz_fe.data.model.Card
+import com.example.flashwiz_fe.domain.model.Card
 
 interface CardRepository {
     suspend fun getAllCards(): List<Card>

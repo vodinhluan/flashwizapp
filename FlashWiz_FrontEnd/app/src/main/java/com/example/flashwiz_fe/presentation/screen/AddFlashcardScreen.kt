@@ -22,10 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashwiz_fe.data.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.AddFlashcardViewModel
-import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
 fun AddFlashcardScreen(

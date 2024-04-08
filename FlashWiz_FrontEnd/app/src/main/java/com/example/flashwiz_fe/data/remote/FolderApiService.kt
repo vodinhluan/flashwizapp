@@ -1,7 +1,7 @@
 package com.example.flashwiz_fe.data.remote
 
-import com.example.flashwiz_fe.data.model.Folder
-import com.example.flashwiz_fe.data.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.Folder
+import com.example.flashwiz_fe.domain.model.FolderDetail
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

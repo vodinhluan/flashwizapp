@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -28,9 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.data.model.Card
-import com.example.flashwiz_fe.data.model.FlashcardDetail
-import com.example.flashwiz_fe.data.remote.RetrofitInstance.flashcardApiService
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
+import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.presentation.components.FlashCardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import kotlinx.coroutines.Dispatchers
