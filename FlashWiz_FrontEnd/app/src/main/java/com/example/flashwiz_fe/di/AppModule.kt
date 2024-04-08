@@ -1,11 +1,11 @@
 package com.example.flashwiz_fe.di
 
 import com.example.flashwiz_fe.data.AuthRepositoryImpl
-import com.example.flashwiz_fe.data.remote.ApiService
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
+import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.data.CardRepositoryImpl
+import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateRegisterInputUseCase
 import dagger.Module
@@ -39,14 +39,16 @@ object AppModule {
     // Card Module
     @Provides
     @Singleton
-    fun provideCardApi(): ApiService {
-        return RetrofitInstance.apiService
+    fun provideCardApi(): CardApiService {
+        return RetrofitInstance.cardApiService
     }
 
     @Provides
     @Singleton
-    fun provideCardRepository(apiService: ApiService): CardRepository {
-        return CardRepositoryImpl(apiService)
+    fun provideCardRepository(cardApiService: CardApiService): CardRepository {
+        return CardRepositoryImpl(cardApiService)
     }
 
 }
+
+

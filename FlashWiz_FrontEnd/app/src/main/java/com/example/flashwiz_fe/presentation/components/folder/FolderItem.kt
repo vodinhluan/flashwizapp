@@ -1,3 +1,4 @@
+
 package com.example.flashwiz_fe.presentation.components
 
 import androidx.compose.foundation.BorderStroke
@@ -24,6 +25,7 @@ fun FolderItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
+
             .clickable(onClick = { onItemClick(folder.id) }), // Truyền folderId khi item được nhấp vào
         border = BorderStroke(1.dp, Color.LightGray),
         backgroundColor = MaterialTheme.colors.surface,

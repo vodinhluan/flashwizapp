@@ -41,15 +41,16 @@ fun AddItemComponent(navController: NavController, itemType: String) {
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
                         "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route)
+                        "Card" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
                     }
-                    expanded = false // Đóng menu dropdown sau khi thực hiện hành động
+                    expanded = false
                 }
-                MenuItem(text = "Add Card") {
-                    navController.navigate(ScreenRoutes.AddCardScreen.route)
-                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
-                }
-                // Các mục menu khác có thể được thêm ở đây
+//                MenuItem(text = "Add Card") {
+//                    navController.navigate(ScreenRoutes.AddCardScreen.route)
+//                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục
+//                }
+//                // Các mục menu khác có thể được thêm ở đây
             }
         }
     }

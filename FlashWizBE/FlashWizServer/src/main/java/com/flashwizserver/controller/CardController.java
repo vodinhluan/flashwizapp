@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flashwizserver.model.Card;
+import com.flashwizserver.model.Flashcard;
+import com.flashwizserver.model.Folder;
 import com.flashwizserver.repository.CardRepository;
 import com.flashwizserver.service.CardDAO;
+import com.flashwizserver.service.FlashcardDAO;
 
 @RestController
 public class CardController {
@@ -23,6 +26,8 @@ public class CardController {
     
     @Autowired
     private CardDAO cardService;
+    @Autowired
+    private FlashcardDAO flashcardService;
     
     @GetMapping("/card/get-all")
     public ResponseEntity<List<Card>> getAllCards() {
@@ -35,5 +40,23 @@ public class CardController {
         return cardRepository.save(card);
     }
     
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
+//        cardService.deleteCard(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+    
+    @GetMapping("/card/get-by-flashcard/{flashcardId}")
+    public ResponseEntity<List<Card>> getCardsByFlashcardId(@PathVariable("flashcardId") Integer flashcardId) {
+        Flashcard flashcard = flashcardService.findById(flashcardId);
+        if (flashcard == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Card> cards = flashcard.getCard();
+        
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+    }
 
 }

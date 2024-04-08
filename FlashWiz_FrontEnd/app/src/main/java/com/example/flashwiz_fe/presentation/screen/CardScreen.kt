@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
+import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
+import com.example.flashwiz_fe.ui.theme.redOrange
+import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
@@ -98,13 +101,11 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
             )
 
             TextField(
-                value = cardState.value.backText,
-                onValueChange = { cardState.value = cardState.value.copy(backText = it) },
+                value = cardState.value.frontText,
+                onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
                 label = { Text("") },
-                maxLines = 5,
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth()
             )
 
             Row (

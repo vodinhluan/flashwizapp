@@ -45,6 +45,7 @@ class LoginViewModel @Inject constructor(
                     email = loginState.emailInput,
                     password = loginState.passwordInput
                 )
+
                 loginState.copy(isSuccessfullyLoggedIn = loginResult)
             }catch(e: Exception){
                 loginState.copy(errorMessageLoginProcess = "Could not login")

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flashwizserver.model.Flashcard;
+import com.flashwizserver.model.Folder;
 import com.flashwizserver.repository.FlashcardRepository;
 
 @Service
@@ -36,4 +37,7 @@ public class FlashcardDAO {
 	    public void deleteFlashcard(Integer id) {
 	        flashcardRepository.deleteById(id);
 	    }
+	    public Flashcard findById(Integer flashcardId) {
+			return flashcardRepository.findById(flashcardId).orElse(null);
+		}
 }
