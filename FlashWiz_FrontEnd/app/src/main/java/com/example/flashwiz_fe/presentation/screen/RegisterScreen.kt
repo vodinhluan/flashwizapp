@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.flashwiz_fe.presentation.components.*
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
@@ -72,6 +74,9 @@ fun RegisterScreen(
             )
         }
         RegisterContainer(
+            nameValue ={
+                registerViewModel.registerState.nameInput
+            },
             emailValue = {
                 registerViewModel.registerState.emailInput
             },
@@ -84,6 +89,7 @@ fun RegisterScreen(
             buttonEnabled = {
                 registerViewModel.registerState.isInputValid
             },
+            onNameChanged = registerViewModel::onNameInputChange,
             onEmailChanged = registerViewModel::onEmailInputChange,
             onPasswordChanged = registerViewModel::onPasswordInputChange,
             onPasswordRepeatedChanged = registerViewModel::onPasswordRepeatedInputChange,
@@ -149,10 +155,12 @@ fun RegisterScreen(
 
 @Composable
 fun RegisterContainer(
+    nameValue: () ->String,
     emailValue:() -> String,
     passwordValue:() -> String,
     passwordRepeatedValue:() -> String,
     buttonEnabled:() -> Boolean,
+    onNameChanged:(String)->Unit,
     onEmailChanged:(String)->Unit,
     onPasswordChanged:(String)->Unit,
     onPasswordRepeatedChanged:(String)->Unit,
@@ -175,6 +183,19 @@ fun RegisterContainer(
             text = "Đăng ký",
             color = gray,
             style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+        )
+        TextEntryModule(
+            modifier = Modifier
+                .fillMaxWidth(),
+            description = "Your Name",
+            hint = "John Dean",
+            leadingIcon = Icons.Default.AccountCircle,
+            textValue = nameValue(),
+            textColor = darkGray,
+            cursorColor = brightBlue,
+            onValueChanged = onNameChanged,
+            trailingIcon = null,
+            onTrailingIconClick = null
         )
         TextEntryModule(
             modifier = Modifier

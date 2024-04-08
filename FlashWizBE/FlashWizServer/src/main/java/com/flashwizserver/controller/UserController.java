@@ -34,26 +34,50 @@ public class UserController {
 	}
 
 	
-	 @PostMapping("/user/register")
-	    public ResponseEntity registerNewUser(@RequestParam("name") String name,
-	                                          @RequestParam("email")String email,
-	                                          @RequestParam("password")String password){
+//	 @PostMapping("/user/register")
+//	    public ResponseEntity registerNewUser(@RequestParam("name") String name,
+//	                                          @RequestParam("email")String email,
+//	                                          @RequestParam("password")String password){
+//
+//	        if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
+//	            return new ResponseEntity<>("Hãy điền đầy đủ thông tin ", HttpStatus.BAD_REQUEST);
+//	        } 	
+//
+//	        // Encrypt / Hash Password:
+//	        String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
+//
+//	        // Register New User:
+//	        int result = userDAO.registerNewUserServiceMethod(name, email, hashed_password);
+//
+//	        if(result != 1){
+//	            return new ResponseEntity<>("failed", HttpStatus.BAD_REQUEST);
+//	        }
+//
+//	        return new ResponseEntity<>("success", HttpStatus.OK);
+//
+//	    }
+	@PostMapping("/user/register")
+	public ResponseEntity registerNewUser(@RequestParam("name") String name,
+	                                      @RequestParam("email") String email,
+	                                      @RequestParam("password") String password){
 
-	        if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
-	            return new ResponseEntity<>("Hãy điền đầy đủ thông tin ", HttpStatus.BAD_REQUEST);
-	        }
-
-	        // Encrypt / Hash Password:
-	        String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
-
-	        // Register New User:
-	        int result = userDAO.registerNewUserServiceMethod(name, email, hashed_password);
-
-	        if(result != 1){
-	            return new ResponseEntity<>("failed", HttpStatus.BAD_REQUEST);
-	        }
-
-	        return new ResponseEntity<>("success", HttpStatus.OK);
-
+	    if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
+	        return new ResponseEntity<>("Hãy điền đầy đủ thông tin ", HttpStatus.BAD_REQUEST);
 	    }
+
+	    // Encrypt / Hash Password:
+	    String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
+
+	    // Register New User:
+	    int result = userDAO.registerNewUserServiceMethod(name, email, hashed_password);
+
+	    if(result != 1){
+	        return new ResponseEntity<>("failed", HttpStatus.BAD_REQUEST);
+	    }
+
+	    // Trả về thông tin người dùng dưới dạng JSON
+	    User newUser = new User(email, password, name);
+	    return ResponseEntity.ok(newUser);
+	}
+
 }

@@ -1,8 +1,14 @@
 package com.flashwizserver.model;
 
+
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.constraints.Email;
+
+
 
 public class AuthRequest {
 	@Email 
@@ -18,6 +24,7 @@ public class AuthRequest {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -25,5 +32,5 @@ public class AuthRequest {
 		this.password = password;
 	}
 	
-	
+
 }

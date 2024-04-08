@@ -16,6 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
+import com.example.flashwiz_fe.ui.theme.redOrange
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel

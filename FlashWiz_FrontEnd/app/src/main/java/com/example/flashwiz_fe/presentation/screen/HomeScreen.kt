@@ -22,20 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.data.model.Flashcard
-import com.example.flashwiz_fe.data.model.FlashcardDetail
-import com.example.flashwiz_fe.data.model.Folder
-import com.example.flashwiz_fe.data.remote.ApiService
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.data.model.FolderDetail
 import com.example.flashwiz_fe.data.remote.FolderApiService
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
 
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }

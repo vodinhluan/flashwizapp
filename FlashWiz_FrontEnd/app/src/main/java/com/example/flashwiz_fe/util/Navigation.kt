@@ -38,7 +38,7 @@ fun Navigation() {
         composable(ScreenRoutes.RegisterScreen.route) {
             RegisterScreen(
                 onRegisterSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.MainScreen.route) {
+                    navController.navigate(ScreenRoutes.LoginScreen.route) {
                         popUpTo(0)
                     }
                 },

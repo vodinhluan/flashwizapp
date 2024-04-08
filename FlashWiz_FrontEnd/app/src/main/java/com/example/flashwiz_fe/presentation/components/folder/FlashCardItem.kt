@@ -1,3 +1,5 @@
+package com.example.flashwiz_fe.presentation.components
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,11 +14,18 @@ import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.data.model.Flashcard
 import com.example.flashwiz_fe.data.model.FlashcardDetail
 
+import com.example.flashwiz_fe.data.model.FolderDetail
+
+
+
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlashCardItem(
     flashcard: FlashcardDetail,
-    onItemClick: (Int) -> Unit // Thêm onItemClick trở lại
+    onItemClick: (Int) -> Unit,
+
+
 ) {
     Card(
         modifier = Modifier
@@ -25,7 +34,7 @@ fun FlashCardItem(
             .clickable(onClick = { onItemClick(flashcard.id) }), // Thêm phản hồi khi click
         border = BorderStroke(1.dp, Color.LightGray),
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 4.dp,
+        elevation = 4.dp
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

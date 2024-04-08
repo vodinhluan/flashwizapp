@@ -26,7 +26,8 @@ public class ApplicationSecurityConfig {
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();
+
 	}
 	
 	@Bean
@@ -58,6 +59,7 @@ public class ApplicationSecurityConfig {
 		return http.build();
 	}
 	
+
 
 
 

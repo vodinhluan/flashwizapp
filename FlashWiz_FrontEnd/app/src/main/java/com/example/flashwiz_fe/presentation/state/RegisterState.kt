@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.presentation.state
 
 data class RegisterState(
+    val nameInput:String ="",
     val emailInput:String = "",
     val passwordInput:String = "",
     val passwordRepeatedInput:String = "",
