@@ -14,6 +14,5 @@ fun AccountScreen() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        // Hiển thị nội dung của màn hình Settings
         Text(text = "Đây là trang tài khoản", modifier = Modifier.fillMaxSize())
     }}

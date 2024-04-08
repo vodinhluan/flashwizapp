@@ -35,36 +35,53 @@ public class FlashcardController {
     }
 
   
-//    @PostMapping("/flashcard/save")
-//    public ResponseEntity<Flashcard> createFlashcard(@RequestBody Flashcard flashcard, @RequestParam("userId") Integer userId, @RequestParam("folderIds") List<Integer> folderIds) {
-//        // Tạo đối tượng User từ userId
-//        User user = new User();
-//        user.setId(userId);
-//        flashcard.setUser(user);
-//
-//        // Tạo danh sách các folder từ danh sách folderIds và lưu chúng vào cơ sở dữ liệu
-//        List<Folder> folders = new ArrayList<>();
-//        for (Integer folderId : folderIds) {
-//          Folder folder = folderService.findById(folderId);
-//          if (folder != null) {
-//            folders.add(folder);
-//          }
-//        }
-//      
-//        for (Folder folder : folders) {
-//        	  folder.getFlashcard().add(flashcard);
-//        	}
-//        // Gán danh sách folder cho flashcard
-//        flashcard.setFolders(folders);
-//
-//        // Lưu flashcard
-//        Flashcard createdFlashcard = flashcardService.createFlashcard(flashcard);
-//        return new ResponseEntity<>(createdFlashcard, HttpStatus.CREATED);
-//    }
+    @PostMapping("/flashcard/save")
+    public ResponseEntity<Flashcard> createFlashcard(@RequestBody Flashcard flashcard, @RequestParam("userId") Integer userId, @RequestParam("folderId") Integer folderId) {
+        User user = new User();
+        user.setId(userId);
+        flashcard.setUser(user);
+
+        // Lấy thông tin về folder từ folderId
+        Folder folder = folderService.findById(folderId);
+        if (folder == null) {
+            // Nếu không tìm thấy folder, trả về lỗi
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Gán flashcard cho folder
+        flashcard.setFolder(folder);
+
+        // Lưu flashcard vào cơ sở dữ liệu
+        Flashcard createdFlashcard = flashcardService.createFlashcard(flashcard);
+
+        // Thêm flashcard vào danh sách flashcards của folder
+        folder.getFlashcards().add(createdFlashcard);
+        folderService.saveFolder(folder);
+
+        return new ResponseEntity<>(createdFlashcard, HttpStatus.CREATED);
+    }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFlashcard(@PathVariable Integer id) {
         flashcardService.deleteFlashcard(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }}
+    }
+    @GetMapping("/flashcard/get-by-folder/{folderId}")
+    public ResponseEntity<List<Flashcard>> getFlashcardsByFolderId(@PathVariable("folderId") Integer folderId) {
+        // Lấy thông tin về folder từ folderId
+        Folder folder = folderService.findById(folderId);
+        if (folder == null) {
+            // Nếu không tìm thấy folder, trả về lỗi
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Lấy danh sách flashcards của folder
+        List<Flashcard> flashcards = folder.getFlashcards();
+        
+        // Trả về danh sách flashcards
+        return new ResponseEntity<>(flashcards, HttpStatus.OK);
+    }
+
+
+   }
