@@ -2,16 +2,19 @@ package com.example.flashwiz_fe.util
 
 import AddFolderScreen
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.flashwiz_fe.data.CardRepositoryImpl
+import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.screen.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.screen.CardScreen
-import com.example.flashwiz_fe.presentation.screen.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.RegisterScreen
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
 fun Navigation() {
@@ -60,6 +63,7 @@ fun Navigation() {
             )
         }
 
+
         composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
                 onNavigateBack = {
@@ -68,7 +72,22 @@ fun Navigation() {
             )
         }
 
-    }}
+        composable(ScreenRoutes.AddCardScreen.route) {
+            val cardViewModel: CardViewModel = remember {
+                val cardRepository: CardRepository = CardRepositoryImpl(RetrofitInstance.cardApiService)
+
+                CardViewModel(cardRepository)
+            } ?: error("Cannot create CardViewModel")
+            CardScreen(cardViewModel = cardViewModel, navController = navController)
+        }
+
+
+    }
+}
+
+
+
+
 
 
 

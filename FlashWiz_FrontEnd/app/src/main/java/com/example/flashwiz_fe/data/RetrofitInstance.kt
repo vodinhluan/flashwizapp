@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitInstance {
-        private const val BASE_URL = "http://192.168.1.227:8080/"
+    private const val BASE_URL = "http://192.168.1.227:8080/"
 
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
@@ -21,16 +21,17 @@ object RetrofitInstance {
         val apiService: ApiService by lazy {
             retrofit.create(ApiService::class.java)
         }
-    val folderApiService: FolderApiService by lazy {
-        retrofit.create(FolderApiService::class.java)
+        val folderApiService: FolderApiService by lazy {
+            retrofit.create(FolderApiService::class.java)
+        }
+        val flashcardApiService: FlashcardApiService by lazy {
+            retrofit.create(FlashcardApiService::class.java)
+        }
+        val cardApiService: CardApiService by lazy {
+            retrofit.create(CardApiService::class.java)
+        }
     }
-    val flashcardApiService: FlashcardApiService by lazy {
-        retrofit.create(FlashcardApiService::class.java)
-    }
-    val cardApiService: CardApiService by lazy {
-        retrofit.create(CardApiService::class.java)
-    }
-    }
+
 
 
 

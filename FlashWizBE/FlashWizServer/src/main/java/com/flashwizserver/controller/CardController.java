@@ -40,11 +40,13 @@ public class CardController {
         return cardRepository.save(card);
     }
     
+
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
 //        cardService.deleteCard(id);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
+    
     @GetMapping("/card/get-by-flashcard/{flashcardId}")
     public ResponseEntity<List<Card>> getCardsByFlashcardId(@PathVariable("flashcardId") Integer flashcardId) {
         Flashcard flashcard = flashcardService.findById(flashcardId);

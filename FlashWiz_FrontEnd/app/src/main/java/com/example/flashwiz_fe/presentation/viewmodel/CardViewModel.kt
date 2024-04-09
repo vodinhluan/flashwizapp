@@ -1,27 +1,43 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
+import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.state.CardState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CardViewModel(private val cardRepository: CardRepository) : ViewModel() {
-    private val _cardState = MutableLiveData<CardState>()
-    val cardState: LiveData<CardState> = _cardState
+@HiltViewModel
+class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
+    private val _saveSuccess = MutableStateFlow(false)
+    val saveSuccess: StateFlow<Boolean> = _saveSuccess
 
-    fun saveCard(frontText: String, backText: String) {
-        _cardState.value = CardState.Loading
+    fun saveCard(card: Card) {
         viewModelScope.launch {
             try {
-                // Thực hiện lưu thẻ vào repository
-                val card = cardRepository.saveCard(frontText, backText)
-                _cardState.value = CardState.Loaded(card.front, card.back)
+                Log.d("CardViewModel", "Saving card: $card")
+                cardRepository.saveCard(card)
+                Log.d("CardViewModel", "Card saved successfully")
+                _saveSuccess.value = true
             } catch (e: Exception) {
-                _cardState.value = CardState.Error
+                Log.e("CardViewModel", "Error saving card: $e")
+                _saveSuccess.value = false
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+

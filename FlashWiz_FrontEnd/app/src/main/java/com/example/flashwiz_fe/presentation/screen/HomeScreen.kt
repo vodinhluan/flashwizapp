@@ -22,9 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
+
 import com.example.flashwiz_fe.data.remote.FolderApiService
 
 
@@ -34,9 +36,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
     val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
+    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
+
+    var searchQuery by remember { mutableStateOf("") }
 
     Surface(
-        modifier = Modifier.fillMaxWidth( ),
+        modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
@@ -98,11 +103,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                         .fillMaxWidth()
                         .padding(10.dp, 0.dp, 10.dp, 5.dp),
                     hint = "Search",
-                    textValue = "Search...",
+                    textValue = searchQuery,
                     textColor = Color.Black,
                     cursorColor = Color.LightGray,
-                    onValueChanged = {},
-                    trailingIcon = Icons.Filled.RemoveRedEye,
+                    onValueChanged = { newValue ->
+                        searchQuery = newValue
+                    }, trailingIcon = Icons.Filled.RemoveRedEye,
                     onTrailingIconClick = {}
                 )
             }
@@ -119,13 +125,22 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
-                    items(folders) { folder ->
+
+                    items(folders.filter {
+                        it.name.contains(
+                            searchQuery,
+                            ignoreCase = true
+                        ) || it.descriptions.contains(searchQuery, ignoreCase = true)
+                    }) { folder ->
                         FolderItem(
                             folder = folder,
                             onItemClick = { selectedFolderId ->
                                 selectedFolderId.let { folderId ->
                                     selectedFolder = folders.find { it.id == folderId }
-                                    Log.d("FolderItemClicked", "Clicked on folder with ID: $folderId")
+                                    Log.d(
+                                        "FolderItemClicked",
+                                        "Clicked on folder with ID: $folderId"
+                                    )
                                 }
                             }
                         )
@@ -134,6 +149,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 }
             }
             selectedFolder?.let { folder ->
+
                 FolderDetailScreen(
                     folderId = folder.id,
                     folderName = folder.name,
@@ -145,6 +161,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                     showHeader = showHeaderState
                 )
             }
+
         }
     }
 }

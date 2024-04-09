@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.flashwiz_fe.domain.model.Card
+
 import com.example.flashwiz_fe.data.RetrofitInstance
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -22,6 +23,7 @@ import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+
 
 @Composable
 fun FlashcardDetailScreen(

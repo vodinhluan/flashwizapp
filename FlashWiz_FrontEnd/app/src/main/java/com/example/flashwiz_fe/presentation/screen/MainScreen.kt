@@ -1,6 +1,8 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -61,13 +63,16 @@ fun MainScreen(navController: NavHostController) {
                     onItemSelected = { index -> selectedItemIndex = index }
                 )
             }
-        ) {
-            when (selectedItemIndex) {
-                0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
-                1 -> StatisticScreen()
-                2 -> AccountScreen()
-                else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                when (selectedItemIndex) {
+                    0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+                    1 -> StatisticScreen()
+                    2 -> AccountScreen()
+                    else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+                }
             }
         }
-    }
-}
+    }}

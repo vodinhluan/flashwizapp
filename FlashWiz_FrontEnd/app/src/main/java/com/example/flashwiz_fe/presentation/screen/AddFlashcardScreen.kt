@@ -29,7 +29,7 @@ import com.example.flashwiz_fe.presentation.viewmodel.AddFlashcardViewModel
 @Composable
 fun AddFlashcardScreen(
 
-onNavigateBack: () -> Unit
+onNavigateBack: () -> Unit,
 ) {
     val viewModel: AddFlashcardViewModel = viewModel()
     var flashcardName by remember { mutableStateOf("") }

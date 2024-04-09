@@ -26,8 +26,9 @@ public class Folder {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-	@OneToMany(mappedBy = "folder") 
-    private List<Flashcard> flashcards = new ArrayList<>(); 
+
+	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
+    private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
 
 
 	public Integer getId() {

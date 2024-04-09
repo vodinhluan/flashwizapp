@@ -1,5 +1,4 @@
 package com.example.flashwiz_fe.data.remote
-
 import com.example.flashwiz_fe.domain.model.Folder
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import retrofit2.http.Body

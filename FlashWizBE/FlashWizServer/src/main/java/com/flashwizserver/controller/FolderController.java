@@ -21,8 +21,6 @@ import com.flashwizserver.service.UserDAO;
 public class FolderController {
     @Autowired
     private FolderDAO folderDAO;
-   
-
 
     @GetMapping("/folder/get-all")
     public ResponseEntity<List<Folder>> getAllFolder() {
@@ -39,6 +37,8 @@ public class FolderController {
         
         Folder savedFolder = folderDAO.saveFolder(folder);
         return ResponseEntity.ok(savedFolder);
+
+
     }
     @GetMapping("/folder/get-by-id/{folderId}")
     public ResponseEntity<Folder> getFolderById(@PathVariable Integer folderId) {
@@ -48,7 +48,11 @@ public class FolderController {
         } else {
             return ResponseEntity.notFound().build();
         }
+
     }
+   
 }
+
+
 
 
