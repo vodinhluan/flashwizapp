@@ -23,47 +23,40 @@ import com.flashwizserver.repository.UserRepository;
 public class ApplicationSecurityConfig {
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 
 		return new BCryptPasswordEncoder();
 
-	    
 
 	}
-	
-	@Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
-        return provider;
-    }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " khong tim thay"));
-    }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder());
+		provider.setUserDetailsService(userDetailsService());
+		return provider;
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return username -> userRepo.findByEmail(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User " + username + " khong tim thay"));
+	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();
 	}
 
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-			.csrf(AbstractHttpConfigurer::disable)
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll());
+		http.csrf(AbstractHttpConfigurer::disable)
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll());
 		return http.build();
 	}
-	
-
-
-
 
 }

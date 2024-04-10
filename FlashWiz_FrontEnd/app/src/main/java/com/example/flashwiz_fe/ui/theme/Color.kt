@@ -23,3 +23,12 @@ val redOrange = Color(0xFFe84a23)
 val green = Color(0xFF0ddb25)
 val blue = Color(0xFF140ddb)
 val brightBlue = Color(0xFF027cf5)
+
+val PrimaryColor = Color(0xFFFFC17B)
+val LightTextColor = Color(0xFF758684)
+
+val BackgroundColor = Color(0xFFFFE8F0)
+val SecondaryColor = Color(0xFF593153)
+val PlaceholderColor = Color(0xFFE5E5E5)
+val LightPrimaryColor = Color(0xFFFFF6EE)
+

@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +41,16 @@ public class Flashcard {
 	private Folder folder;
 
 	
+	@OneToMany(mappedBy = "flashcard") 
+    private List<Card> Card = new ArrayList<>(); 
+	
+	public List<Card> getCard() {
+		return Card;
+	}
+
+	public void setCard(List<Card> card) {
+		Card = card;
+	}
 
 	public Folder getFolder() {
 		return folder;
@@ -80,5 +91,7 @@ public class Flashcard {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	
 
 }

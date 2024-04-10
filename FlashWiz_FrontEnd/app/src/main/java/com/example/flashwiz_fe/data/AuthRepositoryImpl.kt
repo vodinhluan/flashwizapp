@@ -1,22 +1,24 @@
 package com.example.flashwiz_fe.data
 
-import com.example.flashwiz_fe.data.model.LoginRequest
-import com.example.flashwiz_fe.data.model.RegisterResponse
-import com.example.flashwiz_fe.data.model.TokenResponse
-import com.example.flashwiz_fe.data.network.RetrofitInstance
+
+import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
-
 import retrofit2.Response
 
+
+import com.example.flashwiz_fe.domain.model.RegisterResponse
+import com.example.flashwiz_fe.domain.model.TokenResponse
+
+
 class AuthRepositoryImpl : AuthRepository {
-    private val apiService = RetrofitInstance.apiService
+    private val authApiService = RetrofitInstance.authApiService
     override suspend fun login(email: String, password: String): Boolean {
         delay(1000)
          return try {
              // Gọi API đăng nhập người dùng
              val requestBody = LoginRequest(email, password)
-             val response: Response<TokenResponse> = apiService.login(requestBody)
+             val response: Response<TokenResponse> = authApiService.login(requestBody)
 
             // Kiểm tra kết quả từ response
             if (response.isSuccessful) {
@@ -64,7 +66,7 @@ class AuthRepositoryImpl : AuthRepository {
     override suspend fun register(name: String, email: String, password: String): Boolean {
         delay(1000)
         return try {
-            val response: Response<RegisterResponse> = apiService.register(name, email, password)
+            val response: Response<RegisterResponse> = authApiService.register(name, email, password)
             if (response.isSuccessful) {
                 println("API đăng ký người dùng thành công")
                 true
