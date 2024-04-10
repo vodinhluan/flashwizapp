@@ -41,10 +41,7 @@ fun TextEntryModule(
     trailingIcon: ImageVector? = null,
     onTrailingIconClick: (() -> Unit)?,
     modifier: Modifier = Modifier
-<<<<<<< HEAD
 
-=======
->>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
 ) {
 
     Column(

@@ -16,14 +16,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-<<<<<<< HEAD
+
 import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
 import com.example.flashwiz_fe.ui.theme.redOrange
-=======
+
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
->>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
+
 
 @Composable
 fun CardScreen() {

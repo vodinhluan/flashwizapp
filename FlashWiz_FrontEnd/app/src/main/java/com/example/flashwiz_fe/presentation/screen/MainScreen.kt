@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -20,14 +21,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-<<<<<<< HEAD
+
 import com.example.flashwiz_fe.data.network.RetrofitInstance
-=======
-import com.example.flashwiz_fe.data.remote.RetrofitInstance
->>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
+
+
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {

@@ -1,7 +1,7 @@
 package com.example.flashwiz_fe.presentation.screen
 
 import android.util.Log
-import com.example.flashwiz_fe.presentation.components.FolderItem
+//import com.example.flashwiz_fe.presentation.components.FolderItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,19 +24,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.model.Flashcard
 import com.example.flashwiz_fe.data.model.Folder
-<<<<<<< HEAD
+
 import com.example.flashwiz_fe.data.network.ApiService
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
-=======
-import com.example.flashwiz_fe.data.remote.ApiService
+
+
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.data.model.FolderDetail
 import com.example.flashwiz_fe.data.remote.RetrofitInstance
 
 import kotlinx.coroutines.DelicateCoroutinesApi
->>>>>>> f51a6747cfc1c55a29c8bbff0539566cfa4f7907
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -121,30 +121,30 @@ fun HomeScreen(navController: NavController, apiService: ApiService) {
                 onTrailingIconClick = {}
             )
 
-            LaunchedEffect(Unit) {
-                folders = apiService.getAllFolders()
-                isDataLoaded = true // Đặt biến trạng thái là true khi dữ liệu đã được tải xuống
-            }
+//            LaunchedEffect(Unit) {
+//                folders = apiService.getAllFolders()
+//                isDataLoaded = true // Đặt biến trạng thái là true khi dữ liệu đã được tải xuống
+//            }
 
             // Thanh scrollbar
-            if (isDataLoaded) { // Chỉ hiển thị khi dữ liệu đã được tải xuống
-                LazyColumn(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    items(folders) { folder ->
-                        FolderItem(
-                            folder = folder,
-                            onItemClick = { selectedFolderId ->
-                                selectedFolderId.let { folderId ->
-                                    selectedFolder = folders.find { it.id == folderId }
-                                    Log.d("FolderItemClicked", "Clicked on folder with ID: $folderId")
-                                }
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-                }
-            }
+//            if (isDataLoaded) { // Chỉ hiển thị khi dữ liệu đã được tải xuống
+//                LazyColumn(
+//                    modifier = Modifier.weight(1f)
+//                ) {
+//                    items(folders) { folder ->
+//                        FolderItem(
+//                            folder = folder,
+//                            onItemClick = { selectedFolderId ->
+//                                selectedFolderId.let { folderId ->
+//                                    selectedFolder = folders.find { it.id == folderId }
+//                                    Log.d("FolderItemClicked", "Clicked on folder with ID: $folderId")
+//                                }
+//                            }
+//                        )
+//                        Spacer(modifier = Modifier.height(8.dp))
+//                    }
+//                }
+//            }
 
             Spacer(modifier = Modifier.height(16.dp)) // Thêm Spacer ở đây
 

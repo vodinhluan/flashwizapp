@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.data.network
 
 import com.example.flashwiz_fe.data.model.Folder
+import com.example.flashwiz_fe.data.model.LoginRequest
 import com.example.flashwiz_fe.data.model.RegisterResponse
 import com.example.flashwiz_fe.data.model.TokenResponse
 import retrofit2.Response
@@ -26,11 +27,11 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ):Response<RegisterResponse>
-    @FormUrlEncoded
+
     @POST("/auth/login")
     suspend fun login(
-        @Field("email") email: String,
-        @Field("password") password: String,
+        @Body body: LoginRequest
+
     ): Response<TokenResponse>
 
 }
