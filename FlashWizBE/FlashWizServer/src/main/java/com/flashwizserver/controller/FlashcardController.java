@@ -44,17 +44,13 @@ public class FlashcardController {
         // Lấy thông tin về folder từ folderId
         Folder folder = folderService.findById(folderId);
         if (folder == null) {
-            // Nếu không tìm thấy folder, trả về lỗi
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Gán flashcard cho folder
         flashcard.setFolder(folder);
 
-        // Lưu flashcard vào cơ sở dữ liệu
         Flashcard createdFlashcard = flashcardService.createFlashcard(flashcard);
 
-        // Thêm flashcard vào danh sách flashcards của folder
         folder.getFlashcards().add(createdFlashcard);
         folderService.saveFolder(folder);
 

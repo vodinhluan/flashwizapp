@@ -23,6 +23,7 @@ import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import com.example.flashwiz_fe.domain.model.CardDetail
 
 
 @Composable
@@ -32,7 +33,7 @@ fun FlashcardDetailScreen(
     description: String,
     onNavigateUp: () -> Unit
 ) {
-    var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
+    var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {

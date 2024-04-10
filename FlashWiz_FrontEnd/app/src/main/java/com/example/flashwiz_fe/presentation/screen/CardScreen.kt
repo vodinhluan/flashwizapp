@@ -101,8 +101,8 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
             )
 
             TextField(
-                value = cardState.value.frontText,
-                onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
+                value = cardState.value.backText,
+                onValueChange = { cardState.value = cardState.value.copy(backText = it) },
                 label = { Text("") },
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
