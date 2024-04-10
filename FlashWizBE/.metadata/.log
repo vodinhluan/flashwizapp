@@ -7069,3 +7069,90 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 13:17:55.241
 !MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:32:59.996
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:33:57.676
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:40:32.005
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:40:44.576
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:41:25.269
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:41:54.559
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-04-10 17:43:30.924
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-04-10 17:44:07.448
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:44:12.467
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:44:36.338
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:46:23.524
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:46:25.564
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:46:31.738
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:48:01.633
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:48:38.560
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:50:03.452
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.eclipse.lsp4e 2 0 2024-04-10 17:50:11.486
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:65)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:50:12.896
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:51:11.846
+!MESSAGE Classpath changed for project: FlashWizServer
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-04-10 17:51:21.618
+!MESSAGE Classpath changed for project: FlashWizServer
