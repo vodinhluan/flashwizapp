@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
@@ -28,10 +29,12 @@ import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
 
 import com.example.flashwiz_fe.data.remote.FolderApiService
+import com.example.flashwiz_fe.presentation.viewmodel.AddFolderViewModel
 
 
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService) {
+    val viewModel: AddFolderViewModel = viewModel()
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
@@ -66,7 +69,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder")
+                        AddItemComponent(navController = navController, "Folder",null)
                     } else {
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -93,7 +96,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 textAlign = TextAlign.Left,
                                 modifier = Modifier.padding(16.dp)
                             )
-                            AddItemComponent(navController = navController, "Flashcard")
+                            selectedFolder?.let { folder ->
+                            AddItemComponent(navController = navController, "Flashcard",folderId=folder.id)
+                            }
                         }
                     }
                 }
@@ -142,8 +147,14 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                         "Clicked on folder with ID: $folderId"
                                     )
                                 }
-                            }
+                            },
+                            onDeleteClick = { selectedFolderId ->
+                                selectedFolderId.let { folderId ->
+                                selectedFolder = folders.find { it.id == folderId }
+                                viewModel.deleteFolder(folderId)
+                            }}
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }

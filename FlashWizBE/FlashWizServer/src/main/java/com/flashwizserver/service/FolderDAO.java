@@ -37,10 +37,15 @@ public class FolderDAO {
 
 
 	public Folder getFolderById(Integer folderId) {
-		// Triển khai logic lấy folder từ cơ sở dữ liệu dựa trên folderId
 		Optional<Folder> optionalFolder = folderRepo.findById(folderId);
 		return optionalFolder.orElse(null);
 	}
+	public void delete(Integer id){
+		Long countById=folderRepo.countById(id);
+	
+		folderRepo.deleteById(id);
+	
+}
 
 }
 

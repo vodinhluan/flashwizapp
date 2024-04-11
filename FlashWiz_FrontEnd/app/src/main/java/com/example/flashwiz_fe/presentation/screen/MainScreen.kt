@@ -28,6 +28,7 @@ import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
+
     val items = listOf(
         BottomNavigationItem(
             title = "Home",

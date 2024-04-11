@@ -1,5 +1,8 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.example.flashwiz_fe.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,19 +25,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.AddFlashcardViewModel
 
 @Composable
 fun AddFlashcardScreen(
-
 onNavigateBack: () -> Unit,
+initialFolderId: Int?,
 ) {
     val viewModel: AddFlashcardViewModel = viewModel()
     var flashcardName by remember { mutableStateOf("") }
     var flashcardDescription by remember { mutableStateOf("") }
-    var selectedFolder by remember {mutableStateOf<FolderDetail?>(null)  }
+    val navController = rememberNavController()
+    val folderId = initialFolderId ?: navController.currentBackStackEntry?.arguments?.getInt("folderId")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,11 +81,16 @@ onNavigateBack: () -> Unit,
             BackIconComponent(onNavigateBack)
             Button(
                 onClick = {
-                    viewModel.addFlashcard(flashcardName, flashcardDescription,3) { isSuccess ->
-                        if (isSuccess) {
-                            onNavigateBack()
-                        } else {
-
+                    if (folderId != null) {
+                        viewModel.addFlashcard(flashcardName, flashcardDescription,folderId) { isSuccess ->
+                            if (isSuccess) {
+                                onNavigateBack()
+                            } else {
+                                Log.d(
+                                    "Add",
+                                    "null"
+                                )
+                            }
                         }
                     }
                 }

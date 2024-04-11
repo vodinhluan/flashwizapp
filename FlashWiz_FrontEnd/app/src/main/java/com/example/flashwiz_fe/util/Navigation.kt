@@ -68,9 +68,11 @@ fun Navigation() {
             AddFlashcardScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
+                initialFolderId = navController.currentBackStackEntry?.arguments?.getInt("folderId")
             )
         }
+
 
         composable(ScreenRoutes.AddCardScreen.route) {
             val cardViewModel: CardViewModel = remember {
