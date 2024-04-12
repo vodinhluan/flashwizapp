@@ -58,11 +58,7 @@ public class FlashcardController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFlashcard(@PathVariable Integer id) {
-        flashcardService.deleteFlashcard(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+ 
     @GetMapping("/flashcard/get-by-folder/{folderId}")
     public ResponseEntity<List<Flashcard>> getFlashcardsByFolderId(@PathVariable("folderId") Integer folderId) {
         // Lấy thông tin về folder từ folderId
@@ -79,5 +75,10 @@ public class FlashcardController {
         return new ResponseEntity<>(flashcards, HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/flashcard/delete/{id}")
+    public ResponseEntity<List<Flashcard>> deleteFlashcard(@PathVariable(name= "id") Integer id) {
+    	flashcardService.deleteFlashcard(id);
+        List<Flashcard> flashcards = flashcardService.getAllFlashcards();
+        return new ResponseEntity<>(flashcards, HttpStatus.OK);
+    }
    }

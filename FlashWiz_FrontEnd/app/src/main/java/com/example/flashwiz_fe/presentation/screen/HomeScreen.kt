@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
 import android.util.Log
-import com.example.flashwiz_fe.presentation.components.FolderItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,12 +28,14 @@ import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
 
 import com.example.flashwiz_fe.data.remote.FolderApiService
-import com.example.flashwiz_fe.presentation.viewmodel.AddFolderViewModel
+import com.example.flashwiz_fe.presentation.components.FolderItem
+import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService) {
-    val viewModel: AddFolderViewModel = viewModel()
+    val viewModel: FolderViewModel = viewModel()
+    var originalFolders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
@@ -54,7 +55,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
         ) {
             if (showHeaderState.value) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .background(Color.Cyan),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -72,7 +74,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                         AddItemComponent(navController = navController, "Folder",null)
                     } else {
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .background(Color.Cyan),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -121,12 +124,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
 
 
             LaunchedEffect(Unit) {
-                folders = apiService.getAllFolders()
-                isDataLoaded = true // Đặt biến trạng thái là true khi dữ liệu đã được tải xuống
+                originalFolders = apiService.getAllFolders()
+                folders = originalFolders
+                isDataLoaded = true
             }
 
-            // Thanh scrollbar
-            if (isDataLoaded) { // Chỉ hiển thị khi dữ liệu đã được tải xuống
+            if (isDataLoaded) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -148,19 +151,21 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                     )
                                 }
                             },
-                            onDeleteClick = { selectedFolderId ->
-                                selectedFolderId.let { folderId ->
-                                selectedFolder = folders.find { it.id == folderId }
-                                viewModel.deleteFolder(folderId)
-                            }}
-                        )
-
+                            onDeleteClick = { folderId ->
+                                viewModel.deleteFolderAndUpdateList(
+                                    folderId = folderId,
+                                    viewModel = viewModel,
+                                    apiService = apiService,
+                                    originalFolders = originalFolders
+                                ) { updatedFolders ->
+                                    folders = updatedFolders // Cập nhật danh sách thư mục hiển thị
+                                }
+                            } )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }
             selectedFolder?.let { folder ->
-
                 FolderDetailScreen(
                     folderId = folder.id,
                     folderName = folder.name,

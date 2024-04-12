@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.background
@@ -29,14 +30,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
-import com.example.flashwiz_fe.presentation.components.FlashCardItem
+import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
 fun FolderDetailScreen(
@@ -47,13 +47,15 @@ fun FolderDetailScreen(
     navController: NavController,
     showHeader: MutableState<Boolean>
 ) {
+    val viewModel: FlashcardViewModel = viewModel()
+    var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
     LaunchedEffect(Unit) {
-        GlobalScope.launch(Dispatchers.IO) {
-            flashcards = flashcardApiService.getFlashcardsByFolderId(folderId)
+        originalFlashcard = flashcardApiService.getFlashcardsByFolderId(folderId)
+        flashcards = originalFlashcard
         }
-    }
+
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -73,16 +75,27 @@ fun FolderDetailScreen(
         if (selectedFlashcard == null) {
             LazyColumn {
                 items(flashcards) { flashcard ->
-                    FlashCardItem(
+                    FlashcardItem(
                         flashcard = flashcard,
                         onItemClick = { selectedFlashcardId ->
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
-                                showHeader.value = false // Ẩn header khi flashcard được chọn
+                                Log.d(
+                                    "FlashcardItemClicked",
+                                    "Clicked on folder with ID: $flashcardId"
+                                )
                             }
-                        }
-                    )
-
+                        },
+                        onDeleteClick = { flashcardId ->
+                            viewModel.deleteFlashcardAndUpdateList(
+                                flashcardId = flashcardId,
+                                viewModel = viewModel,
+                                apiService = flashcardApiService,
+                                originalFlashcard = originalFlashcard
+                            ) { updatedFlashcards ->
+                                flashcards = updatedFlashcards // Cập nhật danh sách thư mục hiển thị
+                            }
+                        } )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }

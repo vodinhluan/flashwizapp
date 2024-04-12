@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.flashwiz_fe.domain.model.FolderDetail
 
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FolderItem(
@@ -41,7 +42,7 @@ fun FolderItem(
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically, // Căn giữa theo chiều dọc
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -49,7 +50,6 @@ fun FolderItem(
                     style = MaterialTheme.typography.subtitle1,
                     modifier = Modifier.weight(1f)
                 )
-                // Thêm nút để xóa thư mục
                 IconButton(
                     onClick = { onDeleteClick(folder.id) }
                 ) {
@@ -60,7 +60,6 @@ fun FolderItem(
                 text = folder.descriptions,
                 style = MaterialTheme.typography.body2
             )
-            // Thêm nút để xóa thư mục
 
         }
     }

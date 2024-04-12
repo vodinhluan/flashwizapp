@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.data
 
-import com.example.flashwiz_fe.data.remote.ApiService
+
+import com.example.flashwiz_fe.data.remote.AuthApiService
 import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.data.remote.FlashcardApiService
 import com.example.flashwiz_fe.data.remote.FolderApiService
@@ -9,7 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitInstance {
-    private const val BASE_URL = "http://192.168.226.175:8080/"
+
+    private const val BASE_URL = "http://192.168.1.228:8080/"
 
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
@@ -18,8 +20,8 @@ object RetrofitInstance {
                 .build()
         }
 
-        val apiService: ApiService by lazy {
-            retrofit.create(ApiService::class.java)
+        val authApiService: AuthApiService by lazy {
+            retrofit.create(AuthApiService::class.java)
         }
         val folderApiService: FolderApiService by lazy {
             retrofit.create(FolderApiService::class.java)
