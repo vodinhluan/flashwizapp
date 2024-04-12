@@ -37,7 +37,6 @@ import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
-
 @Composable
 fun FolderDetailScreen(
     folderId: Int,
@@ -45,22 +44,22 @@ fun FolderDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController,
-    showHeader: MutableState<Boolean>
+    showHeader: MutableState<Boolean> // Thêm trạng thái của header
 ) {
     val viewModel: FlashcardViewModel = viewModel()
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
+
     LaunchedEffect(Unit) {
         originalFlashcard = flashcardApiService.getFlashcardsByFolderId(folderId)
         flashcards = originalFlashcard
-        }
-
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        if (showHeader.value) { // Sử dụng giá trị của showHeader để quyết định việc hiển thị của header
+        if (showHeader.value) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -80,10 +79,7 @@ fun FolderDetailScreen(
                         onItemClick = { selectedFlashcardId ->
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
-                                Log.d(
-                                    "FlashcardItemClicked",
-                                    "Clicked on folder with ID: $flashcardId"
-                                )
+                                showHeader.value = false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
                             }
                         },
                         onDeleteClick = { flashcardId ->
@@ -93,13 +89,15 @@ fun FolderDetailScreen(
                                 apiService = flashcardApiService,
                                 originalFlashcard = originalFlashcard
                             ) { updatedFlashcards ->
-                                flashcards = updatedFlashcards // Cập nhật danh sách thư mục hiển thị
+                                flashcards = updatedFlashcards
                             }
-                        } )
+                        }
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         } else {
+            // Header của card
             Row(
                 modifier = Modifier.fillMaxWidth()
                     .background(Color.Cyan),

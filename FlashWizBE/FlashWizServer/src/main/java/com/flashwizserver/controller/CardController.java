@@ -58,5 +58,11 @@ public class CardController {
         
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
+    @DeleteMapping("/card/delete/{id}")
+    public ResponseEntity<List<Card>> deleteCard(@PathVariable(name= "id") Integer id) {
+    	cardService.deleteCard(id);
+        List<Card> cards = cardService.getAllCards();
+        return new ResponseEntity<>(cards, HttpStatus.OK);
+    }
 
 }

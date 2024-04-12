@@ -39,25 +39,22 @@ fun FlashcardDetailScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Tiêu đề và mô tả
         Text(text = flashcardName, style = MaterialTheme.typography.h4)
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = description, style = MaterialTheme.typography.body1)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Danh sách các card hiển thị theo grid
         if (isDataLoaded) {
             LazyVerticalGrid(
-                modifier = Modifier.weight(1f), // Chiếm toàn bộ không gian còn lại
+                modifier = Modifier.weight(1f),
                 columns = GridCells.Fixed(2)
             ) {
                 items(cards) { card ->
                     CardItemComponent(
-                        question = card.back,
-                        answer = card.front,
+                        card = card,
                         onFlashcardClicked = {
-                            // Xử lý sự kiện khi click vào card nếu cần
-                        }
+
+                        },
                     )
                 }
             }

@@ -22,15 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-
+import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
-
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.presentation.components.FolderItem
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
-
 
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService) {
@@ -39,24 +37,20 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
-    val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
+    val showHeaderState = remember { mutableStateOf(true) }
     var selectedFolderId by remember { mutableStateOf<Int?>(null) }
-
     var searchQuery by remember { mutableStateOf("") }
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
-
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
             if (showHeaderState.value) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                         .background(Color.Cyan),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -71,11 +65,10 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder",null)
+                        AddItemComponent(navController = navController, "Folder", null)
                     } else {
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth()
                                 .background(Color.Cyan),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -100,7 +93,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 modifier = Modifier.padding(16.dp)
                             )
                             selectedFolder?.let { folder ->
-                            AddItemComponent(navController = navController, "Flashcard",folderId=folder.id)
+                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
                             }
                         }
                     }
@@ -121,8 +114,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 )
             }
 
-
-
             LaunchedEffect(Unit) {
                 originalFolders = apiService.getAllFolders()
                 folders = originalFolders
@@ -133,7 +124,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
-
                     items(folders.filter {
                         it.name.contains(
                             searchQuery,
@@ -155,17 +145,20 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 viewModel.deleteFolderAndUpdateList(
                                     folderId = folderId,
                                     viewModel = viewModel,
-                                    apiService = apiService,
+                                    apiService = RetrofitInstance.folderApiService,
                                     originalFolders = originalFolders
-                                ) { updatedFolders ->
-                                    folders = updatedFolders // Cập nhật danh sách thư mục hiển thị
+                                ) { updatedFlashcards ->
+                                    folders = updatedFlashcards
                                 }
-                            } )
+                            }
+                        )
+
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }
             selectedFolder?.let { folder ->
+
                 FolderDetailScreen(
                     folderId = folder.id,
                     folderName = folder.name,
