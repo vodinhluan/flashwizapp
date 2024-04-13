@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,6 +29,10 @@ import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
+import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
@@ -34,7 +40,8 @@ fun FlashcardDetailScreen(
     flashcardId: Int,
     flashcardName: String,
     description: String,
-    onNavigateUp: () -> Unit
+    onNavigateUp: () -> Unit,
+    navController: NavController
 ) {
     val cardViewModel: CardViewModel = hiltViewModel()
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
@@ -62,7 +69,6 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
-
                         },
                         onDeleteClick = { cardId ->
                             cardViewModel.deleteCardAndUpdateList(
@@ -78,6 +84,17 @@ fun FlashcardDetailScreen(
                 }
             }
         }
+        CustomButtonComponent(
+            text = "Review Cards",
+            onClick = {
+                navController.navigate(ScreenRoutes.ReviewCardScreen.route)
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+            backgroundColor = Color.Blue,
+            contentColor = Color.White,
+            borderColor = Color.Black
+        )
     }
 }
+
 

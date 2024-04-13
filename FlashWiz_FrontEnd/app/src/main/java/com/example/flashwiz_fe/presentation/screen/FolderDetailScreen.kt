@@ -135,7 +135,8 @@ fun FolderDetailScreen(
                     onNavigateUp = {
                         selectedFlashcard = null
                         showHeader.value = true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
-                    }
+                    },
+                    navController
                 )
             }
         }

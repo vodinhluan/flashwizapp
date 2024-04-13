@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.util
 
 import AddFolderScreen
+import ReviewCardScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -17,7 +18,7 @@ import com.example.flashwiz_fe.presentation.screen.RegisterScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
-fun Navigation() {
+fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(
@@ -83,10 +84,13 @@ fun Navigation() {
             CardScreen(cardViewModel = cardViewModel, navController = navController)
         }
 
+        composable(ScreenRoutes.ReviewCardScreen.route) {
+            ReviewCardScreen()
+        }
+
 
     }
 }
-
 
 
 

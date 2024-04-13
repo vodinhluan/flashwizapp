@@ -45,6 +45,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
         color = Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
+
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -153,7 +154,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             }
                         )
 
+
                         Spacer(modifier = Modifier.height(8.dp))
+
                     }
                 }
             }
