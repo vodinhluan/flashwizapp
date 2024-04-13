@@ -16,11 +16,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
@@ -28,7 +33,8 @@ fun FlashcardDetailScreen(
     flashcardId: Int,
     flashcardName: String,
     description: String,
-    onNavigateUp: () -> Unit
+    onNavigateUp: () -> Unit,
+    navController: NavController
 ) {
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
@@ -39,29 +45,38 @@ fun FlashcardDetailScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Tiêu đề và mô tả
         Text(text = flashcardName, style = MaterialTheme.typography.h4)
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = description, style = MaterialTheme.typography.body1)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Danh sách các card hiển thị theo grid
         if (isDataLoaded) {
             LazyVerticalGrid(
-                modifier = Modifier.weight(1f), // Chiếm toàn bộ không gian còn lại
+                modifier = Modifier.weight(1f),
                 columns = GridCells.Fixed(2)
             ) {
                 items(cards) { card ->
                     CardItemComponent(
-                        question = card.back,
-                        answer = card.front,
+                        card = card,
                         onFlashcardClicked = {
-                            // Xử lý sự kiện khi click vào card nếu cần
+                            // Hành động khi nhấp vào từng Card
                         }
                     )
                 }
             }
         }
+
+        CustomButtonComponent(
+            text = "Review Cards",
+            onClick = {
+                navController.navigate(ScreenRoutes.ReviewCardScreen.route)
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+            backgroundColor = Color.Blue,
+            contentColor = Color.White,
+            borderColor = Color.Black
+        )
     }
 }
+
 

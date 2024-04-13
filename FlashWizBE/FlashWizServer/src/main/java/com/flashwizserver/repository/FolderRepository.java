@@ -15,5 +15,5 @@ import com.flashwizserver.model.Folder;
 @Repository
 
 public interface FolderRepository extends CrudRepository<Folder, Integer> {
-	
+	public Long countById(Integer id);
 }
