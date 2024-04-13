@@ -1,3 +1,4 @@
+
 package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.layout.Column
@@ -18,9 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 
 @Composable
@@ -30,11 +36,14 @@ fun FlashcardDetailScreen(
     description: String,
     onNavigateUp: () -> Unit
 ) {
+    val cardViewModel: CardViewModel = hiltViewModel()
+    var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        cards = RetrofitInstance.cardApiService.getCardsByFlashcardId(flashcardId)
+        originalCard = cardViewModel.getCardsByFlashcardId(flashcardId)
+        cards = originalCard
         isDataLoaded = true
     }
 
@@ -55,6 +64,16 @@ fun FlashcardDetailScreen(
                         onFlashcardClicked = {
 
                         },
+                        onDeleteClick = { cardId ->
+                            cardViewModel.deleteCardAndUpdateList(
+                                cardId = cardId,
+                                viewModel = cardViewModel,
+                                apiService = RetrofitInstance.cardApiService,
+                                originalCard = originalCard
+                            ) { updateCards ->
+                                cards = updateCards
+                            }
+                        }
                     )
                 }
             }

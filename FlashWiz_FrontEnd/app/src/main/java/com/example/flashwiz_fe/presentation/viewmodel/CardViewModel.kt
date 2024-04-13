@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
     private val _saveSuccess = MutableStateFlow(false)
@@ -32,6 +33,9 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
             }
         }
     }
+    suspend fun getCardsByFlashcardId(flashcardId: Int): List<CardDetail> {
+        return cardRepository.getCardsByFlashcardId(flashcardId)
+    }
     fun deleteCard(cardId: Int) {
         viewModelScope.launch {
             try {
@@ -48,12 +52,3 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         updateCards(updatedCard)
     }
 }
-
-
-
-
-
-
-
-
-

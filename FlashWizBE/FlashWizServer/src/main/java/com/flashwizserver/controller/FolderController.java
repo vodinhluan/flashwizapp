@@ -38,8 +38,6 @@ public class FolderController {
         
         Folder savedFolder = folderDAO.saveFolder(folder);
         return ResponseEntity.ok(savedFolder);
-
-
     }
     @DeleteMapping("/folder/delete/{id}")
     public ResponseEntity<List<Folder>> deleteFolder(@PathVariable(name= "id") Integer id) {
