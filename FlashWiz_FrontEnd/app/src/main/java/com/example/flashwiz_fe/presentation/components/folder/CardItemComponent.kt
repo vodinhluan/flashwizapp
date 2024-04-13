@@ -64,7 +64,7 @@ fun CardItemComponent(
 
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = card.back,
+                text = card.front,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             Spacer(modifier = Modifier.weight(1f))

@@ -16,11 +16,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
@@ -28,7 +33,8 @@ fun FlashcardDetailScreen(
     flashcardId: Int,
     flashcardName: String,
     description: String,
-    onNavigateUp: () -> Unit
+    onNavigateUp: () -> Unit,
+    navController: NavController
 ) {
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
@@ -53,12 +59,24 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
-
-                        },
+                            // Hành động khi nhấp vào từng Card
+                        }
                     )
                 }
             }
         }
+
+        CustomButtonComponent(
+            text = "Review Cards",
+            onClick = {
+                navController.navigate(ScreenRoutes.ReviewCardScreen.route)
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+            backgroundColor = Color.Blue,
+            contentColor = Color.White,
+            borderColor = Color.Black
+        )
     }
 }
+
 

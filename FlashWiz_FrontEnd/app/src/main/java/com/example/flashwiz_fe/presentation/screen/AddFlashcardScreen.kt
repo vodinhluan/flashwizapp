@@ -31,14 +31,15 @@ import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
 fun AddFlashcardScreen(
-onNavigateBack: () -> Unit,
-initialFolderId: Int?,
+    onNavigateBack: () -> Unit,
+    initialFolderId: Int?,
 ) {
     val viewModel: FlashcardViewModel = viewModel()
     var flashcardName by remember { mutableStateOf("") }
     var flashcardDescription by remember { mutableStateOf("") }
     val navController = rememberNavController()
-    val folderId = initialFolderId ?: navController.currentBackStackEntry?.arguments?.getInt("folderId")
+    val folderId =
+        initialFolderId ?: navController.currentBackStackEntry?.arguments?.getInt("folderId")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +82,11 @@ initialFolderId: Int?,
             Button(
                 onClick = {
                     if (folderId != null) {
-                        viewModel.addFlashcard(flashcardName, flashcardDescription,folderId) { isSuccess ->
+                        viewModel.addFlashcard(
+                            flashcardName,
+                            flashcardDescription,
+                            folderId
+                        ) { isSuccess ->
                             if (isSuccess) {
                                 onNavigateBack()
                             } else {
