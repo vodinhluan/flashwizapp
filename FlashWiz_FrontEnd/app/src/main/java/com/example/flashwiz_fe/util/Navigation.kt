@@ -17,7 +17,7 @@ import com.example.flashwiz_fe.presentation.screen.RegisterScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
-fun Navigation() {
+fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(
@@ -57,9 +57,6 @@ fun Navigation() {
         }
         composable(ScreenRoutes.AddFolderScreen.route) {
             AddFolderScreen(
-//                onAddFolder = { folderName, folderDescription ->
-//                    // Xử lý khi người dùng thêm thư mục ở đây
-//                },
                 onNavigateBack = {
                     navController.popBackStack()
                 }
@@ -69,9 +66,6 @@ fun Navigation() {
 
         composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
-//                onAddFolder = { folderName, folderDescription ->
-//                    // Xử lý khi người dùng thêm thư mục ở đây
-//                },
                 onNavigateBack = {
                     navController.popBackStack()
                 }
@@ -90,7 +84,6 @@ fun Navigation() {
 
     }
 }
-
 
 
 

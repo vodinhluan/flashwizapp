@@ -44,10 +44,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var searchQuery by remember { mutableStateOf("") }
 
     Surface(
-        modifier = Modifier.fillMaxWidth( ),
+        modifier = Modifier.fillMaxWidth(),
         color = Color.White
     ) {
-        val expanded = remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -111,7 +110,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                     cursorColor = Color.LightGray,
                     onValueChanged = { newValue ->
                         searchQuery = newValue
-                    },                    trailingIcon = Icons.Filled.RemoveRedEye,
+                    }, trailingIcon = Icons.Filled.RemoveRedEye,
                     onTrailingIconClick = {}
                 )
             }
@@ -130,18 +129,24 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 ) {
 
                     items(folders.filter {
-                        it.name.contains(searchQuery, ignoreCase = true) || it.descriptions.contains(searchQuery, ignoreCase = true)
+                        it.name.contains(
+                            searchQuery,
+                            ignoreCase = true
+                        ) || it.descriptions.contains(searchQuery, ignoreCase = true)
                     }) { folder ->
                         FolderItem(
-                            folder = folder,
-                            onItemClick = { selectedFolderId ->
-                                selectedFolderId.let { folderId ->
-                                    selectedFolder = folders.find { it.id == folderId }
-                                    Log.d("FolderItemClicked", "Clicked on folder with ID: $folderId")
-                                }
+                            folder = folder
+                        ) { selectedFolderId ->
+                            selectedFolderId.let { folderId ->
+                                selectedFolder = folders.find { it.id == folderId }
+                                Log.d(
+                                    "FolderItemClicked",
+                                    "Clicked on folder with ID: $folderId"
+                                )
                             }
-                        )
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
+
                     }
                 }
             }
