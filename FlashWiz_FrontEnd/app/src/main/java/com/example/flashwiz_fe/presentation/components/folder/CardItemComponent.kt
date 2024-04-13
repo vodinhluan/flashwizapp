@@ -36,7 +36,7 @@ fun CardItemComponent(
         modifier = Modifier
             .padding(8.dp)
             .clickable(onClick = onFlashcardClicked)
-            .size(200.dp), 
+            .size(200.dp),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color.Gray),
         backgroundColor = Color.White
