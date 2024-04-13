@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,16 +41,14 @@ public class FolderController {
 
 
     }
-    @GetMapping("/folder/get-by-id/{folderId}")
-    public ResponseEntity<Folder> getFolderById(@PathVariable Integer folderId) {
-        Folder folder = folderDAO.getFolderById(folderId);
-        if (folder != null) {
-            return ResponseEntity.ok(folder);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
+    @DeleteMapping("/folder/delete/{id}")
+    public ResponseEntity<List<Folder>> deleteFolder(@PathVariable(name= "id") Integer id) {
+        folderDAO.delete(id);
+        List<Folder> folders = folderDAO.getAllFolder();
+        return new ResponseEntity<>(folders, HttpStatus.OK);
     }
+
+
    
 }
 

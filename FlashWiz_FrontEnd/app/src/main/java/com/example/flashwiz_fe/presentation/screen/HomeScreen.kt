@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
 import android.util.Log
-import com.example.flashwiz_fe.presentation.components.FolderItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,32 +20,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-
+import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
-
-
-
-
-
 import com.example.flashwiz_fe.data.remote.FolderApiService
-
+import com.example.flashwiz_fe.presentation.components.FolderItem
+import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService) {
+    val viewModel: FolderViewModel = viewModel()
+    var originalFolders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
-    val showHeaderState = remember { mutableStateOf(true) } // Thêm biến showHeaderState
-
+    val showHeaderState = remember { mutableStateOf(true) }
+    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
     var searchQuery by remember { mutableStateOf("") }
-
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
+        val expanded = remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -68,7 +66,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder")
+                        AddItemComponent(navController = navController, "Folder", null)
                     } else {
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -95,7 +93,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 textAlign = TextAlign.Left,
                                 modifier = Modifier.padding(16.dp)
                             )
-                            AddItemComponent(navController = navController, "Flashcard")
+                            selectedFolder?.let { folder ->
+                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+                            }
                         }
                     }
                 }
@@ -115,19 +115,16 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 )
             }
 
-
-
             LaunchedEffect(Unit) {
-                folders = apiService.getAllFolders()
-                isDataLoaded = true // Đặt biến trạng thái là true khi dữ liệu đã được tải xuống
+                originalFolders = apiService.getAllFolders()
+                folders = originalFolders
+                isDataLoaded = true
             }
 
-            // Thanh scrollbar
-            if (isDataLoaded) { // Chỉ hiển thị khi dữ liệu đã được tải xuống
+            if (isDataLoaded) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
                 ) {
-
                     items(folders.filter {
                         it.name.contains(
                             searchQuery,
@@ -135,16 +132,29 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                         ) || it.descriptions.contains(searchQuery, ignoreCase = true)
                     }) { folder ->
                         FolderItem(
-                            folder = folder
-                        ) { selectedFolderId ->
-                            selectedFolderId.let { folderId ->
-                                selectedFolder = folders.find { it.id == folderId }
-                                Log.d(
-                                    "FolderItemClicked",
-                                    "Clicked on folder with ID: $folderId"
-                                )
+                            folder = folder,
+                            onItemClick = { selectedFolderId ->
+                                selectedFolderId.let { folderId ->
+                                    selectedFolder = folders.find { it.id == folderId }
+                                    Log.d(
+                                        "FolderItemClicked",
+                                        "Clicked on folder with ID: $folderId"
+                                    )
+                                }
+                            },
+                            onDeleteClick = { folderId ->
+                                viewModel.deleteFolderAndUpdateList(
+                                    folderId = folderId,
+                                    viewModel = viewModel,
+                                    apiService = RetrofitInstance.folderApiService,
+                                    originalFolders = originalFolders
+                                ) { updatedFlashcards ->
+                                    folders = updatedFlashcards
+                                }
                             }
-                        }
+                        )
+
+
                         Spacer(modifier = Modifier.height(8.dp))
 
                     }
@@ -154,7 +164,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
 
                 FolderDetailScreen(
                     folderId = folder.id,
-
                     folderName = folder.name,
                     description = folder.descriptions,
                     onNavigateUp = {
@@ -164,6 +173,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                     showHeader = showHeaderState
                 )
             }
+
         }
     }
 }

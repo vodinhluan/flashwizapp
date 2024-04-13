@@ -1,25 +1,21 @@
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashwiz_fe.R
 import com.example.flashwiz_fe.presentation.components.BackIconComponent
-import com.example.flashwiz_fe.presentation.viewmodel.AddFolderViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 @Composable
 fun AddFolderScreen(
     onNavigateBack: () -> Unit
 ) {
-    val viewModel: AddFolderViewModel = viewModel()
+    val viewModel: FolderViewModel = viewModel()
     var folderName by remember { mutableStateOf("") }
     var folderDescription by remember { mutableStateOf("") }
 

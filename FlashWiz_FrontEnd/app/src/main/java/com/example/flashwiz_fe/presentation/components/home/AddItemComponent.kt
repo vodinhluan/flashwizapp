@@ -1,11 +1,13 @@
 package com.example.flashwiz_fe.presentation.components.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material3.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,8 +21,7 @@ import com.example.flashwiz_fe.presentation.components.MenuItem
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemComponent(navController: NavController, itemType: String) {
-    var expanded by remember { mutableStateOf(false) }
+fun AddItemComponent(navController: NavController, itemType: String,folderId: Int?, onFolderSelected: ((Int) -> Unit)? = null, onFlashcardSelected: (() -> Unit)? = null) {    var expanded by remember { mutableStateOf(false) }
 
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
 
@@ -41,11 +42,16 @@ fun AddItemComponent(navController: NavController, itemType: String) {
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
                         "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route)
+                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route + "?folderId=$folderId")
                         "Card" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+                        "Review" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+
+
                     }
                     expanded = false
                 }
+
+
 //                MenuItem(text = "Add Card") {
 //                    navController.navigate(ScreenRoutes.AddCardScreen.route)
 //                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục

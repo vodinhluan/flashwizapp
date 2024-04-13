@@ -28,6 +28,7 @@ import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
+
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
@@ -70,6 +71,7 @@ fun MainScreen(navController: NavHostController) {
                 when (selectedItemIndex) {
                     0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                     1 ->  StatisticScreen()
+                    1 -> StatisticScreen()
                     2 -> AccountScreen()
                     else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 }

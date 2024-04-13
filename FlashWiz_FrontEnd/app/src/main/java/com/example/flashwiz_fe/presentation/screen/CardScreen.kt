@@ -20,17 +20,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+
+import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
+import com.example.flashwiz_fe.ui.theme.redOrange
+
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
 import com.example.flashwiz_fe.ui.theme.redOrange
+
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+
+
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 
 @Composable
 fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) {
@@ -101,8 +111,8 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
             )
 
             TextField(
-                value = cardState.value.frontText,
-                onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
+                value = cardState.value.backText,
+                onValueChange = { cardState.value = cardState.value.copy(backText = it) },
                 label = { Text("") },
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
