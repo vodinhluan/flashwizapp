@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +36,12 @@ fun MainScreen(navController: NavHostController) {
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
+            hasNews = false,
+        ),
+        BottomNavigationItem(
+            title = "Group",
+            selectedIcon = Icons.Filled.Group,
+            unselectedIcon = Icons.Outlined.Group,
             hasNews = false,
         ),
         BottomNavigationItem(
@@ -70,9 +78,9 @@ fun MainScreen(navController: NavHostController) {
             ) {
                 when (selectedItemIndex) {
                     0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
-                    1 ->  StatisticScreen()
-                    1 -> StatisticScreen()
-                    2 -> AccountScreen()
+                    1 -> StudyGroupScreen()
+                    2 -> StatisticScreen()
+                    3 -> AccountScreen()
                     else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 }
             }

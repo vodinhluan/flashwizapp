@@ -1,3 +1,4 @@
+
 package com.example.flashwiz_fe.presentation.screen
 
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
+import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.util.ScreenRoutes
@@ -36,11 +43,14 @@ fun FlashcardDetailScreen(
     onNavigateUp: () -> Unit,
     navController: NavController
 ) {
+    val cardViewModel: CardViewModel = hiltViewModel()
+    var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        cards = RetrofitInstance.cardApiService.getCardsByFlashcardId(flashcardId)
+        originalCard = cardViewModel.getCardsByFlashcardId(flashcardId)
+        cards = originalCard
         isDataLoaded = true
     }
 
@@ -59,13 +69,21 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
-                            // Hành động khi nhấp vào từng Card
+                        },
+                        onDeleteClick = { cardId ->
+                            cardViewModel.deleteCardAndUpdateList(
+                                cardId = cardId,
+                                viewModel = cardViewModel,
+                                apiService = RetrofitInstance.cardApiService,
+                                originalCard = originalCard
+                            ) { updateCards ->
+                                cards = updateCards
+                            }
                         }
                     )
                 }
             }
         }
-
         CustomButtonComponent(
             text = "Review Cards",
             onClick = {

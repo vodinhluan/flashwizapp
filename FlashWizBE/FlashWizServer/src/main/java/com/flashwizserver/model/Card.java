@@ -33,7 +33,7 @@ public class Card {
 //    @JoinColumn(name = "flashcard_id") 
 //	private List<Flashcard> flashcards;
 	@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "flashcard_id") 
     private Flashcard flashcard;
 

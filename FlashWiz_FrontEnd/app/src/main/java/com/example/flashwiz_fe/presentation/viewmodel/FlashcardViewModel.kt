@@ -26,7 +26,7 @@ class FlashcardViewModel: ViewModel() {
             }
         }
     }
-    fun deleteFlashcard(flashcardId: Int) {
+    private fun deleteFlashcard(flashcardId: Int) {
         viewModelScope.launch {
             try {
                 flashcardService.deleteFlashcard(flashcardId)

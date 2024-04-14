@@ -29,12 +29,14 @@ import com.example.flashwiz_fe.domain.model.CardDetail
 fun CardItemComponent(
     card: CardDetail,
     onFlashcardClicked: () -> Unit,
+    onDeleteClick: (Int) -> Unit
+
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .clickable(onClick = onFlashcardClicked)
-            .size(200.dp), // Kích thước vuông
+            .size(200.dp),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color.Gray),
         backgroundColor = Color.White
@@ -47,7 +49,7 @@ fun CardItemComponent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(30.dp)
-                    .background(Color.Gray) // Màu sắc của header
+                    .background(Color.Gray)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -55,7 +57,9 @@ fun CardItemComponent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
-                        onClick = {  }
+                        onClick = {
+                            onDeleteClick(card.id)
+                        }
                     ) {
                         Icon(Icons.Default.Delete, contentDescription = "Delete")
                     }
