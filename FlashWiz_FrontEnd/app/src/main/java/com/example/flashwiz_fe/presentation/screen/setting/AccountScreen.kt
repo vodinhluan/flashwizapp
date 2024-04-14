@@ -1,12 +1,7 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.setting
 
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +16,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -31,11 +24,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Nightlight
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -45,10 +36,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.R
+
+
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.screen.NofiticaionScreen
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.LightPrimaryColor
@@ -68,8 +64,11 @@ fun AccountScreen() {
             ProfileCardUI()
             DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it }
             GeneralOptionsUI()
+            ChangePasswordUI()
             LogoutUI()
+            NofiticaionScreen()
         }
+
     }
 }
 
@@ -84,7 +83,9 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
         typography = MaterialTheme.typography,
         shapes = Shapes,
         content = {
-            Box(modifier = Modifier.fillMaxSize().background(color = colors.background)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(color = colors.background)) {
                 content()
             }
         }
@@ -157,7 +158,7 @@ fun ProfileCardUI() {
                         text = "View",
                         fontFamily = Poppins,
                         color = SecondaryColor,
-                        fontSize = 12.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -252,14 +253,14 @@ fun GeneralSettingItem(icon: Int, mainText: String, subText: String, onClick: ()
                         text = mainText,
                         fontFamily = Poppins,
                         color = MaterialTheme.colors.onSurface,
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
                         text = subText,
                         fontFamily = Poppins,
                         color = MaterialTheme.colors.onSurface,
-                        fontSize = 10.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
@@ -267,12 +268,13 @@ fun GeneralSettingItem(icon: Int, mainText: String, subText: String, onClick: ()
             Icon(
                 painter = painterResource(id = R.drawable.ic_right_arrow),
                 contentDescription = "",
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(20.dp)
             )
 
         }
     }
 }
+
 
 
 @Composable
@@ -282,11 +284,11 @@ fun LogoutUI() {
             .padding(horizontal = 14.dp)
             .padding(top = 10.dp)
     ) {
+
         Logout(
             mainText = "LOGOUT",
             onClick = {}
         )
-
     }
 }
 @OptIn(ExperimentalMaterialApi::class)
@@ -313,14 +315,14 @@ fun Logout(mainText: String, onClick: () -> Unit) {
                     text = mainText,
                     fontFamily = Poppins,
                     color = MaterialTheme.colors.onSurface,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
             }
             Icon(
-                painter = painterResource(id = R.drawable.logout),
+                painter = painterResource(id = R.drawable.ic_logout),
                 contentDescription = "",
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(20.dp)
             )
 
         }
@@ -349,15 +351,16 @@ fun DarkModeSwitch(isDarkMode: Boolean, onToggleDarkMode: (Boolean) -> Unit) {
                 fontFamily = Poppins,
                 color = MaterialTheme.colors.onSurface, // Use onSurface for text color to ensure good contrast
                 fontWeight = FontWeight.Bold,
-                fontSize = 14.sp
+                fontSize = 16.sp
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = if (isDarkMode) Icons.Filled.LightMode else Icons.Filled.Nightlight,
                 contentDescription = "Toggle Dark Mode",
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(20.dp),
                 tint = MaterialTheme.colors.onSurface
             )
         }
     }
 }
+

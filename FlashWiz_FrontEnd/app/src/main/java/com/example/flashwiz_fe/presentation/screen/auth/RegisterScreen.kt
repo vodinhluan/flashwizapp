@@ -1,5 +1,9 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.auth
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.RegisterViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,10 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -20,44 +24,37 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 
-
-import com.example.flashwiz_fe.presentation.components.*
 
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 
-
-import com.example.flashwiz_fe.presentation.components.*
-import com.example.flashwiz_fe.presentation.components.login.AuthButton
 
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
-import com.example.flashwiz_fe.presentation.viewmodel.LoginViewModel
 import com.example.flashwiz_fe.ui.theme.*
 
 @Composable
-fun LoginScreen(
-    onLoginSuccessNavigation: () -> Unit,
-    onNavigateToRegisterScreen: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel()
+fun RegisterScreen(
+    onRegisterSuccessNavigation: () -> Unit,
+    onNavigateToLoginScreen: () -> Unit,
+    registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
 
     NavDestinationHelper(
         shouldNavigate = {
-            loginViewModel.loginState.isSuccessfullyLoggedIn
+            registerViewModel.registerState.isSuccessfullyRegistered
         },
         destination = {
-            onLoginSuccessNavigation()
+            onRegisterSuccessNavigation()
         }
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white)
+            .background(white),
     ){
         Box(
             modifier = Modifier
@@ -74,33 +71,49 @@ fun LoginScreen(
             Text(
                 text = "FlashWiz",
                 style = MaterialTheme.typography.h3,
-                fontFamily = FontFamily.Cursive ,
+                fontFamily = FontFamily.Cursive,
                 color = white,
                 fontWeight = FontWeight.SemiBold
             )
         }
-        LoginContainer(
+        RegisterContainer(
+            nameValue ={
+                registerViewModel.registerState.nameInput
+            },
             emailValue = {
-                loginViewModel.loginState.emailInput
+                registerViewModel.registerState.emailInput
             },
             passwordValue = {
-                loginViewModel.loginState.passwordInput
+                registerViewModel.registerState.passwordInput
+            },
+            passwordRepeatedValue = {
+                registerViewModel.registerState.passwordRepeatedInput
             },
             buttonEnabled = {
-                loginViewModel.loginState.isInputValid
+                registerViewModel.registerState.isInputValid
             },
-            onEmailChanged = loginViewModel::onEmailInputChange,
-            onPasswordChanged = loginViewModel::onPasswordInputChange,
-            onLoginButtonClick = loginViewModel::onLoginClick,
+            onNameChanged = registerViewModel::onNameInputChange,
+            onEmailChanged = registerViewModel::onEmailInputChange,
+            onPasswordChanged = registerViewModel::onPasswordInputChange,
+            onPasswordRepeatedChanged = registerViewModel::onPasswordRepeatedInputChange,
+            onButtonClick = registerViewModel::onRegisterClick,
             isPasswordShown = {
-                loginViewModel.loginState.isPasswordShown
+                registerViewModel.registerState.isPasswordShown
             },
-            onTrailingPasswordIconClick = loginViewModel::onToggleVisualTransformation,
+            isPasswordRepeatedShown = {
+                registerViewModel.registerState.isPasswordRepeatedShown
+            },
+            onTrailingPasswordIconClick = {
+                registerViewModel.onToggleVisualTransformationPassword()
+            },
+            onTrailingPasswordRepeatedIconClick = {
+                registerViewModel.onToggleVisualTransformationPasswordRepeated()
+            },
             errorHint = {
-                loginViewModel.loginState.errorMessageInput
+                registerViewModel.registerState.errorMessageInput
             },
             isLoading = {
-                loginViewModel.loginState.isLoading
+                registerViewModel.registerState.isLoading
             },
             modifier = Modifier
                 .padding(top = 200.dp)
@@ -115,8 +128,8 @@ fun LoginScreen(
             bubbleColor2 = blue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-                .align(Alignment.BottomCenter)
+                .height(220.dp)
+                .align(Alignment.BottomCenter),
         )
         Row(
             modifier = Modifier
@@ -125,90 +138,127 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.Center
         ){
             Text(
-                "Bạn chưa có tài khoản ?",
-                style = MaterialTheme.typography.body2
-
+                "Đã có tài khoản?",
+                style = MaterialTheme.typography.body2,
             )
             Text(
-                "Đăng ký",
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .clickable {
-                        onNavigateToRegisterScreen()
+                        onNavigateToLoginScreen()
                     },
+                text = "Đăng nhập",
                 color = blue,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.body2
             )
         }
     }
-
 }
 
 @Composable
-fun LoginContainer(
+fun RegisterContainer(
+    nameValue: () ->String,
     emailValue:() -> String,
-    passwordValue:()-> String,
+    passwordValue:() -> String,
+    passwordRepeatedValue:() -> String,
     buttonEnabled:() -> Boolean,
-    onEmailChanged:(String) -> Unit,
-    onPasswordChanged:(String) -> Unit,
-    onLoginButtonClick:()->Unit,
-    isPasswordShown:()->Boolean,
-    onTrailingPasswordIconClick: () -> Unit,
-    errorHint:()->String?,
-    isLoading:()->Boolean,
-    modifier: Modifier = Modifier
+    onNameChanged:(String)->Unit,
+    onEmailChanged:(String)->Unit,
+    onPasswordChanged:(String)->Unit,
+    onPasswordRepeatedChanged:(String)->Unit,
+    onButtonClick:()->Unit,
+    isPasswordShown: ()->Boolean,
+    isPasswordRepeatedShown: ()->Boolean,
+    onTrailingPasswordIconClick: ()->Unit,
+    onTrailingPasswordRepeatedIconClick: ()->Unit,
+    errorHint:() -> String?,
+    isLoading:() -> Boolean,
+    modifier: Modifier = Modifier,
 ) {
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
-            text = "Đăng nhập",
+            text = "Đăng ký",
             color = gray,
             style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
         )
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
+            description = "Your Name",
+            hint = "John Dean",
+            leadingIcon = Icons.Default.AccountCircle,
+            textValue = nameValue(),
+            textColor = darkGray,
+            cursorColor = brightBlue,
+            onValueChanged = onNameChanged,
+            trailingIcon = null,
+            onTrailingIconClick = null
+        )
+        TextEntryModule(
+            modifier = Modifier
+                .fillMaxWidth(),
             description = "Email address",
-            hint = "example@gmail.com",
+            hint = "flashwizex@gmail.com",
+            leadingIcon = Icons.Default.Email,
             textValue = emailValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onEmailChanged,
             trailingIcon = null,
-            onTrailingIconClick = null,
-            leadingIcon = Icons.Default.Email
+            onTrailingIconClick = null
         )
+
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
             description = "Password",
-            hint = "Enter password",
+            hint = "Enter Password",
+            leadingIcon = Icons.Default.VpnKey,
             textValue = passwordValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onPasswordChanged,
+            keyboardType = KeyboardType.Password,
+            visualTransformation = if(isPasswordShown()){
+                VisualTransformation.None
+            } else PasswordVisualTransformation(),
             trailingIcon = Icons.Default.RemoveRedEye,
             onTrailingIconClick = {
                 onTrailingPasswordIconClick()
-            },
+            }
+        )
+        TextEntryModule(
+            modifier = Modifier
+                .fillMaxWidth(),
+            description = "Confirm Password",
+            hint = "Confirm Password",
             leadingIcon = Icons.Default.VpnKey,
-            visualTransformation = if(isPasswordShown()){
+            textValue = passwordRepeatedValue(),
+            textColor = gray,
+            cursorColor = brightBlue,
+            onValueChanged = onPasswordRepeatedChanged,
+            keyboardType = KeyboardType.Password,
+            visualTransformation = if(isPasswordRepeatedShown()){
                 VisualTransformation.None
-                }else PasswordVisualTransformation(),
-            keyboardType = KeyboardType.Password
+            } else PasswordVisualTransformation(),
+            trailingIcon = Icons.Default.RemoveRedEye,
+            onTrailingIconClick = {
+                onTrailingPasswordRepeatedIconClick()
+            }
         )
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp) ,
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ){
             AuthButton(
-                text = "Login",
+                text = "Register",
                 backgroundColor = blue,
                 contentColor = white,
                 enabled = buttonEnabled(),
@@ -216,18 +266,13 @@ fun LoginContainer(
                     .fillMaxWidth()
                     .height(45.dp)
                     .shadow(5.dp, RoundedCornerShape(25.dp)),
-                isLoading = isLoading(),
-                onButtonClick = onLoginButtonClick,
-
+                onButtonClick = onButtonClick,
+                isLoading = isLoading()
             )
             Text(
                 errorHint() ?: "",
                 style = MaterialTheme.typography.body2
-
             )
-
         }
-
     }
 }
-
