@@ -82,9 +82,10 @@ fun MainScreen(navController: NavHostController) {
             ) {
                 when (selectedItemIndex) {
                     0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
-                    1 -> StudyGroupScreen()
+                    1 -> StudyGroupScreen(navController = navController)
                     2 -> StatisticScreen()
-                    3 -> AccountScreen(onLogoutSuccessNavigation = {})
+                    3 -> AccountScreen()
+
                     else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 }
             }

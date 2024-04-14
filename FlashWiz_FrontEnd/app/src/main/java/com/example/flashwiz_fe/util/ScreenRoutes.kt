@@ -8,11 +8,11 @@ sealed class ScreenRoutes(val route: String) {
     object AddCardScreen : ScreenRoutes("add_card_screen")
     object AddFlashcardScreen : ScreenRoutes("add_flashcard_screen")
     object FlashcardDetailScreen : ScreenRoutes("flashcard_detail_screen")
-<<<<<<< HEAD
     object AccountScreen : ScreenRoutes("account_screen")
-=======
+
 
     object ReviewCardScreen : ScreenRoutes("review_card_screen")
 
->>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
+    object NotificationScreen: ScreenRoutes("notification_screen")
+
 }

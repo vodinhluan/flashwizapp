@@ -101,21 +101,21 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             } ?: error("Cannot create CardViewModel")
             CardScreen(cardViewModel = cardViewModel, navController = navController)
         }
-        composable(ScreenRoutes.AccountScreen.route){
-            AccountScreen(
-                onLogoutSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.LoginScreen.route){
-                        popUpTo(0)
-                    }
-                }
-            )
-        }
+
+
 
 
         composable(ScreenRoutes.ReviewCardScreen.route) {
             ReviewCardScreen()
         }
+
+
+        composable(ScreenRoutes.NotificationScreen.route){
+
+        }
+
+
+
     }
 
 }
-

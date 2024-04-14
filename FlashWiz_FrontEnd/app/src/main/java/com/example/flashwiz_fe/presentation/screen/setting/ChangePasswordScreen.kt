@@ -43,7 +43,6 @@ import com.example.flashwiz_fe.ui.theme.Shapes
 @Composable
 fun ChangePasswordUI() {
     var showChangePasswordDialog by remember { mutableStateOf(false) }
-    var snackbarMessage by remember { mutableStateOf("") }
 
     Column(modifier = Modifier
         .padding(horizontal = 14.dp)
@@ -57,29 +56,11 @@ fun ChangePasswordUI() {
         if (showChangePasswordDialog) {
             ChangePasswordDialog(
                 onDismiss = { showChangePasswordDialog = false },
-                onSubmit = { oldPassword, newPassword, confirmPassword ->
-                    if (newPassword != confirmPassword) {
-                        snackbarMessage = "Passwords do not match"
-                    } else {
-                        // Assume a function to change password here
-                        showChangePasswordDialog = false
-                        snackbarMessage = "Password successfully changed"
-                    }
+                onChangeSuccess = {
+                    showChangePasswordDialog = false
+                    // Possibly show a snackbar in the main UI or simply rely on dialog's own notification
                 }
             )
-        }
-    }
-
-    if (snackbarMessage.isNotEmpty()) {
-        Snackbar(
-            modifier = Modifier.padding(8.dp),
-            action = {
-                Button(onClick = { snackbarMessage = "" }) {
-                    Text("OK", color = Color.White)
-                }
-            }
-        ) {
-            Text(snackbarMessage)
         }
     }
 }
@@ -148,10 +129,12 @@ fun ChangePassword(icon: Int, mainText: String, subText: String, onClick: () -> 
 }
 
 @Composable
-fun ChangePasswordDialog(onDismiss: () -> Unit, onSubmit: (String, String, String) -> Unit) {
+fun ChangePasswordDialog(onDismiss: () -> Unit, onChangeSuccess: () -> Unit) {
     var oldPassword by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var snackbarMessage by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
@@ -161,15 +144,26 @@ fun ChangePasswordDialog(onDismiss: () -> Unit, onSubmit: (String, String, Strin
                 PasswordInput("Old Password", oldPassword) { oldPassword = it }
                 PasswordInput("New Password", newPassword) { newPassword = it }
                 PasswordInput("Confirm New Password", confirmPassword) { confirmPassword = it }
+                if (snackbarMessage.isNotEmpty()) {
+                    Text(snackbarMessage, color = MaterialTheme.colors.error)
+                }
+                if (successMessage.isNotEmpty()) {
+                    Text(successMessage, color = MaterialTheme.colors.primary)
+                }
             }
         },
         confirmButton = {
             Button(
                 onClick = {
                     if (newPassword != confirmPassword) {
-                        onSubmit(oldPassword, newPassword, "Passwords do not match")
+                        snackbarMessage = "Passwords do not match"
+                        successMessage = ""  // Clear success message if present
                     } else {
-                        onSubmit(oldPassword, newPassword, confirmPassword)
+                        // Simulate a successful password change operation
+                        snackbarMessage = ""  // Clear error message if present
+                        successMessage = "Password successfully changed"
+                        onChangeSuccess()
+                        // Optionally, you might want to dismiss the dialog automatically after a delay
                     }
                 }
             ) {
@@ -177,13 +171,16 @@ fun ChangePasswordDialog(onDismiss: () -> Unit, onSubmit: (String, String, Strin
             }
         },
         dismissButton = {
-            Button(onClick = { onDismiss() }) {
+            Button(onClick = {
+                onDismiss()
+                snackbarMessage = ""  // Clear messages on dismiss
+                successMessage = ""
+            }) {
                 Text("Cancel")
             }
         }
     )
 }
-
 @Composable
 fun PasswordInput(label: String, value: String, onValueChange: (String) -> Unit) {
     OutlinedTextField(
