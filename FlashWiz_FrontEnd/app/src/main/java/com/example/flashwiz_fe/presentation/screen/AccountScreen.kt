@@ -34,7 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.R
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.ui.theme.LightPrimaryColor
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.PrimaryColor
@@ -43,13 +46,33 @@ import com.example.flashwiz_fe.ui.theme.Shapes
 
 
 @Composable
-fun AccountScreen() {
+fun AccountScreen(
+    logoutViewModel: LogoutViewModel = hiltViewModel(),
+    onLogoutSuccessNavigation:() -> Unit
+) {
+
+
+    NavDestinationHelper(
+        shouldNavigate = {
+            logoutViewModel.logoutState.isSuccessfullyLoggedOut
+        },
+        destination = {
+            onLogoutSuccessNavigation()
+        }
+    )
+
+
+
+
     Column() {
         HeaderText()
         ProfileCardUI()
         DarkMode()
         GeneralOptionsUI()
-        SupportOptionsUI()
+        SupportOptionsUI(
+            onLogoutButtonClick = logoutViewModel::logoutClick
+        )
+
     }
 }
 
@@ -232,7 +255,10 @@ fun GeneralSettingItem(icon: Int, mainText: String, subText: String, onClick: ()
 
 
 @Composable
-fun SupportOptionsUI() {
+fun SupportOptionsUI(
+    onLogoutButtonClick:() -> Unit
+) {
+
     Column(
         modifier = Modifier
             .padding(horizontal = 14.dp)
@@ -262,10 +288,12 @@ fun SupportOptionsUI() {
             mainText = "Privacy Policy",
             onClick = {}
         )
+        //Test Đăng xuất
         SupportItem(
             icon = R.drawable.ic_about,
-            mainText = "About",
-            onClick = {}
+            mainText = "Đăng xuất",
+            onClick = onLogoutButtonClick
+
         )
     }
 }
@@ -427,5 +455,9 @@ fun DarkModeSetting(
         }
     }
 }
+
+
+
+
 
 

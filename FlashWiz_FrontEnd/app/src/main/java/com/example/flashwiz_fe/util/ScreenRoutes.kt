@@ -9,5 +9,5 @@ sealed class ScreenRoutes(val route: String) {
     object AddCardScreen : ScreenRoutes("add_card_screen")
     object AddFlashcardScreen : ScreenRoutes("add_flashcard_screen")
     object FlashcardDetailScreen : ScreenRoutes("flashcard_detail_screen")
-
+    object AccountScreen : ScreenRoutes("account_screen")
 }

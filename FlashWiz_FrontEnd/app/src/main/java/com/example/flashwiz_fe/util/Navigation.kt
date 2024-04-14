@@ -2,13 +2,17 @@ package com.example.flashwiz_fe.util
 
 import AddFolderScreen
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
+import com.example.flashwiz_fe.presentation.screen.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.screen.CardScreen
 import com.example.flashwiz_fe.presentation.screen.LoginScreen
@@ -16,10 +20,24 @@ import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.RegisterScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
+
+
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
+
+    // Kiểm tra trạng thái đăng nhập khi Composable được khởi tạo
+    LaunchedEffect(Unit) {
+        val userPreferences = UserPreferences(context)
+        println("Email đang đăng nhập: ${userPreferences.getUserEmail()}")
+        if (userPreferences.getIsLoggedIn()) {
+            navController.navigate(ScreenRoutes.MainScreen.route) {
+                popUpTo(0)
+            }
+        }
+    }
     NavHost(
         navController = navController,
         startDestination = ScreenRoutes.LoginScreen.route
@@ -80,10 +98,20 @@ fun Navigation() {
             } ?: error("Cannot create CardViewModel")
             CardScreen(cardViewModel = cardViewModel, navController = navController)
         }
-
+        composable(ScreenRoutes.AccountScreen.route){
+            AccountScreen(
+                onLogoutSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
 
     }
+
 }
+
 
 
 
