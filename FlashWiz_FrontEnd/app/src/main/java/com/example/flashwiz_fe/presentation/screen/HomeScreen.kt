@@ -154,9 +154,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             }
                         )
 
-
                         Spacer(modifier = Modifier.height(8.dp))
-
                     }
                 }
             }
