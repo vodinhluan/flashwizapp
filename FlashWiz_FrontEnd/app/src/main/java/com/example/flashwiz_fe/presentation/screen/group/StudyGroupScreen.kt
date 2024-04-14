@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.group
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -9,12 +9,11 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun StatisticScreen() {
+fun StudyGroupScreen() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        // Hiển thị nội dung của màn hình Chat
-        Text(text = "Đây là trang thống kê", modifier = Modifier.fillMaxSize())
+        Text(text = "Trang Study Group", modifier = Modifier.fillMaxSize())
     }
 }

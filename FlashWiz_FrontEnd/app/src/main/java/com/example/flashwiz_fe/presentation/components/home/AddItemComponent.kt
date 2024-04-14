@@ -21,8 +21,7 @@ import com.example.flashwiz_fe.presentation.components.MenuItem
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemComponent(navController: NavController, itemType: String,onFolderSelected: ((Int) -> Unit)? = null) {
-    var expanded by remember { mutableStateOf(false) }
+fun AddItemComponent(navController: NavController, itemType: String,folderId: Int?, onFolderSelected: ((Int) -> Unit)? = null, onFlashcardSelected: (() -> Unit)? = null) {    var expanded by remember { mutableStateOf(false) }
 
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
 
@@ -43,11 +42,16 @@ fun AddItemComponent(navController: NavController, itemType: String,onFolderSele
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
                         "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route)
+                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route + "?folderId=$folderId")
                         "Card" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+                        "Review" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+
+
                     }
                     expanded = false
                 }
+
+
 //                MenuItem(text = "Add Card") {
 //                    navController.navigate(ScreenRoutes.AddCardScreen.route)
 //                    expanded = false // Đóng menu sau khi chuyển đến màn hình thêm thư mục

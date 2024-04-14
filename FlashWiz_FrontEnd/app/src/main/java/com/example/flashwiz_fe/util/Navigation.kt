@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.util
 
 import AddFolderScreen
+import ReviewCardScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -12,18 +13,18 @@ import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.presentation.screen.AccountScreen
-import com.example.flashwiz_fe.presentation.screen.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.CardScreen
-import com.example.flashwiz_fe.presentation.screen.LoginScreen
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
+import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
+import com.example.flashwiz_fe.presentation.screen.card.CardScreen
+import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
-import com.example.flashwiz_fe.presentation.screen.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 
 
 @Composable
-fun Navigation() {
+fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
     val navController = rememberNavController()
     val context = LocalContext.current
 
@@ -86,9 +87,11 @@ fun Navigation() {
             AddFlashcardScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
+                initialFolderId = navController.currentBackStackEntry?.arguments?.getInt("folderId")
             )
         }
+
 
         composable(ScreenRoutes.AddCardScreen.route) {
             val cardViewModel: CardViewModel = remember {
@@ -98,6 +101,7 @@ fun Navigation() {
             } ?: error("Cannot create CardViewModel")
             CardScreen(cardViewModel = cardViewModel, navController = navController)
         }
+<<<<<<< HEAD
         composable(ScreenRoutes.AccountScreen.route){
             AccountScreen(
                 onLogoutSuccessNavigation = {
@@ -107,6 +111,13 @@ fun Navigation() {
                 }
             )
         }
+=======
+
+        composable(ScreenRoutes.ReviewCardScreen.route) {
+            ReviewCardScreen()
+        }
+
+>>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
 
     }
 
@@ -117,5 +128,8 @@ fun Navigation() {
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144

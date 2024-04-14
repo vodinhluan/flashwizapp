@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,16 +25,27 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
+import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
+import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
+import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
+
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
+            hasNews = false,
+        ),
+        BottomNavigationItem(
+            title = "Group",
+            selectedIcon = Icons.Filled.Group,
+            unselectedIcon = Icons.Outlined.Group,
             hasNews = false,
         ),
         BottomNavigationItem(
@@ -69,8 +82,14 @@ fun MainScreen(navController: NavHostController) {
             ) {
                 when (selectedItemIndex) {
                     0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+<<<<<<< HEAD
                     1 -> StatisticScreen()
                     2 -> AccountScreen(onLogoutSuccessNavigation = {})
+=======
+                    1 -> StudyGroupScreen()
+                    2 -> StatisticScreen()
+                    3 -> AccountScreen()
+>>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
                     else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 }
             }

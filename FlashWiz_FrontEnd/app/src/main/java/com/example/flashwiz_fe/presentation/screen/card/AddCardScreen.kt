@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,7 @@ fun AddCardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text (
-            text = "Add Card",
+            text = "Add Card2134",
             fontSize = 24.sp,
             color = Color.Black,
             modifier = Modifier.padding(top = 24.dp)
@@ -41,7 +41,7 @@ fun AddCardScreen(
                 navController.navigate("cardScreen") // Sử dụng route ID đã định nghĩa cho CardScreen
             }
         ) {
-            Text("Add Card")
+            Text("Add Card534654")
         }
     }
 }

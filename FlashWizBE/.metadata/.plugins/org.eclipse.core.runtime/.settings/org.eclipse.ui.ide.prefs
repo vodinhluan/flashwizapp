@@ -1,7 +1,11 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=a3b7df1ce7e43ef18139c9597943705e5d23dd2a
+>>>>>>>=Stashed changes
 eclipse.preferences.version=1
+<<<<<<< HEAD
 platformState=1709970946485
+=======
+platformState=1001759221017151
+>>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
 quickStart=false
 tipsAndTricks=true

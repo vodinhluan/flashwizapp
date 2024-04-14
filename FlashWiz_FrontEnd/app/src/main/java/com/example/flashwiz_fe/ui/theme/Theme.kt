@@ -5,31 +5,33 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+val DarkColors = darkColors(
+    primary = Color.Gray,
+    secondary = Color.LightGray,
+    background = Color.Black,  // Background set to black for dark theme
+    surface = Color.DarkGray,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.White,
+    onSurface = Color.White,
 )
 
-private val LightColorPalette = lightColors(
-    primary = PrimaryColor,
-    primaryVariant = PrimaryColor,
-    secondary = PrimaryColor
-
-    /* Other default colors to override
-    background = Color.White,
+val LightColors = lightColors(
+    primary = Color.Blue,
+    secondary = Color.DarkGray,
+    background = Color.White,  // Background set to white for light theme
     surface = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black,
-    */
 )
 
 @Composable
 fun FlashWizTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = LightColorPalette
+    val colors = LightColors
 
     MaterialTheme(
         colors = colors,

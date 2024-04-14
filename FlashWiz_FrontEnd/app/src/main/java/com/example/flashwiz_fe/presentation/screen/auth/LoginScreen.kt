@@ -1,61 +1,69 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.auth
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.flashwiz_fe.presentation.viewmodel.RegisterViewModel
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-
-
-import com.example.flashwiz_fe.presentation.components.*
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
-
-
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.*
+import com.example.flashwiz_fe.presentation.viewmodel.LoginViewModel
+import com.example.flashwiz_fe.ui.theme.blue
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.darkGray
+import com.example.flashwiz_fe.ui.theme.gray
+import com.example.flashwiz_fe.ui.theme.white
+import com.example.flashwiz_fe.ui.theme.whiteGray
 
 @Composable
-fun RegisterScreen(
-    onRegisterSuccessNavigation: () -> Unit,
-    onNavigateToLoginScreen: () -> Unit,
-    registerViewModel: RegisterViewModel = hiltViewModel()
+fun LoginScreen(
+    onLoginSuccessNavigation: () -> Unit,
+    onNavigateToRegisterScreen: () -> Unit,
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-
     NavDestinationHelper(
         shouldNavigate = {
-            registerViewModel.registerState.isSuccessfullyRegistered
+            loginViewModel.loginState.isSuccessfullyLoggedIn
         },
         destination = {
-            onRegisterSuccessNavigation()
+            onLoginSuccessNavigation()
         }
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(white),
+            .background(white)
     ){
         Box(
             modifier = Modifier
@@ -72,49 +80,33 @@ fun RegisterScreen(
             Text(
                 text = "FlashWiz",
                 style = MaterialTheme.typography.h3,
-                fontFamily = FontFamily.Cursive,
+                fontFamily = FontFamily.Cursive ,
                 color = white,
                 fontWeight = FontWeight.SemiBold
             )
         }
-        RegisterContainer(
-            nameValue ={
-                registerViewModel.registerState.nameInput
-            },
+        LoginContainer(
             emailValue = {
-                registerViewModel.registerState.emailInput
+                loginViewModel.loginState.emailInput
             },
             passwordValue = {
-                registerViewModel.registerState.passwordInput
-            },
-            passwordRepeatedValue = {
-                registerViewModel.registerState.passwordRepeatedInput
+                loginViewModel.loginState.passwordInput
             },
             buttonEnabled = {
-                registerViewModel.registerState.isInputValid
+                loginViewModel.loginState.isInputValid
             },
-            onNameChanged = registerViewModel::onNameInputChange,
-            onEmailChanged = registerViewModel::onEmailInputChange,
-            onPasswordChanged = registerViewModel::onPasswordInputChange,
-            onPasswordRepeatedChanged = registerViewModel::onPasswordRepeatedInputChange,
-            onButtonClick = registerViewModel::onRegisterClick,
+            onEmailChanged = loginViewModel::onEmailInputChange,
+            onPasswordChanged = loginViewModel::onPasswordInputChange,
+            onLoginButtonClick = loginViewModel::onLoginClick,
             isPasswordShown = {
-                registerViewModel.registerState.isPasswordShown
+                loginViewModel.loginState.isPasswordShown
             },
-            isPasswordRepeatedShown = {
-                registerViewModel.registerState.isPasswordRepeatedShown
-            },
-            onTrailingPasswordIconClick = {
-                registerViewModel.onToggleVisualTransformationPassword()
-            },
-            onTrailingPasswordRepeatedIconClick = {
-                registerViewModel.onToggleVisualTransformationPasswordRepeated()
-            },
+            onTrailingPasswordIconClick = loginViewModel::onToggleVisualTransformation,
             errorHint = {
-                registerViewModel.registerState.errorMessageInput
+                loginViewModel.loginState.errorMessageInput
             },
             isLoading = {
-                registerViewModel.registerState.isLoading
+                loginViewModel.loginState.isLoading
             },
             modifier = Modifier
                 .padding(top = 200.dp)
@@ -129,8 +121,8 @@ fun RegisterScreen(
             bubbleColor2 = blue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
-                .align(Alignment.BottomCenter),
+                .height(250.dp)
+                .align(Alignment.BottomCenter)
         )
         Row(
             modifier = Modifier
@@ -139,127 +131,93 @@ fun RegisterScreen(
             horizontalArrangement = Arrangement.Center
         ){
             Text(
-                "Đã có tài khoản?",
-                style = MaterialTheme.typography.body2,
+                "Bạn chưa có tài khoản ?",
+                style = MaterialTheme.typography.body2
+
             )
             Text(
+                "Đăng ký",
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .clickable {
-                        onNavigateToLoginScreen()
+                        onNavigateToRegisterScreen()
                     },
-                text = "Đăng nhập",
                 color = blue,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.body2
             )
         }
     }
+
 }
 
 @Composable
-fun RegisterContainer(
-    nameValue: () ->String,
+fun LoginContainer(
     emailValue:() -> String,
-    passwordValue:() -> String,
-    passwordRepeatedValue:() -> String,
+    passwordValue:()-> String,
     buttonEnabled:() -> Boolean,
-    onNameChanged:(String)->Unit,
-    onEmailChanged:(String)->Unit,
-    onPasswordChanged:(String)->Unit,
-    onPasswordRepeatedChanged:(String)->Unit,
-    onButtonClick:()->Unit,
-    isPasswordShown: ()->Boolean,
-    isPasswordRepeatedShown: ()->Boolean,
-    onTrailingPasswordIconClick: ()->Unit,
-    onTrailingPasswordRepeatedIconClick: ()->Unit,
-    errorHint:() -> String?,
-    isLoading:() -> Boolean,
-    modifier: Modifier = Modifier,
+    onEmailChanged:(String) -> Unit,
+    onPasswordChanged:(String) -> Unit,
+    onLoginButtonClick:()->Unit,
+    isPasswordShown:()->Boolean,
+    onTrailingPasswordIconClick: () -> Unit,
+    errorHint:()->String?,
+    isLoading:()->Boolean,
+    modifier: Modifier = Modifier
 ) {
-
+    val context = LocalContext.current
+    val dataStore = UserPreferences(context)
+    val scope = rememberCoroutineScope()
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
-            text = "Đăng ký",
+            text = "Đăng nhập",
             color = gray,
             style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
         )
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
-            description = "Your Name",
-            hint = "John Dean",
-            leadingIcon = Icons.Default.AccountCircle,
-            textValue = nameValue(),
-            textColor = darkGray,
-            cursorColor = brightBlue,
-            onValueChanged = onNameChanged,
-            trailingIcon = null,
-            onTrailingIconClick = null
-        )
-        TextEntryModule(
-            modifier = Modifier
-                .fillMaxWidth(),
             description = "Email address",
-            hint = "flashwizex@gmail.com",
-            leadingIcon = Icons.Default.Email,
+            hint = "example@gmail.com",
             textValue = emailValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onEmailChanged,
             trailingIcon = null,
-            onTrailingIconClick = null
+            onTrailingIconClick = null,
+            leadingIcon = Icons.Default.Email
         )
-
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
             description = "Password",
-            hint = "Enter Password",
-            leadingIcon = Icons.Default.VpnKey,
+            hint = "Enter password",
             textValue = passwordValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onPasswordChanged,
-            keyboardType = KeyboardType.Password,
-            visualTransformation = if(isPasswordShown()){
-                VisualTransformation.None
-            } else PasswordVisualTransformation(),
             trailingIcon = Icons.Default.RemoveRedEye,
             onTrailingIconClick = {
                 onTrailingPasswordIconClick()
-            }
-        )
-        TextEntryModule(
-            modifier = Modifier
-                .fillMaxWidth(),
-            description = "Confirm Password",
-            hint = "Confirm Password",
+            },
             leadingIcon = Icons.Default.VpnKey,
-            textValue = passwordRepeatedValue(),
-            textColor = gray,
-            cursorColor = brightBlue,
-            onValueChanged = onPasswordRepeatedChanged,
-            keyboardType = KeyboardType.Password,
-            visualTransformation = if(isPasswordRepeatedShown()){
+            visualTransformation = if(isPasswordShown()){
                 VisualTransformation.None
-            } else PasswordVisualTransformation(),
-            trailingIcon = Icons.Default.RemoveRedEye,
-            onTrailingIconClick = {
-                onTrailingPasswordRepeatedIconClick()
-            }
+            }else PasswordVisualTransformation(),
+            keyboardType = KeyboardType.Password
         )
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp) ,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             AuthButton(
-                text = "Register",
+                text = "Login",
                 backgroundColor = blue,
                 contentColor = white,
                 enabled = buttonEnabled(),
@@ -267,13 +225,17 @@ fun RegisterContainer(
                     .fillMaxWidth()
                     .height(45.dp)
                     .shadow(5.dp, RoundedCornerShape(25.dp)),
-                onButtonClick = onButtonClick,
-                isLoading = isLoading()
-            )
+                isLoading = isLoading(),
+                onButtonClick = onLoginButtonClick,
+
+                )
             Text(
                 errorHint() ?: "",
                 style = MaterialTheme.typography.body2
+
             )
+
         }
+
     }
 }
