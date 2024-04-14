@@ -25,8 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import com.example.flashwiz_fe.presentation.components.static.BarChart
+import com.example.flashwiz_fe.presentation.components.static.BarChartData
+import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
+import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
+
+
 
 
 
@@ -50,7 +56,9 @@ fun StaticText() {
 fun StatisticScreen() {
     Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item { StaticText() }
@@ -89,93 +97,3 @@ fun StatisticScreen() {
 }
 
 
-@Composable
-fun StatisticSummaryItem(title: String, value: String, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 4.dp)
-            .fillMaxHeight(),
-
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-@Composable
-fun StatisticDetails(title: String, data: Int) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "$title:",
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "$data",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-data class BarChartData(val label: String, val value: Int)
-@Composable
-fun BarChart(data: List<BarChartData>, maxValue: Int, barColor: Color) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Bottom
-    ) {
-        data.forEach { item ->
-            val barHeight = (item.value.toFloat() / maxValue.toFloat()) * 100f.dp
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "${item.value}",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Box(
-                    modifier = Modifier
-                        .width(35.dp)
-                        .height(barHeight)
-                        .background(barColor)
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = item.label,
-                    fontSize = 10.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
-}
