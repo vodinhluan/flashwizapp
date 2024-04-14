@@ -34,5 +34,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     
     
     Optional<User> findByEmail(String email);
+    @Query("SELECT u.id FROM User u WHERE u.email = :email")
+    Integer findUserIdByEmail(@Param("email") String email);
 }
 
