@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.setting
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button

@@ -81,8 +81,6 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
-
-
         composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
                 onNavigateBack = {
@@ -91,8 +89,6 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 initialFolderId = navController.currentBackStackEntry?.arguments?.getInt("folderId")
             )
         }
-
-
         composable(ScreenRoutes.AddCardScreen.route) {
             val cardViewModel: CardViewModel = remember {
                 val cardRepository: CardRepository = CardRepositoryImpl(RetrofitInstance.cardApiService)
@@ -101,21 +97,10 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             } ?: error("Cannot create CardViewModel")
             CardScreen(cardViewModel = cardViewModel, navController = navController)
         }
-
-
-
-
         composable(ScreenRoutes.ReviewCardScreen.route) {
             ReviewCardScreen()
         }
-
-
         composable(ScreenRoutes.NotificationScreen.route){
-
         }
-
-
-
     }
-
 }
