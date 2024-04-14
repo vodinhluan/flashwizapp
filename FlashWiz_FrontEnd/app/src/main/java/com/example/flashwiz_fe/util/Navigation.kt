@@ -88,6 +88,10 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             ReviewCardScreen()
         }
 
+        composable(ScreenRoutes.NotificationScreen.route){
+
+        }
+
 
     }
 }

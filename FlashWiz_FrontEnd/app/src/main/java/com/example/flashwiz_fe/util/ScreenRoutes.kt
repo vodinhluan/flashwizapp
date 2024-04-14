@@ -11,4 +11,6 @@ sealed class ScreenRoutes(val route: String) {
 
     object ReviewCardScreen : ScreenRoutes("review_card_screen")
 
+    object NotificationScreen: ScreenRoutes("notification_screen")
+
 }

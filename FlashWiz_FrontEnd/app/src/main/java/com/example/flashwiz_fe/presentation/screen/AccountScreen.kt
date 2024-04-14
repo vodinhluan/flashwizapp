@@ -60,6 +60,7 @@ fun AccountScreen() {
             GeneralOptionsUI()
             ChangePasswordUI()
             LogoutUI()
+            NofiticaionScreen()
         }
     }
 }
@@ -75,7 +76,9 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
         typography = MaterialTheme.typography,
         shapes = Shapes,
         content = {
-            Box(modifier = Modifier.fillMaxSize().background(color = colors.background)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(color = colors.background)) {
                 content()
             }
         }
@@ -277,7 +280,6 @@ fun LogoutUI() {
             mainText = "LOGOUT",
             onClick = {}
         )
-
     }
 }
 @OptIn(ExperimentalMaterialApi::class)
