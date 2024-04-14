@@ -2,10 +2,14 @@
 <<<<<<<=HEAD
 >>>>>>>=a3b7df1ce7e43ef18139c9597943705e5d23dd2a
 eclipse.preferences.version=1
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 platformState=1001611680775393
 =======
 platformState=1001759221017151
 >>>>>>> 718005bdeab7c1ca35fd80248f8012541d6a5e8a
+=======
+platformState=1688632047151
+>>>>>>> Stashed changes
 quickStart=false
 tipsAndTricks=true
