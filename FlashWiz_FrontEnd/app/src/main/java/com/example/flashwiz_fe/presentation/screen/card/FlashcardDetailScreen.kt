@@ -1,5 +1,5 @@
 
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.card
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,16 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
-import com.example.flashwiz_fe.domain.model.FlashcardDetail
-import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
-import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
-import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 

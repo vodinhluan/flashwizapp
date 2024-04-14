@@ -1,43 +1,72 @@
 package com.example.flashwiz_fe.data
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-//object UserPreferences {
-//    private const val USER_PREFERENCES_NAME = "user_preferences"
-//    private val Context.dataStore by preferencesDataStore(name = USER_PREFERENCES_NAME)
-//
-//    // Hàm để lưu thông tin người dùng vào DataStore
-//    suspend fun saveUserToken(context: Context, tokenResponse: TokenResponse) {
-//        context.dataStore.edit { preferences ->
-//            preferences[PreferencesKeys.EMAIL] = tokenResponse.email
-//            preferences[PreferencesKeys.ACCESS_TOKEN] = tokenResponse.accessToken
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+class UserPreferences @Inject constructor(
+    @ApplicationContext context: Context
+) {
+
+    private val myPreferencesDataStore = context.dataStore
+    private object PreferencesKey{
+        val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
+        val KEY_USER_EMAIL = stringPreferencesKey("user_email")
+        val KEY_IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
+    }
+//    val userPreferencesFlow: Flow<Preferences> = myPreferencesDataStore.data
+//        .catch { exception ->
+//            if (exception is IOException) {
+//                emit(emptyPreferences())
+//            } else {
+//                throw exception
+//            }
+//        }. map { preferences ->
+//            val
 //        }
-//    }
-//
-//    // Flow để lấy thông tin người dùng từ DataStore
-//    val Context.userPreferences: Flow<TokenResponse>
-//        get() = dataStore.data.map { preferences ->
-//            TokenResponse(
-//                preferences[PreferencesKeys.ACCESS_TOKEN] ?: "",
-//                preferences[PreferencesKeys.EMAIL] ?: ""
-//            )
-//        }
-//
-//    // Phương thức để lưu trạng thái ghi nhớ đăng nhập vào DataStore
-//    suspend fun saveRememberMePreference(context: Context, rememberMe: Boolean) {
-//        context.dataStore.edit { preferences ->
-//            preferences[PreferencesKeys.REMEMBER_ME] = rememberMe
-//        }
-//    }
-//
-//    // Object để định nghĩa các khóa cho Preferences
-//    private object PreferencesKeys {
-//        val EMAIL = stringPreferencesKey("email")
-//        val ACCESS_TOKEN = stringPreferencesKey("access_token")
-////        val REMEMBER_ME = booleanPreferencesKey("remember_me")
-//    }
-//}
+    suspend fun saveUserToken(token: String) {
+        myPreferencesDataStore.edit { preferences ->
+            preferences[PreferencesKey.KEY_ACCESS_TOKEN] = token
+        }
+    }
 
+    suspend fun saveUserEmail(email: String) {
+        myPreferencesDataStore.edit { preferences ->
+            preferences[PreferencesKey.KEY_USER_EMAIL] = email
+        }
+    }
 
+    suspend fun saveIsLoggedIn(isLoggedIn: Boolean) {
+        myPreferencesDataStore.edit { preferences ->
+            preferences[PreferencesKey.KEY_IS_LOGGED_IN] = isLoggedIn
+        }
+    }
 
+    // Helper functions to retrieve saved data (consider implementing)
+    suspend fun getUserToken(): String? {
+        val preferences = myPreferencesDataStore.data.first()
+        return preferences[PreferencesKey.KEY_ACCESS_TOKEN]
+    }
+    suspend fun getUserEmail(): String? {
+        val preferences = myPreferencesDataStore.data.first()
+        return preferences[PreferencesKey.KEY_USER_EMAIL]
+    }
+    suspend fun getIsLoggedIn(): Boolean {
+        val preferences = myPreferencesDataStore.data.first()
+        return preferences[PreferencesKey.KEY_IS_LOGGED_IN] ?: false
+    }
+      suspend fun clearData() {
+        myPreferencesDataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 
-
+}

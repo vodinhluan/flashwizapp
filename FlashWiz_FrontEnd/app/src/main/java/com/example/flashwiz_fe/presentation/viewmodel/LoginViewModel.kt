@@ -12,12 +12,13 @@ import com.example.flashwiz_fe.presentation.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val validateLoginInputUseCase: ValidateLoginInputUseCase,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+
+
 ): ViewModel() {
 
     var loginState by mutableStateOf(LoginState())
@@ -53,6 +54,8 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private fun checkInputValidation(){
         val validationResult = validateLoginInputUseCase(

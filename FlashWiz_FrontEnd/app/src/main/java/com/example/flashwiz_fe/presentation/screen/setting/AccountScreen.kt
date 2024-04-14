@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.setting
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,7 +38,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.R
+
+
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.screen.NofiticaionScreen
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.LightPrimaryColor
@@ -62,6 +68,7 @@ fun AccountScreen() {
             LogoutUI()
             NofiticaionScreen()
         }
+
     }
 }
 
@@ -269,6 +276,7 @@ fun GeneralSettingItem(icon: Int, mainText: String, subText: String, onClick: ()
 }
 
 
+
 @Composable
 fun LogoutUI() {
     Column(
@@ -276,6 +284,7 @@ fun LogoutUI() {
             .padding(horizontal = 14.dp)
             .padding(top = 10.dp)
     ) {
+
         Logout(
             mainText = "LOGOUT",
             onClick = {}

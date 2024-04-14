@@ -1,16 +1,18 @@
 package com.example.flashwiz_fe.di
 
+import android.content.Context
 import com.example.flashwiz_fe.data.AuthRepositoryImpl
+import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.data.CardRepositoryImpl
-import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateRegisterInputUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -32,9 +34,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository():AuthRepository{
-        return AuthRepositoryImpl()
+    fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
+        return AuthRepositoryImpl(context)
     }
+
 
     // Card Module
     @Provides

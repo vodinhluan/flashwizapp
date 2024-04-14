@@ -11,9 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import com.example.flashwiz_fe.ui.theme.FlashWizTheme
 import com.example.flashwiz_fe.ui.theme.gray
@@ -40,5 +37,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
     }
 }
