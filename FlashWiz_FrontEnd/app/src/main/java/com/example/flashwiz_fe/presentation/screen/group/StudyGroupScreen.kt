@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
-import com.example.flashwiz_fe.presentation.components.home.AddItemNewGroup
+import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 
 @Composable
@@ -45,7 +45,9 @@ fun StudyGroupScreen(navController: NavController) {
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-                AddItemNewGroup(navController = navController)
+                AddItemNewGroup(navController = navController, itemType = "Group", groupId = null)
+
+
             }
 
             SearchBar(

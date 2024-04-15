@@ -15,11 +15,12 @@ import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.card.CardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
 
 
 
@@ -81,6 +82,13 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
+        composable(ScreenRoutes.AddStudyGroupScreen.route) {
+            AddStudyGroupScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
         composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
                 onNavigateBack = {
@@ -95,7 +103,7 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            CardScreen(cardViewModel = cardViewModel, navController = navController)
+            AddCardScreen(cardViewModel = cardViewModel, navController = navController)
         }
         composable(ScreenRoutes.ReviewCardScreen.route) {
             ReviewCardScreen()
