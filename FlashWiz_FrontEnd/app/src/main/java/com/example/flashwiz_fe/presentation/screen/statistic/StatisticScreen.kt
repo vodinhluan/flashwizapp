@@ -95,5 +95,3 @@ fun StatisticScreen() {
         }
     }
 }
-
-

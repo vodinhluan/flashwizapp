@@ -68,3 +68,13 @@ fun StudyGroupScreen(navController: NavController) {
             }
         }
     }
+
+@Composable
+fun StudyGroupScreen() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Text(text = "Trang Study Group", modifier = Modifier.fillMaxSize())
+    }
+}

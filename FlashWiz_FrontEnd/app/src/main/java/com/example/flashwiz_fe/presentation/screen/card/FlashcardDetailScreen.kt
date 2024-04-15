@@ -22,12 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
-import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
+import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 
@@ -36,8 +40,8 @@ fun FlashcardDetailScreen(
     flashcardId: Int,
     flashcardName: String,
     description: String,
-    onNavigateUp: () -> Unit,
-    navController: NavController
+    onNavigateUp: () -> Unit, // không trả về -> xác định hành động như là Quay về hoặc Đóng màn hình
+    navController: NavController // điều hướng
 ) {
     val cardViewModel: CardViewModel = hiltViewModel()
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
@@ -65,6 +69,8 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
+
+
                         },
                         onDeleteClick = { cardId ->
                             cardViewModel.deleteCardAndUpdateList(
@@ -92,5 +98,3 @@ fun FlashcardDetailScreen(
         )
     }
 }
-
-

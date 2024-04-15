@@ -30,7 +30,6 @@ fun CardItemComponent(
     card: CardDetail,
     onFlashcardClicked: () -> Unit,
     onDeleteClick: (Int) -> Unit
-
 ) {
     Card(
         modifier = Modifier

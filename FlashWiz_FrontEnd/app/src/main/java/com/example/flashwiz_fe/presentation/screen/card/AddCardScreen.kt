@@ -27,9 +27,6 @@ import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-
-
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -145,12 +142,3 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
         }
     }
 }
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.util
 
 import AddFolderScreen
-import ReviewCardScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -13,16 +12,14 @@ import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
-
-
 
 @Composable
 fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
@@ -112,3 +109,37 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
         }
     }
 }
+
+//        composable(
+//            route = ScreenRoutes.FlashcardDetailScreen.route + "/{flashcardId}/{flashcardName}/{description}",
+//            arguments = listOf(
+//                navArgument("flashcardId") { type = NavType.IntType },
+//                navArgument("flashcardName") { type = NavType.StringType },
+//                navArgument("description") { type = NavType.StringType }
+//            )
+//        ) { backStackEntry ->
+//            val flashcardId = backStackEntry.arguments?.getInt("flashcardId")
+//            val flashcardName = backStackEntry.arguments?.getString("flashcardName")
+//            val description = backStackEntry.arguments?.getString("description")
+//
+//            if (flashcardId != null && flashcardName != null && description != null) {
+//                FlashcardDetailScreen(
+//                    flashcardId = flashcardId,
+//                    flashcardName = flashcardName,
+//                    description = description,
+//                    onNavigateUp = { navController.popBackStack() },
+//                    navController = navController
+//                )
+//            }
+//        }
+//
+//        composable(ScreenRoutes.ReviewCardScreen.route) {
+//            ReviewCardScreen(onBack = { navController.navigate(ScreenRoutes.FlashcardDetailScreen.route) })
+//        }
+
+
+
+
+
+
+
