@@ -28,6 +28,9 @@ import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
+import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
+import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
