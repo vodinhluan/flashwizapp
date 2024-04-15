@@ -13,12 +13,12 @@ import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
-import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.card.CardScreen
-import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
+import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
+import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 
@@ -99,9 +99,8 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            CardScreen(cardViewModel = cardViewModel, navController = navController)
+            AddCardScreen(cardViewModel = cardViewModel, navController = navController)
         }
-<<<<<<< HEAD
         composable(ScreenRoutes.AccountScreen.route){
             AccountScreen(
                 onLogoutSuccessNavigation = {
@@ -111,25 +110,13 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
-=======
 
         composable(ScreenRoutes.ReviewCardScreen.route) {
             ReviewCardScreen()
         }
 
->>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
 
     }
 
 }
 
-
-
-
-
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144

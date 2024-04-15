@@ -3,8 +3,6 @@ package com.example.flashwiz_fe
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-<<<<<<< HEAD
-=======
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
->>>>>>> 5585cfda358241c6640f73ed4c50d5d165394144
 import androidx.compose.ui.graphics.toArgb
 import com.example.flashwiz_fe.ui.theme.FlashWizTheme
 import com.example.flashwiz_fe.ui.theme.gray
