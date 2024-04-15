@@ -1,6 +1,5 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.flashcard
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.background
@@ -36,6 +35,7 @@ import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
+import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 @Composable
 fun FolderDetailScreen(

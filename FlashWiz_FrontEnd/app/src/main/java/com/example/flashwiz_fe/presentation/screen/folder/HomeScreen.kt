@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.folder
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -28,6 +28,7 @@ import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.presentation.components.FolderItem
+import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 @Composable
@@ -154,14 +155,11 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             }
                         )
 
-
                         Spacer(modifier = Modifier.height(8.dp))
-
                     }
                 }
             }
             selectedFolder?.let { folder ->
-
                 FolderDetailScreen(
                     folderId = folder.id,
                     folderName = folder.name,

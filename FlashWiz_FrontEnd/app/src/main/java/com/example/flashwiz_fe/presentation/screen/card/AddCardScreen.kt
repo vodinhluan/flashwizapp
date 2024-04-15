@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.card
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,33 +17,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-
-import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.redOrange
-
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
-import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.redOrange
-
-import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-
-
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
 @Composable
-fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) {
+fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController) {
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
@@ -153,6 +139,7 @@ fun CardScreen(cardViewModel: CardViewModel,  navController: NavHostController) 
         }
     }
 }
+
 
 
 

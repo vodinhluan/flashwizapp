@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.group
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme

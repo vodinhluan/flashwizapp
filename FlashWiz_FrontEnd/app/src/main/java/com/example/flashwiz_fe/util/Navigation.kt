@@ -10,11 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.presentation.screen.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.CardScreen
-import com.example.flashwiz_fe.presentation.screen.LoginScreen
+import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
+import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
-import com.example.flashwiz_fe.presentation.screen.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
@@ -81,7 +81,7 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            CardScreen(cardViewModel = cardViewModel, navController = navController)
+           AddCardScreen(cardViewModel = cardViewModel, navController = navController)
         }
 
         composable(ScreenRoutes.ReviewCardScreen.route) {

@@ -1,5 +1,5 @@
 
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.card
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

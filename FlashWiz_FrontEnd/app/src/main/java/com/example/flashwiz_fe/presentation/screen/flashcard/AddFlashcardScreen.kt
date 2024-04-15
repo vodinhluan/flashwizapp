@@ -1,6 +1,6 @@
 @file:Suppress("NAME_SHADOWING")
 
-package com.example.flashwiz_fe.presentation.screen
+package com.example.flashwiz_fe.presentation.screen.flashcard
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
