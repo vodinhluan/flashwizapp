@@ -1,6 +1,5 @@
 package com.example.flashwiz_fe.presentation.screen
 
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -23,22 +22,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import kotlinx.coroutines.delay
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
+import com.example.flashwiz_fe.domain.model.CardDetail
+
 
 @Composable
-fun ReviewCardScreen() {
+fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId: Int) {
+    val cards by cardViewModel.cardsLiveData.observeAsState()
+    val randomCard = cards?.firstOrNull()
+    LaunchedEffect(Unit) {
+        cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.DarkGray
     ) {
         Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            FlippingCard()
+            FlippingCard(randomCard = randomCard)
         }
     }
 }
 
 @Composable
-fun FlippingCard() {
+fun FlippingCard(randomCard: CardDetail?) {
     var rotated by remember { mutableStateOf(false) }
     var showEvaluationBar by remember { mutableStateOf(false) }
     val rotate by animateFloatAsState(
@@ -46,11 +57,9 @@ fun FlippingCard() {
         animationSpec = tween(600)
     )
 
-    // Listen to changes in the `rotated` state and trigger side effects
     LaunchedEffect(rotated) {
         if (rotated) {
-            // Trigger the evaluation bar to show after the flip animation completes
-            delay(600)  // Wait for the animation to complete
+            delay(600)
             showEvaluationBar = true
         } else {
             showEvaluationBar = false
@@ -72,15 +81,17 @@ fun FlippingCard() {
             .clickable { rotated = !rotated }
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            val frontText = randomCard?.front ?: "Front text not available"
+            val backText = randomCard?.back ?: "Back text not available"
             if (rotate < 90f) {
                 Text(
-                    text = "This is the front of the card",
+                    text = frontText,
                     fontSize = 24.sp,
                     color = Color.Black
                 )
             } else {
                 Text(
-                    text = "This is the back of the card",
+                    text = backText,
                     fontSize = 24.sp,
                     color = Color.Black,
                     modifier = Modifier.graphicsLayer { rotationY = 180f }
@@ -129,5 +140,3 @@ fun EvaluationButton(text: String, color: Color, weight: Float) {
         Text(text = text, color = Color.Black)
     }
 }
-
-

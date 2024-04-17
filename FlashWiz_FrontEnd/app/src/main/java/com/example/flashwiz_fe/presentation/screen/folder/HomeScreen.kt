@@ -79,7 +79,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder", null)
+                        AddItemComponent(navController = navController, "Folder", null, null)
                     } else {
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -107,7 +107,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 modifier = Modifier.padding(16.dp)
                             )
                             selectedFolder?.let { folder ->
-                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id, null)
                             }
                         }
                     }

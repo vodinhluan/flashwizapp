@@ -125,8 +125,9 @@ fun FolderDetailScreen(
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-                AddItemComponent(navController = navController,"Card",null)
-
+                selectedFlashcard?.let { flashcard ->
+                    AddItemComponent(navController = navController,"Card",null, flashcardId = flashcard.id)
+                }
             }
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(

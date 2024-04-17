@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.components.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,12 @@ import com.example.flashwiz_fe.presentation.components.MenuItem
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemComponent(navController: NavController, itemType: String,folderId: Int?, onFolderSelected: ((Int) -> Unit)? = null, onFlashcardSelected: (() -> Unit)? = null) {    var expanded by remember { mutableStateOf(false) }
+fun AddItemComponent(navController: NavController, itemType: String
+                     ,folderId: Int?,
+                     flashcardId: Int?,
+                     onFolderSelected: ((Int) -> Unit)? = null,
+                     onFlashcardSelected: (() -> Unit)? = null) {
+    var expanded by remember { mutableStateOf(false) }
 
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
 
@@ -42,11 +48,15 @@ fun AddItemComponent(navController: NavController, itemType: String,folderId: In
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
                         "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> navController.navigate(ScreenRoutes.AddFlashcardScreen.route + "?folderId=$folderId")
-                        "Card" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+                        "Flashcard" -> {
+                            folderId?.let { Log.d("FolderId", it.toString()) }
+                            navController.navigate(ScreenRoutes.AddFlashcardScreen.route + "?folderId=$folderId")
+                        }
+                        "Card" ->  {
+                            Log.d("FlashcardId", flashcardId?.toString() ?: "FlashcardId is null")
+                            navController.navigate("${ScreenRoutes.AddCardScreen.route}/$flashcardId")
+                        }
                         "Review" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
-
-
                     }
                     expanded = false
                 }

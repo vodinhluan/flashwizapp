@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
+import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
@@ -29,10 +31,12 @@ import kotlinx.coroutines.withContext
 
 
 @Composable
-fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController) {
+fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController, initialFlashcardId: Int?) {
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
+    // Khai báo một State để lưu trữ giá trị của flashcardId
+//    val flashcardID by cardViewModel.flashcardId.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -52,7 +56,7 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "CARD INFO",
+                    text = "CARD INFO $initialFlashcardId",
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 24.sp,
@@ -112,11 +116,17 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                 CustomButtonComponent(
                     text = "Save This Card",
                     onClick = {
-                        val card = Card(
-                            front = cardState.value.frontText.trim(),
-                            back = cardState.value.backText.trim()
-                        )
-                        cardViewModel.saveCard(card)
+
+                        Log.d("AddCardScreen", "Flashcard ID: $initialFlashcardId")
+                        if (initialFlashcardId != null) {
+                            cardViewModel.saveCard(
+                                Card(
+                                    front = cardState.value.frontText.trim(),
+                                    back = cardState.value.backText.trim()
+                                ),
+                                initialFlashcardId
+                            )
+                        }
                     },
                     modifier = Modifier.wrapContentSize(),
                     backgroundColor = Color.LightGray,
@@ -139,13 +149,3 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

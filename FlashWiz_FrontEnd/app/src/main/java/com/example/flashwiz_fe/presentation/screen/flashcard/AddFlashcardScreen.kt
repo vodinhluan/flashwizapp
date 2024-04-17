@@ -48,7 +48,6 @@ fun AddFlashcardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
         Text(
             text = "Add Flashcard",
             fontSize = 24.sp,

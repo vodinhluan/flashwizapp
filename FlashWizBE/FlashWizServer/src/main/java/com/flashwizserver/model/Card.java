@@ -28,10 +28,7 @@ public class Card {
 	@Column
 	private String back;
 	
-//	@JsonIgnore
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "flashcard_id") 
-//	private List<Flashcard> flashcards;
+
 	@JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "flashcard_id") 
@@ -61,13 +58,6 @@ public class Card {
 		this.back = back;
 	}
 
-//	public List<Flashcard> getFlashcards() {
-//		return flashcards;
-//	}
-//
-//	public void setFlashcards(List<Flashcard> flashcards) {
-//		this.flashcards = flashcards;
-//	}
 	public Flashcard getFlashcard() {
 		return flashcard;
 	}
@@ -76,7 +66,6 @@ public class Card {
 		this.flashcard = flashcard;
 	}
 
-	
-	
+		
 	
 }
