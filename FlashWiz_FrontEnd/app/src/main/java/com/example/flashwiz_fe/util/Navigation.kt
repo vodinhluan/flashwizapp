@@ -24,6 +24,7 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
 
 @Composable
 fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
@@ -85,6 +86,14 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             val navController = rememberNavController()
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
 
+        composable(ScreenRoutes.AddStudyGroupScreen.route) {
+            AddStudyGroupScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(ScreenRoutes.AddFlashcardScreen.route) {
             AddFlashcardScreen(
                 onNavigateBack = { navController.popBackStack() },
                 initialFolderId = folderId,
@@ -109,6 +118,7 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             ReviewCardScreen()
         }
         composable(ScreenRoutes.NotificationScreen.route){
+            }
         }
     }
 }
