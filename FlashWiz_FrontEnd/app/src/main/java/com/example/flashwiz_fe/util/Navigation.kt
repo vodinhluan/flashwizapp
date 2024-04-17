@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.util
 
+import AddCardScreen
 import AddFolderScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,7 +18,7 @@ import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
-import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
+import com.example.flashwiz_fe.presentation.screen.card.RichTextEditor
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
 
