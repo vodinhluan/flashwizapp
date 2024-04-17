@@ -57,7 +57,7 @@ fun AddFolderScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackIconComponent(onNavigateBack)
+            BackIconComponent(onNavigateBack,false)
             Button(
                 onClick = {
                     viewModel.addFolder(folderName, folderDescription) { isSuccess ->

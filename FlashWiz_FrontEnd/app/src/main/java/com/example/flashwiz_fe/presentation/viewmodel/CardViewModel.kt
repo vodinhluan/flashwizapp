@@ -20,11 +20,11 @@ import javax.inject.Inject
 class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
     private val _saveSuccess = MutableStateFlow(false)
     val saveSuccess: StateFlow<Boolean> = _saveSuccess
-    fun saveCard(card: Card) {
+    fun saveCard(card: Card,flashcardId: Int) {
         viewModelScope.launch {
             try {
                 Log.d("CardViewModel", "Saving card: $card")
-                cardRepository.saveCard(card)
+                cardRepository.saveCard(card,flashcardId)
                 Log.d("CardViewModel", "Card saved successfully")
                 _saveSuccess.value = true
             } catch (e: Exception) {

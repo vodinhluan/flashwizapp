@@ -41,7 +41,7 @@ fun FlashcardDetailScreen(
     flashcardName: String,
     description: String,
     onNavigateUp: () -> Unit,
-    navController: NavController
+    navController: NavController // điều hướng
 ) {
     val cardViewModel: CardViewModel = hiltViewModel()
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
@@ -69,6 +69,8 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
+
+
                         },
                         onDeleteClick = { cardId ->
                             cardViewModel.deleteCardAndUpdateList(
@@ -96,5 +98,3 @@ fun FlashcardDetailScreen(
         )
     }
 }
-
-

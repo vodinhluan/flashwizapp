@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flashwizserver.model.Card;
@@ -36,9 +37,22 @@ public class CardController {
     }
 
     @PostMapping("/card/save")
-    public Card createCard(@RequestBody Card card) {
-        return cardRepository.save(card);
-    }
+    public ResponseEntity<Card> createCard(@RequestBody Card card,@RequestParam("flashcardId") Integer flashcardId) {
+    	 Flashcard flashcard = flashcardService.findById(flashcardId);
+         if (flashcard == null) {
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
+
+         card.setFlashcard(flashcard);
+
+         Card createdCard = cardService.createCard(card);
+
+         flashcard.getCard().add(createdCard);
+         flashcardService.saveFlashcard(flashcard);
+
+         return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
+     }
+
     
 
 //    @DeleteMapping("/{id}")
