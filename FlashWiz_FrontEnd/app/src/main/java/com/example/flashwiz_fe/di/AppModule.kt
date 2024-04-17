@@ -22,13 +22,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideValidateLoginInputUseCase():ValidateLoginInputUseCase{
+    fun provideValidateLoginInputUseCase(): ValidateLoginInputUseCase {
         return ValidateLoginInputUseCase()
     }
 
     @Provides
     @Singleton
-    fun provideValidateRegisterInputUseCase():ValidateRegisterInputUseCase{
+    fun provideValidateRegisterInputUseCase(): ValidateRegisterInputUseCase {
         return ValidateRegisterInputUseCase()
     }
 

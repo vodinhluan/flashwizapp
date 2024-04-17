@@ -38,7 +38,7 @@ fun FlashcardDetailScreen(
     flashcardName: String,
     description: String,
     onNavigateUp: () -> Unit,
-    navController: NavController,
+    navController: NavController // điều hướng
 ) {
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }

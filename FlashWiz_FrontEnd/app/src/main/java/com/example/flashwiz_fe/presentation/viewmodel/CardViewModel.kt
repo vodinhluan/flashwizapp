@@ -39,11 +39,11 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         Log.d("ID FlashCard is:", "hello FlashCard ID: $id")
     }
 
-    fun saveCard(card: Card, flashcardId: Int) {
+        fun saveCard(card: Card,flashcardId: Int) {
         viewModelScope.launch {
             try {
                 Log.d("CardViewModel", "Saving card: $card")
-                cardRepository.saveCard(card, flashcardId)
+                cardRepository.saveCard(card,flashcardId)
                 Log.d("CardViewModel", "Card saved successfully")
                 _saveSuccess.value = true
             } catch (e: Exception) {

@@ -20,9 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
-import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
@@ -31,12 +32,11 @@ import kotlinx.coroutines.withContext
 
 
 @Composable
-fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController, initialFlashcardId: Int?) {
+fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController,initialFlashcardId: Int?) {
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
-    // Khai báo một State để lưu trữ giá trị của flashcardId
-//    val flashcardID by cardViewModel.flashcardId.collectAsState()
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -149,3 +149,4 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
         }
     }
 }
+

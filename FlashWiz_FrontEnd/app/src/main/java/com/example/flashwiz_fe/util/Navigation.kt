@@ -1,15 +1,19 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.example.flashwiz_fe.util
 
 import AddFolderScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.flashwiz_fe.data.CardRepositoryImpl
@@ -20,6 +24,7 @@ import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
@@ -31,7 +36,7 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
     val context = LocalContext.current
     var showHeader: MutableState<Boolean>
 
-    // Kiểm tra trạng thái đăng nhập khi Composable được khởi tạo
+
     LaunchedEffect(Unit) {
         val userPreferences = UserPreferences(context)
         println("Email đang đăng nhập: ${userPreferences.getUserEmail()}")
@@ -83,12 +88,16 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
-        composable(ScreenRoutes.AddFlashcardScreen.route) {
+
+        // ** CHECK THIS **
+        composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
+            val navController = rememberNavController()
+            val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
+
             AddFlashcardScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                initialFolderId = navController.currentBackStackEntry?.arguments?.getInt("folderId")
+                onNavigateBack = { navController.popBackStack() },
+                initialFolderId = folderId,
+                navController = navController
             )
         }
 
@@ -100,6 +109,7 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             val cardViewModel: CardViewModel = hiltViewModel()
             ReviewCardScreen(cardViewModel, flashcardId)
         }
+
 
         composable(ScreenRoutes.AddCardScreen.route+"/{flashcardId}") { backStackEntry ->
             val navController = rememberNavController()

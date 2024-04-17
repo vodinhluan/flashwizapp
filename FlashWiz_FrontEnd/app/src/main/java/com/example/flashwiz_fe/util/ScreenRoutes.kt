@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.util
 sealed class ScreenRoutes(val route: String) {
+
     object LoginScreen : ScreenRoutes("login_screen")
     object RegisterScreen : ScreenRoutes("register_screen")
     object MainScreen : ScreenRoutes("main_screen")
@@ -9,6 +10,7 @@ sealed class ScreenRoutes(val route: String) {
     object AddFlashcardScreen : ScreenRoutes("add_flashcard_screen")
     object FlashcardDetailScreen : ScreenRoutes("flashcard_detail_screen")
     object AccountScreen : ScreenRoutes("account_screen")
+    object AddStudyGroupScreen : ScreenRoutes("add_study_group_screen")
 
 
     object ReviewCardScreen : ScreenRoutes("review_card_screen")

@@ -40,6 +40,15 @@ public class UserDAO {
     public String checkUserPasswordByEmail(String email){
         return userRepo.checkUserPasswordByEmail(email);
     }
+
+	public Integer getUserIdByEmail(String userEmail) {
+		return userRepo.findUserIdByEmail(userEmail);
+	}
+
+	 public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElse(null); 
+    }
    
 
 }

@@ -11,21 +11,24 @@ import kotlinx.coroutines.launch
 class FlashcardViewModel: ViewModel() {
     private val flashcardService = RetrofitInstance.flashcardApiService
 
-    fun addFlashcard(name: String, description: String,folderId: Int, onResult: (Boolean) -> Unit) {
-        val flashcard = Flashcard(name = name, descriptions = description, userId = 2,folderId = folderId )
+    fun addFlashcard(name: String, description: String, folderId: Int, onResult: (Boolean) -> Unit) {
+        val flashcard = Flashcard(name = name, descriptions = description, userId = 2, folderId = folderId)
         viewModelScope.launch {
             try {
-                val response = flashcardService.saveFlashcard(flashcard, 2,folderId)
+                val response = flashcardService.saveFlashcard(flashcard, 2, folderId)
                 if (response.equals("ok")) {
                     onResult(true)
                 } else {
+                    // Xử lý trường hợp không thành công
                     onResult(false)
                 }
             } catch (e: Exception) {
-                onResult(false) // Xử lý exception
+                // Xử lý lỗi
+                onResult(false)
             }
         }
     }
+
     private fun deleteFlashcard(flashcardId: Int) {
         viewModelScope.launch {
             try {

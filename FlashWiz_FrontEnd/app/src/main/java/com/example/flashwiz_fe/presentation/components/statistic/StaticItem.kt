@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components.static
+package com.example.flashwiz_fe.presentation.screen.statistic
 
 
 import androidx.compose.foundation.background

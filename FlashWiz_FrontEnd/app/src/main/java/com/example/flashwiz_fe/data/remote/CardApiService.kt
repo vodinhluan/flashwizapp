@@ -2,6 +2,7 @@ package com.example.flashwiz_fe.data.remote
 
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.domain.model.Flashcard
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import retrofit2.Response
 import retrofit2.http.Body
@@ -22,6 +23,7 @@ interface CardApiService {
     ): Response<Card>
     @GET("card/get-by-flashcard/{flashcardId}")
     suspend fun getCardsByFlashcardId(@Path("flashcardId") flashcardId: Int): List<CardDetail>
+
     @DELETE("/card/delete/{id}")
     suspend fun deleteCard(@Path("id") id: Int): List<CardDetail>
 }

@@ -8,7 +8,8 @@ import com.example.flashwiz_fe.domain.model.TokenResponse
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import retrofit2.Response
-class AuthRepositoryImpl(context: Context): AuthRepository {
+
+class AuthRepositoryImpl(context: Context) : AuthRepository {
     private val authApiService = RetrofitInstance.authApiService
     private val userPreferences = UserPreferences(context)
 
@@ -21,7 +22,7 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
 
             // Kiểm tra kết quả từ response
             if (response.isSuccessful) {
-                val tokenResponseBody= response.body()
+                val tokenResponseBody = response.body()
                 println("Ket noi nguoi dung thanh cong")
 
                 // Kiểm tra tokenResponse không null
@@ -59,13 +60,16 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
         }
 
     }
-    override suspend fun logout(){
+
+    override suspend fun logout() {
         userPreferences.clearData()
     }
+
     override suspend fun register(name: String, email: String, password: String): Boolean {
         delay(1000)
         return try {
-            val response: Response<RegisterResponse> = authApiService.register(name, email, password)
+            val response: Response<RegisterResponse> =
+                authApiService.register(name, email, password)
             if (response.isSuccessful) {
                 println("API đăng ký người dùng thành công")
                 true

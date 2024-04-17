@@ -1,14 +1,19 @@
-package com.example.flashwiz_fe.presentation.components.home
+package com.example.flashwiz_fe.presentation.components.group
 
-import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,14 +27,14 @@ import com.example.flashwiz_fe.presentation.components.MenuItem
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemComponent(navController: NavController, itemType: String
-                     ,folderId: Int?,
-                     flashcardId: Int?,
-                     onFolderSelected: ((Int) -> Unit)? = null,
-                     onFlashcardSelected: (() -> Unit)? = null) {
+fun AddItemNewGroup(navController: NavController,
+                    itemType: String,
+                    groupId: Int?,
+                    ) {
+    var groupName by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
-
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
+
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -44,23 +49,15 @@ fun AddItemComponent(navController: NavController, itemType: String
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.align(Alignment.End)
-            ) {
+            ){
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
-                        "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
-                        "Flashcard" -> {
-                            folderId?.let { Log.d("FolderId", it.toString()) }
-                            navController.navigate(ScreenRoutes.AddFlashcardScreen.route + "?folderId=$folderId")
-                        }
-                        "Card" ->  {
-                            Log.d("FlashcardId", flashcardId?.toString() ?: "FlashcardId is null")
-                            navController.navigate("${ScreenRoutes.AddCardScreen.route}/$flashcardId")
-                        }
-                        "Review" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
+                        "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
+
+
                     }
                     expanded = false
                 }
-
             }
         }
     }
