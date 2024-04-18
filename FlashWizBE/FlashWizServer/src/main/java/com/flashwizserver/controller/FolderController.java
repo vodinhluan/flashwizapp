@@ -32,6 +32,15 @@ public class FolderController {
         List<Folder> folder = folderDAO.getAllFolder();
         return new ResponseEntity<>(folder, HttpStatus.OK);
     }
+    @GetMapping("/folder/get/{userId}")
+    public ResponseEntity<List<Folder>> getFolderByUserId(@PathVariable("userId") Integer userId) {
+        List<Folder> folders = folderDAO.getFolderByUserId(userId);
+        if (folders.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(folders, HttpStatus.OK);
+    }
+
 //	@GetMapping("/folder/get-all")
 //	public ResponseEntity<?> getAllFoldersForCurrentUser() {
 //	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

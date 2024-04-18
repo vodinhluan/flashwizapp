@@ -5,18 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.Folder
 import kotlinx.coroutines.launch
 
 
-class FolderViewModel : ViewModel() {
+class FolderViewModel() : ViewModel() {
 
     private val folderService = RetrofitInstance.folderApiService
     private val _folders = mutableStateOf<List<FolderDetail>>(emptyList())
     val folders: State<List<FolderDetail>> = _folders
-
     fun addFolder(name: String, description: String, onResult: (Boolean) -> Unit) {
         val folder = Folder(name = name, descriptions = description, userId = 2) // Thay đổi userId thành giá trị thích hợp
         viewModelScope.launch {

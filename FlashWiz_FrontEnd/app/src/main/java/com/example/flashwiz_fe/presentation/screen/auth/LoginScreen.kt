@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
-import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
@@ -48,9 +47,11 @@ import com.example.flashwiz_fe.ui.theme.whiteGray
 
 @Composable
 fun LoginScreen(
+
     onLoginSuccessNavigation: () -> Unit,
     onNavigateToRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
+
 ) {
     NavDestinationHelper(shouldNavigate = {
         loginViewModel.loginState.isSuccessfullyLoggedIn

@@ -16,30 +16,29 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
     override suspend fun login(email: String, password: String): Boolean {
         delay(1000)
         return try {
-            // Gọi API đăng nhập người dùng
             val requestBody = LoginRequest(email, password)
             val response: Response<TokenResponse> = authApiService.login(requestBody)
 
-            // Kiểm tra kết quả từ response
             if (response.isSuccessful) {
                 val tokenResponseBody = response.body()
                 println("Ket noi nguoi dung thanh cong")
 
-                // Kiểm tra tokenResponse không null
                 if (tokenResponseBody != null) {
                     val accessToken = tokenResponseBody.accessToken
                     val userEmail = tokenResponseBody.email
+                    val userId = tokenResponseBody.id
+
                     println("Lưu thông tin email và token")
-// Lưu access token vào DataStore
-                    if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty()) {
+                    if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty() ) {
                         userPreferences.saveUserToken(accessToken)
                         userPreferences.saveUserEmail(userEmail)
                         userPreferences.saveIsLoggedIn(true)
+                        userPreferences.saveUserId(userId)
                         println("Lưu thông tin token,email vào dataStore")
-                        //test
                         println("Thông tin Access Token: ${userPreferences.getUserToken()}")
                         println("Thông tin Email: ${userPreferences.getUserEmail()}")
-                        true // Đăng nhập thành công
+                        println("Thông tin UserId: ${userPreferences.getUserId()}")
+                        true
                     } else {
                         println("Lỗi: Thiếu dữ liệu token hoặc email")
                         false
@@ -54,7 +53,6 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                 false
             }
         } catch (e: Exception) {
-            // Xử lý các trường hợp lỗi khác nhau (ví dụ: lỗi kết nối, lỗi parsing response, ...)
             println("Xảy ra lỗi: ${e.message}")
             return false
         }

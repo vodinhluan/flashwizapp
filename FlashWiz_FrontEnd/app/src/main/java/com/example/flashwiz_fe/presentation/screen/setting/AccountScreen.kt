@@ -41,7 +41,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.R
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.LightPrimaryColor
@@ -57,23 +60,39 @@ import com.example.flashwiz_fe.presentation.components.setting.DetailDialog
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
+import com.example.flashwiz_fe.util.ScreenRoutes
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 @Composable
-fun AccountScreen() {
+fun AccountScreen(logoutViewModel: LogoutViewModel = hiltViewModel(),
+                  navController: NavController
+) {
+
     var darkTheme by remember { mutableStateOf(false) }
     AppTheme(darkTheme = darkTheme) {
+        NavDestinationHelper(
+            shouldNavigate = {
+                logoutViewModel.logoutState.isSuccessfullyLoggedOut
+            },
+            destination = {
+                navController.navigate(ScreenRoutes.LoginScreen.route) {
+                    popUpTo(0)
+                }
+            }
+        )
         Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
             AccountText()
             ProfileCardUI()
             DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it }
             GeneralOptionsUI()
             ChangePasswordUI()
-            LogoutUI()
+            LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
         }
             NofiticaionScreen()
         }

@@ -78,5 +78,8 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+//    suspend fun getUserIdFromPreferences(): String? {
+//        return authRepository.getUserIdFromPreferences()
+//    }
 
 }
