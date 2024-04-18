@@ -111,4 +111,13 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         _currentRating.value = rating
         Log.d("Set Rating is:", "Rating value: $rating")
     }
+
+    fun updateCardRatingInViewModelScope(cardId: Int, newRating: String) {
+        viewModelScope.launch {
+            updateCardRating(cardId, newRating)
+        }
+    }
+    suspend fun updateCardRating(cardId: Int, newRating: String) {
+        cardRepository.updateCardRating(cardId, newRating)
+    }
 }

@@ -42,7 +42,10 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
         modifier = Modifier.fillMaxSize(),
         color = Color.DarkGray
     ) {
-        Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             FlippingCard(randomCard = randomCard)
         }
     }
@@ -107,10 +110,13 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel = hiltVie
         exit = fadeOut() + slideOutVertically()
     ) {
         EvaluationBar { rating ->
-            // Gọi đến CardViewModel để cập nhật currentRating ở đây
             cardViewModel.setCurrentRating(rating)
-            Log.d("CardViewModel", "Current rating: $rating")
-        }    }
+            randomCard?.let { card ->
+                // Sử dụng hàm mới để gọi suspend function
+                cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
+            }
+        }
+    }
 }
 
 @Composable
@@ -121,10 +127,26 @@ fun EvaluationBar(onEvaluationClick: (String) -> Unit) {
             .padding(vertical = 16.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween // Sử dụng SpaceBetween để phân bổ đều
     ) {
-        EvaluationButton(text = "Fail", color = Color.Red, weight = 6f) { onEvaluationClick("fail") }
-        EvaluationButton(text = "Hard", color = Color.Yellow, weight = 6f) { onEvaluationClick("hard") }
-        EvaluationButton(text = "Good", color = Color.Cyan, weight = 6f) { onEvaluationClick("good") }
-        EvaluationButton(text = "Easy", color = Color.Green, weight = 6f) { onEvaluationClick("easy") }
+        EvaluationButton(
+            text = "Fail",
+            color = Color.Red,
+            weight = 6f
+        ) { onEvaluationClick("fail") }
+        EvaluationButton(
+            text = "Hard",
+            color = Color.Yellow,
+            weight = 6f
+        ) { onEvaluationClick("hard") }
+        EvaluationButton(
+            text = "Good",
+            color = Color.Cyan,
+            weight = 6f
+        ) { onEvaluationClick("good") }
+        EvaluationButton(
+            text = "Easy",
+            color = Color.Green,
+            weight = 6f
+        ) { onEvaluationClick("easy") }
     }
 }
 
