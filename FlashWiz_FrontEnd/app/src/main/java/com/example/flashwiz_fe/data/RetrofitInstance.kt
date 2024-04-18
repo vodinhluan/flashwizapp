@@ -35,12 +35,3 @@ object RetrofitInstance {
         retrofit.create(GroupApiService::class.java)
     }
 }
-
-
-
-
-
-
-
-
-
