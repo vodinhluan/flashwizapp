@@ -47,6 +47,10 @@ public class FolderDAO {
 	
 }
 
+	public List<Folder> getAllFoldersForUser(Integer userId) {
+		return folderRepo.findByUserId(userId);
+	}
+
 }
 
 	

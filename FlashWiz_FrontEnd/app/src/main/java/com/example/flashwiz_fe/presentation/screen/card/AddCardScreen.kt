@@ -1,47 +1,152 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+
+
+import androidx.navigation.NavHostController
+import com.example.flashwiz_fe.domain.model.Card
+import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
+import com.example.flashwiz_fe.presentation.state.CardState
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 @Composable
-fun AddCardScreen(
-    navController: NavController // Thêm NavController như một tham số
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController,initialFlashcardId: Int?) {
+    val cardState = remember { mutableStateOf(CardState()) }
+    val saveSuccess by cardViewModel.saveSuccess.collectAsState()
+    val context = LocalContext.current
+
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        Text (
-            text = "Add Card2134",
-            fontSize = 24.sp,
-            color = Color.Black,
-            modifier = Modifier.padding(top = 24.dp)
-        )
+        val expanded = remember {
+            mutableStateOf(false)
+        }
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                navController.navigate("cardScreen") // Sử dụng route ID đã định nghĩa cho CardScreen
-            }
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text("Add Card534654")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Cyan),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "CARD INFO $initialFlashcardId",
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
+            // FRONT CARD
+            Text(
+                text = "FRONT CARD",
+                style = TextStyle(
+                    color = Color.Black,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
+            )
+
+            TextField(
+                value = cardState.value.frontText,
+                onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
+                label = { Text("") },
+                modifier = Modifier.padding(8.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            // BACK CARD
+            Text(
+                text = "BACK CARD",
+                style = TextStyle(
+                    color = Color.Black,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(5.dp)
+            )
+
+            TextField(
+                value = cardState.value.backText,
+                onValueChange = { cardState.value = cardState.value.copy(backText = it) },
+                label = { Text("") },
+                modifier = Modifier.padding(8.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                // SAVE BUTTON
+                CustomButtonComponent(
+                    text = "Save This Card",
+                    onClick = {
+
+                        Log.d("AddCardScreen", "Flashcard ID: $initialFlashcardId")
+                        if (initialFlashcardId != null) {
+                            cardViewModel.saveCard(
+                                Card(
+                                    front = cardState.value.frontText.trim(),
+                                    back = cardState.value.backText.trim()
+                                ),
+                                initialFlashcardId
+                            )
+                        }
+                    },
+                    modifier = Modifier.wrapContentSize(),
+                    backgroundColor = Color.LightGray,
+                    contentColor = Color.Blue,
+                    borderColor = Color.Black
+                )
+
+            }
+            LaunchedEffect(saveSuccess) {
+                if (saveSuccess) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Thất bại", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 }
+

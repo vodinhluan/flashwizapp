@@ -40,6 +40,9 @@ import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.FolderItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
+
+import com.example.flashwiz_fe.presentation.components.FolderItem
+
 import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
@@ -53,6 +56,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     val showHeaderState = remember { mutableStateOf(true) }
     var selectedFolderId by remember { mutableStateOf<Int?>(null) }
     var searchQuery by remember { mutableStateOf("") }
+    var isFolderSelected by remember { mutableStateOf(false) }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -64,7 +69,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
         ) {
             if (showHeaderState.value) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .background(Color.Cyan),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -79,10 +85,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder", null)
+
+                        AddItemComponent(navController = navController, "Folder", null, null)
                     } else {
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .background(Color.Cyan),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -107,7 +115,13 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 modifier = Modifier.padding(16.dp)
                             )
                             selectedFolder?.let { folder ->
-                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+
+                                AddItemComponent(
+                                    navController = navController,
+                                    "Flashcard",
+                                    folderId = folder.id,
+                                    null
+                                )
                             }
                         }
                     }
@@ -148,6 +162,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             folder = folder,
                             onItemClick = { selectedFolderId ->
                                 selectedFolderId.let { folderId ->
+                                    isFolderSelected = true
                                     selectedFolder = folders.find { it.id == folderId }
                                     Log.d(
                                         "FolderItemClicked",
@@ -172,7 +187,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                 }
             }
             selectedFolder?.let { folder ->
-
                 FolderDetailScreen(
                     folderId = folder.id,
                     folderName = folder.name,

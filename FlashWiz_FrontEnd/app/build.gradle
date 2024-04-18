@@ -115,4 +115,7 @@ dependencies {
     //Accompanist
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
 
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta01'
+
+
 }

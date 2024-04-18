@@ -1,4 +1,3 @@
-
 package com.example.flashwiz_fe.presentation.screen.card
 
 import androidx.compose.foundation.layout.Column
@@ -22,14 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
-
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun FlashcardDetailScreen(
@@ -37,17 +38,20 @@ fun FlashcardDetailScreen(
     flashcardName: String,
     description: String,
     onNavigateUp: () -> Unit,
-    navController: NavController
+    navController: NavController // điều hướng
 ) {
-    val cardViewModel: CardViewModel = hiltViewModel()
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
+    val cardViewModel: CardViewModel = hiltViewModel()
+
 
     LaunchedEffect(Unit) {
-        originalCard = cardViewModel.getCardsByFlashcardId(flashcardId)
-        cards = originalCard
-        isDataLoaded = true
+        cardViewModel.getCardsByFlashcardId(flashcardId).let { fetchedCards ->
+            originalCard = fetchedCards
+            cards = originalCard
+            isDataLoaded = true
+        }
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
@@ -65,6 +69,7 @@ fun FlashcardDetailScreen(
                     CardItemComponent(
                         card = card,
                         onFlashcardClicked = {
+
                         },
                         onDeleteClick = { cardId ->
                             cardViewModel.deleteCardAndUpdateList(
@@ -83,7 +88,8 @@ fun FlashcardDetailScreen(
         CustomButtonComponent(
             text = "Review Cards",
             onClick = {
-                navController.navigate(ScreenRoutes.ReviewCardScreen.route)
+                cardViewModel.setFlashcardId(flashcardId)
+                navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
             },
             modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
             backgroundColor = Color.Blue,
@@ -92,5 +98,3 @@ fun FlashcardDetailScreen(
         )
     }
 }
-
-

@@ -1,19 +1,15 @@
 package com.example.flashwiz_fe.presentation.screen.flashcard
 
+import androidx.compose.foundation.layout.*
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Text
@@ -26,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,12 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
+import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+
 @Composable
 fun FolderDetailScreen(
     folderId: Int,
@@ -47,7 +45,7 @@ fun FolderDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController,
-    showHeader: MutableState<Boolean> // Thêm trạng thái của header
+    showHeader: MutableState<Boolean>
 ) {
     val viewModel: FlashcardViewModel = viewModel()
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
@@ -82,7 +80,8 @@ fun FolderDetailScreen(
                         onItemClick = { selectedFlashcardId ->
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
-                                showHeader.value = false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
+                                showHeader.value =
+                                    false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
                             }
                         },
                         onDeleteClick = { flashcardId ->
@@ -102,7 +101,8 @@ fun FolderDetailScreen(
         } else {
             // Header của card
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -113,7 +113,8 @@ fun FolderDetailScreen(
                     modifier = Modifier
                         .clickable {
                             selectedFlashcard = null
-                            showHeader.value = true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
+                            showHeader.value =
+                                true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
                         }
                         .padding(16.dp)
                 )
@@ -127,7 +128,14 @@ fun FolderDetailScreen(
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-                AddItemComponent(navController = navController,"Card",null)
+                selectedFlashcard?.let { flashcard ->
+                    AddItemComponent(
+                        navController = navController,
+                        "Card",
+                        null,
+                        flashcardId = flashcard.id
+                    )
+                }
 
             }
             selectedFlashcard?.let { flashcard ->
@@ -137,7 +145,7 @@ fun FolderDetailScreen(
                     description = flashcard.descriptions,
                     onNavigateUp = {
                         selectedFlashcard = null
-                        showHeader.value = true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
+                        showHeader.value = true
                     },
                     navController
                 )

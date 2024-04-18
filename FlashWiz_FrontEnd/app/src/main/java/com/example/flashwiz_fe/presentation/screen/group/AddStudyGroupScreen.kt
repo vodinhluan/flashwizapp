@@ -1,7 +1,6 @@
-@file:Suppress("NAME_SHADOWING")
-package com.example.flashwiz_fe.presentation.screen.flashcard
+package com.example.flashwiz_fe.presentation.screen.group
 
-import android.util.Log
+import StudyGroupViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,22 +23,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.presentation.components.BackIconComponent
-import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
-fun AddFlashcardScreen(
-    onNavigateBack: () -> Unit,
-    initialFolderId: Int?,
-    navController: NavHostController
-
+fun AddStudyGroupScreen(
+    onNavigateBack: () -> Unit
 ) {
-    val viewModel: FlashcardViewModel = viewModel()
-    var flashcardName by remember { mutableStateOf("") }
-    var flashcardDescription by remember { mutableStateOf("") }
-
+    val viewModel: StudyGroupViewModel = viewModel()
+    val userId = viewModel.userId
+    var groupName by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -49,8 +41,9 @@ fun AddFlashcardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+
         Text(
-            text = "Add Flashcard",
+            text = "Add Group",
             fontSize = 24.sp,
             color = Color.Black,
             modifier = Modifier.padding(top = 24.dp)
@@ -59,17 +52,9 @@ fun AddFlashcardScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
-            value = flashcardName,
-            onValueChange = { flashcardName = it },
-            label = { Text("Flashcard Name") }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = flashcardDescription,
-            onValueChange = { flashcardDescription = it },
-            label = { Text("Flashcard Description") }
+            value = groupName,
+            onValueChange = { groupName = it },
+            label = { Text("Group Name") }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -78,24 +63,20 @@ fun AddFlashcardScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackIconComponent(onNavigateBack,true)
+            BackIconComponent(onNavigateBack,false)
             Button(
                 onClick = {
-                    Log.d("AddFlashcardScreen", "Folder ID: $initialFolderId")
-                    if (initialFolderId != null) {
-                        viewModel.addFlashcard(
-                            flashcardName,
-                            flashcardDescription,
-                            initialFolderId
-                        ) {
+                    viewModel.addGroup(groupName) { isSuccess ->
+                        if (isSuccess) {
                             onNavigateBack()
+                        } else {
+                            // Xử lý khi thêm nhóm không thành công
                         }
                     }
                 }
             ) {
-                Text("Add Flashcard")
+                Text("Add Group")
             }
-
         }
     }
 }

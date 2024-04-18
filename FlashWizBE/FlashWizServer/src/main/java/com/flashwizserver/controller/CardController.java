@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.flashwizserver.model.Card;
 import com.flashwizserver.model.Flashcard;
@@ -21,6 +23,7 @@ import com.flashwizserver.service.FlashcardDAO;
 
 @RestController
 public class CardController {
+
     @Autowired
     private CardRepository cardRepository;
     
@@ -36,16 +39,23 @@ public class CardController {
     }
 
     @PostMapping("/card/save")
-    public Card createCard(@RequestBody Card card) {
-        return cardRepository.save(card);
-    }
-    
+    public ResponseEntity<Card> createCard(@RequestBody Card card,@RequestParam("flashcardId") Integer flashcardId) {
+    	 Flashcard flashcard = flashcardService.findById(flashcardId);
+         if (flashcard == null) {
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
-//        cardService.deleteCard(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+         card.setFlashcard(flashcard);
+
+         Card createdCard = cardService.createCard(card);
+
+         flashcard.getCard().add(createdCard);
+         flashcardService.saveFlashcard(flashcard);
+
+         return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
+     }
+
+
     
     @GetMapping("/card/get-by-flashcard/{flashcardId}")
     public ResponseEntity<List<Card>> getCardsByFlashcardId(@PathVariable("flashcardId") Integer flashcardId) {

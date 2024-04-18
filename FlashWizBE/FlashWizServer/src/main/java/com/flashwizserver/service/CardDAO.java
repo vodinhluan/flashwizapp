@@ -24,6 +24,7 @@ public class CardDAO {
 	}
 	
 	public Card createCard (Card card) {
+		card.setRating("new");
 		return cardRepo.save(card);
 	}
 	

@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
@@ -51,44 +52,36 @@ fun LoginScreen(
     onNavigateToRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    NavDestinationHelper(
-        shouldNavigate = {
-            loginViewModel.loginState.isSuccessfullyLoggedIn
-        },
-        destination = {
-            onLoginSuccessNavigation()
-        }
-    )
+    NavDestinationHelper(shouldNavigate = {
+        loginViewModel.loginState.isSuccessfullyLoggedIn
+    }, destination = {
+        onLoginSuccessNavigation()
+    })
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(white)
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp),
-            contentAlignment = Alignment.Center
-        ){
+                .height(120.dp), contentAlignment = Alignment.Center
+        ) {
             HeaderBackground(
-                leftColor = blue,
-                rightColor = brightBlue,
-                modifier = Modifier
-                    .fillMaxSize()
+                leftColor = blue, rightColor = brightBlue, modifier = Modifier.fillMaxSize()
             )
             Text(
                 text = "FlashWiz",
                 style = MaterialTheme.typography.h3,
-                fontFamily = FontFamily.Cursive ,
+                fontFamily = FontFamily.Cursive,
                 color = white,
                 fontWeight = FontWeight.SemiBold
             )
         }
-        LoginContainer(
-            emailValue = {
-                loginViewModel.loginState.emailInput
-            },
+        LoginContainer(emailValue = {
+            loginViewModel.loginState.emailInput
+        },
             passwordValue = {
                 loginViewModel.loginState.passwordInput
             },
@@ -129,10 +122,9 @@ fun LoginScreen(
                 .padding(bottom = 10.dp)
                 .align(Alignment.BottomCenter),
             horizontalArrangement = Arrangement.Center
-        ){
+        ) {
             Text(
-                "Bạn chưa có tài khoản ?",
-                style = MaterialTheme.typography.body2
+                "Bạn chưa có tài khoản ?", style = MaterialTheme.typography.body2
 
             )
             Text(
@@ -153,16 +145,16 @@ fun LoginScreen(
 
 @Composable
 fun LoginContainer(
-    emailValue:() -> String,
-    passwordValue:()-> String,
-    buttonEnabled:() -> Boolean,
-    onEmailChanged:(String) -> Unit,
-    onPasswordChanged:(String) -> Unit,
-    onLoginButtonClick:()->Unit,
-    isPasswordShown:()->Boolean,
+    emailValue: () -> String,
+    passwordValue: () -> String,
+    buttonEnabled: () -> Boolean,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onLoginButtonClick: () -> Unit,
+    isPasswordShown: () -> Boolean,
     onTrailingPasswordIconClick: () -> Unit,
-    errorHint:()->String?,
-    isLoading:()->Boolean,
+    errorHint: () -> String?,
+    isLoading: () -> Boolean,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -172,15 +164,14 @@ fun LoginContainer(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text(
             text = "Đăng nhập",
             color = gray,
             style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
         )
         TextEntryModule(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             description = "Email address",
             hint = "example@gmail.com",
             textValue = emailValue(),
@@ -192,8 +183,7 @@ fun LoginContainer(
             leadingIcon = Icons.Default.Email
         )
         TextEntryModule(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             description = "Password",
             hint = "Enter password",
             textValue = passwordValue(),
@@ -205,17 +195,16 @@ fun LoginContainer(
                 onTrailingPasswordIconClick()
             },
             leadingIcon = Icons.Default.VpnKey,
-            visualTransformation = if(isPasswordShown()){
+            visualTransformation = if (isPasswordShown()) {
                 VisualTransformation.None
-            }else PasswordVisualTransformation(),
+            } else PasswordVisualTransformation(),
             keyboardType = KeyboardType.Password
         )
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp) ,
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             AuthButton(
                 text = "Login",
                 backgroundColor = blue,
@@ -230,8 +219,7 @@ fun LoginContainer(
 
                 )
             Text(
-                errorHint() ?: "",
-                style = MaterialTheme.typography.body2
+                errorHint() ?: "", style = MaterialTheme.typography.body2
 
             )
 
