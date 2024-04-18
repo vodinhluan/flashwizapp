@@ -14,15 +14,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Nightlight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flashwiz_fe.ui.theme.Poppins
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
+import androidx.compose.runtime.livedata.observeAsState
+
 
 @Composable
-fun DarkModeSwitch(isDarkMode: Boolean, onToggleDarkMode: (Boolean) -> Unit) {
+fun DarkModeSwitch(viewModel: ThemeViewModel = viewModel()) {
+    val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
+
     Card(
         backgroundColor = MaterialTheme.colors.surface,
         modifier = Modifier
@@ -33,21 +40,21 @@ fun DarkModeSwitch(isDarkMode: Boolean, onToggleDarkMode: (Boolean) -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onToggleDarkMode(!isDarkMode) }
+                .clickable { viewModel.toggleTheme() }
                 .padding(vertical = 10.dp, horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = if (isDarkMode) "Switch to Light Mode" else "Switch to Dark Mode",
                 fontFamily = Poppins,
-                color = MaterialTheme.colors.onSurface, // Use onSurface for text color to ensure good contrast
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = if (isDarkMode) Icons.Filled.LightMode else Icons.Filled.Nightlight,
-                contentDescription = "Toggle Dark Mode",
+                contentDescription = if (isDarkMode) "Switch to light mode" else "Switch to dark mode",
                 modifier = Modifier.size(20.dp),
                 tint = MaterialTheme.colors.onSurface
             )

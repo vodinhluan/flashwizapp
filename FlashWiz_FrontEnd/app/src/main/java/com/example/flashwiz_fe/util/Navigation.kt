@@ -31,7 +31,7 @@ import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
-fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
+fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
     val navController = rememberNavController()
     val context = LocalContext.current
     var showHeader: MutableState<Boolean>

@@ -1,76 +1,47 @@
 package com.example.flashwiz_fe.presentation.screen.setting
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-
-import androidx.compose.material.ExperimentalMaterialApi
-
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.Nightlight
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
+
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.flashwiz_fe.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
-import com.example.flashwiz_fe.ui.theme.LightPrimaryColor
 import com.example.flashwiz_fe.ui.theme.Poppins
-import com.example.flashwiz_fe.ui.theme.PrimaryColor
-import com.example.flashwiz_fe.ui.theme.SecondaryColor
 import com.example.flashwiz_fe.ui.theme.Shapes
 
 
 
 import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
-import com.example.flashwiz_fe.presentation.components.setting.DetailDialog
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.ui.theme.DarkColors
-import com.example.flashwiz_fe.ui.theme.LightColors
-import com.example.flashwiz_fe.ui.theme.Poppins
-import com.example.flashwiz_fe.ui.theme.Shapes
 
 
 @Composable
 fun AccountScreen() {
-    var darkTheme by remember { mutableStateOf(false) }
-    AppTheme(darkTheme = darkTheme) {
+    val viewModel: ThemeViewModel = viewModel()
+
+    AppTheme(darkTheme = viewModel.darkThemeEnabled.observeAsState(false).value) {
         Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
             AccountText()
             ProfileCardUI()
-            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it }
+            DarkModeSwitch(viewModel)
             GeneralOptionsUI()
             ChangePasswordUI()
             LogoutUI()
@@ -88,7 +59,7 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
     val colors = if (darkTheme) DarkColors else LightColors
 
     MaterialTheme(
-        colors = colors,
+        colors = if (darkTheme) darkColors() else lightColors(),
         typography = MaterialTheme.typography,
         shapes = Shapes,
         content = {
