@@ -13,10 +13,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CardApiService {
-
     @GET("/card/get-all")
     suspend fun getAllCards(): List<Card>
-
     @POST("/card/save")
     suspend fun saveCard(
         @Body card: Card,

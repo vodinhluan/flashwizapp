@@ -9,9 +9,9 @@ interface CardUseCase {
 }
 
 class CardUseCaseImpl(private val cardRepository: CardRepository) : CardUseCase {
+
     override suspend fun saveCard(card: Card,flashcardId: Int) {
         cardRepository.saveCard(card, flashcardId)
     }
 }
-
 

@@ -69,7 +69,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
         ) {
             if (showHeaderState.value) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .background(Color.Cyan),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -84,10 +85,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder", null,null)
+
+                        AddItemComponent(navController = navController, "Folder", null, null)
                     } else {
                         Row(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .background(Color.Cyan),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -112,7 +115,13 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 modifier = Modifier.padding(16.dp)
                             )
                             selectedFolder?.let { folder ->
-                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id,null)
+
+                                AddItemComponent(
+                                    navController = navController,
+                                    "Flashcard",
+                                    folderId = folder.id,
+                                    null
+                                )
                             }
                         }
                     }

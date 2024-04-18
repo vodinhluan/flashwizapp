@@ -37,6 +37,7 @@ import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+
 @Composable
 fun FolderDetailScreen(
     folderId: Int,
@@ -79,7 +80,8 @@ fun FolderDetailScreen(
                         onItemClick = { selectedFlashcardId ->
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
-                                showHeader.value = false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
+                                showHeader.value =
+                                    false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
                             }
                         },
                         onDeleteClick = { flashcardId ->
@@ -99,7 +101,8 @@ fun FolderDetailScreen(
         } else {
             // Header của card
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -110,7 +113,8 @@ fun FolderDetailScreen(
                     modifier = Modifier
                         .clickable {
                             selectedFlashcard = null
-                            showHeader.value = true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
+                            showHeader.value =
+                                true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
                         }
                         .padding(16.dp)
                 )
@@ -125,7 +129,12 @@ fun FolderDetailScreen(
                     modifier = Modifier.padding(16.dp)
                 )
                 selectedFlashcard?.let { flashcard ->
-                    AddItemComponent(navController = navController,"Card",null,flashcardId = flashcard.id)
+                    AddItemComponent(
+                        navController = navController,
+                        "Card",
+                        null,
+                        flashcardId = flashcard.id
+                    )
                 }
 
             }

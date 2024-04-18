@@ -8,4 +8,5 @@ interface CardRepository {
     suspend fun saveCard(card: Card, flashcardId: Int): Response<Card>
     suspend fun getCardsByFlashcardId(flashcardId: Int): List<CardDetail>
     suspend fun deleteCard(id: Int): List<CardDetail>
+    suspend fun getAllCards(): List<Card>
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
-
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.state.CardState
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
@@ -37,6 +36,7 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +56,7 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "CARD INFO",
+                    text = "CARD INFO $initialFlashcardId",
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 24.sp,
@@ -149,3 +149,4 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
         }
     }
 }
+

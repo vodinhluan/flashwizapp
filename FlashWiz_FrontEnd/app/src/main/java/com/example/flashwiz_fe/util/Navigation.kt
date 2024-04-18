@@ -5,13 +5,17 @@ package com.example.flashwiz_fe.util
 import AddFolderScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
@@ -23,12 +27,15 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
+import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
 fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
     val navController = rememberNavController()
     val context = LocalContext.current
+    var showHeader: MutableState<Boolean>
+
 
     LaunchedEffect(Unit) {
         val userPreferences = UserPreferences(context)
@@ -81,6 +88,8 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
+
+        // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
             val navController = rememberNavController()
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
@@ -92,6 +101,14 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             )
         }
 
+        composable(
+            route = "${ScreenRoutes.ReviewCardScreen.route}/{flashcardId}",
+            arguments = listOf(navArgument("flashcardId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val flashcardId = backStackEntry.arguments?.getInt("flashcardId") ?: 0
+            val cardViewModel: CardViewModel = hiltViewModel()
+            ReviewCardScreen(cardViewModel, flashcardId)
+        }
 
 
         composable(ScreenRoutes.AddCardScreen.route+"/{flashcardId}") { backStackEntry ->
@@ -105,40 +122,13 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
             } ?: error("Cannot create CardViewModel")
             AddCardScreen(cardViewModel = cardViewModel, navController = navController, initialFlashcardId = flashcardId)
         }
-        composable(ScreenRoutes.ReviewCardScreen.route) {
-            ReviewCardScreen()
+
+        composable(ScreenRoutes.NotificationScreen.route) {
         }
-        composable(ScreenRoutes.NotificationScreen.route){
-        }
+
+
     }
 }
-
-//        composable(
-//            route = ScreenRoutes.FlashcardDetailScreen.route + "/{flashcardId}/{flashcardName}/{description}",
-//            arguments = listOf(
-//                navArgument("flashcardId") { type = NavType.IntType },
-//                navArgument("flashcardName") { type = NavType.StringType },
-//                navArgument("description") { type = NavType.StringType }
-//            )
-//        ) { backStackEntry ->
-//            val flashcardId = backStackEntry.arguments?.getInt("flashcardId")
-//            val flashcardName = backStackEntry.arguments?.getString("flashcardName")
-//            val description = backStackEntry.arguments?.getString("description")
-//
-//            if (flashcardId != null && flashcardName != null && description != null) {
-//                FlashcardDetailScreen(
-//                    flashcardId = flashcardId,
-//                    flashcardName = flashcardName,
-//                    description = description,
-//                    onNavigateUp = { navController.popBackStack() },
-//                    navController = navController
-//                )
-//            }
-//        }
-//
-//        composable(ScreenRoutes.ReviewCardScreen.route) {
-//            ReviewCardScreen(onBack = { navController.navigate(ScreenRoutes.FlashcardDetailScreen.route) })
-//        }
 
 
 

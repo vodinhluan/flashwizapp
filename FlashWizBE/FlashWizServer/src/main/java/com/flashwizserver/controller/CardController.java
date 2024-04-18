@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.flashwizserver.model.Card;
 import com.flashwizserver.model.Flashcard;
@@ -22,6 +23,7 @@ import com.flashwizserver.service.FlashcardDAO;
 
 @RestController
 public class CardController {
+
     @Autowired
     private CardRepository cardRepository;
     
@@ -53,13 +55,7 @@ public class CardController {
          return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
      }
 
-    
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
-//        cardService.deleteCard(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
     
     @GetMapping("/card/get-by-flashcard/{flashcardId}")
     public ResponseEntity<List<Card>> getCardsByFlashcardId(@PathVariable("flashcardId") Integer flashcardId) {
