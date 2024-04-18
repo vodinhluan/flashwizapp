@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -25,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import kotlinx.coroutines.delay
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import com.example.flashwiz_fe.domain.model.CardDetail
 
@@ -49,7 +49,7 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
 }
 
 @Composable
-fun FlippingCard(randomCard: CardDetail?) {
+fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel = hiltViewModel()) {
     var rotated by remember { mutableStateOf(false) }
     var showEvaluationBar by remember { mutableStateOf(false) }
     val rotate by animateFloatAsState(
@@ -106,34 +106,37 @@ fun FlippingCard(randomCard: CardDetail?) {
         enter = fadeIn() + slideInVertically(),
         exit = fadeOut() + slideOutVertically()
     ) {
-        EvaluationBar()
-    }
+        EvaluationBar { rating ->
+            // Gọi đến CardViewModel để cập nhật currentRating ở đây
+            cardViewModel.setCurrentRating(rating)
+            Log.d("CardViewModel", "Current rating: $rating")
+        }    }
 }
 
 @Composable
-fun EvaluationBar() {
+fun EvaluationBar(onEvaluationClick: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween // Sử dụng SpaceBetween để phân bổ đều
     ) {
-        EvaluationButton(text = "Fail", color = Color.Red, weight = 6f)
-        EvaluationButton(text = "Hard", color = Color.Yellow, weight = 6f)
-        EvaluationButton(text = "Good", color = Color.Cyan, weight = 6f)
-        EvaluationButton(text = "Easy", color = Color.Green, weight = 6f)
+        EvaluationButton(text = "Fail", color = Color.Red, weight = 6f) { onEvaluationClick("fail") }
+        EvaluationButton(text = "Hard", color = Color.Yellow, weight = 6f) { onEvaluationClick("hard") }
+        EvaluationButton(text = "Good", color = Color.Cyan, weight = 6f) { onEvaluationClick("good") }
+        EvaluationButton(text = "Easy", color = Color.Green, weight = 6f) { onEvaluationClick("easy") }
     }
 }
 
 @Composable
-fun EvaluationButton(text: String, color: Color, weight: Float) {
+fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .width(80.dp)
             .padding(horizontal = 2.dp)
             .height(48.dp) // Cố định chiều cao nút
             .background(color, RoundedCornerShape(10.dp))
-            .clickable { /* Handle button click */ }
+            .clickable { onClick() }
             .padding(horizontal = 3.dp), // Thêm padding ngang sau khi áp dụng weight
         contentAlignment = Alignment.Center
     ) {
