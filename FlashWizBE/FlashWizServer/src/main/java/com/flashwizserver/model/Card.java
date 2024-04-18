@@ -28,7 +28,9 @@ public class Card {
 	@Column
 	private String back;
 	
-
+	@Column
+	private String rating;
+	
 	@JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "flashcard_id") 
@@ -66,6 +68,12 @@ public class Card {
 		this.flashcard = flashcard;
 	}
 
-		
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
 	
 }

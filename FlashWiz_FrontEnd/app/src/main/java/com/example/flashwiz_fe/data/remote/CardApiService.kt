@@ -18,7 +18,6 @@ interface CardApiService {
     @POST("/card/save")
     suspend fun saveCard(
         @Body card: Card,
-
         @Query("flashcardId") flashcardId: Int
     ): Response<Card>
     @GET("card/get-by-flashcard/{flashcardId}")
