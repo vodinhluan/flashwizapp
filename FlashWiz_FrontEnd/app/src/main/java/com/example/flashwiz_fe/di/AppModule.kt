@@ -7,6 +7,7 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.repository.CardRepository
+import com.example.flashwiz_fe.domain.use_case.ValidateForgotPasswordEmailInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateRegisterInputUseCase
 import dagger.Module
@@ -36,6 +37,11 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
         return AuthRepositoryImpl(context)
+    }
+    @Provides
+    @Singleton
+    fun provideValidateForgotPasswordEmailInputUseCase(): ValidateForgotPasswordEmailInputUseCase{
+        return ValidateForgotPasswordEmailInputUseCase()
     }
 
 

@@ -20,6 +20,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
 	public Long countById(Integer id);
 
+//	public User findByEmail(String email); 
+     
+	Optional<User> findByResetPasswordOTP(String OTP);
 	
 	@Transactional
 	@Modifying
@@ -34,5 +37,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     
     
     Optional<User> findByEmail(String email);
+
+	
+
+	
 }
 
