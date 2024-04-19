@@ -41,25 +41,7 @@ public class FolderController {
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }
 
-//	@GetMapping("/folder/get-all")
-//	public ResponseEntity<?> getAllFoldersForCurrentUser() {
-//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	    Object principal = authentication.getPrincipal();
-//	    Integer userId = null;
-//
-//	    if (principal instanceof UserDetails) {
-//	        String userEmail = ((UserDetails) principal).getUsername();
-//	        User user = userDAO.getUserByEmail(userEmail);
-//	        userId = user.getId();
-//	    }
-//
-//	    if (userId != null) {
-//	        List<Folder> folders = folderDAO.getAllFoldersForUser(userId);
-//	        return new ResponseEntity<>(folders, HttpStatus.OK);
-//	    } else {
-//	        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-//	    }
-//	}
+
 
 
     @PostMapping("/folder/save")

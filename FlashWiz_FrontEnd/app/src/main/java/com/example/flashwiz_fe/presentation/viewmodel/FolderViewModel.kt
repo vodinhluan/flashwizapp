@@ -18,17 +18,17 @@ class FolderViewModel() : ViewModel() {
     private val _folders = mutableStateOf<List<FolderDetail>>(emptyList())
     val folders: State<List<FolderDetail>> = _folders
     fun addFolder(name: String, description: String, onResult: (Boolean) -> Unit) {
-        val folder = Folder(name = name, descriptions = description, userId = 2) // Thay đổi userId thành giá trị thích hợp
+        val folder = Folder(name = name, descriptions = description, userId = 2)
         viewModelScope.launch {
             try {
                 val response = folderService.saveFolder(folder, 2)
                 if (response.equals("ok")) {
-                    onResult(true) // Phản hồi thành công
+                    onResult(true)
                 } else {
-                    onResult(false) // Phản hồi thất bại
+                    onResult(false)
                 }
             } catch (e: Exception) {
-                onResult(false) // Xử lý exception
+                onResult(false)
             }
         }
     }
@@ -36,9 +36,7 @@ class FolderViewModel() : ViewModel() {
         viewModelScope.launch {
             try {
                 folderService.deleteFolder(folderId)
-                // Gọi API để lấy danh sách mới sau khi xóa thành công
             } catch (_: Exception) {
-                // Xử lý lỗi nếu cần
             }
         }
     }
