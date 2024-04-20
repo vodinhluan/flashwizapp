@@ -1,6 +1,8 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +11,7 @@ import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.domain.repository.CardRepository
+import com.example.flashwiz_fe.presentation.state.EnumReviewCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,24 +20,43 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
+    // card state
+    private val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
+    val cardState: LiveData<EnumReviewCard> = _cardState
+    val currentCard: MutableState<CardDetail?> = mutableStateOf(null)
+
+
+    // save state
     private val _saveSuccess = MutableStateFlow(false)
     val saveSuccess: StateFlow<Boolean> = _saveSuccess
 
-    // list card
+    // List card
     private val _cardsLiveData = MutableLiveData<List<CardDetail>>()
     val cardsLiveData: LiveData<List<CardDetail>> = _cardsLiveData
     private val _errorLiveData = MutableLiveData<String>()
     val errorLiveData: LiveData<String> = _errorLiveData
 
+    // id card
     private val _flashcardId = MutableStateFlow(1)
     val flashcardId: StateFlow<Int> = _flashcardId
 
+    // random card
     private val _randomCardLiveData = MutableLiveData<CardDetail?>()
     val randomCardLiveData: LiveData<CardDetail?> = _randomCardLiveData
 
     // Rating
     private val _currentRating = MutableStateFlow("new")
     val currentRating: StateFlow<String> = _currentRating
+
+    // Các danh sách riêng biệt cho mỗi loại rating
+    private var newRatingList: MutableList<CardDetail> = mutableListOf()
+    private var failRatingList: MutableList<CardDetail> = mutableListOf()
+    private var hardRatingList: MutableList<CardDetail> = mutableListOf()
+    private var goodRatingList: MutableList<CardDetail> = mutableListOf()
+    private var easyRatingList: MutableList<CardDetail> = mutableListOf()
+
+
+
 
     fun setFlashcardId(id: Int) {
         _flashcardId.value = id
@@ -63,9 +85,7 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         viewModelScope.launch {
             try {
                 cardRepository.deleteCard(cardId)
-                // Gọi API để lấy danh sách mới sau khi xóa thành công
             } catch (_: Exception) {
-                // Xử lý lỗi nếu cần
             }
         }
     }
@@ -82,11 +102,32 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         updateCards(updatedCard)
     }
 
+
+    // ** RANDOM CARD **
     fun getRandomCardsByFlashcardId(flashcardId: Int) {
         viewModelScope.launch {
             try {
                 val allCards = getCardsByFlashcardId(flashcardId)
                 Log.d("Test allCards w ID", "All cards: $allCards")
+                // Reset the rating lists
+                newRatingList = mutableListOf()
+                failRatingList = mutableListOf()
+                hardRatingList = mutableListOf()
+                goodRatingList = mutableListOf()
+                easyRatingList = mutableListOf()
+
+                // Populate the lists based on card ratings
+                for (card in allCards) {
+                    when (card.rating) {
+                        "new" -> newRatingList.add(card)
+                        "fail" -> failRatingList.add(card)
+                        "hard" -> hardRatingList.add(card)
+                        "good" -> goodRatingList.add(card)
+                        "easy" -> easyRatingList.add(card)
+                    }
+                }
+
+                logCardRatings()
 
                 val shuffledCards = allCards.shuffled()
                 _cardsLiveData.value = shuffledCards
@@ -106,6 +147,9 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
             }
         }
     }
+    fun logCardRatings() {
+        Log.d("CardRatings", "(new: ${newRatingList.size}, fail: ${failRatingList.size}, hard: ${hardRatingList.size}, good: ${goodRatingList.size}, easy: ${easyRatingList.size})")
+    }
 
     fun setCurrentRating(rating: String) {
         _currentRating.value = rating
@@ -119,5 +163,55 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
     }
     suspend fun updateCardRating(cardId: Int, newRating: String) {
         cardRepository.updateCardRating(cardId, newRating)
+    }
+
+    fun updateCardList(rating: String, card: CardDetail) {
+        // Always remove the card from all lists regardless
+        newRatingList.remove(card)
+        failRatingList.remove(card)
+        hardRatingList.remove(card)
+        goodRatingList.remove(card)
+        easyRatingList.remove(card)
+
+        // Add the card to the new rating list
+        when (rating) {
+            "new" -> newRatingList.add(card)
+            "fail" -> failRatingList.add(card)
+            "hard" -> hardRatingList.add(card)
+            "good" -> goodRatingList.add(card)
+            "easy" -> easyRatingList.add(card)
+        }
+
+        onRatingSubmitted()    }
+
+    fun onCardFlipped() {
+        _cardState.value = EnumReviewCard.BACK
+    }
+
+    fun onRatingSubmitted() {
+        _cardState.value = EnumReviewCard.FRONT
+        getNextCard()
+        getRandomCardsByFlashcardId(flashcardId.value) // Thêm dòng này để lấy thẻ mới sau khi đánh giá
+    }
+
+    fun getNextCard() {
+        val allRatingListsInOrder = listOf(newRatingList, failRatingList, hardRatingList, goodRatingList, easyRatingList)
+
+        for(list in allRatingListsInOrder) {
+            if(list.isNotEmpty()) {
+                val randomCard = list.random()
+
+                if(list.remove(randomCard)) {
+                    currentCard.value = randomCard
+                }
+
+                break
+            }
+        }
+    }
+
+    fun resetCardState() {
+        _currentRating.value = "new" // Reset rating về "new"
+        _cardState.value = EnumReviewCard.FRONT // Đặt trạng thái card về mặt trước
     }
 }
