@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -20,18 +21,26 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.TextAreaComponent
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
+import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 
 @Composable
-fun StudyGroupScreen(navController: NavController) {
+fun StudyGroupScreen(navController: NavController, themeViewModel: ThemeViewModel = viewModel()) {
+    val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
+
     var searchQuery by remember { mutableStateOf("") }
     var text by remember { mutableStateOf(TextFieldValue()) }
+
+    val textColor = if (isDarkModeEnabled == true) Color.White else Color.Black
+    val surfaceColor = if (isDarkModeEnabled == true) Color.Black else Color.White
+
     Surface(
         modifier = Modifier.fillMaxSize(),
-                color = Color.White
+        color = surfaceColor
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -44,7 +53,7 @@ fun StudyGroupScreen(navController: NavController) {
                 Text(
                     text = "STUDY GROUP",
                     style = TextStyle(
-                        color = Color.Black,
+                        color = textColor,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     ),
@@ -52,8 +61,6 @@ fun StudyGroupScreen(navController: NavController) {
                     modifier = Modifier.padding(16.dp)
                 )
                 AddItemNewGroup(navController = navController, itemType = "Group", groupId = null)
-
-
             }
 
             SearchBar(
@@ -63,25 +70,34 @@ fun StudyGroupScreen(navController: NavController) {
                     .padding(10.dp, 0.dp, 10.dp, 5.dp),
                 hint = "Search",
                 textValue = searchQuery,
-                textColor = Color.Black,
+                textColor = textColor,
                 cursorColor = Color.LightGray,
                 onValueChanged = { newValue ->
                     searchQuery = newValue
-                }, trailingIcon = Icons.Filled.RemoveRedEye,
+                },
+                trailingIcon = Icons.Filled.RemoveRedEye,
                 onTrailingIconClick = {}
             )
             TextAreaComponent()
-            }
         }
     }
-
+}
 @Composable
-fun StudyGroupScreen() {
+fun StudyGroupScreen(themeViewModel: ThemeViewModel = viewModel()) {
+    val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
+
+    val textColor = if (isDarkModeEnabled == true) Color.White else Color.Black
+    val surfaceColor = if (isDarkModeEnabled == true) Color.Black else Color.White
+
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = surfaceColor
     ) {
-        Text(text = "Trang Study Group", modifier = Modifier.fillMaxSize())
+        Text(
+            text = "Trang Study Group",
+            modifier = Modifier.fillMaxSize(),
+            color = textColor
+        )
     }
 }
 

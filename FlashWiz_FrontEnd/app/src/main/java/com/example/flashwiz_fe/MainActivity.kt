@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,25 +22,30 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var PreferenceManager: PreferenceManager
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        PreferenceManager = PreferenceManager(this)
-        val initialDarkTheme = PreferenceManager.darkModeEnabled
+        preferenceManager = PreferenceManager(this)
+        val initialDarkTheme = preferenceManager.darkModeEnabled
 
         window.statusBarColor = gray.toArgb()
         window.navigationBarColor = gray.toArgb()
 
         setContent {
-            var darkTheme by remember { mutableStateOf(initialDarkTheme) }
+            FlashWizApp(initialDarkTheme, preferenceManager)
+        }
+    }
+}
 
-            FlashWizTheme(darkTheme = darkTheme) {
-                Navigation(darkTheme = darkTheme) {
-                    darkTheme = !darkTheme
-                    PreferenceManager.darkModeEnabled = darkTheme // Update preference when theme is toggled
-                }
-            }
+@Composable
+fun FlashWizApp(initialDarkTheme: Boolean, preferenceManager: PreferenceManager) {
+    var darkTheme by remember { mutableStateOf(initialDarkTheme) }
+
+    FlashWizTheme(darkTheme = darkTheme) {
+        Navigation(darkTheme = darkTheme) {
+            darkTheme = !darkTheme
+            preferenceManager.darkModeEnabled = darkTheme // Update preference when theme is toggled
         }
     }
 }

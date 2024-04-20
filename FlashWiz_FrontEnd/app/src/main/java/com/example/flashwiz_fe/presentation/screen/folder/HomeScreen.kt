@@ -47,7 +47,7 @@ import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, apiService: FolderApiService) {
+fun HomeScreen(navController: NavController, apiService: FolderApiService, isDarkMode: Boolean) {
     val viewModel: FolderViewModel = viewModel()
     var originalFolders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
@@ -57,10 +57,13 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
     var selectedFolderId by remember { mutableStateOf<Int?>(null) }
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
+    val apiService = RetrofitInstance.folderApiService
+//    val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = if (isDarkMode) Color.Black else Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
 

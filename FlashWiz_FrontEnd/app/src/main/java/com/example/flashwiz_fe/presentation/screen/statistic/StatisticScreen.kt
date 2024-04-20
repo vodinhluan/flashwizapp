@@ -2,23 +2,19 @@ package com.example.flashwiz_fe.presentation.screen.statistic
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,15 +22,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
 @Composable
-fun StaticText() {
-    androidx.compose.material.Text(
+fun StaticText(isDarkModeEnabled: Boolean) {
+    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
+
+    Text(
         text = "Static",
         fontFamily = Poppins,
-        color = SecondaryColor,
+        color = androidx.compose.material.MaterialTheme.colors.onSurface,
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
@@ -46,15 +45,22 @@ fun StaticText() {
 
 
 @Composable
-fun StatisticScreen() {
-    Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
+fun StatisticScreen(themeViewModel: ThemeViewModel = viewModel()) {
+    // Lấy giá trị darkThemeEnabled từ ViewModel
+    val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(if (isDarkModeEnabled == true) Color.Black else Color.White)
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item { StaticText() }
+            item { isDarkModeEnabled?.let { StaticText(it) } }
 
 
             item {
@@ -82,7 +88,7 @@ fun StatisticScreen() {
                         BarChartData("Sat", 35),
                         BarChartData("Sun", 25)
                     ),
-                    maxValue = 50, barColor = Color.Black
+                    maxValue = 50, barColor = if (isDarkModeEnabled == true) Color.White else Color.Black
                 )
             }
         }
