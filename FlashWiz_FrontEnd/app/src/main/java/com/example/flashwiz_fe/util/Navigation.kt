@@ -15,8 +15,10 @@ import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.screen.MainScreen
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ForgotPasswordScreen
+import com.example.flashwiz_fe.presentation.screen.auth.InsertOTPScreen
 import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
@@ -63,14 +65,29 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
         composable(ScreenRoutes.ForgotPasswordScreen.route){
             ForgotPasswordScreen(
                 onForgotPasswordSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                    navController.navigate(ScreenRoutes.InsertOTPScreen.route){
                         popUpTo(0)
                     }
                 }
             )
         }
         composable(ScreenRoutes.InsertOTPScreen.route){
-
+            InsertOTPScreen(
+                onVerifiedOTPSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route){
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable(ScreenRoutes.ResetPasswordScreen.route){
+            ResetPasswordScreen(
+                onChangePasswordSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                        popUpTo(0)
+                    }
+                }
+            )
         }
         composable(ScreenRoutes.RegisterScreen.route) {
             RegisterScreen(

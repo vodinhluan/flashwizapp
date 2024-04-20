@@ -6,8 +6,10 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.VISIBILITY_PRIVATE
+import androidx.core.app.NotificationCompat.VISIBILITY_SECRET
 import androidx.core.app.NotificationManagerCompat
 import com.example.flashwiz_fe.R
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,17 +26,13 @@ object NotificationModule {
     fun provideNotificationBuilder(
         @ApplicationContext context: Context
     ): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context, "Main Channel ID")
-            .setContentTitle("Welcome")
+        return NotificationCompat.Builder(context, "Main Channel ID").setContentTitle("Welcome")
             .setContentText("YouTube Channel: Stevdza-San")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setVisibility(VISIBILITY_PRIVATE)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT).setVisibility(VISIBILITY_PRIVATE)
             .setPublicVersion(
-                NotificationCompat.Builder(context, "Main Channel ID")
-                    .setContentTitle("Hidden")
-                    .setContentText("Unlock to see the message.")
-                    .build()
+                NotificationCompat.Builder(context, "Main Channel ID").setContentTitle("Hidden")
+                    .setContentText("Unlock to see the message.").build()
             )
     }
 
@@ -46,9 +44,7 @@ object NotificationModule {
         val notificationManager = NotificationManagerCompat.from(context)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "Main Channel ID",
-                "Main Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
+                "Main Channel ID", "Main Channel", NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
         }

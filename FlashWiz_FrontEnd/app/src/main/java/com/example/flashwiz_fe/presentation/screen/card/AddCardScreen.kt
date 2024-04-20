@@ -125,7 +125,7 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                             front = cardState.value.frontText.trim(),
                             back = cardState.value.backText.trim()
                         )
-                        cardViewModel.saveCard(card)
+//                        cardViewModel.saveCard(card) Phu Le da Comment
                     },
                     modifier = Modifier.wrapContentSize(),
                     backgroundColor = Color.LightGray,

@@ -2,6 +2,7 @@ package com.example.flashwiz_fe.data
 
 
 import android.content.Context
+import com.example.flashwiz_fe.domain.model.ChangePasswordSuccessfully
 import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
@@ -12,7 +13,7 @@ import retrofit2.Response
 class AuthRepositoryImpl(context: Context): AuthRepository {
     private val authApiService = RetrofitInstance.authApiService
     private val userPreferences = UserPreferences(context)
-
+    private var savedOTP: String? = null
     override suspend fun login(email: String, password: String): Boolean {
         delay(1000)
         return try {
@@ -63,6 +64,7 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
     override suspend fun logout(){
         userPreferences.clearData()
     }
+
     override suspend fun forgot(email: String): Boolean {
         return try {
             val response: Response<ForgotPasswordResponse> = authApiService.forgot(email)
@@ -70,7 +72,8 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
                 val forgotPasswordResponse = response.body()
                 forgotPasswordResponse?.let {
                     println("Email: ${it.email}")
-                    println("resetPasswordOTP: ${it.OTP}")
+                    println("resetPasswordOTP: ${it.otp}")
+                    savedOTP = it.otp
                     true
                 } ?: run {
                     println("Không có dữ liệu trả về từ API.")
@@ -85,6 +88,35 @@ class AuthRepositoryImpl(context: Context): AuthRepository {
             false
         }
     }
+
+    override suspend fun changePassword(newPassword: String): Boolean {
+        delay(10000)
+        return try {
+            if (savedOTP.isNullOrEmpty()) {
+                println("Lỗi: Mã OTP không tồn tại.")
+                return false
+            }
+            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(newPassword, savedOTP ?: "")
+            if (response.isSuccessful) {
+                println("Thay đổi mật khẩu thành công")
+                true
+            } else {
+                println("Lỗi khi thay đổi mật khẩu: ${response.code()}")
+                false
+            }
+        } catch (e: Exception) {
+            println("Xảy ra lỗi: ${e.message}")
+            false
+        }
+    }
+
+
+
+    override suspend fun verifiedOtp(otp: String): Boolean {
+        return otp == savedOTP
+    }
+
+
     override suspend fun register(name: String, email: String, password: String): Boolean {
         delay(1000)
         return try {

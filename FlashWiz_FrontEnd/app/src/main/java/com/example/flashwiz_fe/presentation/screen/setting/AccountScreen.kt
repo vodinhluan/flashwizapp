@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
-import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
@@ -54,11 +53,11 @@ fun AccountScreen(
         Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
             AccountText()
             ProfileCardUI()
-            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it }
+//            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it } Phu Le
             GeneralOptionsUI()
             ChangePasswordUI()
             LogoutUI(
-                onLogoutButtonClick = logoutViewModel::logoutClick
+//                onLogoutButtonClick = logoutViewModel::logoutClick Phu Le
             )
             NofiticaionScreen()
         }

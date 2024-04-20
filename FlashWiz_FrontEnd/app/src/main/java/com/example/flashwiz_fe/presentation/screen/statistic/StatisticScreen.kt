@@ -19,10 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.flashwiz_fe.presentation.components.static.BarChart
-import com.example.flashwiz_fe.presentation.components.static.BarChartData
-import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
-import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
+//import com.example.flashwiz_fe.presentation.components.statistic.BarChart
+//import com.example.flashwiz_fe.presentation.components.static.BarChartData
+//import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
+//import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
 

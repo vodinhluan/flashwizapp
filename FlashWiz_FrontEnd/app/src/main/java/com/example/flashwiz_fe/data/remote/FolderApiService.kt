@@ -1,4 +1,5 @@
 package com.example.flashwiz_fe.data.remote
+
 import com.example.flashwiz_fe.domain.model.Folder
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import retrofit2.http.Body
@@ -17,6 +18,7 @@ interface FolderApiService {
         @Body folder: Folder,
         @Query("userId") userId: Int
     ): Folder
+
     @DELETE("/folder/delete/{id}")
     suspend fun deleteFolder(@Path("id") id: Int): List<FolderDetail>
 

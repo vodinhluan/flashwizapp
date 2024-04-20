@@ -24,9 +24,7 @@ import com.example.flashwiz_fe.R
 import com.example.flashwiz_fe.ui.theme.Poppins
 
 @Composable
-fun LogoutUI(
-    onLogoutButtonClick: () -> Unit
-) {
+fun LogoutUI() {
     Column(
         modifier = Modifier
             .padding(horizontal = 14.dp)
@@ -35,7 +33,7 @@ fun LogoutUI(
 
         Logout(
             mainText = "LOGOUT",
-            onClick = onLogoutButtonClick
+            onClick = {}
         )
     }
 }

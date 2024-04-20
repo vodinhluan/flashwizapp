@@ -16,4 +16,5 @@ sealed class ScreenRoutes(val route: String) {
 
     object NotificationScreen: ScreenRoutes("notification_screen")
 
+    object ResetPasswordScreen:ScreenRoutes("reset_password_screen")
 }

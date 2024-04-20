@@ -38,7 +38,6 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.FolderItem
-import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
@@ -79,7 +78,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             textAlign = TextAlign.Left,
                             modifier = Modifier.padding(16.dp)
                         )
-                        AddItemComponent(navController = navController, "Folder", null)
+//                        AddItemComponent(navController = navController, "Folder", null) Phu Le
                     } else {
                         Row(
                             modifier = Modifier.fillMaxWidth()
@@ -107,7 +106,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 modifier = Modifier.padding(16.dp)
                             )
                             selectedFolder?.let { folder ->
-                                AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+//              Phu Le                  AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
                             }
                         }
                     }

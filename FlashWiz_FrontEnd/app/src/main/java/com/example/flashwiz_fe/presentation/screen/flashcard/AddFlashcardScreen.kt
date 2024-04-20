@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
@@ -78,7 +77,7 @@ fun AddFlashcardScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackIconComponent(onNavigateBack)
+//            BackIconComponent(onNavigateBack) Phu Le
             Button(
                 onClick = {
                     if (folderId != null) {

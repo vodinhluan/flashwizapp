@@ -20,12 +20,8 @@ class LogoutViewModel @Inject constructor(
 
     fun logoutClick() {
         viewModelScope.launch {
-            try {
-                authRepository.logout()
-                logoutState = logoutState.copy(isSuccessfullyLoggedOut = true)
-            }catch (e: Exception) {
-                // Xử lý lỗi nếu cần
-            }
+            authRepository.logout()
+            logoutState = logoutState.copy(isSuccessfullyLoggedOut = true)
         }
     }
 }

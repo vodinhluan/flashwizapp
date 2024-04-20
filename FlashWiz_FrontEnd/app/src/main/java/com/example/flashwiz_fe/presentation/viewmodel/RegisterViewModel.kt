@@ -78,10 +78,13 @@ class RegisterViewModel @Inject constructor(
                     email = registerState.emailInput,
                     password = registerState.passwordInput
                 )
+                println("Giá trị result: $result")
                 registerState = registerState.copy(
                     isSuccessfullyRegistered = result,
                     isLoading = false
                 )
+                println("Giá trị isSuccessfullyRegistered: ${registerState.isSuccessfullyRegistered}")
+
             } catch (e: Exception) {
                 registerState = registerState.copy(
                     errorMessageRegisterProcess = "Không thể đăng ký",

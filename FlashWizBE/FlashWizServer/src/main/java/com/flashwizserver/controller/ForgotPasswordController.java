@@ -87,7 +87,7 @@ public class ForgotPasswordController {
             
             response.put("status", "success");
             response.put("email", email);
-            response.put("OTP", otp); // Thêm OTP vào phản hồi
+            response.put("otp", otp); // Thêm OTP vào phản hồi
             
              
             return ResponseEntity.ok(response);
@@ -190,11 +190,11 @@ public class ForgotPasswordController {
     
 
         @PostMapping("/reset_password")
-        public ResponseEntity<Map<String, String>> processResetPassword(@RequestParam("otp") String OTP, 
+        public ResponseEntity<Map<String, String>> processResetPassword(@RequestParam("otp") String otp, 
                                                                         @RequestParam("password") String password) {
             Map<String, String> response = new HashMap<>();
              
-            Optional<User> userOptional = userDAO.getByResetPasswordOTP(OTP);
+            Optional<User> userOptional = userDAO.getByResetPasswordOTP(otp);
              
             if (!userOptional.isPresent()) {
                 response.put("status", "error");
