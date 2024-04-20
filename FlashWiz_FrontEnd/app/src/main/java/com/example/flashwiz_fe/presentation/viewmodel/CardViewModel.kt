@@ -57,6 +57,7 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
     private var easyRatingList: MutableList<CardDetail> = mutableListOf()
 
 
+
     fun setFlashcardId(id: Int) {
         _flashcardId.value = id
         Log.d("ID FlashCard is:", "hello FlashCard ID: $id")
@@ -176,6 +177,5 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         _cardState.value = EnumReviewCard.FRONT
         initialFlashcardId?.let { getRandomCardsByFlashcardId(it) }
     }
-
 
 }

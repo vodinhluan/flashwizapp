@@ -1,14 +1,8 @@
 package com.example.flashwiz_fe.presentation.screen
 
-import android.content.Context
-import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,10 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-import kotlinx.coroutines.delay
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.flashwiz_fe.domain.model.CardDetail
@@ -226,11 +218,5 @@ fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> U
     ) {
         Text(text = text, color = Color.Black)
     }
-
-}
-
-@Composable
-fun ToastMessage(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
