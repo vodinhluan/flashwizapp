@@ -19,7 +19,7 @@ interface FolderApiService {
         @Query("userId") userId: Int
     ): Folder
     @GET("/folder/get/{userId}")
-    suspend fun getFoldersByUserId(@Path("userId") userId: Int): List<FolderDetail>
+    suspend fun getFoldersByUserId(@Path("userId") userId: Int?): List<FolderDetail>
     @DELETE("/folder/delete/{id}")
     suspend fun deleteFolder(@Path("id") id: Int): List<FolderDetail>
 

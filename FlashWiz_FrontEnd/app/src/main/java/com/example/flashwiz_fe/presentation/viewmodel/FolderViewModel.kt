@@ -17,11 +17,11 @@ class FolderViewModel() : ViewModel() {
     private val folderService = RetrofitInstance.folderApiService
     private val _folders = mutableStateOf<List<FolderDetail>>(emptyList())
     val folders: State<List<FolderDetail>> = _folders
-    fun addFolder(name: String, description: String, onResult: (Boolean) -> Unit) {
-        val folder = Folder(name = name, descriptions = description, userId = 2)
+    fun addFolder(name: String, description: String,userId: Int, onResult: (Boolean) -> Unit) {
+        val folder = Folder(name = name, descriptions = description, userId = userId)
         viewModelScope.launch {
             try {
-                val response = folderService.saveFolder(folder, 2)
+                val response = folderService.saveFolder(folder, userId)
                 if (response.equals("ok")) {
                     onResult(true)
                 } else {

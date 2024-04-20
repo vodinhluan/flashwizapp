@@ -47,7 +47,7 @@ import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, apiService: FolderApiService) {
+fun HomeScreen(navController: NavController, apiService: FolderApiService,userId: Int?) {
     val viewModel: FolderViewModel = viewModel()
     var originalFolders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
@@ -143,7 +143,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
             }
 
             LaunchedEffect(Unit) {
-                originalFolders = apiService.getAllFolders()
+                Log.d("UserId", "UserId: $userId")
+                originalFolders = apiService.getFoldersByUserId(userId)
                 folders = originalFolders
                 isDataLoaded = true
             }

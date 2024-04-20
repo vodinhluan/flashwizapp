@@ -14,4 +14,3 @@ class CardUseCaseImpl(private val cardRepository: CardRepository) : CardUseCase 
         cardRepository.saveCard(card, flashcardId)
     }
 }
-

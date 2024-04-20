@@ -4,7 +4,6 @@ package com.example.flashwiz_fe.util
 
 import AddFolderScreen
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -26,43 +25,48 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import androidx.compose.runtime.LaunchedEffect as LaunchedEffect
 
 @Composable
-fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
+fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
     val navController = rememberNavController()
     val context = LocalContext.current
     var showHeader: MutableState<Boolean>
-
+    val userPreferences = remember { UserPreferences(context) }
 
     LaunchedEffect(Unit) {
-        val userPreferences = UserPreferences(context)
         println("Email đang đăng nhập: ${userPreferences.getUserEmail()}")
         println("User Id đang đăng nhập: ${userPreferences.getUserId()}")
 
         if (userPreferences.getIsLoggedIn()) {
-            navController.navigate(ScreenRoutes.MainScreen.route) {
+            val userId = userPreferences.getUserId() ?: "0"
+            navController.navigate("${ScreenRoutes.MainScreen.route}/$userId") {
                 popUpTo(0)
             }
         }
     }
+
     NavHost(
         navController = navController,
         startDestination = ScreenRoutes.LoginScreen.route
     ) {
 
-            composable(ScreenRoutes.LoginScreen.route) {
-                LoginScreen(
-                    onLoginSuccessNavigation = {
-                        navController.navigate(ScreenRoutes.MainScreen.route) {
-                            popUpTo(0)
-                        }
-                    },
-                    onNavigateToRegisterScreen = {
-                        navController.navigate(ScreenRoutes.RegisterScreen.route) {
-                            popUpTo(0)
-                        }
-                    })
+        composable(ScreenRoutes.LoginScreen.route) {
+            LoginScreen(
+                onLoginSuccessNavigation = { userId ->
+                    println("UserId login: $userId")
+                    navController.navigate("${ScreenRoutes.MainScreen.route}/$userId") {
+                        popUpTo(0)
+                    }
+                },
+                onNavigateToRegisterScreen = {
+                    navController.navigate(ScreenRoutes.RegisterScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
         }
+
 
         composable(ScreenRoutes.RegisterScreen.route) {
             RegisterScreen(
@@ -78,14 +82,21 @@ fun Navigation(darkTheme: Any, onThemeUpdated: () -> Unit) {
                 }
             )
         }
-        composable(ScreenRoutes.MainScreen.route) {
-            MainScreen(navController)
+        composable(ScreenRoutes.MainScreen.route + "/{userId}") { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: "0"
+            val userIdInt = if (userId.matches("\\d+".toRegex())) {
+                userId.toInt()
+            } else {
+               0
+            }
+            MainScreen(navController, userIdInt)
         }
+
         composable(ScreenRoutes.AddFolderScreen.route) {
             AddFolderScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
 

@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe
+package com.example.flashwiz_fe.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

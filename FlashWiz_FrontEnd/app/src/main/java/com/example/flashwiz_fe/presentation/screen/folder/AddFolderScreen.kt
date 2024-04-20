@@ -13,7 +13,7 @@ import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 @Composable
 fun AddFolderScreen(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
 ) {
     val viewModel: FolderViewModel = viewModel()
     var folderName by remember { mutableStateOf("") }
@@ -60,7 +60,7 @@ fun AddFolderScreen(
             BackIconComponent(onNavigateBack,false)
             Button(
                 onClick = {
-                    viewModel.addFolder(folderName, folderDescription) { isSuccess ->
+                    viewModel.addFolder(folderName, folderDescription,2) { isSuccess ->
                         if (isSuccess) {
                             onNavigateBack()
                         } else {

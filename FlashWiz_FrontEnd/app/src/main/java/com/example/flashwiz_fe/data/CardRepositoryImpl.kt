@@ -1,14 +1,9 @@
 package com.example.flashwiz_fe.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.flashwiz_fe.data.RetrofitInstance.cardApiService
 import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class CardRepositoryImpl(private val cardApiService: CardApiService) : CardRepository {
@@ -26,6 +21,10 @@ class CardRepositoryImpl(private val cardApiService: CardApiService) : CardRepos
 
     override suspend fun getAllCards(): List<Card> {
         return cardApiService.getAllCards()
+    }
+
+    override suspend fun updateCardRating(cardId: Int, newRating: String): Response<Card> {
+        return cardApiService.updateCardRating(cardId, newRating)
     }
 
 }

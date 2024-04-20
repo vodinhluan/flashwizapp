@@ -45,11 +45,10 @@ fun RegisterScreen(
     NavDestinationHelper(
         shouldNavigate = {
             registerViewModel.registerState.isSuccessfullyRegistered
-        },
-        destination = {
-            onRegisterSuccessNavigation()
         }
-    )
+    ) {
+        onRegisterSuccessNavigation()
+    }
 
     Box(
         modifier = Modifier

@@ -19,6 +19,11 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,20 +49,28 @@ import com.example.flashwiz_fe.ui.theme.darkGray
 import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.ui.theme.whiteGray
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
 fun LoginScreen(
 
-    onLoginSuccessNavigation: () -> Unit,
+    onLoginSuccessNavigation: (userId: String?) -> Unit,
     onNavigateToRegisterScreen: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel()
-
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    userPreferences: UserPreferences = UserPreferences(LocalContext.current)
 ) {
+
+    val userIdState = remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(loginViewModel.userId) {
+        userIdState.value = loginViewModel.userId
+    }
+
     NavDestinationHelper(shouldNavigate = {
         loginViewModel.loginState.isSuccessfullyLoggedIn
     }, destination = {
-        onLoginSuccessNavigation()
+        onLoginSuccessNavigation(userIdState.value)
     })
+
 
     Box(
         modifier = Modifier
@@ -80,7 +93,9 @@ fun LoginScreen(
                 fontWeight = FontWeight.SemiBold
             )
         }
-        LoginContainer(emailValue = {
+        LoginContainer(
+            userId = userIdState.value.toString(),
+            emailValue = {
             loginViewModel.loginState.emailInput
         },
             passwordValue = {
@@ -146,6 +161,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginContainer(
+    userId: String?,
     emailValue: () -> String,
     passwordValue: () -> String,
     buttonEnabled: () -> Boolean,
@@ -156,7 +172,7 @@ fun LoginContainer(
     onTrailingPasswordIconClick: () -> Unit,
     errorHint: () -> String?,
     isLoading: () -> Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier ,
 ) {
     val context = LocalContext.current
     val dataStore = UserPreferences(context)

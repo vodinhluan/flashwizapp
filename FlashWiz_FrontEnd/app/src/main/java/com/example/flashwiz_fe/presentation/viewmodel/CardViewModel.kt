@@ -32,18 +32,20 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
     private val _randomCardLiveData = MutableLiveData<CardDetail?>()
     val randomCardLiveData: LiveData<CardDetail?> = _randomCardLiveData
 
-
+    // Rating
+    private val _currentRating = MutableStateFlow("new")
+    val currentRating: StateFlow<String> = _currentRating
 
     fun setFlashcardId(id: Int) {
         _flashcardId.value = id
         Log.d("ID FlashCard is:", "hello FlashCard ID: $id")
     }
 
-        fun saveCard(card: Card,flashcardId: Int) {
+    fun saveCard(card: Card, flashcardId: Int) {
         viewModelScope.launch {
             try {
                 Log.d("CardViewModel", "Saving card: $card")
-                cardRepository.saveCard(card,flashcardId)
+                cardRepository.saveCard(card, flashcardId)
                 Log.d("CardViewModel", "Card saved successfully")
                 _saveSuccess.value = true
             } catch (e: Exception) {
@@ -103,5 +105,19 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
                 _errorLiveData.value = "Failed to fetch random cards: ${e.message}"
             }
         }
+    }
+
+    fun setCurrentRating(rating: String) {
+        _currentRating.value = rating
+        Log.d("Set Rating is:", "Rating value: $rating")
+    }
+
+    fun updateCardRatingInViewModelScope(cardId: Int, newRating: String) {
+        viewModelScope.launch {
+            updateCardRating(cardId, newRating)
+        }
+    }
+    suspend fun updateCardRating(cardId: Int, newRating: String) {
+        cardRepository.updateCardRating(cardId, newRating)
     }
 }
