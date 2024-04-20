@@ -1,5 +1,7 @@
 package com.example.flashwiz_fe.presentation.screen
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -27,6 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.flashwiz_fe.domain.model.CardDetail
@@ -39,9 +43,12 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
 
     val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
     val cardState: LiveData<EnumReviewCard> = _cardState
+    // Lưu giá trị của flashcard ID ban đầu
+    val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
 
 
     LaunchedEffect(Unit) {
+        cardViewModel.setInitialFlashcardId(initialFlashcardId)
         cardViewModel.getRandomCardsByFlashcardId(flashcardId)
     }
 
@@ -56,6 +63,7 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
             FlippingCard(randomCard = randomCard, cardViewModel = cardViewModel)
         }
     }
+
 }
 
 @Composable
@@ -95,6 +103,24 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
             val frontText = randomCard?.front ?: "Front text not available"
             val backText = randomCard?.back ?: "Back text not available"
             if (rotate < 90f) {
+                Text(
+                    text = randomCard?.id?.toString() ?: "",
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(top = 16.dp, start = 16.dp),
+                    style = MaterialTheme.typography.h4,
+                    color = Color.Blue
+                )
+
+                Text(
+                    text = randomCard?.rating ?: "",
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(top = 16.dp, start = 76.dp),
+                    style = MaterialTheme.typography.h4,
+                    color = Color.Blue
+                )
+
                 Text(
                     text = frontText,
                     fontSize = 24.sp,
@@ -138,7 +164,6 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
         }
     }
 }
-
 
 @Composable
 fun EvaluationBar(
@@ -201,4 +226,11 @@ fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> U
     ) {
         Text(text = text, color = Color.Black)
     }
+
 }
+
+@Composable
+fun ToastMessage(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
