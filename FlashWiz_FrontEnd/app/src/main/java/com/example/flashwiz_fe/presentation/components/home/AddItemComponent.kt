@@ -25,6 +25,7 @@ import com.example.flashwiz_fe.util.ScreenRoutes
 fun AddItemComponent(navController: NavController, itemType: String
                      ,folderId: Int?,
                      flashcardId: Int?,
+                     userId:Int?,
                      onFolderSelected: ((Int) -> Unit)? = null,
                      onFlashcardSelected: (() -> Unit)? = null) {
     var expanded by remember { mutableStateOf(false) }
@@ -47,7 +48,10 @@ fun AddItemComponent(navController: NavController, itemType: String
             ) {
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
-                        "Folder" -> navController.navigate(ScreenRoutes.AddFolderScreen.route)
+                        "Folder" -> {
+                            userId?.let { Log.d("userId", it.toString()) }
+                            navController.navigate("${ScreenRoutes.AddFolderScreen.route}/$userId")
+                        }
                         "Flashcard" -> {
                             folderId?.let { Log.d("FolderId", it.toString()) }
                             navController.navigate("${ScreenRoutes.AddFlashcardScreen.route}/$folderId")

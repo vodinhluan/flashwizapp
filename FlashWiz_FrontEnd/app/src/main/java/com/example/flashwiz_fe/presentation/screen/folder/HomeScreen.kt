@@ -86,7 +86,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                             modifier = Modifier.padding(16.dp)
                         )
 
-                        AddItemComponent(navController = navController, "Folder", null, null)
+                        AddItemComponent(navController = navController, "Folder", null, null,userId)
                     } else {
                         Row(
                             modifier = Modifier
@@ -120,7 +120,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                     navController = navController,
                                     "Flashcard",
                                     folderId = folder.id,
-                                    null
+                                    null,null
                                 )
                             }
                         }

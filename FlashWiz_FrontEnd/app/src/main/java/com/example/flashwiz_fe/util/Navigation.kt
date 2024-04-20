@@ -92,11 +92,15 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             MainScreen(navController, userIdInt)
         }
 
-        composable(ScreenRoutes.AddFolderScreen.route) {
+        composable(ScreenRoutes.AddFolderScreen.route+ "/{userId}") {backStackEntry ->
+            val navController = rememberNavController()
+            val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull()
             AddFolderScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 },
+                initialUserId = userId,
+                navController = navController
             )
         }
 

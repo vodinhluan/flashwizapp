@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -9,11 +10,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 @Composable
 fun AddFolderScreen(
     onNavigateBack: () -> Unit,
+    initialUserId: Int?,
+    navController: NavHostController
+
 ) {
     val viewModel: FolderViewModel = viewModel()
     var folderName by remember { mutableStateOf("") }
@@ -60,11 +65,14 @@ fun AddFolderScreen(
             BackIconComponent(onNavigateBack,false)
             Button(
                 onClick = {
-                    viewModel.addFolder(folderName, folderDescription,2) { isSuccess ->
-                        if (isSuccess) {
+                    Log.d("AddFlashcardScreen", "Folder ID: $initialUserId")
+                    if (initialUserId != null) {
+                        viewModel.addFolder(
+                            folderName,
+                            folderDescription,
+                            initialUserId
+                        ) {
                             onNavigateBack()
-                        } else {
-
                         }
                     }
                 }

@@ -133,7 +133,7 @@ fun FolderDetailScreen(
                         navController = navController,
                         "Card",
                         null,
-                        flashcardId = flashcard.id
+                        flashcardId = flashcard.id,null
                     )
                 }
 

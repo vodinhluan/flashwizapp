@@ -35,11 +35,9 @@ public class FolderController {
     @GetMapping("/folder/get/{userId}")
     public ResponseEntity<List<Folder>> getFolderByUserId(@PathVariable("userId") Integer userId) {
         List<Folder> folders = folderDAO.getFolderByUserId(userId);
-        if (folders.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(folders, HttpStatus.OK);
+        return ResponseEntity.ok(folders);
     }
+
 
 
 
