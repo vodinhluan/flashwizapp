@@ -57,7 +57,7 @@ fun AccountScreen(
             GeneralOptionsUI()
             ChangePasswordUI()
             LogoutUI(
-//                onLogoutButtonClick = logoutViewModel::logoutClick Phu Le
+                onLogoutButtonClick = logoutViewModel::logoutClick
             )
             NofiticaionScreen()
         }
