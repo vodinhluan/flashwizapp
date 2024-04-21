@@ -31,7 +31,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideValidateRegisterInputUseCase():ValidateRegisterInputUseCase{
+    fun provideValidateRegisterInputUseCase(): ValidateRegisterInputUseCase {
         return ValidateRegisterInputUseCase()
     }
 

@@ -19,6 +19,7 @@ interface AuthApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Response<RegisterResponse>
+
     @POST("/auth/login")
     suspend fun login(
         @Body body: LoginRequest

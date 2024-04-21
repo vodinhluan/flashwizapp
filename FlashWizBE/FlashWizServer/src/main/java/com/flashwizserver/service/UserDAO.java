@@ -44,6 +44,7 @@ public class UserDAO {
     public String checkUserPasswordByEmail(String email){
         return userRepo.checkUserPasswordByEmail(email);
     }
+
     
     public void updateResetPasswordOTP(String OTP, String email) throws AccountNotFoundException {
         Optional<User> userOptional = userRepo.findByEmail(email);
@@ -73,8 +74,15 @@ public class UserDAO {
         }
     }
 
-    
+	public Integer getUserIdByEmail(String userEmail) {
+		return userRepo.findUserIdByEmail(userEmail);
+	}
 
+	 public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElse(null); 
+    }
+  
 
 }
 

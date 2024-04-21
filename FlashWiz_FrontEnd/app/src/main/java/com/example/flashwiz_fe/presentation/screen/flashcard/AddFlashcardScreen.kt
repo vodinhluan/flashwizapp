@@ -1,5 +1,4 @@
 @file:Suppress("NAME_SHADOWING")
-
 package com.example.flashwiz_fe.presentation.screen.flashcard
 
 import android.util.Log
@@ -25,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
@@ -32,13 +32,14 @@ import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 fun AddFlashcardScreen(
     onNavigateBack: () -> Unit,
     initialFolderId: Int?,
+    navController: NavHostController
+
 ) {
     val viewModel: FlashcardViewModel = viewModel()
     var flashcardName by remember { mutableStateOf("") }
     var flashcardDescription by remember { mutableStateOf("") }
-    val navController = rememberNavController()
-    val folderId =
-        initialFolderId ?: navController.currentBackStackEntry?.arguments?.getInt("folderId")
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +47,6 @@ fun AddFlashcardScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
 
         Text(
             text = "Add Flashcard",
@@ -77,29 +77,28 @@ fun AddFlashcardScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-//            BackIconComponent(onNavigateBack) Phu Le
+
+//            BackIconComponent(onNavigateBack) #Phu Le Comment
+
+//            BackIconComponent(onNavigateBack,true) #Phu Le Comment
+
             Button(
                 onClick = {
-                    if (folderId != null) {
+                    Log.d("AddFlashcardScreen", "Folder ID: $initialFolderId")
+                    if (initialFolderId != null) {
                         viewModel.addFlashcard(
                             flashcardName,
                             flashcardDescription,
-                            folderId
-                        ) { isSuccess ->
-                            if (isSuccess) {
-                                onNavigateBack()
-                            } else {
-                                Log.d(
-                                    "Add",
-                                    "null"
-                                )
-                            }
+                            initialFolderId
+                        ) {
+                            onNavigateBack()
                         }
                     }
                 }
             ) {
                 Text("Add Flashcard")
             }
+
         }
     }
 }
