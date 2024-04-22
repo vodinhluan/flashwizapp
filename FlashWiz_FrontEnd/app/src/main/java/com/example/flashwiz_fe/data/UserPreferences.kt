@@ -12,17 +12,20 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+
 class UserPreferences @Inject constructor(
     @ApplicationContext context: Context
 ) {
 
     private val myPreferencesDataStore = context.dataStore
-    private object PreferencesKey{
+
+    private object PreferencesKey {
         val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
         val KEY_USER_EMAIL = stringPreferencesKey("user_email")
         val KEY_IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
     }
-//    val userPreferencesFlow: Flow<Preferences> = myPreferencesDataStore.data
+
+    //    val userPreferencesFlow: Flow<Preferences> = myPreferencesDataStore.data
 //        .catch { exception ->
 //            if (exception is IOException) {
 //                emit(emptyPreferences())
@@ -55,15 +58,18 @@ class UserPreferences @Inject constructor(
         val preferences = myPreferencesDataStore.data.first()
         return preferences[PreferencesKey.KEY_ACCESS_TOKEN]
     }
+
     suspend fun getUserEmail(): String? {
         val preferences = myPreferencesDataStore.data.first()
         return preferences[PreferencesKey.KEY_USER_EMAIL]
     }
+
     suspend fun getIsLoggedIn(): Boolean {
         val preferences = myPreferencesDataStore.data.first()
         return preferences[PreferencesKey.KEY_IS_LOGGED_IN] ?: false
     }
-      suspend fun clearData() {
+
+    suspend fun clearData() {
         myPreferencesDataStore.edit { preferences ->
             preferences.clear()
         }

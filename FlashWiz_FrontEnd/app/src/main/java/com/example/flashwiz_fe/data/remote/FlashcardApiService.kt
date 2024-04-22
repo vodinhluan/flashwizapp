@@ -13,6 +13,7 @@ import retrofit2.http.Query
 interface FlashcardApiService {
     @GET("flashcard/get-by-folder/{folderId}")
     suspend fun getFlashcardsByFolderId(@Path("folderId") folderId: Int): List<FlashcardDetail>
+
     @POST("/flashcard/save")
     suspend fun saveFlashcard(
         @Body flashcard: Flashcard,
@@ -20,6 +21,7 @@ interface FlashcardApiService {
         @Query("userId") userId: Int,
         @Query("folderId") folderId: Int
     ): Flashcard
+
     @DELETE("/flashcard/delete/{id}")
     suspend fun deleteFlashcard(@Path("id") id: Int): List<FlashcardDetail>
 }

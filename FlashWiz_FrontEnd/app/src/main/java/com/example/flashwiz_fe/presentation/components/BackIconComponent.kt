@@ -9,13 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-
 @Composable
-fun BackIconComponent(onBackClick: () -> Unit) {
+fun BackIconComponent(onBackClick: () -> Unit, isFolderSelected: Boolean) {
+
     Icon(
         imageVector = Icons.Default.ArrowBack,
         contentDescription = "Back",
-        tint = Color.Black,
         modifier = Modifier
             .clickable { onBackClick() }
             .padding(16.dp)

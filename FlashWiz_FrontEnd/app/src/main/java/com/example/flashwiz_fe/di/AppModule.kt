@@ -7,8 +7,11 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.repository.CardRepository
+import com.example.flashwiz_fe.domain.use_case.ValidateForgotPasswordEmailInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
+import com.example.flashwiz_fe.domain.use_case.ValidateOTPInputUseCase
 import com.example.flashwiz_fe.domain.use_case.ValidateRegisterInputUseCase
+import com.example.flashwiz_fe.domain.use_case.ValidateResetPasswordInputUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,13 +25,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideValidateLoginInputUseCase():ValidateLoginInputUseCase{
+    fun provideValidateLoginInputUseCase(): ValidateLoginInputUseCase {
         return ValidateLoginInputUseCase()
     }
 
     @Provides
     @Singleton
-    fun provideValidateRegisterInputUseCase():ValidateRegisterInputUseCase{
+    fun provideValidateRegisterInputUseCase(): ValidateRegisterInputUseCase {
         return ValidateRegisterInputUseCase()
     }
 
@@ -37,7 +40,23 @@ object AppModule {
     fun provideAuthRepository(@ApplicationContext context: Context): AuthRepository {
         return AuthRepositoryImpl(context)
     }
+    @Provides
+    @Singleton
+    fun provideValidateForgotPasswordEmailInputUseCase(): ValidateForgotPasswordEmailInputUseCase {
+        return ValidateForgotPasswordEmailInputUseCase()
+    }
 
+    @Provides
+    @Singleton
+    fun provideValidateOTPInputUseCase(): ValidateOTPInputUseCase {
+        return ValidateOTPInputUseCase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideValidateResetPasswordUseCase(): ValidateResetPasswordInputUseCase {
+        return ValidateResetPasswordInputUseCase()
+    }
 
     // Card Module
     @Provides

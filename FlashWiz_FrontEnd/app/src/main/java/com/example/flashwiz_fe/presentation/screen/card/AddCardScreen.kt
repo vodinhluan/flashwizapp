@@ -1,8 +1,8 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
@@ -40,9 +42,11 @@ import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@Composable
-fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController) {
 
+
+
+@Composable
+fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController,initialFlashcardId: Int?) {
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
@@ -52,7 +56,6 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
     var isItalicBack by remember { mutableStateOf(false) }
     var textAlignFront by remember { mutableStateOf(TextAlign.Start) }
     var textAlignBack by remember { mutableStateOf(TextAlign.Start) }
-
 
 
     Surface(
@@ -73,7 +76,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "CARD INFO",
+                    text = "CARD INFO $initialFlashcardId",
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 24.sp,
@@ -83,8 +86,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                     modifier = Modifier.padding(16.dp)
                 )
             }
-
-            // FRONT CARD
+// FRONT CARD
             Text(
                 text = "FRONT CARD",
                 style = TextStyle(
@@ -96,7 +98,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                 modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
             )
 
-            // Add B and I Buttons for Front End
+// Add B and I Buttons for Front End
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -139,6 +141,8 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                     .align(Alignment.CenterHorizontally)
                     .height(175.dp)
             )
+
+
             // BACK CARD
             Text(
                 text = "BACK CARD",
@@ -151,7 +155,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                 modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
             )
 
-            // Add B and I Buttons for Back End
+// Add B and I Buttons for Back End
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -179,6 +183,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                     onClick = { textAlignBack = TextAlign.End }
                 )
             }
+
             TextField(
                 value = cardState.value.backText,
                 onValueChange = { cardState.value = cardState.value.copy(backText = it) },
@@ -194,7 +199,7 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                     .height(175.dp)
             )
 
-            Row(
+            Row (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -202,19 +207,32 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
                 CustomButtonComponent(
                     text = "Save This Card",
                     onClick = {
+
                         val card = Card(
                             front = cardState.value.frontText.trim(),
                             back = cardState.value.backText.trim()
                         )
-                        cardViewModel.saveCard(card)
+//                        cardViewModel.saveCard(card) Phu Le da Comment
+
+
+                        Log.d("AddCardScreen", "Flashcard ID: $initialFlashcardId")
+                        if (initialFlashcardId != null) {
+                            cardViewModel.saveCard(
+                                Card(
+                                    front = cardState.value.frontText.trim(),
+                                    back = cardState.value.backText.trim()
+                                ),
+                                initialFlashcardId
+                            )
+                        }
                     },
                     modifier = Modifier.wrapContentSize(),
                     backgroundColor = Color.LightGray,
                     contentColor = Color.Blue,
                     borderColor = Color.Black
                 )
-            }
 
+            }
             LaunchedEffect(saveSuccess) {
                 if (saveSuccess) {
                     withContext(Dispatchers.Main) {
@@ -230,22 +248,3 @@ fun AddCardScreen(cardViewModel: CardViewModel, navController: NavHostController
     }
 }
 
-@Composable
-fun IconButtonWithText(
-    text: String,
-    isBold: Boolean = false,
-    isItalic: Boolean = false,
-    onClick: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable(onClick = onClick)
-    ) {
-        Text(
-            text = text,
-            fontSize = 20.sp,
-            fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal,
-            fontStyle = if (isItalic) FontStyle.Italic else FontStyle.Normal,
-        )
-    }
-}
