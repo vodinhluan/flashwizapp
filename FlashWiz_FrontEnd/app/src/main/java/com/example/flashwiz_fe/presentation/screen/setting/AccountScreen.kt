@@ -12,18 +12,36 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 import androidx.compose.runtime.livedata.observeAsState
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
+import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
+import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
+
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
+
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 
@@ -34,26 +52,35 @@ import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
 
 
 @Composable
-fun AccountScreen() {
-    val viewModel: ThemeViewModel = viewModel()
 
-    AppTheme(darkTheme = viewModel.darkThemeEnabled.observeAsState(false).value) {
+fun AccountScreen(
+    logoutViewModel: LogoutViewModel = hiltViewModel(),
+    navController: NavController
+) {
+    var darkTheme by remember { mutableStateOf(false) }
+    AppTheme(darkTheme = darkTheme) {
+        NavDestinationHelper(
+            shouldNavigate = {
+                logoutViewModel.logoutState.isSuccessfullyLoggedOut
+            },
+            destination = {
+                navController.navigate(ScreenRoutes.LoginScreen.route) {
+                    popUpTo(0)
+                }
+            }
+        )
         Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
-            AccountText()
+//            AccountText() #Phu Le Comment
             ProfileCardUI()
-            DarkModeSwitch(viewModel)
+//            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it } #Phu Le Comment
             GeneralOptionsUI()
             ChangePasswordUI()
-            LogoutUI()
+            LogoutUI(
+                onLogoutButtonClick = logoutViewModel::logoutClick
+            )
         }
-            NofiticaionScreen()
-        }
-
     }
-
-
-
-
+}
 @Composable
 fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
     val colors = if (darkTheme) DarkColors else LightColors
@@ -64,30 +91,56 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
         shapes = Shapes,
         content = {
             Box(modifier = Modifier.fillMaxSize().background(color = colors.background)) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(color = colors.background)) {
-                content()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = colors.background)
+                ) {
+                    content()
+                }
             }
-        }}
+        }
     )
 }
 
+//fun AccountScreen() { #Phu Le Comment
+//    val viewModel: ThemeViewModel = viewModel()
+//
+//    AppTheme(darkTheme = viewModel.darkThemeEnabled.observeAsState(false).value) {
+//        Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
+//            AccountText()
+//            ProfileCardUI()
+//            DarkModeSwitch(viewModel)
+//            GeneralOptionsUI()
+//            ChangePasswordUI()
+//            LogoutUI()
+//        }
+//
+//            NofiticaionScreen()
+//        }
+//
+//    }
 
-@Composable
-fun AccountText() {
-    Text(
-        text = "Account",
-        fontFamily = Poppins,
-        color = MaterialTheme.colors.onSurface,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp, bottom = 10.dp),
-        fontWeight = FontWeight.ExtraBold,
-        fontSize = 20.sp
-    )
-}
+
+
+
+
+
+
+//@Composable #Phu Le Comment
+//fun AccountText() {
+//    Text(
+//        text = "Account",
+//        fontFamily = Poppins,
+//        color = MaterialTheme.colors.onSurface,
+//        textAlign = TextAlign.Center,
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 30.dp, bottom = 10.dp),
+//        fontWeight = FontWeight.ExtraBold,
+//        fontSize = 20.sp
+//    )
+//}
 
 //
 //@Composable

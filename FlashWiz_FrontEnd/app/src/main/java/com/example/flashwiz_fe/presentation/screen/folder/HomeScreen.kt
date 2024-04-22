@@ -38,7 +38,6 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.FolderItem
-import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 
 import com.example.flashwiz_fe.presentation.components.FolderItem
@@ -86,7 +85,11 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             modifier = Modifier.padding(16.dp)
                         )
 
-                        AddItemComponent(navController = navController, "Folder", null, null)
+//                        AddItemComponent(navController = navController, "Folder", null) #Phu Le Comment
+
+
+//                        AddItemComponent(navController = navController, "Folder", null, null)  #Phu Le Comment
+
                     } else {
                         Row(
                             modifier = Modifier
@@ -116,12 +119,16 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                             )
                             selectedFolder?.let { folder ->
 
-                                AddItemComponent(
-                                    navController = navController,
-                                    "Flashcard",
-                                    folderId = folder.id,
-                                    null
-                                )
+//       #Phu Le Comment               AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+
+
+//        #Phu Le Comment                        AddItemComponent(
+//                                    navController = navController,
+//                                    "Flashcard",
+//                                    folderId = folder.id,
+//                                    null
+//                                )
+
                             }
                         }
                     }

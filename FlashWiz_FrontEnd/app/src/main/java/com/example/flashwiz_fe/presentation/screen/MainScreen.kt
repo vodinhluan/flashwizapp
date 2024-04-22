@@ -25,19 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
-import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
-import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
-import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
 
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
-import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(
+    navController: NavHostController,
+
+) {
 
     val items = listOf(
         BottomNavigationItem(
@@ -88,7 +88,7 @@ fun MainScreen(navController: NavHostController) {
                     0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                     1 -> StudyGroupScreen(navController = navController)
                     2 -> StatisticScreen()
-                    3 -> AccountScreen()
+                    3 -> AccountScreen(navController = navController)
 
                     else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
                 }

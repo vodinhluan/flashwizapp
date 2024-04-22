@@ -20,14 +20,22 @@ import com.example.flashwiz_fe.data.CardRepositoryImpl
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
-import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.MainScreen
+
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
+import com.example.flashwiz_fe.presentation.screen.auth.ForgotPasswordScreen
+import com.example.flashwiz_fe.presentation.screen.auth.InsertOTPScreen
+import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
+import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
+import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
+
+import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
+
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
+
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
@@ -59,6 +67,38 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                 },
                 onNavigateToRegisterScreen = {
                     navController.navigate(ScreenRoutes.RegisterScreen.route) {
+                        popUpTo(0)
+                    }
+                },
+                onNavigateToForgotPasswordScreen = {
+                    navController.navigate(ScreenRoutes.ForgotPasswordScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable(ScreenRoutes.ForgotPasswordScreen.route){
+            ForgotPasswordScreen(
+                onForgotPasswordSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.InsertOTPScreen.route){
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable(ScreenRoutes.InsertOTPScreen.route){
+            InsertOTPScreen(
+                onVerifiedOTPSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route){
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable(ScreenRoutes.ResetPasswordScreen.route){
+            ResetPasswordScreen(
+                onChangePasswordSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
                         popUpTo(0)
                     }
                 }
@@ -123,12 +163,22 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             AddCardScreen(cardViewModel = cardViewModel, navController = navController, initialFlashcardId = flashcardId)
         }
 
-        composable(ScreenRoutes.NotificationScreen.route) {
+
+
+
+        composable(ScreenRoutes.ReviewCardScreen.route) {
+//            ReviewCardScreen() Phu Le comment
         }
 
+        composable(ScreenRoutes.NotificationScreen.route){
+        }
 
     }
 }
+
+
+
+
 
 
 
