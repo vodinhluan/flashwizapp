@@ -28,13 +28,13 @@ import com.example.flashwiz_fe.domain.model.CardDetail
 @Composable
 fun CardItemComponent(
     card: CardDetail,
-    onFlashcardClicked: () -> Unit,
+    onCardClicked: () -> Unit,
     onDeleteClick: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .clickable(onClick = onFlashcardClicked)
+            .clickable(onClick = onCardClicked)
             .size(200.dp),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color.Gray),

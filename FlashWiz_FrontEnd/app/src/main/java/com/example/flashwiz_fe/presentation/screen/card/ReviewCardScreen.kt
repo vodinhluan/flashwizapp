@@ -7,7 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
@@ -95,6 +98,7 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
             val frontText = randomCard?.front ?: "Front text not available"
             val backText = randomCard?.back ?: "Back text not available"
             if (rotate < 90f) {
+
                 Text(
                     text = randomCard?.id?.toString() ?: "",
                     modifier = Modifier

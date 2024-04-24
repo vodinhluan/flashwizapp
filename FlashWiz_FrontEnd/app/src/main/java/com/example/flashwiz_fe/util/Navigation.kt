@@ -173,7 +173,6 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
 
 
         composable(ScreenRoutes.AddCardScreen.route+"/{flashcardId}") { backStackEntry ->
-            val navController = rememberNavController()
             val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
 
             val cardViewModel: CardViewModel = remember {
@@ -181,7 +180,12 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            AddCardScreen(cardViewModel = cardViewModel, navController = navController, initialFlashcardId = flashcardId)
+            AddCardScreen( onNavigateBack = {
+                navController.navigateUp()
+            },
+                cardViewModel = cardViewModel,
+                navController = navController,
+                initialFlashcardId = flashcardId)
         }
 
 

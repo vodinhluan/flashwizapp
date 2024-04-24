@@ -18,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.flashwiz_fe.presentation.components.MenuItem
+import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
@@ -29,7 +31,7 @@ fun AddItemComponent(navController: NavController, itemType: String
                      onFolderSelected: ((Int) -> Unit)? = null,
                      onFlashcardSelected: (() -> Unit)? = null) {
     var expanded by remember { mutableStateOf(false) }
-
+//    val navController = rememberNavController();
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
 
     Column(
@@ -58,7 +60,9 @@ fun AddItemComponent(navController: NavController, itemType: String
                         }
                         "Card" ->  {
                             Log.d("FlashcardId", flashcardId?.toString() ?: "FlashcardId is null")
-                            navController.navigate("${ScreenRoutes.AddCardScreen.route}/$flashcardId")
+                            navController.navigate("${ScreenRoutes.AddCardScreen.route}/$flashcardId"){
+//                                AddCardScreen(onNavigateUp = {navController.navigate()},)
+                            }
                         }
                         "Review" -> navController.navigate(ScreenRoutes.AddCardScreen.route)
                     }

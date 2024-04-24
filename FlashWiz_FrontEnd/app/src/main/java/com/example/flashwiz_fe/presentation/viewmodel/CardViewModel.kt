@@ -21,6 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
     private var initialFlashcardId: Int? = null
+    private val _selectedCard = MutableLiveData<CardDetail>()
+    val selectedCard: LiveData<CardDetail> = _selectedCard
+    private val _updatedCard = MutableLiveData<CardDetail>()
+    val updatedCard: LiveData<CardDetail> = _updatedCard
 
     // card state
     private val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
@@ -248,6 +252,27 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
 
     fun onCardFlipped() {
         _cardState.value = EnumReviewCard.BACK
+    }
+    fun getCardById(cardId: Int) {
+        viewModelScope.launch {
+            val response = cardRepository.getCardById(cardId)
+            if (response.isSuccessful) {
+                _selectedCard.value = response.body()
+            } else {
+
+            }
+        }
+    }
+    fun updateCard(cardId: Int, updatedCard: CardDetail) {
+        viewModelScope.launch {
+            try {
+                cardRepository.updateCard(cardId, updatedCard)
+                Log.d("CardViewModel", "Card updated successfully")
+                _updatedCard.value = updatedCard
+            } catch (e: Exception) {
+                Log.e("CardViewModel", "Error updating card: $e")
+            }
+        }
     }
 
 }
