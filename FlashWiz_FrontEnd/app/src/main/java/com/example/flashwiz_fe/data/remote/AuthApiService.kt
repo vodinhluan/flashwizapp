@@ -1,5 +1,7 @@
 package com.example.flashwiz_fe.data.remote
 
+import com.example.flashwiz_fe.domain.model.ChangePasswordSuccessfully
+import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.model.TokenResponse
@@ -22,4 +24,18 @@ interface AuthApiService {
     suspend fun login(
         @Body body: LoginRequest
     ): Response<TokenResponse>
+
+    @FormUrlEncoded
+    @POST("/forgot_password")
+    suspend fun forgot(
+        @Field("email") email: String,
+    ): Response<ForgotPasswordResponse>
+
+    @FormUrlEncoded
+    @POST("/reset_password")
+    suspend fun changePassword(
+        @Field("password") newPassword: String,
+        @Field("otp") savedOTP: String,
+    ): Response<ChangePasswordSuccessfully>
+
 }

@@ -2,6 +2,8 @@ package com.example.flashwiz_fe.data
 
 
 import android.content.Context
+import com.example.flashwiz_fe.domain.model.ChangePasswordSuccessfully
+import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.model.TokenResponse
@@ -12,7 +14,7 @@ import retrofit2.Response
 class AuthRepositoryImpl(context: Context) : AuthRepository {
     private val authApiService = RetrofitInstance.authApiService
     private val userPreferences = UserPreferences(context)
-
+    private var savedOTP: String? = null
     override suspend fun login(email: String, password: String): Boolean {
         delay(1000)
         return try {
@@ -29,7 +31,8 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val userId = tokenResponseBody.id
 
                     println("Lưu thông tin email và token")
-                    if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty() ) {
+                // Lưu access token vào DataStore
+                    if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty()) {
                         userPreferences.saveUserToken(accessToken)
                         userPreferences.saveUserEmail(userEmail)
                         userPreferences.saveIsLoggedIn(true)
@@ -63,12 +66,64 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         userPreferences.clearData()
     }
 
+
+    override suspend fun forgot(email: String): Boolean {
+        return try {
+            val response: Response<ForgotPasswordResponse> = authApiService.forgot(email)
+            if (response.isSuccessful) {
+                val forgotPasswordResponse = response.body()
+                forgotPasswordResponse?.let {
+                    println("Email: ${it.email}")
+                    println("resetPasswordOTP: ${it.otp}")
+                    savedOTP = it.otp
+                    true
+                } ?: run {
+                    println("Không có dữ liệu trả về từ API.")
+                    false
+                }
+            } else {
+                println("API trả về mã lỗi: ${response.code()}")
+                false
+            }
+        } catch (e: Exception) {
+            println("Xảy ra lỗi: ${e.message}")
+            false
+        }
+    }
+
+    override suspend fun changePassword(newPassword: String): Boolean {
+        delay(10000)
+        return try {
+            if (savedOTP.isNullOrEmpty()) {
+                println("Lỗi: Mã OTP không tồn tại.")
+                return false
+            }
+            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(newPassword, savedOTP ?: "")
+            if (response.isSuccessful) {
+                println("Thay đổi mật khẩu thành công")
+                true
+            } else {
+                println("Lỗi khi thay đổi mật khẩu: ${response.code()}")
+                false
+            }
+        } catch (e: Exception) {
+            println("Xảy ra lỗi: ${e.message}")
+            false
+        }
+    }
+
+
+
+    override suspend fun verifiedOtp(otp: String): Boolean {
+        return otp == savedOTP
+    }
     override suspend fun register(name: String, email: String, password: String): Boolean {
         delay(1000)
         return try {
             val response: Response<RegisterResponse> =
                 authApiService.register(name, email, password)
             if (response.isSuccessful) {
+
                 println("API đăng ký người dùng thành công")
                 true
             } else {

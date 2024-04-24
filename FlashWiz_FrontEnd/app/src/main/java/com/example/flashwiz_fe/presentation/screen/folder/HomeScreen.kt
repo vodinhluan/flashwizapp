@@ -84,6 +84,10 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                         )
 
                         AddItemComponent(navController = navController, "Folder", null, null,userId)
+//                        AddItemComponent(navController = navController, "Folder", null) #Phu Le Comment
+
+
+//                        AddItemComponent(navController = navController, "Folder", null, null)  #Phu Le Comment
 
                     } else {
                         isFolderSelected = true
@@ -121,6 +125,15 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                     folderId = folder.id,
                                     null,null
                                 )
+//       #Phu Le Comment               AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+
+
+//        #Phu Le Comment                        AddItemComponent(
+//                                    navController = navController,
+//                                    "Flashcard",
+//                                    folderId = folder.id,
+//                                    null
+//                                )
 
                             }
                         }

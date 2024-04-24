@@ -19,16 +19,18 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,8 +38,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
+
+
+import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
@@ -57,13 +63,16 @@ fun LoginScreen(
     onLoginSuccessNavigation: (userId: String?) -> Unit,
     onNavigateToRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel(),
-    userPreferences: UserPreferences = UserPreferences(LocalContext.current)
+    userPreferences: UserPreferences = UserPreferences(LocalContext.current),
+    onNavigateToForgotPasswordScreen: () -> Unit,
+
 ) {
 
     val userIdState = remember { mutableStateOf<String?>(null) }
     LaunchedEffect(loginViewModel.userId) {
         userIdState.value = loginViewModel.userId
     }
+
 
     NavDestinationHelper(shouldNavigate = {
         loginViewModel.loginState.isSuccessfullyLoggedIn
@@ -117,6 +126,7 @@ fun LoginScreen(
             isLoading = {
                 loginViewModel.loginState.isLoading
             },
+            onNavigateToForgotPasswordScreen = onNavigateToForgotPasswordScreen,
             modifier = Modifier
                 .padding(top = 200.dp)
                 .fillMaxWidth(0.9f)
@@ -173,10 +183,8 @@ fun LoginContainer(
     errorHint: () -> String?,
     isLoading: () -> Boolean,
     modifier: Modifier = Modifier ,
+    onNavigateToForgotPasswordScreen:() -> Unit,
 ) {
-    val context = LocalContext.current
-    val dataStore = UserPreferences(context)
-    val scope = rememberCoroutineScope()
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -217,8 +225,25 @@ fun LoginContainer(
             } else PasswordVisualTransformation(),
             keyboardType = KeyboardType.Password
         )
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                "Forgot your password ?",
+                modifier = Modifier
+                    .padding(start = 5.dp)
+                    .clickable {
+                        onNavigateToForgotPasswordScreen()
+                    },
+                color = blue,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.body2
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -233,8 +258,7 @@ fun LoginContainer(
                     .shadow(5.dp, RoundedCornerShape(25.dp)),
                 isLoading = isLoading(),
                 onButtonClick = onLoginButtonClick,
-
-                )
+            )
             Text(
                 errorHint() ?: "", style = MaterialTheme.typography.body2
 
@@ -244,3 +268,4 @@ fun LoginContainer(
 
     }
 }
+
