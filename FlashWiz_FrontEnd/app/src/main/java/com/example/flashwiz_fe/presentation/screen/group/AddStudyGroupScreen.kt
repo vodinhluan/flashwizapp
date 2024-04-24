@@ -63,7 +63,7 @@ fun AddStudyGroupScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BackIconComponent(onNavigateBack,false)
+            BackIconComponent(onBackClick = onNavigateBack)
             Button(
                 onClick = {
                     viewModel.addGroup(groupName) { isSuccess ->

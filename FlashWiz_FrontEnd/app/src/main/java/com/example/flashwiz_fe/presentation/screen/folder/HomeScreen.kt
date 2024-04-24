@@ -40,9 +40,6 @@ import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.presentation.components.FolderItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
-
-import com.example.flashwiz_fe.presentation.components.FolderItem
-
 import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
@@ -54,9 +51,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
     val showHeaderState = remember { mutableStateOf(true) }
-    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -87,7 +84,9 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                         )
 
                         AddItemComponent(navController = navController, "Folder", null, null,userId)
+
                     } else {
+                        isFolderSelected = true
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -122,6 +121,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                     folderId = folder.id,
                                     null,null
                                 )
+
                             }
                         }
                     }
@@ -141,14 +141,11 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                     onTrailingIconClick = {}
                 )
             }
-
             LaunchedEffect(Unit) {
-                Log.d("UserId", "UserId: $userId")
-                originalFolders = apiService.getFoldersByUserId(userId)
+                originalFolders = apiService.getAllFolders()
                 folders = originalFolders
                 isDataLoaded = true
             }
-
             if (isDataLoaded) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
@@ -182,7 +179,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 }
                             }
                         )
-
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
@@ -199,7 +195,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                     showHeader = showHeaderState
                 )
             }
-
         }
     }
 }
+

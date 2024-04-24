@@ -3,6 +3,7 @@
 package com.example.flashwiz_fe.util
 
 import AddFolderScreen
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
@@ -92,12 +93,14 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             MainScreen(navController, userIdInt)
         }
 
-        composable(ScreenRoutes.AddFolderScreen.route+ "/{userId}") {backStackEntry ->
-            val navController = rememberNavController()
+        composable(ScreenRoutes.AddFolderScreen.route+ "/{userId}") { backStackEntry ->
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                Log.d("Navigation", "Navigated to ${destination.route}")
+            }
             val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull()
             AddFolderScreen(
                 onNavigateBack = {
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 initialUserId = userId,
                 navController = navController
@@ -106,15 +109,18 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
 
         // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
-            val navController = rememberNavController()
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
 
             AddFlashcardScreen(
-                onNavigateBack = { navController.popBackStack() },
+                onNavigateBack = { folderId ->
+                    // Quay lại màn hình trước đó với thông tin về folderId
+                    navController.popBackStack()
+                },
                 initialFolderId = folderId,
                 navController = navController
             )
         }
+
 
         composable(
             route = "${ScreenRoutes.ReviewCardScreen.route}/{flashcardId}",
