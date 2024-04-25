@@ -25,16 +25,6 @@ class UserPreferences @Inject constructor(
         val KEY_IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
     }
 
-    //    val userPreferencesFlow: Flow<Preferences> = myPreferencesDataStore.data
-//        .catch { exception ->
-//            if (exception is IOException) {
-//                emit(emptyPreferences())
-//            } else {
-//                throw exception
-//            }
-//        }. map { preferences ->
-//            val
-//        }
     suspend fun saveUserToken(token: String) {
         myPreferencesDataStore.edit { preferences ->
             preferences[PreferencesKey.KEY_ACCESS_TOKEN] = token

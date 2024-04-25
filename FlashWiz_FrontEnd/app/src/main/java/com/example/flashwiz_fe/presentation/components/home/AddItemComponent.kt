@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.MenuItem
+import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
@@ -36,6 +37,7 @@ fun AddItemComponent(navController: NavController, itemType: String
     ) {
         Icon(
             imageVector = icon,
+            tint = white,
             contentDescription = null,
             modifier = Modifier.clickable { expanded = !expanded }
         )
