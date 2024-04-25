@@ -37,11 +37,13 @@ import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
+
 import com.example.flashwiz_fe.presentation.components.FolderItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
+import DeleteDialog as DeleteDialog
 
 @Composable
 fun HomeScreen(navController: NavController, apiService: FolderApiService,userId: Int?) {
@@ -53,7 +55,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
     val showHeaderState = remember { mutableStateOf(true) }
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
-
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var folderIdToDelete by remember { mutableStateOf<Int?>(null) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -182,18 +185,34 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 }
                             },
                             onDeleteClick = { folderId ->
-                                viewModel.deleteFolderAndUpdateList(
-                                    folderId = folderId,
-                                    viewModel = viewModel,
-                                    apiService = RetrofitInstance.folderApiService,
-                                    originalFolders = originalFolders
-                                ) { updatedFlashcards ->
-                                    folders = updatedFlashcards
-                                }
+                                folderIdToDelete=folderId
+                                showDeleteDialog = true
                             }
+
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
                     }
+                }
+            }
+            if (showDeleteDialog) {
+                folderIdToDelete?.let {
+                    DeleteDialog(
+                        IdtoDelete = it,
+                        onDismiss = { showDeleteDialog = false },
+                        itemType="folder",
+                        onChangeSuccess = { folderId ->
+                            viewModel.deleteFolderAndUpdateList(
+                                folderId = folderId,
+                                viewModel = viewModel,
+                                apiService = RetrofitInstance.folderApiService,
+                                originalFolders = originalFolders
+                            ) { updatedFolders ->
+                                folders = updatedFolders
+                            }
+                            showDeleteDialog = false
+                        }
+                    )
                 }
             }
             selectedFolder?.let { folder ->

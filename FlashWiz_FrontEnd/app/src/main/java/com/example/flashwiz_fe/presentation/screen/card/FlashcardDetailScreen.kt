@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
+import DeleteDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
@@ -56,7 +58,8 @@ fun FlashcardDetailScreen(
     val updatedCard by cardViewModel.updatedCard.observeAsState()
     var showUpdateCardDialog by remember { mutableStateOf(false) }
     var selectedCard by remember { mutableStateOf<CardDetail?>(null) } // MutableState để lưu trữ thông tin của thẻ được chọn
-
+    var cardIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         cardViewModel.getCardsByFlashcardId(flashcardId).let { fetchedCards ->
@@ -96,17 +99,30 @@ fun FlashcardDetailScreen(
                             showUpdateCardDialog = true
                                         },
                         onDeleteClick = { cardId ->
-                            cardViewModel.deleteCardAndUpdateList(
-                                cardId = cardId,
-                                viewModel = cardViewModel,
-                                apiService = RetrofitInstance.cardApiService,
-                                originalCard = originalCard
-                            ) { updateCards ->
-                                cards = updateCards
-                            }
+                            cardIdToDelete=cardId
+                            showDeleteDialog = true
                         }
                     )
-
+                    if (showDeleteDialog) {
+                        cardIdToDelete?.let {
+                            DeleteDialog(
+                                IdtoDelete = it,
+                                onDismiss = { showDeleteDialog = false },
+                                itemType="card",
+                                onChangeSuccess = { cardId ->
+                                    cardViewModel.deleteCardAndUpdateList(
+                                        cardId = cardId,
+                                        viewModel = cardViewModel,
+                                        apiService = RetrofitInstance.cardApiService,
+                                        originalCard = originalCard
+                                    ) { updatedCards ->
+                                        cards = updatedCards
+                                    }
+                                    showDeleteDialog = false
+                                }
+                            )
+                        }
+                    }
                     if (showUpdateCardDialog) {
                         com.example.flashwiz_fe.presentation.screen.card.UpdateCardDialog(
                             card = selectedCard ?: card,

@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.flashcard
 
+import DeleteDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
@@ -54,6 +56,8 @@ fun FolderDetailScreen(
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
+    var flashcardIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         originalFlashcard = flashcardApiService.getFlashcardsByFolderId(folderId)
@@ -88,17 +92,31 @@ fun FolderDetailScreen(
                             }
                         },
                         onDeleteClick = { flashcardId ->
+                            flashcardIdToDelete=flashcardId
+                            showDeleteDialog = true
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+            if (showDeleteDialog) {
+                flashcardIdToDelete?.let {
+                    DeleteDialog(
+                        IdtoDelete = it,
+                        onDismiss = { showDeleteDialog = false },
+                        itemType="flashcard",
+                        onChangeSuccess = { flashcardId ->
                             viewModel.deleteFlashcardAndUpdateList(
                                 flashcardId = flashcardId,
                                 viewModel = viewModel,
-                                apiService = flashcardApiService,
+                                apiService = RetrofitInstance.flashcardApiService,
                                 originalFlashcard = originalFlashcard
                             ) { updatedFlashcards ->
                                 flashcards = updatedFlashcards
                             }
+                            showDeleteDialog = false
                         }
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         } else {
