@@ -39,7 +39,6 @@ import com.example.flashwiz_fe.presentation.viewmodel.RegisterViewModel
 import com.example.flashwiz_fe.ui.theme.blue
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.darkGray
-import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.ui.theme.whiteGray
 
@@ -131,12 +130,12 @@ fun RegisterScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
-                .align(Alignment.BottomCenter),
+                .height(200.dp)
+                .align(Alignment.BottomCenter)
         )
         Row(
             modifier = Modifier
@@ -247,7 +246,7 @@ fun RegisterContainer(
             hint = "Confirm Password",
             leadingIcon = Icons.Default.VpnKey,
             textValue = passwordRepeatedValue(),
-            textColor = gray,
+            textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onPasswordRepeatedChanged,
             keyboardType = KeyboardType.Password,

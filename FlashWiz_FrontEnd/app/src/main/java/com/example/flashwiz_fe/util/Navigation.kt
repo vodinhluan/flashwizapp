@@ -17,9 +17,6 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.screen.MainScreen
-
-import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
-
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ForgotPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.auth.InsertOTPScreen
@@ -27,12 +24,7 @@ import com.example.flashwiz_fe.presentation.screen.auth.LoginScreen
 import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
-
-
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-
-import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
-
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import androidx.compose.runtime.LaunchedEffect as LaunchedEffect
 
@@ -86,7 +78,13 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                     navController.navigate(ScreenRoutes.InsertOTPScreen.route){
                         popUpTo(0)
                     }
+                },
+                onNavigateToLoginScreen = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                        popUpTo(0)
+                    }
                 }
+
             )
         }
         composable(ScreenRoutes.InsertOTPScreen.route){

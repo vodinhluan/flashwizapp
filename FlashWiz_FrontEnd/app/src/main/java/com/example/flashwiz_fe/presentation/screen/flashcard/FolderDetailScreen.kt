@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
@@ -43,6 +44,7 @@ import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.state.EnumScreenState
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import com.example.flashwiz_fe.ui.theme.brightBlue
 
 @Composable
 fun FolderDetailScreen(
@@ -121,12 +123,26 @@ fun FolderDetailScreen(
                 }
             }
         } else {
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Cyan),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+                    .background(
+                        brightBlue,
+                        RoundedCornerShape(
+                            topStart = 0.dp,
+                            topEnd = 0.dp,
+                            bottomStart = 20.dp,
+                            bottomEnd = 20.dp
+                        )
+                    )
+                    .padding(0.dp, 0.dp, 0.dp, 20.dp)
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
@@ -157,7 +173,7 @@ fun FolderDetailScreen(
                         flashcardId = flashcard.id,null
                     )
                 }
-            }
+            }}
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(
                     flashcardId = flashcard.id,

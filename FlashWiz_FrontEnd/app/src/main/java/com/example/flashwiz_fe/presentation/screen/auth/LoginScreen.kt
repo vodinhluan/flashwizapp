@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -28,6 +29,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -41,8 +46,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
-
-
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
@@ -52,7 +55,6 @@ import com.example.flashwiz_fe.presentation.viewmodel.LoginViewModel
 import com.example.flashwiz_fe.ui.theme.blue
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.darkGray
-import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.ui.theme.whiteGray
 import com.example.flashwiz_fe.util.ScreenRoutes
@@ -79,7 +81,6 @@ fun LoginScreen(
     }, destination = {
         onLoginSuccessNavigation(userIdState.value)
     })
-
 
     Box(
         modifier = Modifier
@@ -136,11 +137,11 @@ fun LoginScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(200.dp)
                 .align(Alignment.BottomCenter)
         )
         Row(
@@ -151,7 +152,6 @@ fun LoginScreen(
         ) {
             Text(
                 "Bạn chưa có tài khoản ?", style = MaterialTheme.typography.body2
-
             )
             Text(
                 "Đăng ký",
@@ -187,18 +187,18 @@ fun LoginContainer(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Đăng nhập",
-            color = gray,
-            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+            color = blue,
+            style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.SemiBold)
         )
         TextEntryModule(
             modifier = Modifier.fillMaxWidth(),
             description = "Email address",
-            hint = "example@gmail.com",
+            hint = "",
             textValue = emailValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
@@ -207,39 +207,62 @@ fun LoginContainer(
             onTrailingIconClick = null,
             leadingIcon = Icons.Default.Email
         )
-        TextEntryModule(
-            modifier = Modifier.fillMaxWidth(),
-            description = "Password",
-            hint = "Enter password",
-            textValue = passwordValue(),
-            textColor = darkGray,
-            cursorColor = brightBlue,
-            onValueChanged = onPasswordChanged,
-            trailingIcon = Icons.Default.RemoveRedEye,
-            onTrailingIconClick = {
-                onTrailingPasswordIconClick()
-            },
-            leadingIcon = Icons.Default.VpnKey,
-            visualTransformation = if (isPasswordShown()) {
-                VisualTransformation.None
-            } else PasswordVisualTransformation(),
-            keyboardType = KeyboardType.Password
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Text(
-                "Forgot your password ?",
-                modifier = Modifier
-                    .padding(start = 5.dp)
-                    .clickable {
-                        onNavigateToForgotPasswordScreen()
-                    },
-                color = blue,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.body2
+        Column() {
+            TextEntryModule(
+                modifier = Modifier.fillMaxWidth(),
+                description = "Password",
+                hint = "",
+                textValue = passwordValue(),
+                textColor = darkGray,
+                cursorColor = brightBlue,
+                onValueChanged = onPasswordChanged,
+                trailingIcon = Icons.Default.RemoveRedEye,
+                onTrailingIconClick = {
+                    onTrailingPasswordIconClick()
+                },
+                leadingIcon = Icons.Default.VpnKey,
+                visualTransformation = if (isPasswordShown()) {
+                    VisualTransformation.None
+                } else PasswordVisualTransformation(),
+                keyboardType = KeyboardType.Password
             )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    var rememberMe by remember { mutableStateOf(false) }
+
+                    Checkbox(
+                        checked = rememberMe,
+                        onCheckedChange = { isChecked ->
+                            rememberMe = isChecked
+                        },
+
+                        )
+                    Text(
+                        "Remember me",
+                        modifier = Modifier,
+                        color = darkGray,
+                        fontWeight = FontWeight.Normal,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                Text(
+                    "Forgot your password?",
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .clickable {
+                            onNavigateToForgotPasswordScreen()
+                        },
+                    color = blue,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.body2
+                )
+            }
         }
         Column(
             modifier = Modifier

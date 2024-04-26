@@ -38,10 +38,6 @@ public class FolderController {
         return ResponseEntity.ok(folders);
     }
 
-
-
-
-
     @PostMapping("/folder/save")
     public ResponseEntity<Folder> saveFolder(@RequestBody Folder folder, @RequestParam("userId") Integer userId) {
         User user = new User();
@@ -58,8 +54,6 @@ public class FolderController {
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }
 
-
-   
 }
 
 
