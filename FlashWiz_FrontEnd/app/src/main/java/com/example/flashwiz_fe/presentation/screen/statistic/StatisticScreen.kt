@@ -3,19 +3,19 @@ package com.example.flashwiz_fe.presentation.screen.statistic
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 
-import androidx.compose.foundation.layout.width
-
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,14 +29,14 @@ import androidx.compose.ui.unit.sp
 //import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
 //import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
 
-import androidx.compose.ui.unit.times
-
+import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
+
 @Composable
 fun StaticText() {
     androidx.compose.material.Text(
-        text = "Static",
+        text = "DATA ANALYST",
         fontFamily = Poppins,
         color = SecondaryColor,
         textAlign = TextAlign.Center,
@@ -48,11 +48,17 @@ fun StaticText() {
     )
 }
 
+//Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
+
 
 @Composable
-fun StatisticScreen() {
-    Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
-        LazyColumn(
+fun StatisticScreen(cardApiService: CardApiService, flashcardId: Int) {
+    val statisticViewModel: StatisticViewModel = remember {
+        StatisticViewModel(cardApiService, flashcardId)
+    }
+    val statisticData by statisticViewModel.statisticData.observeAsState(mapOf())
+
+    Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
@@ -60,35 +66,27 @@ fun StatisticScreen() {
         ) {
             item { StaticText() }
 
+            item { StatisticDetails("Tổng số từ học được", statisticData?.get("totalCard") ?: 0) }
+            item { StatisticDetails("Fail Rating", statisticData?.get("failCard") ?: 0) }
+            item { StatisticDetails("Hard Rating", statisticData?.get("hardCard") ?: 0) }
+            item { StatisticDetails("Good Rating", statisticData?.get("goodCard") ?: 0) }
+            item { StatisticDetails("Easy Rating", statisticData?.get("easyCard") ?: 0) }
 
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    StatisticSummaryItem("Reviews Today", "2/10", Modifier.weight(1f))
-                    StatisticSummaryItem("Streak (Days)", "32", Modifier.weight(1f))
-                }
-            }
-
-            item { StatisticDetails("Cards Studied", 150) }
-            item { StatisticDetails("Hours Studied", 12) }
-            item { StatisticDetails("Average Score", 85) }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(text = "Daily Statistics", style = MaterialTheme.typography.titleLarge)
                 BarChart(
                     data = listOf(
-                        BarChartData("Mon", 10),
-                        BarChartData("Tue", 20),
-                        BarChartData("Wed", 30),
-                        BarChartData("Thu", 40),
-                        BarChartData("Fri", 50),
-                        BarChartData("Sat", 35),
-                        BarChartData("Sun", 25)
+                        BarChartData("Fail", statisticData?.get("failCard") ?: 0),
+                        BarChartData("Hard", statisticData?.get("hardCard") ?: 0),
+                        BarChartData("Good", statisticData?.get("goodCard") ?: 0),
+                        BarChartData("Easy", statisticData?.get("easyCard") ?: 0),
                     ),
-                    maxValue = 50, barColor = Color.Black
+                    maxValue = statisticData?.values?.maxOrNull() ?: 1, barColor = Color.Black
                 )
             }
         }
     }
 }
+
+

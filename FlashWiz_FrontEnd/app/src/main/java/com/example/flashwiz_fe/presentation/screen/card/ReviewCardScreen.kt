@@ -25,17 +25,22 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.state.EnumReviewCard
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId: Int) {
+fun ReviewCardScreen(
+    cardViewModel: CardViewModel = hiltViewModel(),
+    flashcardId: Int,
+    navController: NavController
+) {
     val cards by cardViewModel.cardsLiveData.observeAsState()
     val randomCard = cards?.firstOrNull()
 
     val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
     val cardState: LiveData<EnumReviewCard> = _cardState
-    // Lưu giá trị của flashcard ID ban đầu
     val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
 
 
@@ -52,17 +57,29 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FlippingCard(randomCard = randomCard, cardViewModel = cardViewModel)
+            FlippingCard(
+                randomCard = randomCard,
+                cardViewModel = cardViewModel,
+                navController = navController,
+                flashcardId = flashcardId
+            )
         }
     }
 
 }
 
 @Composable
-fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
+fun FlippingCard(
+    randomCard: CardDetail?,
+    cardViewModel: CardViewModel,
+    navController: NavController,
+    flashcardId: Int
+) {
     var rotated by remember { mutableStateOf(false) }
     var showEvaluationBar by remember { mutableStateOf(false) }
     var showBackContent by remember { mutableStateOf(false) }
+    val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
+
 
     val rotate by animateFloatAsState(
         targetValue = if (rotated) 180f else 0f,
@@ -135,9 +152,14 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
         EvaluationBar(onEvaluationClick = { rating ->
             cardViewModel.setCurrentRating(rating)
             randomCard?.let { card ->
-//                cardViewModel.onRatingSubmitted(rating) // Gọi lại hàm onRatingSubmitted sau khi người dùng đánh giá
                 cardViewModel.removeCurrentCardFromRatingList()
                 cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
+//                if (cardViewModel.stopRandomCard.value) {
+////                    cardViewModel.setStopRandomCard(false)
+//                    cardViewModel.setFlashcardId(initialFlashcardId)
+//                    navController.navigate("${ScreenRoutes.StatisticScreen.route}/$initialFlashcardId") {
+//                    }
+//                }
                 cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
                 rotated = false // Reset trạng thái của card khi random card mới
                 showEvaluationBar = false // Ẩn evaluation bar khi random card mới
@@ -177,7 +199,6 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("fail")
-//            cardViewModel.onRatingSubmitted("fail")
         }
         EvaluationButton(
             text = "Hard",
@@ -185,7 +206,6 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("hard")
-//            cardViewModel.onRatingSubmitted("hard")
         }
         EvaluationButton(
             text = "Good",
@@ -193,7 +213,6 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("good")
-//            cardViewModel.onRatingSubmitted("good")
         }
         EvaluationButton(
             text = "Easy",
@@ -201,7 +220,6 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("easy")
-//            cardViewModel.onRatingSubmitted("easy")
         }
     }
 

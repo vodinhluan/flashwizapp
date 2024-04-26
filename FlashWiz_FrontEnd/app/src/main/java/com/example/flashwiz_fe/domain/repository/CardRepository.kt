@@ -10,5 +10,6 @@ interface CardRepository {
     suspend fun deleteCard(id: Int): List<CardDetail>
     suspend fun getAllCards(): List<Card>
     suspend fun updateCardRating(cardId: Int, newRating: String): Response<Card>
+    suspend fun getCardStatistics(flashcardId: Int): Response<Map<String, Int>>
 
 }
