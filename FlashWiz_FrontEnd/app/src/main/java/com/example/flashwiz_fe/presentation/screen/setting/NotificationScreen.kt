@@ -47,8 +47,6 @@ fun Notification(notificationViewModel: NotificationViewModel = hiltViewModel())
             subText = "Customize notifications",
             onClick = notificationViewModel::showSimpleNotification
         )
-
-//        NotificationTimeSetting(notificationViewModel)
     }
 }
 
@@ -110,4 +108,3 @@ fun NotificationItem(icon: Int, mainText: String, subText: String, onClick: () -
         }
     }
 }
-

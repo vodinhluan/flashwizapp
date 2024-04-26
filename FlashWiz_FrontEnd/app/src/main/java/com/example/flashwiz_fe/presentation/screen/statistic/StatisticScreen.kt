@@ -33,7 +33,7 @@ fun StaticText(isDarkModeEnabled: Boolean) {
     Text(
         text = "Static",
         fontFamily = Poppins,
-        color = androidx.compose.material.MaterialTheme.colors.onSurface,
+        color = textColor,
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +46,6 @@ fun StaticText(isDarkModeEnabled: Boolean) {
 
 @Composable
 fun StatisticScreen(themeViewModel: ThemeViewModel = viewModel()) {
-    // Lấy giá trị darkThemeEnabled từ ViewModel
     val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
 
     Column(
