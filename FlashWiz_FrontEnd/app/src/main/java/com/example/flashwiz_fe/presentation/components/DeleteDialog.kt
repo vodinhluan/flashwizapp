@@ -55,7 +55,6 @@ fun DeleteDialog(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-
                 TextButton(
                     onClick = { onDismiss() },
                     modifier = Modifier.padding(8.dp).weight(1f) // Sử dụng weight để cân đối kích thước

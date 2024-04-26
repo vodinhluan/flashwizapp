@@ -139,12 +139,11 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
                 CustomButtonComponent(
                     text = "Save This Card",
                     onClick = {
-
+                        onNavigateBack()
                         val card = Card(
                             front = cardState.value.frontText.trim(),
                             back = cardState.value.backText.trim()
                         )
-//                        cardViewModel.saveCard(card) Phu Le da Comment
 
 
                         Log.d("AddCardScreen", "Flashcard ID: $initialFlashcardId")
@@ -167,8 +166,8 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
             }
             LaunchedEffect(saveSuccess) {
                 if (saveSuccess) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     withContext(Dispatchers.Main) {

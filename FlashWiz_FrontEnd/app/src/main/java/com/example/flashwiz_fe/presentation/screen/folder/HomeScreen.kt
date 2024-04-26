@@ -87,11 +87,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                         )
 
                         AddItemComponent(navController = navController, "Folder", null, null,userId)
-//                        AddItemComponent(navController = navController, "Folder", null) #Phu Le Comment
-
-
-//                        AddItemComponent(navController = navController, "Folder", null, null)  #Phu Le Comment
-
                     } else {
                         isFolderSelected = true
                         Row(
@@ -122,22 +117,12 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                             )
                             selectedFolder?.let { folder ->
 
-                                AddItemComponent(
-                                    navController = navController,
-                                    "Flashcard",
-                                    folderId = folder.id,
-                                    null,null
-                                )
-//       #Phu Le Comment               AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
-
-
-//        #Phu Le Comment                        AddItemComponent(
-//                                    navController = navController,
-//                                    "Flashcard",
-//                                    folderId = folder.id,
-//                                    null
-//                                )
-
+                                    AddItemComponent(
+                                        navController = navController,
+                                        "Flashcard",
+                                        folderId = folder.id,
+                                        null,null
+                                    )
                             }
                         }
                     }

@@ -41,6 +41,7 @@ import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
+import com.example.flashwiz_fe.presentation.state.EnumScreenState
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
@@ -88,7 +89,7 @@ fun FolderDetailScreen(
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
                                 showHeader.value =
-                                    false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
+                                    false
                             }
                         },
                         onDeleteClick = { flashcardId ->
@@ -120,7 +121,6 @@ fun FolderDetailScreen(
                 }
             }
         } else {
-            // Header của card
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -135,7 +135,7 @@ fun FolderDetailScreen(
                         .clickable {
                             selectedFlashcard = null
                             showHeader.value =
-                                true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
+                                true
                         }
                         .padding(16.dp)
                 )
@@ -157,18 +157,6 @@ fun FolderDetailScreen(
                         flashcardId = flashcard.id,null
                     )
                 }
-
-//        #Phu Le Comment    AddItemComponent(navController = navController,"Card",null)
-//                selectedFlashcard?.let { flashcard ->
-//                    AddItemComponent(
-//                        navController = navController,
-//                        "Card",
-//                        null,
-//                        flashcardId = flashcard.id
-//                    )
-//                }
-
-
             }
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(
