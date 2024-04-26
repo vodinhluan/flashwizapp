@@ -7,7 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
@@ -41,7 +44,7 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
 
     LaunchedEffect(Unit) {
         cardViewModel.setInitialFlashcardId(initialFlashcardId)
-        cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+        cardViewModel.getRandomCardsByFlashcardId(flashcardId) // chạy lần 1
     }
 
     Surface(
@@ -95,6 +98,7 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
             val frontText = randomCard?.front ?: "Front text not available"
             val backText = randomCard?.back ?: "Back text not available"
             if (rotate < 90f) {
+
                 Text(
                     text = randomCard?.id?.toString() ?: "",
                     modifier = Modifier
@@ -135,12 +139,14 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
         EvaluationBar(onEvaluationClick = { rating ->
             cardViewModel.setCurrentRating(rating)
             randomCard?.let { card ->
+//                cardViewModel.onRatingSubmitted(rating) // Gọi lại hàm onRatingSubmitted sau khi người dùng đánh giá
+                cardViewModel.removeCurrentCardFromRatingList()
                 cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
-                cardViewModel.updateCardList(rating, card)
                 cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
                 rotated = false // Reset trạng thái của card khi random card mới
                 showEvaluationBar = false // Ẩn evaluation bar khi random card mới
                 showBackContent = false // Ẩn mặt sau của thẻ khi random card mới
+
             }
         }, cardViewModel = cardViewModel, flashcardId = flashcardId)
     }
@@ -175,7 +181,7 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("fail")
-            cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+//            cardViewModel.onRatingSubmitted("fail")
         }
         EvaluationButton(
             text = "Hard",
@@ -183,7 +189,7 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("hard")
-            cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+//            cardViewModel.onRatingSubmitted("hard")
         }
         EvaluationButton(
             text = "Good",
@@ -191,7 +197,7 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("good")
-            cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+//            cardViewModel.onRatingSubmitted("good")
         }
         EvaluationButton(
             text = "Easy",
@@ -199,9 +205,10 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("easy")
-            cardViewModel.getRandomCardsByFlashcardId(flashcardId)
+//            cardViewModel.onRatingSubmitted("easy")
         }
     }
+
 }
 
 @Composable

@@ -32,26 +32,11 @@ public class FolderController {
         List<Folder> folder = folderDAO.getAllFolder();
         return new ResponseEntity<>(folder, HttpStatus.OK);
     }
-//	@GetMapping("/folder/get-all")
-//	public ResponseEntity<?> getAllFoldersForCurrentUser() {
-//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	    Object principal = authentication.getPrincipal();
-//	    Integer userId = null;
-//
-//	    if (principal instanceof UserDetails) {
-//	        String userEmail = ((UserDetails) principal).getUsername();
-//	        User user = userDAO.getUserByEmail(userEmail);
-//	        userId = user.getId();
-//	    }
-//
-//	    if (userId != null) {
-//	        List<Folder> folders = folderDAO.getAllFoldersForUser(userId);
-//	        return new ResponseEntity<>(folders, HttpStatus.OK);
-//	    } else {
-//	        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-//	    }
-//	}
-
+    @GetMapping("/folder/get/{userId}")
+    public ResponseEntity<List<Folder>> getFolderByUserId(@PathVariable("userId") Integer userId) {
+        List<Folder> folders = folderDAO.getFolderByUserId(userId);
+        return ResponseEntity.ok(folders);
+    }
 
     @PostMapping("/folder/save")
     public ResponseEntity<Folder> saveFolder(@RequestBody Folder folder, @RequestParam("userId") Integer userId) {
@@ -69,8 +54,6 @@ public class FolderController {
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }
 
-
-   
 }
 
 

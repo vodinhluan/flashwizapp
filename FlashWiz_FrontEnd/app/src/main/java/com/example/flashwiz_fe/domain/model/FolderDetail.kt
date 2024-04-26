@@ -4,5 +4,5 @@ data class FolderDetail(
     val id: Int,
     val name: String,
     val descriptions: String,
-    val userId: Int
+//    val userId: Int
 )

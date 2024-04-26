@@ -1,6 +1,11 @@
 package com.example.flashwiz_fe.presentation.components.login
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +19,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.flashwiz_fe.ui.theme.blue
 import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun BubbleAnimation(
@@ -114,10 +119,10 @@ fun BubbleAnimation(
 @Composable
 fun BubbleAnimationPreview() {
     BubbleAnimation(
-        bubbleColor1 = blue,
+        bubbleColor1 = white,
         bubbleColor2 = brightBlue,
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(200.dp)
     )
 }

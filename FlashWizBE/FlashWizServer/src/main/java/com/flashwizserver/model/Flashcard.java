@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,7 +42,7 @@ public class Flashcard {
 	private Folder folder;
 
 	
-	@OneToMany(mappedBy = "flashcard") 
+	@OneToMany(mappedBy = "flashcard",cascade = CascadeType.ALL, orphanRemoval = true) 
     private List<Card> Card = new ArrayList<>(); 
 	
 	public List<Card> getCard() {

@@ -4,6 +4,6 @@ data class CardDetail(
     val id: Int,
     val front: String,
     val back: String,
-    val rating: String
+    var rating: String
 )
 

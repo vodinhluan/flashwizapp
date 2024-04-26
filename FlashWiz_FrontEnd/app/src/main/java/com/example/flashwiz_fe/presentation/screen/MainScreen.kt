@@ -26,18 +26,18 @@ import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 
+
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
+
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
+import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.state.BottomNavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    navController: NavHostController,
-
-) {
+fun MainScreen(navController: NavHostController, userId: Int?) {
 
     val items = listOf(
         BottomNavigationItem(
@@ -75,6 +75,7 @@ fun MainScreen(
         Scaffold(
             bottomBar = {
                 BottomNavigationBar(
+
                     items = items,
                     selectedItemIndex = selectedItemIndex,
                     onItemSelected = { index -> selectedItemIndex = index }
@@ -85,12 +86,16 @@ fun MainScreen(
                 modifier = Modifier.padding(innerPadding)
             ) {
                 when (selectedItemIndex) {
-                    0 ->  HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+                    0 -> if (userId != null) {
+                        HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService,userId = userId)
+                    }
                     1 -> StudyGroupScreen(navController = navController)
                     2 -> StatisticScreen()
                     3 -> AccountScreen(navController = navController)
 
-                    else -> HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService)
+                    else -> if (userId != null) {
+                        HomeScreen(navController = navController, apiService = RetrofitInstance.folderApiService,userId = userId)
+                    }
                 }
             }
         }

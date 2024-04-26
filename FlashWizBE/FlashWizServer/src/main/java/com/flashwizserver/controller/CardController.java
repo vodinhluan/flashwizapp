@@ -96,4 +96,21 @@ public class CardController {
 		card = cardService.updateCard(id, card);
 		return ResponseEntity.ok().body(card);
 	}
+	@PutMapping("/card/{id}/update")
+	public ResponseEntity<Card> updateCard(@PathVariable(name = "id") Integer id, @RequestBody Card updatedCard) {
+	    Optional<Card> cardOptional = cardService.getCardById(id);
+	    if (!cardOptional.isPresent()) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+
+	    Card existingCard = cardOptional.get();
+	    existingCard.setFront(updatedCard.getFront());
+	    existingCard.setBack(updatedCard.getBack());
+
+	    Card savedCard = cardService.updateCard(id, existingCard);
+	    return ResponseEntity.ok().body(savedCard);
+	}
+	
+
+
 }

@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +53,7 @@ fun TextEntryModule(
         Text(
             text = description,
             color = textColor,
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = FontFamily.Default,
             style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
         )
         TextField(
@@ -97,7 +96,9 @@ fun TextEntryModule(
             },
             placeholder = {
                 Text(
+
                     hint,
+                    fontFamily = FontFamily.Default,
                     style = MaterialTheme.typography.body2
                 )
             },
@@ -115,16 +116,15 @@ fun TextEntryModulePreview() {
         description = "Email address",
         modifier = Modifier
             .fillMaxWidth()
-
             .padding(10.dp, 0.dp, 10.dp, 5.dp),
-        hint = "KApps@gmail.com",
+        hint = "",
         leadingIcon = Icons.Default.Email,
-        textValue = "TextInput",
+        textValue = "luantranphu901@gmail.com",
         textColor = Color.Black,
         cursorColor = brightBlue,
         onValueChanged = {},
         trailingIcon = Icons.Filled.RemoveRedEye,
         onTrailingIconClick = {},
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = VisualTransformation.None
     )
 }

@@ -23,18 +23,9 @@ class UserPreferences @Inject constructor(
         val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
         val KEY_USER_EMAIL = stringPreferencesKey("user_email")
         val KEY_IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
+        val KEY_USER_ID = stringPreferencesKey("user_id")
     }
 
-    //    val userPreferencesFlow: Flow<Preferences> = myPreferencesDataStore.data
-//        .catch { exception ->
-//            if (exception is IOException) {
-//                emit(emptyPreferences())
-//            } else {
-//                throw exception
-//            }
-//        }. map { preferences ->
-//            val
-//        }
     suspend fun saveUserToken(token: String) {
         myPreferencesDataStore.edit { preferences ->
             preferences[PreferencesKey.KEY_ACCESS_TOKEN] = token
@@ -46,6 +37,12 @@ class UserPreferences @Inject constructor(
             preferences[PreferencesKey.KEY_USER_EMAIL] = email
         }
     }
+    suspend fun saveUserId(userId: Int) {
+        myPreferencesDataStore.edit { preferences ->
+            preferences[PreferencesKey.KEY_USER_ID] = userId.toString()
+        }
+    }
+
 
     suspend fun saveIsLoggedIn(isLoggedIn: Boolean) {
         myPreferencesDataStore.edit { preferences ->
@@ -68,11 +65,17 @@ class UserPreferences @Inject constructor(
         val preferences = myPreferencesDataStore.data.first()
         return preferences[PreferencesKey.KEY_IS_LOGGED_IN] ?: false
     }
+    suspend fun getUserId(): String? {
+        val preferences = myPreferencesDataStore.data.first()
+        return preferences[PreferencesKey.KEY_USER_ID]
+    }
+
 
     suspend fun clearData() {
         myPreferencesDataStore.edit { preferences ->
             preferences.clear()
         }
     }
+
 
 }

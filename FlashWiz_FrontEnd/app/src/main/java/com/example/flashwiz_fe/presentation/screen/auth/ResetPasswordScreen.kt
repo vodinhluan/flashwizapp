@@ -115,8 +115,8 @@ fun ResetPasswordScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
