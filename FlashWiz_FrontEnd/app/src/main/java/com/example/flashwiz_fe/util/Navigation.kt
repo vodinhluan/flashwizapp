@@ -3,6 +3,7 @@ package com.example.flashwiz_fe.util
 import AddFolderScreen
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +27,6 @@ import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-import androidx.compose.runtime.LaunchedEffect as LaunchedEffect
 
 @Composable
 fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
@@ -148,7 +148,6 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
         // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
-
             AddFlashcardScreen(
                 onNavigateBack = { folderId ->
                     // Quay lại màn hình trước đó với thông tin về folderId

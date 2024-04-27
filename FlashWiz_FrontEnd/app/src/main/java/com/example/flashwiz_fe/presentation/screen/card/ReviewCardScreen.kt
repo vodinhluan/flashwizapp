@@ -5,31 +5,43 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.state.EnumReviewCard
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
 fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId: Int) {
@@ -177,6 +189,7 @@ fun EvaluationBar(
     ) {
         EvaluationButton(
             text = "Fail",
+            emoji = "❎",
             color = Color.Red,
             weight = 6f
         ) {
@@ -185,6 +198,7 @@ fun EvaluationBar(
         }
         EvaluationButton(
             text = "Hard",
+            emoji = "\uD83D\uDCAA",
             color = Color.Yellow,
             weight = 6f
         ) {
@@ -193,6 +207,7 @@ fun EvaluationBar(
         }
         EvaluationButton(
             text = "Good",
+            emoji = "\uD83D\uDC4D",
             color = Color.Cyan,
             weight = 6f
         ) {
@@ -201,6 +216,7 @@ fun EvaluationBar(
         }
         EvaluationButton(
             text = "Easy",
+            emoji = "\uD83D\uDE0A",
             color = Color.Green,
             weight = 6f
         ) {
@@ -212,7 +228,7 @@ fun EvaluationBar(
 }
 
 @Composable
-fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> Unit) {
+fun EvaluationButton(text: String,emoji: String, color: Color, weight: Float, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .width(80.dp)
@@ -223,7 +239,23 @@ fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> U
             .padding(horizontal = 3.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = text, color = Color.Black)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = text)
+            Spacer(modifier = Modifier.width(4.dp)) // Add space between text and emoji
+            Text(text = emoji)
+        }
     }
 }
-
+@Preview
+@Composable
+fun EvaluationButtonPreview() {
+    Column {
+        EvaluationButton(
+            text = "Good",
+            emoji = "\u274E",
+            color = Color.Cyan,
+            weight = 6f,
+            onClick = {}
+        )
+    }
+}

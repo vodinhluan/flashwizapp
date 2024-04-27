@@ -34,7 +34,6 @@ import com.example.flashwiz_fe.ui.theme.Shapes
 @Composable
 fun ProfileCardUI() {
     var showDetails by remember { mutableStateOf(false) }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
