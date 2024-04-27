@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.domain.repository.AuthRepository
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
@@ -36,6 +37,7 @@ import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
 import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
@@ -48,10 +50,21 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
 
     isDarkModeEnabled?.let {
         AppTheme(it) {
+            NavDestinationHelper(
+                shouldNavigate = {
+                    logoutViewModel.logoutState.isSuccessfullyLoggedOut
+                },
+                destination = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+
             Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
                 AccountText()
                 if (userId != null) {
-                    ProfileCardUI(userId)
+                    ProfileCardUI()
                 }
                 DarkModeSwitch(isDarkMode) { darkMode ->
                     viewModel.toggleTheme()
@@ -62,6 +75,7 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
                 LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
             }
         }
+
     }
 }
 

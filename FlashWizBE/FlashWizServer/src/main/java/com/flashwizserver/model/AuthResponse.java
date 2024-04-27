@@ -2,16 +2,18 @@ package com.flashwizserver.model;
 
 public class AuthResponse {
 	private Integer id;
-
+	private String name;
 	private String email;
 	private String accessToken;
+
 	
 	
 	public AuthResponse() {}
 	
-	public AuthResponse(Integer id, String email, String accessToken) {
+	public AuthResponse(Integer id,String name, String email, String accessToken) {
 		super();
 		this.id=id;
+		this.name = name;
 		this.email = email;
 		this.accessToken = accessToken;
 	}
@@ -34,6 +36,15 @@ public class AuthResponse {
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 	
 }

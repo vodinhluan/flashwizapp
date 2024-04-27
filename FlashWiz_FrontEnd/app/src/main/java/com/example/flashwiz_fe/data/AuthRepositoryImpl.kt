@@ -29,6 +29,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val accessToken = tokenResponseBody.accessToken
                     val userEmail = tokenResponseBody.email
                     val userId = tokenResponseBody.id
+                    val userName = tokenResponseBody.name
 
                     println("Lưu thông tin email và token")
                 // Lưu access token vào DataStore
@@ -37,10 +38,12 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                         userPreferences.saveUserEmail(userEmail)
                         userPreferences.saveIsLoggedIn(true)
                         userPreferences.saveUserId(userId)
+                        userPreferences.saveUserName(userName)
                         println("Lưu thông tin token,email vào dataStore")
                         println("Thông tin Access Token: ${userPreferences.getUserToken()}")
                         println("Thông tin Email: ${userPreferences.getUserEmail()}")
                         println("Thông tin UserId: ${userPreferences.getUserId()}")
+                        println("Thông tin Name: ${userPreferences.getUserName()}")
                         true
                     } else {
                         println("Lỗi: Thiếu dữ liệu token hoặc email")
