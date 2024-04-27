@@ -1,5 +1,7 @@
 @file:Suppress("NAME_SHADOWING")
+
 package com.example.flashwiz_fe.util
+
 import AddFolderScreen
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -72,34 +74,34 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                 }
             )
         }
-        composable(ScreenRoutes.ForgotPasswordScreen.route){
+        composable(ScreenRoutes.ForgotPasswordScreen.route) {
             ForgotPasswordScreen(
                 onForgotPasswordSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.InsertOTPScreen.route){
+                    navController.navigate(ScreenRoutes.InsertOTPScreen.route) {
                         popUpTo(0)
                     }
                 },
                 onNavigateToLoginScreen = {
-                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                    navController.navigate(ScreenRoutes.LoginScreen.route) {
                         popUpTo(0)
                     }
                 }
 
             )
         }
-        composable(ScreenRoutes.InsertOTPScreen.route){
+        composable(ScreenRoutes.InsertOTPScreen.route) {
             InsertOTPScreen(
                 onVerifiedOTPSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route){
+                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route) {
                         popUpTo(0)
                     }
                 }
             )
         }
-        composable(ScreenRoutes.ResetPasswordScreen.route){
+        composable(ScreenRoutes.ResetPasswordScreen.route) {
             ResetPasswordScreen(
                 onChangePasswordSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                    navController.navigate(ScreenRoutes.LoginScreen.route) {
                         popUpTo(0)
                     }
                 }
@@ -126,12 +128,12 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             val userIdInt = if (userId.matches("\\d+".toRegex())) {
                 userId.toInt()
             } else {
-               0
+                0
             }
             MainScreen(navController, userIdInt)
         }
 
-        composable(ScreenRoutes.AddFolderScreen.route+ "/{userId}") { backStackEntry ->
+        composable(ScreenRoutes.AddFolderScreen.route + "/{userId}") { backStackEntry ->
             navController.addOnDestinationChangedListener { controller, destination, arguments ->
                 Log.d("Navigation", "Navigated to ${destination.route}")
             }
@@ -145,19 +147,17 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             )
         }
 
-        // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
-
             AddFlashcardScreen(
-                onNavigateBack = { folderId ->
-                    // Quay lại màn hình trước đó với thông tin về folderId
+                onNavigateBack = {
                     navController.popBackStack()
                 },
                 initialFolderId = folderId,
                 navController = navController
             )
         }
+
 
 
         composable(
@@ -170,20 +170,23 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
         }
 
 
-        composable(ScreenRoutes.AddCardScreen.route+"/{flashcardId}") { backStackEntry ->
+        composable(ScreenRoutes.AddCardScreen.route + "/{flashcardId}") { backStackEntry ->
             val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
 
             val cardViewModel: CardViewModel = remember {
-                val cardRepository: CardRepository = CardRepositoryImpl(RetrofitInstance.cardApiService)
+                val cardRepository: CardRepository =
+                    CardRepositoryImpl(RetrofitInstance.cardApiService)
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            AddCardScreen( onNavigateBack = {
-                navController.navigateUp()
-            },
+            AddCardScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
                 cardViewModel = cardViewModel,
                 navController = navController,
-                initialFlashcardId = flashcardId)
+                initialFlashcardId = flashcardId
+            )
         }
 
 
@@ -193,7 +196,7 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
 //            ReviewCardScreen() Phu Le comment
         }
 
-        composable(ScreenRoutes.NotificationScreen.route){
+        composable(ScreenRoutes.NotificationScreen.route) {
         }
 
     }

@@ -4,11 +4,7 @@
 content_assist_completion_replacement_background=200,200,0
 content_assist_completion_replacement_foreground=200,0,0
 content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.Enum"><rhs name\="org.springframework.security.config.http.SessionCreationPolicy"/><rhs name\="io.jsonwebtoken.SignatureAlgorithm"/></lhs><lhs name\="java.lang.constant.Constable"><rhs name\="org.springframework.security.config.http.SessionCreationPolicy"/><rhs name\="io.jsonwebtoken.SignatureAlgorithm"/></lhs></history>
-<<<<<<< HEAD
 content_assist_number_of_computers=17
-=======
-content_assist_number_of_computers=14
->>>>>>> d66267cd24557b435a00d2e73381e3cf79a2a86d
 content_assist_parameters_background=52,57,61
 content_assist_parameters_foreground=238,238,238
 content_assist_proposals_background=52,57,61

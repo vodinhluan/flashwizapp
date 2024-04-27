@@ -1,13 +1,7 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
-<<<<<<< HEAD
->>>>>>>=origin/dev
+>>>>>>>=d66267cd24557b435a00d2e73381e3cf79a2a86d
 eclipse.preferences.version=1
 platformState=1688716291630
-=======
->>>>>>>=f434699c748585da4564ad3d2588fdb4d987cff6
-eclipse.preferences.version=1
-platformState=1709970946593
->>>>>>> d66267cd24557b435a00d2e73381e3cf79a2a86d
 quickStart=false
 tipsAndTricks=true

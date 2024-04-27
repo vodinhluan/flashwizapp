@@ -65,7 +65,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
     var isFolderSelected by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var folderIdToDelete by remember { mutableStateOf<Int?>(null) }
-    var headerText by remember { mutableStateOf("Your Folders") }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -141,7 +140,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                     fontWeight = FontWeight.SemiBold
                                 )
                                 selectedFolder?.let { folder ->
-
                                     AddItemComponent(
                                         navController = navController,
                                         "Flashcard",

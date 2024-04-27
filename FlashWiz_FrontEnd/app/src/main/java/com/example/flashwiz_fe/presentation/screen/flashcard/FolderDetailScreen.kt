@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,7 @@ import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.state.EnumScreenState
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun FolderDetailScreen(
@@ -78,7 +80,7 @@ fun FolderDetailScreen(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Button back và các phần khác giữ nguyên
+
             }
         }
 
@@ -95,7 +97,7 @@ fun FolderDetailScreen(
                             }
                         },
                         onDeleteClick = { flashcardId ->
-                            flashcardIdToDelete=flashcardId
+                            flashcardIdToDelete = flashcardId
                             showDeleteDialog = true
                         }
                     )
@@ -107,7 +109,7 @@ fun FolderDetailScreen(
                     DeleteDialog(
                         IdtoDelete = it,
                         onDismiss = { showDeleteDialog = false },
-                        itemType="flashcard",
+                        itemType = "flashcard",
                         onChangeSuccess = { flashcardId ->
                             viewModel.deleteFlashcardAndUpdateList(
                                 flashcardId = flashcardId,
@@ -136,44 +138,43 @@ fun FolderDetailScreen(
                         )
                     )
                     .padding(0.dp, 0.dp, 0.dp, 20.dp)
-            ){
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .clickable {
-                            selectedFlashcard = null
-                            showHeader.value =
-                                true
-                        }
-                        .padding(16.dp)
-                )
-                Text(
-                    text = "Card",
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.padding(16.dp)
-                )
-                selectedFlashcard?.let { flashcard ->
-                    AddItemComponent(
-                        navController = navController,
-                        "Card",
-                        null,
-                        flashcardId = flashcard.id,null
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .clickable {
+                                selectedFlashcard = null
+                                showHeader.value =
+                                    true
+                            }
+                            .padding(16.dp)
                     )
+                    Text(
+                        text = "Card",
+                        style = MaterialTheme.typography.h4,
+                        fontFamily = FontFamily.Cursive,
+                        modifier = Modifier.padding(16.dp),
+                        color = white,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    selectedFlashcard?.let { flashcard ->
+                        AddItemComponent(
+                            navController = navController,
+                            "Card",
+                            null,
+                            flashcardId = flashcard.id, null
+                        )
+                    }
                 }
-            }}
+            }
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(
                     flashcardId = flashcard.id,
