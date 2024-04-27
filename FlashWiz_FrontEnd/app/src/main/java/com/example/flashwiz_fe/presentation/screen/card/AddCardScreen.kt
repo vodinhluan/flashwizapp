@@ -2,15 +2,28 @@ package com.example.flashwiz_fe.presentation.screen.card
 
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +45,9 @@ import kotlinx.coroutines.withContext
 
 
 @Composable
-fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostController,initialFlashcardId: Int?) {
+fun AddCardScreen(    onNavigateBack: () -> Unit,
+//                      onNavigateUp: () ->Unit,
+                      cardViewModel: CardViewModel,  navController: NavHostController,initialFlashcardId: Int?) {
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
@@ -55,8 +70,16 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                     .background(Color.Cyan),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .clickable {
+                            onNavigateBack()                }
+                        .padding(16.dp)
+                )
                 Text(
-                    text = "CARD INFO $initialFlashcardId",
+                    text = "CARD INFO",
                     style = TextStyle(
                         color = Color.Black,
                         fontSize = 24.sp,
@@ -116,6 +139,12 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
                 CustomButtonComponent(
                     text = "Save This Card",
                     onClick = {
+                        onNavigateBack()
+                        val card = Card(
+                            front = cardState.value.frontText.trim(),
+                            back = cardState.value.backText.trim()
+                        )
+
 
                         Log.d("AddCardScreen", "Flashcard ID: $initialFlashcardId")
                         if (initialFlashcardId != null) {
@@ -137,8 +166,8 @@ fun AddCardScreen(cardViewModel: CardViewModel,  navController: NavHostControlle
             }
             LaunchedEffect(saveSuccess) {
                 if (saveSuccess) {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     withContext(Dispatchers.Main) {

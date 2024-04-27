@@ -19,7 +19,6 @@ class FlashcardViewModel: ViewModel() {
                 if (response.equals("ok")) {
                     onResult(true)
                 } else {
-                    // Xử lý trường hợp không thành công
                     onResult(false)
                 }
             } catch (e: Exception) {

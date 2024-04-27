@@ -1,6 +1,8 @@
 package com.example.flashwiz_fe.presentation.components.group
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
+
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,7 +55,11 @@ fun AddItemNewGroup(navController: NavController,
             ){
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
+
+//                        "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
+
                         "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
+
 
 
                     }

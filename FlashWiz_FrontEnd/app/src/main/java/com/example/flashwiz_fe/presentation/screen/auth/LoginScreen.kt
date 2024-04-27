@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -19,11 +20,22 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,6 +43,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
@@ -42,20 +55,31 @@ import com.example.flashwiz_fe.presentation.viewmodel.LoginViewModel
 import com.example.flashwiz_fe.ui.theme.blue
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.darkGray
-import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.ui.theme.whiteGray
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
 fun LoginScreen(
-    onLoginSuccessNavigation: () -> Unit,
+
+    onLoginSuccessNavigation: (userId: String?) -> Unit,
     onNavigateToRegisterScreen: () -> Unit,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    userPreferences: UserPreferences = UserPreferences(LocalContext.current),
+    onNavigateToForgotPasswordScreen: () -> Unit,
+
 ) {
+
+    val userIdState = remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(loginViewModel.userId) {
+        userIdState.value = loginViewModel.userId
+    }
+
+
     NavDestinationHelper(shouldNavigate = {
         loginViewModel.loginState.isSuccessfullyLoggedIn
     }, destination = {
-        onLoginSuccessNavigation()
+        onLoginSuccessNavigation(userIdState.value)
     })
 
     Box(
@@ -79,7 +103,9 @@ fun LoginScreen(
                 fontWeight = FontWeight.SemiBold
             )
         }
-        LoginContainer(emailValue = {
+        LoginContainer(
+            userId = userIdState.value.toString(),
+            emailValue = {
             loginViewModel.loginState.emailInput
         },
             passwordValue = {
@@ -101,6 +127,7 @@ fun LoginScreen(
             isLoading = {
                 loginViewModel.loginState.isLoading
             },
+            onNavigateToForgotPasswordScreen = onNavigateToForgotPasswordScreen,
             modifier = Modifier
                 .padding(top = 200.dp)
                 .fillMaxWidth(0.9f)
@@ -110,11 +137,11 @@ fun LoginScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(200.dp)
                 .align(Alignment.BottomCenter)
         )
         Row(
@@ -125,7 +152,6 @@ fun LoginScreen(
         ) {
             Text(
                 "Bạn chưa có tài khoản ?", style = MaterialTheme.typography.body2
-
             )
             Text(
                 "Đăng ký",
@@ -145,6 +171,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginContainer(
+    userId: String?,
     emailValue: () -> String,
     passwordValue: () -> String,
     buttonEnabled: () -> Boolean,
@@ -155,25 +182,23 @@ fun LoginContainer(
     onTrailingPasswordIconClick: () -> Unit,
     errorHint: () -> String?,
     isLoading: () -> Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier ,
+    onNavigateToForgotPasswordScreen:() -> Unit,
 ) {
-    val context = LocalContext.current
-    val dataStore = UserPreferences(context)
-    val scope = rememberCoroutineScope()
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Đăng nhập",
-            color = gray,
-            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+            color = blue,
+            style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.SemiBold)
         )
         TextEntryModule(
             modifier = Modifier.fillMaxWidth(),
             description = "Email address",
-            hint = "example@gmail.com",
+            hint = "",
             textValue = emailValue(),
             textColor = darkGray,
             cursorColor = brightBlue,
@@ -182,26 +207,66 @@ fun LoginContainer(
             onTrailingIconClick = null,
             leadingIcon = Icons.Default.Email
         )
-        TextEntryModule(
-            modifier = Modifier.fillMaxWidth(),
-            description = "Password",
-            hint = "Enter password",
-            textValue = passwordValue(),
-            textColor = darkGray,
-            cursorColor = brightBlue,
-            onValueChanged = onPasswordChanged,
-            trailingIcon = Icons.Default.RemoveRedEye,
-            onTrailingIconClick = {
-                onTrailingPasswordIconClick()
-            },
-            leadingIcon = Icons.Default.VpnKey,
-            visualTransformation = if (isPasswordShown()) {
-                VisualTransformation.None
-            } else PasswordVisualTransformation(),
-            keyboardType = KeyboardType.Password
-        )
+        Column() {
+            TextEntryModule(
+                modifier = Modifier.fillMaxWidth(),
+                description = "Password",
+                hint = "",
+                textValue = passwordValue(),
+                textColor = darkGray,
+                cursorColor = brightBlue,
+                onValueChanged = onPasswordChanged,
+                trailingIcon = Icons.Default.RemoveRedEye,
+                onTrailingIconClick = {
+                    onTrailingPasswordIconClick()
+                },
+                leadingIcon = Icons.Default.VpnKey,
+                visualTransformation = if (isPasswordShown()) {
+                    VisualTransformation.None
+                } else PasswordVisualTransformation(),
+                keyboardType = KeyboardType.Password
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    var rememberMe by remember { mutableStateOf(false) }
+
+                    Checkbox(
+                        checked = rememberMe,
+                        onCheckedChange = { isChecked ->
+                            rememberMe = isChecked
+                        },
+
+                        )
+                    Text(
+                        "Remember me",
+                        modifier = Modifier,
+                        color = darkGray,
+                        fontWeight = FontWeight.Normal,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                Text(
+                    "Forgot your password?",
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .clickable {
+                            onNavigateToForgotPasswordScreen()
+                        },
+                    color = blue,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+        }
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -216,8 +281,7 @@ fun LoginContainer(
                     .shadow(5.dp, RoundedCornerShape(25.dp)),
                 isLoading = isLoading(),
                 onButtonClick = onLoginButtonClick,
-
-                )
+            )
             Text(
                 errorHint() ?: "", style = MaterialTheme.typography.body2
 
@@ -227,3 +291,4 @@ fun LoginContainer(
 
     }
 }
+

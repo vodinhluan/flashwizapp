@@ -10,8 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 @Composable
-fun BackIconComponent(onBackClick: () -> Unit, isFolderSelected: Boolean) {
-
+fun BackIconComponent(onBackClick: () -> Unit) {
     Icon(
         imageVector = Icons.Default.ArrowBack,
         contentDescription = "Back",

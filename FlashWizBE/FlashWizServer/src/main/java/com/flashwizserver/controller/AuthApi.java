@@ -31,23 +31,24 @@ public class AuthApi {
 	@Autowired
 	UserDAO userDAO;
 
-	@PostMapping("/auth/login")
-	public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
-		try {
-			Authentication authentication = authManager
-					.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+	   @PostMapping("/auth/login")
+	    public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
+	        try {
+	            Authentication authentication = authManager
+	                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-			User user = (User) authentication.getPrincipal();
+	            User user = (User) authentication.getPrincipal();
 
-			String accessToken = jwtTokenUtil.generateAccessToken(user);
-			AuthResponse response = new AuthResponse(user.getEmail(), accessToken);
+	            String accessToken = jwtTokenUtil.generateAccessToken(user);
+	            AuthResponse response = new AuthResponse(user.getId(), user.getEmail(), accessToken);
 
-			return ResponseEntity.ok(response);
+	            return ResponseEntity.ok(response);
 
-		} catch (BadCredentialsException ex) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
+	        } catch (BadCredentialsException ex) {
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	        }
+	    }
+	
 
    
 

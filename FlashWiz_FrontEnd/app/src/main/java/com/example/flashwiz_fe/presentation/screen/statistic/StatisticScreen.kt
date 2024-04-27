@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,6 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
+
+//import com.example.flashwiz_fe.presentation.components.statistic.BarChart
+//import com.example.flashwiz_fe.presentation.components.static.BarChartData
+//import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
+//import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
+
+import androidx.compose.ui.unit.times
+
+
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
 @Composable

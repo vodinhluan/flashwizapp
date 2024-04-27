@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.model.LoginInputValidationType
+import com.example.flashwiz_fe.domain.model.TokenResponse
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
 import com.example.flashwiz_fe.presentation.state.LoginState
@@ -17,13 +19,16 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val validateLoginInputUseCase: ValidateLoginInputUseCase,
     private val authRepository: AuthRepository,
-
+    private val userPreferences: UserPreferences
 
 ): ViewModel() {
 
     var loginState by mutableStateOf(LoginState())
         private set
+    var userId by mutableStateOf<String?>(null)
+        private set
 
+    var tokenResponse by mutableStateOf<TokenResponse?>(null)
     fun onEmailInputChange(newValue: String){
         loginState = loginState.copy(emailInput = newValue)
         checkInputValidation()
@@ -41,16 +46,39 @@ class LoginViewModel @Inject constructor(
     fun onLoginClick(){
         loginState = loginState.copy(isLoading = true)
         viewModelScope.launch {
-            loginState = try{
+            try {
                 val loginResult = authRepository.login(
                     email = loginState.emailInput,
                     password = loginState.passwordInput
                 )
-                loginState.copy(isSuccessfullyLoggedIn = loginResult)
-            }catch(e: Exception){
-                loginState.copy(errorMessageLoginProcess = "Could not login")
-            }finally {
+                val newLoginState = if (loginResult) {
+                    val userId = userPreferences.getUserId().toString()
+                    println("${userId}")
+                    this@LoginViewModel.userId = userId
+                        loginState.copy(isSuccessfullyLoggedIn = true, errorMessageLoginProcess = null,userId = userId)
+                    ?: throw IllegalStateException("User id is null")
+                } else {
+                    loginState.copy(isSuccessfullyLoggedIn = false, errorMessageLoginProcess = "Incorrect email or password")
+                }
+                loginState = newLoginState
+            } catch(e: Exception){
+                loginState = loginState.copy(isSuccessfullyLoggedIn = false, errorMessageLoginProcess = "Could not login")
+            } finally {
                 loginState = loginState.copy(isLoading = false)
+            }
+        }
+    }
+
+    fun getUserById(userId: Int) {
+        viewModelScope.launch {
+            try {
+                // Gọi phương thức trong AuthRepository để lấy thông tin người dùng
+                val user = authRepository.getUserById(userId)
+                // Xử lý kết quả, ví dụ: lưu vào biến userId
+                tokenResponse = user
+            } catch (e: Exception) {
+                // Xử lý lỗi nếu có
+                // Ví dụ: hiển thị thông báo lỗi
             }
         }
     }
@@ -78,5 +106,8 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+//    suspend fun getUserIdFromPreferences(): String? {
+//        return authRepository.getUserIdFromPreferences()
+//    }
 
 }

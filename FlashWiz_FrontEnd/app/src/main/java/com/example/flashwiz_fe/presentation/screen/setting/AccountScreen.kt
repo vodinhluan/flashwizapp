@@ -19,7 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
@@ -32,28 +35,33 @@ import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 
 
 @Composable
-fun AccountScreen(themeViewModel: ThemeViewModel = viewModel()) {
+fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel: LogoutViewModel = hiltViewModel(),
+                  navController: NavController, userId:Int?
+) {
     val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
     val viewModel: ThemeViewModel = viewModel()
     val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
 
     isDarkModeEnabled?.let {
         AppTheme(it) {
-        Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
-            AccountText()
-            ProfileCardUI()
-            DarkModeSwitch(isDarkMode) { darkMode ->
-                viewModel.toggleTheme()
+            Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                AccountText()
+                if (userId != null) {
+                    ProfileCardUI(userId)
+                }
+                DarkModeSwitch(isDarkMode) { darkMode ->
+                    viewModel.toggleTheme()
+                }
+                Notification()
+                GeneralOptionsUI()
+                ChangePasswordUI()
+                LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
             }
-            Notification()
-            GeneralOptionsUI()
-            ChangePasswordUI()
-            LogoutUI()
         }
-    }
     }
 }
 
@@ -72,12 +80,12 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(color = colors.background)) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(color = colors.background)) {
-                content()
-            }
-        }}
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = colors.background)) {
+                    content()
+                }
+            }}
     )
 }
 

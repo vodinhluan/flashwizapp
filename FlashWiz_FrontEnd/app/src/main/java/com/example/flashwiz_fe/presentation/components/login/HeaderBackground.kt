@@ -38,10 +38,11 @@ fun HeaderBackground(
 @Composable
 fun HeaderBackgroundPreview() {
     HeaderBackground(
-
         leftColor = blue,
         rightColor = brightBlue,
         modifier = Modifier
             .fillMaxSize()
+
     )
+
 }

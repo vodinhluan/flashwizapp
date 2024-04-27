@@ -1,6 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
-import androidx.compose.foundation.layout.Column
+import DeleteDialog
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
@@ -29,8 +29,8 @@ import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
-import kotlinx.coroutines.launch
+import com.example.flashwiz_fe.ui.theme.SecondaryColor
+import androidx.compose.foundation.layout.Column as Column
 
 @Composable
 fun FlashcardDetailScreen(
@@ -38,13 +38,19 @@ fun FlashcardDetailScreen(
     flashcardName: String,
     description: String,
     onNavigateUp: () -> Unit,
-    navController: NavController // điều hướng
+    navController: NavController, // điều hướng
+    isDarkModeEnabled: Boolean
 ) {
+    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
     val cardViewModel: CardViewModel = hiltViewModel()
-
+    val updatedCard by cardViewModel.updatedCard.observeAsState()
+    var showUpdateCardDialog by remember { mutableStateOf(false) }
+    var selectedCard by remember { mutableStateOf<CardDetail?>(null) } // MutableState để lưu trữ thông tin của thẻ được chọn
+    var cardIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         cardViewModel.getCardsByFlashcardId(flashcardId).let { fetchedCards ->
@@ -53,11 +59,21 @@ fun FlashcardDetailScreen(
             isDataLoaded = true
         }
     }
+    if (updatedCard != null) {
+        val updatedIndex = cards.indexOfFirst { it.id == updatedCard!!.id }
+        if (updatedIndex != -1) {
+            val updatedCards = cards.toMutableList()
+            updatedCards[updatedIndex] = updatedCard!!
+            cards = updatedCards
+        }
+    }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = flashcardName, style = MaterialTheme.typography.h4)
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
+        Text(text = flashcardName, style = MaterialTheme.typography.h4, color = textColor)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = description, style = MaterialTheme.typography.body1)
+        Text(text = description, style = MaterialTheme.typography.body1, color = textColor)
         Spacer(modifier = Modifier.height(16.dp))
 
         if (isDataLoaded) {
@@ -68,20 +84,45 @@ fun FlashcardDetailScreen(
                 items(cards) { card ->
                     CardItemComponent(
                         card = card,
-                        onFlashcardClicked = {
-
-                        },
+                        onCardClicked = {
+                            cardViewModel.getCardById(card.id)
+                            selectedCard = card
+                            showUpdateCardDialog = true
+                                        },
                         onDeleteClick = { cardId ->
-                            cardViewModel.deleteCardAndUpdateList(
-                                cardId = cardId,
-                                viewModel = cardViewModel,
-                                apiService = RetrofitInstance.cardApiService,
-                                originalCard = originalCard
-                            ) { updateCards ->
-                                cards = updateCards
-                            }
+                            cardIdToDelete=cardId
+                            showDeleteDialog = true
                         }
                     )
+                    if (showDeleteDialog) {
+                        cardIdToDelete?.let {
+                            DeleteDialog(
+                                IdtoDelete = it,
+                                onDismiss = { showDeleteDialog = false },
+                                itemType="card",
+                                onChangeSuccess = { cardId ->
+                                    cardViewModel.deleteCardAndUpdateList(
+                                        cardId = cardId,
+                                        viewModel = cardViewModel,
+                                        apiService = RetrofitInstance.cardApiService,
+                                        originalCard = originalCard
+                                    ) { updatedCards ->
+                                        cards = updatedCards
+                                    }
+                                    showDeleteDialog = false
+                                }
+                            )
+                        }
+                    }
+                    if (showUpdateCardDialog) {
+                        com.example.flashwiz_fe.presentation.screen.card.UpdateCardDialog(
+                            card = selectedCard ?: card,
+                            onDismiss = { showUpdateCardDialog = false },
+                            onChangeSuccess = {
+                                showUpdateCardDialog = false
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -91,7 +132,9 @@ fun FlashcardDetailScreen(
                 cardViewModel.setFlashcardId(flashcardId)
                 navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
             },
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 16.dp),
             backgroundColor = Color.Blue,
             contentColor = Color.White,
             borderColor = Color.Black

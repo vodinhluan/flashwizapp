@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,5 +80,14 @@ public class UserController {
 	    User newUser = new User(email, password, name);
 	    return ResponseEntity.ok(newUser);
 	}
-
+	
+	@GetMapping("/user/get/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) {
+        User user = userDAO.getUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

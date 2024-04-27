@@ -1,12 +1,16 @@
 package com.example.flashwiz_fe.presentation.screen.auth
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.flashwiz_fe.presentation.viewmodel.RegisterViewModel
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,6 +19,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -24,16 +29,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-
-
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
-
-
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
 import com.example.flashwiz_fe.presentation.components.login.HeaderBackground
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.components.login.TextEntryModule
-import com.example.flashwiz_fe.ui.theme.*
+import com.example.flashwiz_fe.presentation.viewmodel.RegisterViewModel
+import com.example.flashwiz_fe.ui.theme.blue
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.darkGray
+import com.example.flashwiz_fe.ui.theme.white
+import com.example.flashwiz_fe.ui.theme.whiteGray
 
 @Composable
 fun RegisterScreen(
@@ -45,11 +52,10 @@ fun RegisterScreen(
     NavDestinationHelper(
         shouldNavigate = {
             registerViewModel.registerState.isSuccessfullyRegistered
-        },
-        destination = {
-            onRegisterSuccessNavigation()
         }
-    )
+    ) {
+        onRegisterSuccessNavigation()
+    }
 
     Box(
         modifier = Modifier
@@ -124,12 +130,12 @@ fun RegisterScreen(
                 .align(Alignment.TopCenter)
         )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
-                .align(Alignment.BottomCenter),
+                .height(200.dp)
+                .align(Alignment.BottomCenter)
         )
         Row(
             modifier = Modifier
@@ -182,11 +188,11 @@ fun RegisterContainer(
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(
-            text = "Đăng ký",
-            color = gray,
-            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
-        )
+//        Text(
+//            text = "Đăng ký",
+//            color = gray,
+//            style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.SemiBold)
+//        )
         TextEntryModule(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -240,7 +246,7 @@ fun RegisterContainer(
             hint = "Confirm Password",
             leadingIcon = Icons.Default.VpnKey,
             textValue = passwordRepeatedValue(),
-            textColor = gray,
+            textColor = darkGray,
             cursorColor = brightBlue,
             onValueChanged = onPasswordRepeatedChanged,
             keyboardType = KeyboardType.Password,

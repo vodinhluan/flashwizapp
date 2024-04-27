@@ -26,5 +26,12 @@ class CardRepositoryImpl(private val cardApiService: CardApiService) : CardRepos
     override suspend fun updateCardRating(cardId: Int, newRating: String): Response<Card> {
         return cardApiService.updateCardRating(cardId, newRating)
     }
+    override suspend fun updateCard(cardId: Int, updatedCard: CardDetail): Response<CardDetail> {
+        return cardApiService.updateCard(cardId, updatedCard)
+
+    }
+    override suspend fun getCardById(id: Int): Response<CardDetail> {
+        return cardApiService.getCardById(id)
+    }
 
 }

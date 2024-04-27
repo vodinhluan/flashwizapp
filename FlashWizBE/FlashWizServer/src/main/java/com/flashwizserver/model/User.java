@@ -28,7 +28,10 @@ public class User implements UserDetails  {
 	@Column(length=64, nullable=false)
 	public String password;
 	@Column(length=64, nullable=false)
-
+	private String resetPasswordOTP;
+	@Column(name = "reset_password_OTP")
+	
+	
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -84,8 +87,19 @@ public class User implements UserDetails  {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
 
 
+
+
+
+	public String getResetPasswordOTP() {
+		return resetPasswordOTP;
+	}
+
+	public void setResetPasswordOTP(String resetpasswordOTP) {
+		this.resetPasswordOTP = resetpasswordOTP;
+	}
 
 	@Override
 	public String toString() {
@@ -143,6 +157,14 @@ public class User implements UserDetails  {
 
 		return true;
 	}
+
+	public Object orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
 
 
 }

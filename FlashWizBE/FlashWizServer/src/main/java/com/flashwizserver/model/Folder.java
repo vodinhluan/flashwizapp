@@ -27,7 +27,7 @@ public class Folder {
 	private User user;
 	
 
-	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
+	@OneToMany(mappedBy = "folder",cascade = CascadeType.ALL, orphanRemoval = true) // Một folder có nhiều flashcard
     private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
 
 

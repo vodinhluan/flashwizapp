@@ -2,13 +2,13 @@ package com.example.flashwiz_fe.data.remote
 
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.model.CardDetail
-import com.example.flashwiz_fe.domain.model.Flashcard
-import com.example.flashwiz_fe.domain.model.FlashcardDetail
+
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -34,4 +34,14 @@ interface CardApiService {
         @Path("id") cardId: Int,
         @Query("rating") newRating: String
     ): Response<Card>
+    @PUT("/card/{id}/update")
+    suspend fun updateCard(
+        @Path("id") cardId: Int,
+        @Body updatedCard: CardDetail
+    ): Response<CardDetail>
+    @GET("/card/{id}")
+    suspend fun getCardById(@Path("id") id: Int): Response<CardDetail>
+
+    @GET("/card/{flashcardId}/static")
+    suspend fun getCardStatistics(@Path("flashcardId") flashcardId: Int): Response<Map<String, Int>>
 }
