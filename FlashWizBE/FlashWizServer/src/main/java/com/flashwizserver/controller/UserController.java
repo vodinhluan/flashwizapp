@@ -1,6 +1,8 @@
 package com.flashwizserver.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.flashwizserver.model.ChangePasswordRequest;
 import com.flashwizserver.model.User;
 import com.flashwizserver.service.UserDAO;
 
@@ -89,5 +93,35 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+	
+	@PostMapping("/user/change_password_request")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        Map<String, String> response = new HashMap<>();
+
+        // Lấy thông tin người dùng từ cơ sở dữ liệu
+        User user = userDAO.getUserByEmail(request.getEmail());
+        if (user == null) {
+            response.put("status", "error");
+            response.put("message", "User not found");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        // Xác minh mật khẩu cũ
+        if (!PasswordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            response.put("status", "error");
+            response.put("message", "Incorrect old password");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        // Mật khẩu cũ đã được xác minh, cập nhật mật khẩu mới
+        String newPassword = request.getNewPassword();
+        String encodedNewPassword = PasswordEncoder.encode(newPassword);
+        user.setPassword(encodedNewPassword);
+        userDAO.saveUser(user);
+
+        response.put("status", "success");
+        response.put("message", "Password changed successfully");
+        return ResponseEntity.ok(response);
     }
 }

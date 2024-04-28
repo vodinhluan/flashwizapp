@@ -43,7 +43,7 @@ class ResetPasswordViewModel @Inject constructor(
         resetPasswordState = resetPasswordState.copy(isLoading = true)
         viewModelScope.launch {
             resetPasswordState = try{
-                val statusResult = authRepository.changePassword(
+                val statusResult = authRepository.resetPassword(
                     newPassword = resetPasswordState.newPasswordInput
                 )
                 println("gia tri cua statusResult: $statusResult")

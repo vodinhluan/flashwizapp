@@ -108,23 +108,48 @@ fun ProfileCardUI() {
         }
     }
     if (showDetails) {
-        DetailDialog(onDismiss = { showDetails = false })
+        DetailDialog(
+            userEmail = userEmail,
+            userName = userName,
+            onDismiss = { showDetails = false },
+            onChangeName = {
+                // Xử lý sự kiện thay đổi tên người dùng ở đây
+            }
+        )
     }
+
 }
 
 @Composable
-fun DetailDialog(onDismiss: () -> Unit) {
+fun DetailDialog(userEmail: String, userName: String, onDismiss: () -> Unit, onChangeName: () -> Unit) {
+
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = {
             Text(
-                text = "Detailed Information") },
+                text = "Thông tin chi tiết người dùng"
+            )
+        },
         text = {
-            Text(
-                text = "Here is more detailed information about the user...") },
+            Column {
+                Text(
+                    text = "Tên người dùng: $userName"
+                )
+                Text(
+                    text = "Email người dùng: $userEmail"
+                )
+            }
+        },
         confirmButton = {
-            Button(onClick = { onDismiss() }) {
-                Text("Close")
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(onClick = { onChangeName() }) {
+                    Text("Change Name")
+                }
+                Button(onClick = { onDismiss() }) {
+                    Text("Close")
+                }
             }
         }
     )
