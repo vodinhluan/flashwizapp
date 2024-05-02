@@ -35,12 +35,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.AuthRepositoryImpl
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 
 @Composable
@@ -62,18 +65,18 @@ fun StudyGroupDetailScreen(
 //
 //    val folderIdsState = mutableStateOf<List<Int>>(emptyList())
 //    val folderRepository = remember { FolderRepositoryImpl(folderApiService) }
-
-
-    // Khai báo viewModel và các mutableState
-    val folderViewModel: FolderViewModel = viewModel()
-    var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
-    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
-
-    var cardState by remember {
-        mutableStateOf<List<CardDetail>>(emptyList())
-    }
-
-    // Hàm để lấy danh sách flashcard khi nhấp vào folder
+//
+//
+//    // Khai báo viewModel và các mutableState
+//    val folderViewModel: FolderViewModel = viewModel()
+//    var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
+//    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
+//
+//    var cardState by remember {
+//        mutableStateOf<List<CardDetail>>(emptyList())
+//    }
+//
+//    // Hàm để lấy danh sách flashcard khi nhấp vào folder
 //    fun getFlashcardsByFolderId(folderId: Int) {
 //        folderViewModel.getFlashcardsByFolderId(folderId)
 //        folderViewModel.flashcardsState.value.let {
@@ -87,8 +90,8 @@ fun StudyGroupDetailScreen(
 //            cardState = it
 //        }
 //    }
-
-
+//
+//
 //    LaunchedEffect(groupId) {
 //        // Gọi phương thức từ GroupApiService để lấy dữ liệu từ backend
 //        val groupInfo = groupApiService.getGroup(groupId)
@@ -159,9 +162,9 @@ fun StudyGroupDetailScreen(
                 ),
                 modifier = Modifier.padding(16.dp)
             )
-//            Column(
-//                modifier = Modifier.padding(horizontal = 16.dp)
-//            ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
 //                usersState.forEach { user ->
 //                    Surface(
 //                        modifier = Modifier.padding(4.dp),
@@ -179,7 +182,7 @@ fun StudyGroupDetailScreen(
 //                        )
 //                    }
 //                }
-//            }
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -210,26 +213,26 @@ fun StudyGroupDetailScreen(
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                folderState.forEach { folder ->
-                    Surface(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .clickable {
+//                folderState.forEach { folder ->
+//                    Surface(
+//                        modifier = Modifier
+//                            .padding(4.dp)
+//                            .clickable {
 //                                getFlashcardsByFolderId(folder.id)
-                            },
-                        color = Color.Blue,
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Text(
-                            text = folder.name,
-                            style = TextStyle(
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal
-                            ),
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
+//                            },
+//                        color = Color.Blue,
+//                        shape = MaterialTheme.shapes.small
+//                    ) {
+//                        Text(
+//                            text = folder.name,
+//                            style = TextStyle(
+//                                color = Color.White,
+//                                fontSize = 12.sp,
+//                                fontWeight = FontWeight.Normal
+//                            ),
+//                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                        )
+//                    }
 //                    flashcardState.forEach { flashcard ->
 //                        Surface(
 //                            modifier = Modifier
@@ -271,7 +274,7 @@ fun StudyGroupDetailScreen(
 //                            }
 //                        }
 //                    }
-                }
+//                }
             }
 
         }

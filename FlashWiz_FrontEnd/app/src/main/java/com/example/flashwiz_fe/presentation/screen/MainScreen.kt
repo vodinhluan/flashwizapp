@@ -32,6 +32,7 @@ import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
+import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
 
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
@@ -103,10 +104,10 @@ fun MainScreen(navController: NavHostController, userId: Int?) {
                         }
                     }
 
-//                    1 -> StudyGroupScreen(navController = navController,
-//                        groupApiService = RetrofitInstance.groupApiService,
-//                        folderApiService = RetrofitInstance.folderApiService,
-//                        userId = userId)
+                    1 -> StudyGroupScreen(navController = navController,
+                        groupApiService = RetrofitInstance.groupApiService,
+                        folderApiService = RetrofitInstance.folderApiService,
+                        userId = userId)
                     2 -> AccountScreen(navController = navController,  userId = userId
 
                     )

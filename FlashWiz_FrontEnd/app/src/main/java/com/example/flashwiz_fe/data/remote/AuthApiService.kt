@@ -6,6 +6,7 @@ import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.model.TokenResponse
+import com.example.flashwiz_fe.domain.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -44,7 +45,7 @@ interface AuthApiService {
     @GET("/user/get/{id}")
     suspend fun getUserById(
         @Path("id") id: Int
-    ): Response<TokenResponse>
+    ): User
 
     @POST("/user/change_password_request")
     suspend fun changePassword(

@@ -8,6 +8,7 @@ import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.model.TokenResponse
+import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import retrofit2.Response
@@ -140,18 +141,19 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         }
     }
 
-    override suspend fun getUserById(id: Int): TokenResponse {
-        return try {
-            val response: Response<TokenResponse> = authApiService.getUserById(id)
-            if (response.isSuccessful) {
-                response.body() ?: throw NullPointerException("Response body is null")
-            } else {
-                throw Exception("Failed to fetch user by id: ${response.code()}")
-            }
-        } catch (e: Exception) {
-            throw Exception("Error fetching user by id: ${e.message}")
-        }
-    }
+    // NOTE: CỦA QUANG NHẬT
+//    override suspend fun getUserById(id: Int): TokenResponse {
+//        return try {
+//            val response: Response<TokenResponse> = authApiService.getUserById(id)
+//            if (response.isSuccessful) {
+//                response.body() ?: throw NullPointerException("Response body is null")
+//            } else {
+//                throw Exception("Failed to fetch user by id: ${response.code()}")
+//            }
+//        } catch (e: Exception) {
+//            throw Exception("Error fetching user by id: ${e.message}")
+//        }
+//    }
 
     override suspend fun changePassword(oldPassword: String, newPassword: String): Boolean {
         return try {
@@ -177,5 +179,9 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
             println("Xảy ra lỗi: ${e.message}")
             return false
         }
+    }
+
+    override suspend fun getUserById(id: Int): User {
+        return authApiService.getUserById(id)
     }
 }
