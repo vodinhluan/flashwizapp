@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DensityMedium
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.DensityMedium
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
@@ -33,6 +35,8 @@ import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
+import com.example.flashwiz_fe.presentation.screen.introduction.IntroductionScreen
+
 
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
@@ -50,6 +54,14 @@ fun MainScreen(navController: NavHostController, userId: Int?) {
 
 
     val items = listOf(
+
+        // Phần giới thiệu
+        BottomNavigationItem(
+            title = "Intro",
+            selectedIcon = Icons.Filled.DensityMedium,
+            unselectedIcon = Icons.Outlined.DensityMedium,
+            hasNews = false,
+        ),
         BottomNavigationItem(
             title = "Home",
             selectedIcon = Icons.Filled.Home,
@@ -68,7 +80,8 @@ fun MainScreen(navController: NavHostController, userId: Int?) {
             selectedIcon = Icons.Filled.AccountCircle,
             unselectedIcon = Icons.Outlined.AccountCircle,
             hasNews = false,
-        )
+        ),
+
     )
 
     var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -92,8 +105,8 @@ fun MainScreen(navController: NavHostController, userId: Int?) {
             ) {
                 when (selectedItemIndex) {
 
-
-                    0 -> if (userId != null) {
+                    0 -> IntroductionScreen ()
+                    1 -> if (userId != null) {
                         viewModel.darkThemeEnabled.value?.let {
                             HomeScreen(
                                 navController = navController,
@@ -104,11 +117,11 @@ fun MainScreen(navController: NavHostController, userId: Int?) {
                         }
                     }
 
-                    1 -> StudyGroupScreen(navController = navController,
+                    2 -> StudyGroupScreen(navController = navController,
                         groupApiService = RetrofitInstance.groupApiService,
                         folderApiService = RetrofitInstance.folderApiService,
                         userId = userId)
-                    2 -> AccountScreen(navController = navController,  userId = userId
+                    3 -> AccountScreen(navController = navController,  userId = userId
 
                     )
 
