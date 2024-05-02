@@ -82,6 +82,11 @@ public class UserDAO {
         return userRepo.findByEmail(email)
                 .orElse(null); 
     }
+
+	 public User getUserById(Integer id) {
+	        Optional<User> userOptional = userRepo.findById(id);
+	        return userOptional.orElse(null);
+	    }
   
 
 }

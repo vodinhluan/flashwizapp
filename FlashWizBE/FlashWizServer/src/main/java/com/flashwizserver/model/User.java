@@ -27,9 +27,9 @@ public class User implements UserDetails  {
 	public String email;
 	@Column(length=64, nullable=false)
 	public String password;
-	@Column(length=64, nullable=false)
+	@Column(length=64, nullable=true)
 	private String resetPasswordOTP;
-	@Column(name = "reset_password_OTP")
+
 	
 	
 	
@@ -40,6 +40,7 @@ public class User implements UserDetails  {
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private Set<Role> roles = new HashSet();
+	private Set<Folder> folders = new HashSet<>();
 
 	public User() {}
 
@@ -163,7 +164,9 @@ public class User implements UserDetails  {
 		return null;
 	}
 
-
+	public void addFolder(Folder folder) {
+	    this.folders.add(folder);
+	}
 	
 
 

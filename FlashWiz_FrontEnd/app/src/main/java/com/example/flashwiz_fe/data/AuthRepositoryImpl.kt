@@ -2,6 +2,7 @@ package com.example.flashwiz_fe.data
 
 
 import android.content.Context
+import com.example.flashwiz_fe.domain.model.ChangePasswordRequest
 import com.example.flashwiz_fe.domain.model.ChangePasswordSuccessfully
 import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
@@ -29,6 +30,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val accessToken = tokenResponseBody.accessToken
                     val userEmail = tokenResponseBody.email
                     val userId = tokenResponseBody.id
+                    val userName = tokenResponseBody.name
 
                     println("Lưu thông tin email và token")
                 // Lưu access token vào DataStore
@@ -37,10 +39,12 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                         userPreferences.saveUserEmail(userEmail)
                         userPreferences.saveIsLoggedIn(true)
                         userPreferences.saveUserId(userId)
+                        userPreferences.saveUserName(userName)
                         println("Lưu thông tin token,email vào dataStore")
                         println("Thông tin Access Token: ${userPreferences.getUserToken()}")
                         println("Thông tin Email: ${userPreferences.getUserEmail()}")
                         println("Thông tin UserId: ${userPreferences.getUserId()}")
+                        println("Thông tin Name: ${userPreferences.getUserName()}")
                         true
                     } else {
                         println("Lỗi: Thiếu dữ liệu token hoặc email")
@@ -91,14 +95,14 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         }
     }
 
-    override suspend fun changePassword(newPassword: String): Boolean {
+    override suspend fun resetPassword(newPassword: String): Boolean {
         delay(10000)
         return try {
             if (savedOTP.isNullOrEmpty()) {
                 println("Lỗi: Mã OTP không tồn tại.")
                 return false
             }
-            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(newPassword, savedOTP ?: "")
+            val response: Response<ChangePasswordSuccessfully> = authApiService.resetPassword(newPassword, savedOTP ?: "")
             if (response.isSuccessful) {
                 println("Thay đổi mật khẩu thành công")
                 true
@@ -133,6 +137,45 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         } catch (e: Exception) {
             println("Xảy ra lỗi: ${e.message}")
             false
+        }
+    }
+
+    override suspend fun getUserById(id: Int): TokenResponse {
+        return try {
+            val response: Response<TokenResponse> = authApiService.getUserById(id)
+            if (response.isSuccessful) {
+                response.body() ?: throw NullPointerException("Response body is null")
+            } else {
+                throw Exception("Failed to fetch user by id: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            throw Exception("Error fetching user by id: ${e.message}")
+        }
+    }
+
+    override suspend fun changePassword(oldPassword: String, newPassword: String): Boolean {
+        return try {
+            val userEmail = userPreferences.getUserEmail()
+
+            if (userEmail.isNullOrEmpty()) {
+                println("Lỗi: Không tìm thấy email người dùng đã lưu trữ")
+                return false
+            }
+
+            val requestBody = ChangePasswordRequest(userEmail, oldPassword, newPassword)
+            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(requestBody)
+
+            if (response.isSuccessful) {
+                println("Đổi mật khẩu thành công")
+                return true
+            } else {
+                val errorMsg = response.errorBody()?.string() ?: "Lỗi không xác định khi đổi mật khẩu"
+                println("Lỗi khi đổi mật khẩu: $errorMsg")
+                return false
+            }
+        } catch (e: Exception) {
+            println("Xảy ra lỗi: ${e.message}")
+            return false
         }
     }
 }

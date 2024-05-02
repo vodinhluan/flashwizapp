@@ -17,7 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,11 +29,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
@@ -42,9 +41,10 @@ import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
-import com.example.flashwiz_fe.presentation.state.EnumScreenState
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import com.example.flashwiz_fe.ui.theme.SecondaryColor
 import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun FolderDetailScreen(
@@ -53,8 +53,10 @@ fun FolderDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController,
-    showHeader: MutableState<Boolean>
+    showHeader: MutableState<Boolean>,
+    isDarkModeEnabled: Boolean
 ) {
+    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
     val viewModel: FlashcardViewModel = viewModel()
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
@@ -144,9 +146,9 @@ fun FolderDetailScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.Black,
+                    tint = Color.White,
                     modifier = Modifier
                         .clickable {
                             selectedFlashcard = null
@@ -157,13 +159,12 @@ fun FolderDetailScreen(
                 )
                 Text(
                     text = "Card",
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.padding(16.dp)
+                    style = MaterialTheme.typography.h4,
+                    fontFamily = FontFamily.Cursive,
+                    textAlign = TextAlign.Center,
+                    color = white,
+                    modifier = Modifier.padding(16.dp),
+                    fontWeight = FontWeight.SemiBold
                 )
                 selectedFlashcard?.let { flashcard ->
                     AddItemComponent(
@@ -183,7 +184,8 @@ fun FolderDetailScreen(
                         selectedFlashcard = null
                         showHeader.value = true
                     },
-                    navController
+                    navController,
+                    isDarkModeEnabled
                 )
             }
         }
