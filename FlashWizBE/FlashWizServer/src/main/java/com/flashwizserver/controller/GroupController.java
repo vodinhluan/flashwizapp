@@ -53,30 +53,24 @@ public class GroupController {
 	private GroupDAO groupDAO;
 
 	@PostMapping("/{userId}/group/create")
-	public ResponseEntity<?> createGroup(@PathVariable("userId") Integer userId, @RequestBody String groupName) {
-		// Tìm user từ userId
-		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
+    public ResponseEntity<?> createGroup(@PathVariable("userId") Integer userId, @RequestBody Group group) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
+        
+        group.setGroupName(group.getGroupName());
+        group.setGroupCode(groupDAO.generateRandomGroupCode());
+        
+        group = groupRepository.save(group);
 
-		// Tạo group mới
-		Group group = new Group();
-		group.setGroupName(groupName);
-		group.setGroupCode(groupDAO.generateRandomGroupCode());
+        GroupUser groupUser = new GroupUser();
+        groupUser.setUser(user);
+        groupUser.setGroup(group);
 
-		// Lưu group vào database
-		group = groupRepository.save(group);
+        groupUser = groupUserRepository.save(groupUser);
+      
+        GroupDTO groupDto = GroupDTO.fromGroup(group);
+        return new ResponseEntity<>(groupDto, HttpStatus.CREATED);
+    }
 
-		// Tạo GroupUser
-		GroupUser groupUser = new GroupUser();
-		groupUser.setUser(user);
-		groupUser.setGroup(group);
-
-		// Lưu GroupUser vào database
-		groupUser = groupUserRepository.save(groupUser);
-
-		GroupDTO groupDto = GroupDTO.fromGroup(group);
-		return new ResponseEntity<>(groupDto, HttpStatus.CREATED);
-	}
 
 	@GetMapping("/group/list")
 	public List<GroupDTO> getAllGroups() {

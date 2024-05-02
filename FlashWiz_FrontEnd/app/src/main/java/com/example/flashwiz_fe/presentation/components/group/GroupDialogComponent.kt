@@ -37,16 +37,19 @@ fun GroupDialogComponent(
     onSuccess: () -> Unit,
     onFailure: () -> Unit,
     groups: List<GroupDTO>, // Thêm tham số groups
-    updateGroups: (List<GroupDTO>) -> Unit // Thêm tham số updateGroups
+    updateGroups: (List<GroupDTO>) -> Unit, // Thêm tham số updateGroups
+    title: String,
+    textfield: String,
+    isJoinDialog: Boolean
 ) {
-    var groupCode by remember { mutableStateOf("") } // Biến lưu trữ giá trị của TextField
+    var groupField by remember { mutableStateOf("") } // Biến lưu trữ giá trị của TextField
     val groupViewModel: StudyGroupViewModel = hiltViewModel()
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = {
             Text(
-                text = "Join Group",
+                text = "$title Group",
                 fontFamily = Poppins,
                 color = SecondaryColor,
                 textAlign = TextAlign.Center,
@@ -57,11 +60,11 @@ fun GroupDialogComponent(
         },
         text ={
             TextField(
-                value = groupCode,
-                onValueChange = { groupCode = it }, // Cập nhật giá trị của groupCode khi có thay đổi
+                value = groupField,
+                onValueChange = { groupField = it }, // Cập nhật giá trị của groupCode khi có thay đổi
                 enabled = true, // Cho phép nhập dữ liệu
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                label = { Text("Group Code") }
+                label = { Text("Group $textfield") }
             )
         },
         confirmButton = {
@@ -84,22 +87,40 @@ fun GroupDialogComponent(
                 }
                 Button(
                     onClick = {
-//                        if (userId != null) {
-//                            groupViewModel.joinGroupAndUpdateList(
-//                                userId = userId,
-//                                groupCode = groupCode,
-//                                onSuccess = {
-//                                    onSuccess()
-//                                    onDismiss()
-//                                },
-//                                onFailure = {
-//                                    onFailure()
-//                                    onDismiss()
-//                                }
-//                            ) { updatedGroups ->
-//                                updateGroups(updatedGroups)
-//                            }
-//                        }
+                        if (userId != null) {
+                            if (isJoinDialog) { // Kiểm tra loại dialog
+                                groupViewModel.joinGroupAndUpdateList(
+                                    userId = userId,
+                                    groupCode = groupField,
+                                    onSuccess = {
+                                        onSuccess()
+                                        onDismiss()
+                                    },
+                                    onFailure = {
+                                        onFailure()
+                                        onDismiss()
+                                    }
+                                ) { updatedGroups ->
+                                    updateGroups(updatedGroups)
+                                }
+                            } else {
+                                // Nếu không phải là dialog join, thực hiện create group
+                                groupViewModel.createGroup(
+                                    userId = userId,
+                                    groupName = groupField,
+                                    onSuccess = {
+                                        onSuccess()
+                                        onDismiss()
+                                    },
+                                    onFailure = {
+                                        onFailure()
+                                        onDismiss()
+                                    }
+                                ){ updatedGroups ->
+                                    updateGroups(updatedGroups)
+                                }
+                            }
+                        }
                     },
                     modifier = Modifier
                         .padding(8.dp)
@@ -109,7 +130,7 @@ fun GroupDialogComponent(
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Join")
+                    Text("$title")
                 }
             }
         },
