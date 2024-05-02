@@ -181,6 +181,10 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         }
     }
 
+    override suspend fun getUserById_Token(id: Int): TokenResponse {
+        return authApiService.getUserById_Token(id)
+    }
+
     override suspend fun getUserById(id: Int): User {
         return authApiService.getUserById(id)
     }

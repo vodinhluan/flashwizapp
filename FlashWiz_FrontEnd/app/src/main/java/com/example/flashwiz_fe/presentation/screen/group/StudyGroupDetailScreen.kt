@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.AuthRepositoryImpl
+import com.example.flashwiz_fe.data.FolderRepositoryImpl
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.CardDetail
@@ -59,62 +60,62 @@ fun StudyGroupDetailScreen(
 ) {
     var expanded by remember { mutableStateOf(false) }
     if (expanded) Icons.AutoMirrored.Filled.PlaylistAddCheck else Icons.AutoMirrored.Filled.PlaylistAdd
-//    val userIdsState = mutableStateOf<List<Int>>(emptyList())
-//    var usersState by remember { mutableStateOf<List<User>>(emptyList()) }
-//    val userRepository = remember { AuthRepositoryImpl(context) }
-//
-//    val folderIdsState = mutableStateOf<List<Int>>(emptyList())
-//    val folderRepository = remember { FolderRepositoryImpl(folderApiService) }
-//
-//
-//    // Khai báo viewModel và các mutableState
-//    val folderViewModel: FolderViewModel = viewModel()
-//    var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
-//    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
-//
-//    var cardState by remember {
-//        mutableStateOf<List<CardDetail>>(emptyList())
-//    }
-//
-//    // Hàm để lấy danh sách flashcard khi nhấp vào folder
-//    fun getFlashcardsByFolderId(folderId: Int) {
-//        folderViewModel.getFlashcardsByFolderId(folderId)
-//        folderViewModel.flashcardsState.value.let {
-//            flashcardState = it
-//        }
-//    }
-//
-//    fun getCardsByFlashcardId(flashCardId: Int) {
-//        folderViewModel.getCardsByFolderId(flashCardId)
-//        folderViewModel.cardState.value.let {
-//            cardState = it
-//        }
-//    }
-//
-//
-//    LaunchedEffect(groupId) {
-//        // Gọi phương thức từ GroupApiService để lấy dữ liệu từ backend
-//        val groupInfo = groupApiService.getGroup(groupId)
-//        val userIds = groupInfo["userIds"] as? List<Int> ?: emptyList()
-//        userIdsState.value = userIds
-//        Log.d("UserIds", "$userIds")
-//        val users = mutableListOf<User>()
-//        for (userId in userIds) {
-//            val user = userRepository.getUserById(userId)
-//            users.add(user)
-//        }
-//        usersState = users
-//        // test folder
-//        val folderIds = groupInfo["folderIds"] as? List<Int> ?: emptyList()
-//        folderIdsState.value = folderIds
-//        Log.d("FolderIds", "$folderIds")
-//        val folders = mutableListOf<FolderDetail>()
-//        for (folderId in folderIds) {
-//            val folder = folderRepository.getFolderById(folderId)
-//            folders.add(folder)
-//        }
-//        folderState = folders
-//    }
+    val userIdsState = mutableStateOf<List<Int>>(emptyList())
+    var usersState by remember { mutableStateOf<List<User>>(emptyList()) }
+    val userRepository = remember { AuthRepositoryImpl(context) }
+
+    val folderIdsState = mutableStateOf<List<Int>>(emptyList())
+    val folderRepository = remember { FolderRepositoryImpl(folderApiService) }
+
+
+    // Khai báo viewModel và các mutableState
+    val folderViewModel: FolderViewModel = viewModel()
+    var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
+    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
+
+    var cardState by remember {
+        mutableStateOf<List<CardDetail>>(emptyList())
+    }
+
+    // Hàm để lấy danh sách flashcard khi nhấp vào folder
+    fun getFlashcardsByFolderId(folderId: Int) {
+        folderViewModel.getFlashcardsByFolderId(folderId)
+        folderViewModel.flashcardsState.value.let {
+            flashcardState = it
+        }
+    }
+
+    fun getCardsByFlashcardId(flashCardId: Int) {
+        folderViewModel.getCardsByFolderId(flashCardId)
+        folderViewModel.cardState.value.let {
+            cardState = it
+        }
+    }
+
+
+    LaunchedEffect(groupId) {
+        // Gọi phương thức từ GroupApiService để lấy dữ liệu từ backend
+        val groupInfo = groupApiService.getGroup(groupId)
+        val userIds = groupInfo["userIds"] as? List<Int> ?: emptyList()
+        userIdsState.value = userIds
+        Log.d("UserIds", "$userIds")
+        val users = mutableListOf<User>()
+        for (userId in userIds) {
+            val user = userRepository.getUserById(userId)
+            users.add(user)
+        }
+        usersState = users
+        // test folder
+        val folderIds = groupInfo["folderIds"] as? List<Int> ?: emptyList()
+        folderIdsState.value = folderIds
+        Log.d("FolderIds", "$folderIds")
+        val folders = mutableListOf<FolderDetail>()
+        for (folderId in folderIds) {
+            val folder = folderRepository.getFolderById(folderId)
+            folders.add(folder)
+        }
+        folderState = folders
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -165,23 +166,23 @@ fun StudyGroupDetailScreen(
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-//                usersState.forEach { user ->
-//                    Surface(
-//                        modifier = Modifier.padding(4.dp),
-//                        color = Color.Gray,
-//                        shape = MaterialTheme.shapes.small
-//                    ) {
-//                        Text(
-//                            text = user.name,
-//                            style = TextStyle(
-//                                color = Color.White,
-//                                fontSize = 12.sp,
-//                                fontWeight = FontWeight.Normal
-//                            ),
-//                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-//                        )
-//                    }
-//                }
+                usersState.forEach { user ->
+                    Surface(
+                        modifier = Modifier.padding(4.dp),
+                        color = Color.Gray,
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Text(
+                            text = user.name,
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
+                }
             }
             Row(
                 modifier = Modifier
@@ -201,80 +202,80 @@ fun StudyGroupDetailScreen(
                 )
 
                 // AddItemNewGroup
-//                AddItemNewGroup(
-//                    navController = navController,
-//                    userId = userId,
-//                    apiService = folderApiService,
-//                    groupId = groupId
-//                )
+                AddItemNewGroup(
+                    navController = navController,
+                    userId = userId,
+                    apiService = folderApiService,
+                    groupId = groupId
+                )
             }
 
             // Load Danh sách Folder theo user ID ở đây
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-//                folderState.forEach { folder ->
-//                    Surface(
-//                        modifier = Modifier
-//                            .padding(4.dp)
-//                            .clickable {
-//                                getFlashcardsByFolderId(folder.id)
-//                            },
-//                        color = Color.Blue,
-//                        shape = MaterialTheme.shapes.small
-//                    ) {
-//                        Text(
-//                            text = folder.name,
-//                            style = TextStyle(
-//                                color = Color.White,
-//                                fontSize = 12.sp,
-//                                fontWeight = FontWeight.Normal
-//                            ),
-//                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-//                        )
-//                    }
-//                    flashcardState.forEach { flashcard ->
-//                        Surface(
-//                            modifier = Modifier
-//                                .padding(4.dp)
-//                                .clickable {
-//                                    getCardsByFlashcardId(flashcard.id)
-//                                },
-//                            color = Color.Cyan,
-//                            shape = MaterialTheme.shapes.small
-//                        ) {
-//                            Text(
-//                                text = flashcard.name,
-//                                style = TextStyle(
-//                                    color = Color.Black,
-//                                    fontSize = 12.sp,
-//                                    fontWeight = FontWeight.Normal
-//                                ),
-//                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-//                            )
-//                        }
-//
-//                        cardState.forEach {
-//                                card ->
-//                            Surface(
-//                                modifier = Modifier
-//                                    .padding(4.dp),
-//                                color = Color.Yellow,
-//                                shape = MaterialTheme.shapes.small
-//                            ) {
-//                                Text(
-//                                    text = card.front +": "+card.back,
-//                                    style = TextStyle(
-//                                        color = Color.Black,
-//                                        fontSize = 12.sp,
-//                                        fontWeight = FontWeight.Normal
-//                                    ),
-//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-//                                )
-//                            }
-//                        }
-//                    }
-//                }
+                folderState.forEach { folder ->
+                    Surface(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .clickable {
+                                getFlashcardsByFolderId(folder.id)
+                            },
+                        color = Color.Blue,
+                        shape = MaterialTheme.shapes.small
+                    ) {
+                        Text(
+                            text = folder.name,
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
+                    flashcardState.forEach { flashcard ->
+                        Surface(
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .clickable {
+                                    getCardsByFlashcardId(flashcard.id)
+                                },
+                            color = Color.Cyan,
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Text(
+                                text = flashcard.name,
+                                style = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Normal
+                                ),
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            )
+                        }
+
+                        cardState.forEach {
+                                card ->
+                            Surface(
+                                modifier = Modifier
+                                    .padding(4.dp),
+                                color = Color.Yellow,
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text(
+                                    text = card.front +": "+card.back,
+                                    style = TextStyle(
+                                        color = Color.Black,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Normal
+                                    ),
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
         }

@@ -43,6 +43,11 @@ interface AuthApiService {
     ): Response<ChangePasswordSuccessfully>
 
     @GET("/user/get/{id}")
+    suspend fun getUserById_Token(
+        @Path("id") id: Int
+    ): TokenResponse
+
+    @GET("/user/get/{id}")
     suspend fun getUserById(
         @Path("id") id: Int
     ): User

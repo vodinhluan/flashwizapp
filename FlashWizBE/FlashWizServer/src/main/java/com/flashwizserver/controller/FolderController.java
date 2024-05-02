@@ -54,6 +54,15 @@ public class FolderController {
         return new ResponseEntity<>(folders, HttpStatus.OK);
     }
 
+    @GetMapping("/folder/get-by-id/{id}")
+	public ResponseEntity<Folder> getFolderById(@PathVariable("id") Integer id) {
+		Folder folder = folderDAO.getFolderById(id);
+		if (folder != null) {
+			return ResponseEntity.ok(folder);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
 
 
