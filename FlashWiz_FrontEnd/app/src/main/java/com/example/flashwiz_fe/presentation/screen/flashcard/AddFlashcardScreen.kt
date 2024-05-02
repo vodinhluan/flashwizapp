@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,8 +38,7 @@ import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 fun AddFlashcardScreen(
     onNavigateBack: (FlashcardDetail?) -> Unit,
     initialFolderId: Int?,
-    navController: NavHostController
-
+    navController: NavHostController,
 ) {
     val selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
     val viewModel: FlashcardViewModel = viewModel()

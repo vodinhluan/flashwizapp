@@ -1,28 +1,56 @@
+package com.example.flashwiz_fe.presentation.viewmodel
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.remote.FolderApiService
+import com.example.flashwiz_fe.domain.model.Flashcard
+import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.Group
+import com.example.flashwiz_fe.domain.model.GroupDTO
 import kotlinx.coroutines.launch
 
 class StudyGroupViewModel : ViewModel() {
     private val groupService = RetrofitInstance.groupApiService
+    fun joinGroupAndUpdateList(userId: Int, groupCode: String, onSuccess: () -> Unit, onFailure: () -> Unit, updateGroups: (List<GroupDTO>) -> Unit) {
+    viewModelScope.launch {
+        try {
+            val response = groupService.joinGroup(userId, groupCode)
+            if (response.isSuccessful) {
+                // Nếu tham gia nhóm thành công, cập nhật lại danh sách nhóm
+                val updatedGroups = groupService.getUserGroups(userId)
+                // Gọi hàm onSuccess để thông báo rằng tham gia nhóm thành công
+                updateGroups(updatedGroups)
+                onSuccess()
+            } else {
+                onFailure()
+            }
+        } catch (e: Exception) {
+            onFailure()
+        }
+    }
 
-    // Thêm trường dữ liệu userId
-    var userId: Int = 0
 
-    fun addGroup(name: String, onResult: (Boolean) -> Unit) {
+}
+    fun createGroup(userId: Int, groupName: String, onSuccess: () -> Unit, onFailure: () -> Unit,updateGroups: (List<GroupDTO>) -> Unit) {
+        val groupDTO = GroupDTO(id=userId, groupName=groupName, groupCode = "" )
         viewModelScope.launch {
             try {
-                val group = Group(name = name, groupCode = "", flashcards = listOf(), userId = userId)
-                val response = groupService.createGroup(group)
+                val response = groupService.createGroup(userId, groupDTO)
                 if (response.isSuccessful) {
-                    onResult(true)
+                    val updatedGroups = groupService.getUserGroups(userId)
+                    updateGroups(updatedGroups)
+                    onSuccess()
                 } else {
-                    onResult(false)
+                    onFailure()
                 }
             } catch (e: Exception) {
-                onResult(false)
+                onFailure()
             }
         }
     }
+
 }
+
+
+

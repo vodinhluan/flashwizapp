@@ -11,6 +11,8 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
+import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DropdownMenu
@@ -27,16 +29,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.MenuItem
+import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemNewGroup(navController: NavController,
-                    itemType: String,
-                    groupId: Int?,
-                    ) {
+fun AddItemNewGroup(
+    navController: NavController,
+    itemType: String,
+    groupId: Int?,
+) {
     var groupName by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
-    val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
+    val icon =
+        if (expanded) Icons.AutoMirrored.Filled.PlaylistAddCheck else Icons.AutoMirrored.Filled.PlaylistAdd
 
 
     Column(
@@ -44,6 +49,7 @@ fun AddItemNewGroup(navController: NavController,
     ) {
         Icon(
             imageVector = icon,
+            tint = white,
             contentDescription = null,
             modifier = Modifier.clickable { expanded = !expanded }
         )
@@ -52,7 +58,7 @@ fun AddItemNewGroup(navController: NavController,
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.align(Alignment.End)
-            ){
+            ) {
                 MenuItem(text = "Add $itemType") {
                     when (itemType) {
 
@@ -61,10 +67,10 @@ fun AddItemNewGroup(navController: NavController,
                         "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
 
 
-
                     }
                     expanded = false
                 }
+
             }
         }
     }

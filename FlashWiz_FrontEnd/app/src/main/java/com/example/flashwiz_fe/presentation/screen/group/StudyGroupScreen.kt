@@ -1,99 +1,268 @@
 package com.example.flashwiz_fe.presentation.screen.group
 
-
-//import com.example.flashwiz_fe.presentation.components.home.AddItemNewGroup
-
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import DeleteDialog
+import GroupApiService
+import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RemoveRedEye
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.presentation.components.TextAreaComponent
+import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.UserPreferences
+import com.example.flashwiz_fe.domain.model.GroupDTO
+import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
+import com.example.flashwiz_fe.presentation.components.group.GroupDialogComponent
+import com.example.flashwiz_fe.presentation.components.group.GroupItem
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
-fun StudyGroupScreen(navController: NavController) {
+fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, userId: Int?) {
+    val context = LocalContext.current
+    val userPreferences = remember { UserPreferences(context) }
+    var originalGroups by remember { mutableStateOf<List<GroupDTO>>(emptyList()) }
+    var groups by remember { mutableStateOf<List<GroupDTO>>(emptyList()) }
+    var selectedGroup by remember { mutableStateOf<GroupDTO?>(null) }
+    var isDataLoaded by remember { mutableStateOf(false) }
+    val showHeaderState = remember { mutableStateOf(true) }
     var searchQuery by remember { mutableStateOf("") }
-    var text by remember { mutableStateOf(TextFieldValue()) }
+    var isGroupSelected by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var groupIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
+    var showAddDialog by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(Unit) {
+        originalGroups = apiService.getUserGroups(userId)
+        groups = originalGroups
+        isDataLoaded = true
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
-                color = Color.White
+        color = Color.White
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .background(Color.Cyan),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "STUDY GROUP",
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.padding(16.dp)
-                )
-//                AddItemNewGroup(navController = navController) #Phu Le Comment
-                AddItemNewGroup(navController = navController, itemType = "Group", groupId = null)
+            if (showHeaderState.value) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            brightBlue,
+                            RoundedCornerShape(
+                                topStart = 0.dp,
+                                topEnd = 0.dp,
+                                bottomStart = 20.dp,
+                                bottomEnd = 20.dp
+                            )
+                        )
+                        .padding(0.dp, 0.dp, 0.dp, 20.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "STUDY GROUP",
+                            style = MaterialTheme.typography.h4,
+                            fontFamily = FontFamily.Cursive,
+                            modifier = Modifier.padding(16.dp),
+                            color = white,
+                            fontWeight = FontWeight.SemiBold
+                        )
 
+                        AddItemNewGroup(
+                            navController = navController,
+                            itemType = "Group",
+                            groupId = null
+                        )
+                    }
 
+                    SearchBar(
+                        description = "Search",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp, 0.dp, 10.dp, 0.dp),
+                        hint = "Search",
+                        textValue = searchQuery,
+                        textColor = Color.Black,
+                        cursorColor = Color.Black,
+                        onValueChanged = { newValue ->
+                            searchQuery = newValue
+                        },
+                        trailingIcon = Icons.Default.Search,
+                        onTrailingIconClick = {}
+                    )
+                }
             }
 
-            SearchBar(
-                description = "Search",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, 0.dp, 10.dp, 5.dp),
-                hint = "Search",
-                textValue = searchQuery,
-                textColor = Color.Black,
-                cursorColor = Color.LightGray,
-                onValueChanged = { newValue ->
-                    searchQuery = newValue
-                }, trailingIcon = Icons.Filled.RemoveRedEye,
-                onTrailingIconClick = {}
-            )
-            TextAreaComponent()
+            if (isDataLoaded) {
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    items(groups.filter {
+                        it.groupName.contains(
+                            searchQuery,
+                            ignoreCase = true
+                        )
+                    }) { group ->
+                        GroupItem(
+                            group = group,
+                            onItemClick = { selectedGroupId ->
+                                selectedGroupId.let { groupId ->
+                                    isGroupSelected = true
+                                    selectedGroup = groups.find { it.id == groupId }
+                                    Log.d(
+                                        "Group ItemClicked",
+                                        "Clicked on group with ID: $groupId"
+                                    )
+                                }
+                            },
+                            onDeleteClick = { groupId ->
+                                groupIdToDelete = groupId
+                                showDeleteDialog = true
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                }
+                if (!isGroupSelected) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(
+                            onClick = {
+                                showAddDialog=true
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = "Add Group")
+                        }
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Button(
+                            onClick = {
+                                showUpdateDialog=true
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = "Join Group")
+                        }
+                    }
+                }
+            }
+            if(showUpdateDialog){
+                GroupDialogComponent (
+                    userId = userId,
+                    onDismiss = {
+                        showUpdateDialog = false
+                    },
+                    onSuccess = {
+                        showUpdateDialog = false
+                    },
+                    onFailure = {
+                        showUpdateDialog = false
+                    },
+                    groups = groups, // Truyền giá trị groups từ StudyGroupScreen
+                    updateGroups = { updatedGroups -> // Truyền hàm cập nhật danh sách nhóm
+                        groups = updatedGroups // Cập nhật danh sách nhóm mới
+                    },
+                    title="Join",
+                    textfield="Code",
+                    isJoinDialog = true
+                )
+            }
+
+            if(showAddDialog){
+                GroupDialogComponent (
+                    userId = userId,
+                    onDismiss = {
+                        showAddDialog = false
+                    },
+                    onSuccess = {
+                        showAddDialog = false
+                    },
+                    onFailure = {
+                        showAddDialog = false
+                    },
+                    groups = groups, // Truyền giá trị groups từ StudyGroupScreen
+                    updateGroups = { updatedGroups -> // Truyền hàm cập nhật danh sách nhóm
+                        groups = updatedGroups // Cập nhật danh sách nhóm mới
+                    },
+                    title="Create",
+                    textfield="Name",
+                    isJoinDialog = false
+                )
+            }
+
+//            if (showDeleteDialog) {
+//                groupIdToDelete?.let {
+//                    DeleteDialog(
+//                        IdtoDelete = it,
+//                        onDismiss = { showDeleteDialog = false },
+//                        itemType = "group",
+//                        onChangeSuccess = { groupId ->
+//                            viewModel.deleteGroupAndUpdateList(
+//                                groupId = groupId,
+//                                viewModel = viewModel,
+//                                apiService = RetrofitInstance.groupApiService,
+//                                originalGroups = originalGroups
+//                            ) { updatedGroups ->
+//                                groups = updatedGroups
+//                            }
+//                            showDeleteDialog = false
+//                        }
+//                    )
+//                }
+//            }
+
+            if (isGroupSelected) {
+                selectedGroup?.let { group ->
+                    StudyGroupDetailScreen(
+                        groupId = group.id,
+                        groupName = group.groupName,
+                        groupCode = group.groupCode,
+                        navController = navController,
+                        groupApiService = apiService,
+                        context = context
+                    )
+                }
             }
         }
     }
-
-@Composable
-fun StudyGroupScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Text(text = "Trang Study Group", modifier = Modifier.fillMaxSize())
-    }
 }
-

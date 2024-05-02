@@ -24,6 +24,7 @@ class UserPreferences @Inject constructor(
         val KEY_USER_EMAIL = stringPreferencesKey("user_email")
         val KEY_IS_LOGGED_IN = booleanPreferencesKey("is_logged_in")
         val KEY_USER_ID = stringPreferencesKey("user_id")
+        val KEY_USER_NAME = stringPreferencesKey("user_name")
     }
 
     suspend fun saveUserToken(token: String) {
@@ -40,6 +41,11 @@ class UserPreferences @Inject constructor(
     suspend fun saveUserId(userId: Int) {
         myPreferencesDataStore.edit { preferences ->
             preferences[PreferencesKey.KEY_USER_ID] = userId.toString()
+        }
+    }
+    suspend fun saveUserName(userName: String) {
+        myPreferencesDataStore.edit { preferences ->
+            preferences[PreferencesKey.KEY_USER_NAME] = userName
         }
     }
 
@@ -69,8 +75,10 @@ class UserPreferences @Inject constructor(
         val preferences = myPreferencesDataStore.data.first()
         return preferences[PreferencesKey.KEY_USER_ID]
     }
-
-
+    suspend fun getUserName(): String? {
+        val preferences = myPreferencesDataStore.data.first()
+        return preferences[PreferencesKey.KEY_USER_NAME]
+    }
     suspend fun clearData() {
         myPreferencesDataStore.edit { preferences ->
             preferences.clear()

@@ -103,7 +103,7 @@ fun AddFolderScreen(
                             initialUserId
                         ) {
                             Log.d("AddFolderScreen", "onNavigateBack is called")
-                            onNavigateBack() // Gọi hàm onNavigateBack
+                            onNavigateBack()
                         }
                     }
                 }
