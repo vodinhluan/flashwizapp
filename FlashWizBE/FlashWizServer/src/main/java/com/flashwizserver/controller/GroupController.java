@@ -53,24 +53,24 @@ public class GroupController {
 	private GroupDAO groupDAO;
 
 	@PostMapping("/{userId}/group/create")
-    public ResponseEntity<?> createGroup(@PathVariable("userId") Integer userId, @RequestBody Group group) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
-        
-        group.setGroupName(group.getGroupName());
-        group.setGroupCode(groupDAO.generateRandomGroupCode());
-        
-        group = groupRepository.save(group);
+	public ResponseEntity<?> createGroup(@PathVariable("userId") Integer userId, @RequestBody Group group) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
 
-        GroupUser groupUser = new GroupUser();
-        groupUser.setUser(user);
-        groupUser.setGroup(group);
+		group.setGroupName(group.getGroupName());
+		group.setGroupCode(groupDAO.generateRandomGroupCode());
 
-        groupUser = groupUserRepository.save(groupUser);
-      
-        GroupDTO groupDto = GroupDTO.fromGroup(group);
-        return new ResponseEntity<>(groupDto, HttpStatus.CREATED);
-    }
+		group = groupRepository.save(group);
 
+		GroupUser groupUser = new GroupUser();
+		groupUser.setUser(user);
+		groupUser.setGroup(group);
+
+		groupUser = groupUserRepository.save(groupUser);
+
+		GroupDTO groupDto = GroupDTO.fromGroup(group);
+		return new ResponseEntity<>(groupDto, HttpStatus.CREATED);
+	}
 
 	@GetMapping("/group/list")
 	public List<GroupDTO> getAllGroups() {
@@ -79,20 +79,21 @@ public class GroupController {
 
 	@GetMapping("/group/user/{userId}")
 	public ResponseEntity<List<GroupDTO>> getUserGroups(@PathVariable("userId") Integer userId) {
-	    User user = userRepository.findById(userId).orElse(null);
-	    
-	    if (user != null) {
-	        List<GroupUser> groupUsers = groupUserRepository.findByUser(user);
-	    
-	        // Convert to list of GroupDto
-	        List<GroupDTO> userGroups = groupUsers.stream()
-	            .map(groupUser -> new GroupDTO(groupUser.getGroup().getId(), groupUser.getGroup().getGroupName(), groupUser.getGroup().getGroupCode()))
-	            .collect(Collectors.toList());
+		User user = userRepository.findById(userId).orElse(null);
 
-	        return ResponseEntity.ok(userGroups);
-	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	    }
+		if (user != null) {
+			List<GroupUser> groupUsers = groupUserRepository.findByUser(user);
+
+			// Convert to list of GroupDto
+			List<GroupDTO> userGroups = groupUsers
+					.stream().map(groupUser -> new GroupDTO(groupUser.getGroup().getId(),
+							groupUser.getGroup().getGroupName(), groupUser.getGroup().getGroupCode()))
+					.collect(Collectors.toList());
+
+			return ResponseEntity.ok(userGroups);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 
 	@PostMapping("/{userId}/group/join/{groupCode}")
@@ -116,6 +117,16 @@ public class GroupController {
 		groupUser.setGroup(group);
 		groupUserRepository.save(groupUser);
 
+		// Share all group's folders to the new user
+		List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
+		for (GroupFolder groupFolder : groupFolders) {
+			GroupFolder newGroupFolder = new GroupFolder();
+			newGroupFolder.setGroup(group);
+			newGroupFolder.setUser(user);
+			newGroupFolder.setFolder(groupFolder.getFolder());
+			groupFolderRepository.save(newGroupFolder);
+		}
+
 		// Sử dụng DTO để trả về group
 		GroupDTO groupDto = GroupDTO.fromGroup(group);
 		return new ResponseEntity<>(groupDto, HttpStatus.OK);
@@ -123,77 +134,82 @@ public class GroupController {
 
 	@GetMapping("/group/{groupId}")
 	public ResponseEntity<?> getGroup(@PathVariable("groupId") Integer groupId) {
-	    Optional<Group> optionalGroup = groupRepository.findById(groupId);
-	    if (!optionalGroup.isPresent()) {
-	        return new ResponseEntity<>("Nhóm không tồn tại", HttpStatus.NOT_FOUND);
-	    }
-	    Group group = optionalGroup.get();
+		Optional<Group> optionalGroup = groupRepository.findById(groupId);
+		if (!optionalGroup.isPresent()) {
+			return new ResponseEntity<>("Nhóm không tồn tại", HttpStatus.NOT_FOUND);
+		}
+		Group group = optionalGroup.get();
 
-	    Set<GroupUser> groupUsers = group.getUserGroups();
+		Set<GroupUser> groupUsers = group.getUserGroups();
 
-	    List<Integer> userIds = groupUsers.stream().map(userGroup -> userGroup.getUser().getId())
-	            .collect(Collectors.toList());
+		List<Integer> userIds = groupUsers.stream().map(userGroup -> userGroup.getUser().getId())
+				.collect(Collectors.toList());
 
-	    // Get the group folders
-	    List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
-	    // Use Set to store unique folder ids
-	    Set<Integer> folderIds = groupFolders.stream().map(groupFolder -> groupFolder.getFolder().getId())
-	            .collect(Collectors.toSet());
+		// Get the group folders
+		List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
+		// Use Set to store unique folder ids
+		Set<Integer> folderIds = groupFolders.stream().map(groupFolder -> groupFolder.getFolder().getId())
+				.collect(Collectors.toSet());
 
-	    Map<String, Object> groupInfo = new LinkedHashMap<>();
-	    groupInfo.put("groupId", group.getId());
-	    groupInfo.put("groupName", group.getGroupName());
-	    groupInfo.put("userIds", userIds);
-	    groupInfo.put("folderIds", folderIds);
+		Map<String, Object> groupInfo = new LinkedHashMap<>();
+		groupInfo.put("groupId", group.getId());
+		groupInfo.put("groupName", group.getGroupName());
+		groupInfo.put("userIds", userIds);
+		groupInfo.put("folderIds", folderIds);
 
-	    return new ResponseEntity<>(groupInfo, HttpStatus.OK);
+		return new ResponseEntity<>(groupInfo, HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping("/{userId}/groups/{groupId}/folders/{folderId}/share")
 	public ResponseEntity<?> shareFolder(@PathVariable("groupId") Integer groupId,
-	                                     @PathVariable("folderId") Integer folderId,
-	                                     @PathVariable("userId") Integer userId) {
+			@PathVariable("folderId") Integer folderId, @PathVariable("userId") Integer userId) {
 
-	    User user = userRepository.findById(userId)
-	                               .orElseThrow(() -> new IllegalArgumentException("Invalid userId: " + userId));
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid userId: " + userId));
 
-	    Folder folder = folderRepository.findById(folderId)
-	                                    .orElseThrow(() -> new IllegalArgumentException("Invalid folderId: " + folderId));
+		Folder folder = folderRepository.findById(folderId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid folderId: " + folderId));
 
-	    Group group = groupRepository.findById(groupId)
-	                                 .orElseThrow(() -> new IllegalArgumentException("Invalid groupId: " + groupId));
-	                                     
-	    List<GroupUser> groupUsers = groupUserRepository.findByGroup(group);
-	    
-	    // Only share folder if it hasn't been shared yet
-	    if (!groupFolderRepository.existsByFolderAndGroup(folder, group)) {
-	        for (GroupUser groupUser : groupUsers) {
-	            if (!groupUser.getUser().equals(user)) {
-	                GroupFolder groupFolder = new GroupFolder();
-	                groupFolder.setGroup(group);
-	                groupFolder.setUser(groupUser.getUser());
-	                groupFolder.setFolder(folder);
-	                groupFolderRepository.save(groupFolder);
-	            }
-	        }
-	    }
+		Group group = groupRepository.findById(groupId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid groupId: " + groupId));
 
-	    return new ResponseEntity<>(folderId, HttpStatus.OK); // Return only the shared folder ID
-	} 
-	
+		List<GroupUser> groupUsers = groupUserRepository.findByGroup(group);
+
+		// Only share folder if it hasn't been shared yet
+		if (!groupFolderRepository.existsByFolderAndGroup(folder, group)) {
+			GroupFolder groupFolder = new GroupFolder();
+			groupFolder.setGroup(group);
+			groupFolder.setFolder(folder);
+			groupFolderRepository.save(groupFolder);
+
+			// Share folders individually to each already existing group user
+			for (GroupUser groupUser : groupUsers) {
+				if (!groupUser.getUser().equals(user)) {
+					GroupFolder groupUserFolder = new GroupFolder();
+					groupUserFolder.setGroup(group);
+					groupUserFolder.setUser(groupUser.getUser());
+					groupUserFolder.setFolder(folder);
+					groupFolderRepository.save(groupUserFolder);
+				}
+			}
+		}
+
+		return new ResponseEntity<>(folderId, HttpStatus.OK); // Return only the shared folder ID
+	}
+
 	@GetMapping("/group/{groupId}/folders")
 	public ResponseEntity<?> getListFolderByGroupId(@PathVariable("groupId") Integer groupId) {
-	    // Tìm nhóm từ groupId
-	    Group group = groupRepository.findById(groupId)
-	                                 .orElseThrow(() -> new IllegalArgumentException("Invalid groupId: " + groupId));
+		// Tìm nhóm từ groupId
+		Group group = groupRepository.findById(groupId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid groupId: " + groupId));
 
-	    // Lấy danh sách thư mục của nhóm
-	    List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
-	    Set<Folder> folderSet = groupFolders.stream().map(GroupFolder::getFolder).collect(Collectors.toCollection(LinkedHashSet::new));
+		// Lấy danh sách thư mục của nhóm
+		List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
+		Set<Folder> folderSet = groupFolders.stream().map(GroupFolder::getFolder)
+				.collect(Collectors.toCollection(LinkedHashSet::new));
 
-	    // Trả về danh sách folder không trùng lặp
-	    return new ResponseEntity<>(folderSet, HttpStatus.OK);
+		// Trả về danh sách folder không trùng lặp
+		return new ResponseEntity<>(folderSet, HttpStatus.OK);
 	}
 
 }
