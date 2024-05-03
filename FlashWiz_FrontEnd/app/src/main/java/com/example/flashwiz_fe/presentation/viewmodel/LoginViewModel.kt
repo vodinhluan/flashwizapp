@@ -73,7 +73,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 // Gọi phương thức trong AuthRepository để lấy thông tin người dùng
-                val user = authRepository.getUserById(userId)
+                val user = authRepository.getUserById_Token(userId)
                 // Xử lý kết quả, ví dụ: lưu vào biến userId
                 tokenResponse = user
             } catch (e: Exception) {

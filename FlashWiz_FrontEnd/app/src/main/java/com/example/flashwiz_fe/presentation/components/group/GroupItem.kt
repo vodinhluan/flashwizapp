@@ -11,23 +11,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flashwiz_fe.domain.model.Group
+import com.example.flashwiz_fe.domain.model.GroupDTO
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun GroupItem(
-    group: Group,
+    group: GroupDTO,
     onItemClick: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit
 ) {
@@ -42,7 +39,7 @@ fun GroupItem(
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .clickable { onItemClick(group.userId) }
+                .clickable { onItemClick(group.id) }
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -50,12 +47,12 @@ fun GroupItem(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = group.name,
+                    text = group.groupName,
                     style = MaterialTheme.typography.subtitle1,
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(
-                    onClick = { onDeleteClick(group.userId) }
+                    onClick = { onDeleteClick(group.id) }
                 ) {
                     Icon(Icons.Default.Delete, contentDescription = "Delete")
                 }
@@ -67,3 +64,17 @@ fun GroupItem(
         }
     }
 }
+
+@Composable
+@Preview
+fun PreviewGroupItem() {
+    // Tạo một nhóm mẫu
+    val group = GroupDTO(id = 1, groupName = "Study Group", groupCode = "SG123")
+
+    GroupItem(
+        group = group,
+        onItemClick = { println("Clicked on group with ID: $it") },
+        onDeleteClick = { println("Clicked delete button on group with ID: $it") }
+    )
+}
+

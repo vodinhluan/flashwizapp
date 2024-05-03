@@ -3,20 +3,11 @@ package com.example.flashwiz_fe.presentation.components.group
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
-
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,18 +17,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.presentation.components.MenuItem
+
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun AddItemNewGroup(navController: NavController,
-                    itemType: String,
-                    groupId: Int?,
-                    ) {
+fun AddItemNewGroup(
+    navController: NavController,
+    userId: Int?,
+    apiService: FolderApiService,
+    groupId: Int?
+) {
     var groupName by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     val icon = if (expanded) Icons.Filled.Add else Icons.Outlined.Add
-
+    var showShareGroupDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -52,20 +48,24 @@ fun AddItemNewGroup(navController: NavController,
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.align(Alignment.End)
-            ){
-                MenuItem(text = "Add $itemType") {
-                    when (itemType) {
-
-//                        "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
-
-                        "Group" -> navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
-
-
-
-                    }
-                    expanded = false
+            ) {
+//                MenuItem(text = "Create Group") {
+//                    navController.navigate(ScreenRoutes.AddStudyGroupScreen.route)
+//                }
+                MenuItem(text = "Share Folder") {
+                    showShareGroupDialog = true
                 }
             }
         }
+    }
+
+    if (showShareGroupDialog) {
+        ShareGroupDialog(
+            onDismiss = { showShareGroupDialog = false },
+            userId = userId ?: -1,
+            apiService = apiService,
+            navController = navController,
+            groupId = groupId
+        )
     }
 }

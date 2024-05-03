@@ -30,7 +30,7 @@ fun AddStudyGroupScreen(
     onNavigateBack: () -> Unit
 ) {
     val viewModel: StudyGroupViewModel = viewModel()
-    val userId = viewModel.userId
+//    val userId = viewModel.userId
     var groupName by remember { mutableStateOf("") }
 
     Column(
@@ -66,13 +66,13 @@ fun AddStudyGroupScreen(
             BackIconComponent(onBackClick = onNavigateBack)
             Button(
                 onClick = {
-                    viewModel.addGroup(groupName) { isSuccess ->
-                        if (isSuccess) {
-                            onNavigateBack()
-                        } else {
-                            // Xử lý khi thêm nhóm không thành công
-                        }
-                    }
+//                    viewModel.addGroup(groupName) { isSuccess ->
+//                        if (isSuccess) {
+//                            onNavigateBack()
+//                        } else {
+//                            // Xử lý khi thêm nhóm không thành công
+//                        }
+//                    }
                 }
             ) {
                 Text("Add Group")

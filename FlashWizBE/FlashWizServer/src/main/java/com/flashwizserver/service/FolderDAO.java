@@ -41,7 +41,7 @@ public class FolderDAO {
 		return optionalFolder.orElse(null);
 	}
 	public void delete(Integer id){
-		Long countById=folderRepo.countById(id);
+		Integer countById=folderRepo.countById(id);
 	
 		folderRepo.deleteById(id);
 	

@@ -124,4 +124,5 @@ public class UserController {
         response.put("message", "Password changed successfully");
         return ResponseEntity.ok(response);
     }
+	
 }
