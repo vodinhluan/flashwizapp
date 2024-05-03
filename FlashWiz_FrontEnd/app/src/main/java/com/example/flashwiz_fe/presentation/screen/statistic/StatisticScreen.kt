@@ -86,7 +86,10 @@ fun StatisticScreen(themeViewModel: ThemeViewModel = viewModel()) {
             item { StatisticDetails("Average Score", 85) }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Daily Statistics", style = MaterialTheme.typography.titleLarge)
+                Text(text = "Daily Statistics",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = if (isDarkModeEnabled == true) Color.White else Color.Black
+                    )
                 BarChart(
                     data = listOf(
                         BarChartData("Mon", 10),
