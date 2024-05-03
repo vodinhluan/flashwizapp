@@ -26,6 +26,7 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
+import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 
 @Composable
@@ -165,7 +166,17 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
         ) { backStackEntry ->
             val flashcardId = backStackEntry.arguments?.getInt("flashcardId") ?: 0
             val cardViewModel: CardViewModel = hiltViewModel()
-            ReviewCardScreen(cardViewModel, flashcardId)
+            ReviewCardScreen(cardViewModel, flashcardId, navController = navController)
+        }
+
+        composable(ScreenRoutes.StatisticScreen.route + "/{flashcardId}") { backStackEntry ->
+            val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
+
+            val cardApiService = RetrofitInstance.cardApiService
+
+            flashcardId?.let {
+                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
+            }
         }
 
 
