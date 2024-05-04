@@ -1,4 +1,4 @@
-package com.example.flashwiz_fe.presentation.components.static
+package com.example.flashwiz_fe.presentation.screen.statistic
 
 
 import androidx.compose.foundation.background
@@ -17,6 +17,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 
 @Composable
 fun StatisticSummaryItem(title: String, value: String, modifier: Modifier = Modifier) {
@@ -81,10 +85,16 @@ fun StatisticDetails(title: String, data: Int) {
         }
     }
 }
-
 data class BarChartData(val label: String, val value: Int)
 @Composable
-fun BarChart(data: List<BarChartData>, maxValue: Int, barColor: Color) {
+fun BarChart(
+    data: List<BarChartData>,
+    maxValue: Int,
+    barColor: Color,
+    themeViewModel: ThemeViewModel = viewModel()
+) {
+    val isDarkModeEnabled by themeViewModel.darkThemeEnabled.observeAsState()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -98,7 +108,8 @@ fun BarChart(data: List<BarChartData>, maxValue: Int, barColor: Color) {
                 Text(
                     text = "${item.value}",
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = if (isDarkModeEnabled == true) Color.White else Color.Black
                 )
                 Box(
                     modifier = Modifier
@@ -110,7 +121,8 @@ fun BarChart(data: List<BarChartData>, maxValue: Int, barColor: Color) {
                 Text(
                     text = item.label,
                     fontSize = 10.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = if (isDarkModeEnabled == true) Color.White else Color.Black
                 )
             }
         }

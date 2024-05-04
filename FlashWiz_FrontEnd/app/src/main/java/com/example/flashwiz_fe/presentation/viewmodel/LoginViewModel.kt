@@ -55,8 +55,8 @@ class LoginViewModel @Inject constructor(
                     val userId = userPreferences.getUserId().toString()
                     println("${userId}")
                     this@LoginViewModel.userId = userId
-                        loginState.copy(isSuccessfullyLoggedIn = true, errorMessageLoginProcess = null,userId = userId)
-                    ?: throw IllegalStateException("User id is null")
+                    loginState.copy(isSuccessfullyLoggedIn = true, errorMessageLoginProcess = null,userId = userId)
+                        ?: throw IllegalStateException("User id is null")
                 } else {
                     loginState.copy(isSuccessfullyLoggedIn = false, errorMessageLoginProcess = "Incorrect email or password")
                 }

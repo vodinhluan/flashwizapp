@@ -1,14 +1,25 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.remote.CardApiService
 import kotlinx.coroutines.launch
 
 class StatisticViewModel(private val cardApiService: CardApiService, private val flashcardId: Int) : ViewModel() {
-    val statisticData: MutableLiveData<Map<String, Int>?> = MutableLiveData()
+    var totalCard: Int = 0
+        private set
+    var newCard: Int = 0
+        private set
+    var failCard: Int = 0
+        private set
+    var hardCard: Int = 0
+        private set
+    var goodCard: Int = 0
+        private set
+    var easyCard: Int = 0
+        private set
+
 
     init {
         fetchCardStatistics()
@@ -19,16 +30,19 @@ class StatisticViewModel(private val cardApiService: CardApiService, private val
         viewModelScope.launch {
             try {
                 val response = cardApiService.getCardStatistics(flashcardId)
-                Log.d("ID FlashCard ABCXYZ:", "FlashCard ID 123456: $flashcardId")
-                Log.d("ID FlashCard ABCXYZ:", "Response ID 123456: $response")
-
                 if (response.isSuccessful) {
-                    statisticData.postValue(response.body())
+                    val statisticMap = response.body() ?: emptyMap()
+                    totalCard = statisticMap["totalCard"] ?: 0
+                    newCard = statisticMap["newCard"] ?: 0
+                    failCard = statisticMap["failCard"] ?: 0
+                    hardCard = statisticMap["hardCard"] ?: 0
+                    goodCard = statisticMap["goodCard"] ?: 0
+                    easyCard = statisticMap["easyCard"] ?: 0
                 } else {
-                    // Xử lý lỗi khi gọi API không thành công
+                    Log.d("StatisticViewModel", "Failed to fetch statistics: ${response.errorBody()}")
                 }
             } catch (e: Exception) {
-                // Xử lý lỗi khi có ngoại lệ xảy ra
+                Log.e("StatisticViewModel", "Error fetching statistics", e)
             }
         }
     }

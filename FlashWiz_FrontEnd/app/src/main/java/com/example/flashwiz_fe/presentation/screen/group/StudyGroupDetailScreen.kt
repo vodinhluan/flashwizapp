@@ -12,10 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
-import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Surface
@@ -29,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,12 +36,9 @@ import com.example.flashwiz_fe.data.AuthRepositoryImpl
 import com.example.flashwiz_fe.data.FolderRepositoryImpl
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
-import com.example.flashwiz_fe.domain.model.CardDetail
-import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
-import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 @Composable
 fun StudyGroupDetailScreen(

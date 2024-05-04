@@ -247,7 +247,10 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 }
                                 showDeleteDialog = false
                             }
+
                         )
+
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
                 selectedFolder?.let { folder ->
@@ -267,6 +270,5 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
         }
     }
 }
-
 
 

@@ -34,7 +34,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val userName = tokenResponseBody.name
 
                     println("Lưu thông tin email và token")
-                // Lưu access token vào DataStore
+                    // Lưu access token vào DataStore
                     if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty()) {
                         userPreferences.saveUserToken(accessToken)
                         userPreferences.saveUserEmail(userEmail)

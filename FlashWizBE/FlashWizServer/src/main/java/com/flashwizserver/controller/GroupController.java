@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.flashwizserver.model.Flashcard;
+import com.flashwizserver.model.Folder;
 import com.flashwizserver.model.Group;
 import com.flashwizserver.model.GroupDTO;
 import com.flashwizserver.model.GroupUser;
@@ -232,3 +234,4 @@ public class GroupController {
 	}
 
 }
+

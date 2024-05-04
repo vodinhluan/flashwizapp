@@ -1,12 +1,10 @@
 package com.example.flashwiz_fe
 
-
-
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,8 +19,6 @@ import com.example.flashwiz_fe.ui.theme.gray
 import com.example.flashwiz_fe.util.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import android.Manifest
-
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

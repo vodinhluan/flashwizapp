@@ -73,4 +73,3 @@ fun PreviewGroupItem() {
         onDeleteClick = { println("Clicked delete button on group with ID: $it") }
     )
 }
-

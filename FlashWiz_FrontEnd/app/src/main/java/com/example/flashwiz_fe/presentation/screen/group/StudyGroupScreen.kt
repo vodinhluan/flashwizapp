@@ -35,12 +35,8 @@ import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.GroupDTO
-import com.example.flashwiz_fe.domain.repository.AuthRepository
-import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.components.group.GroupDialogComponent
 import com.example.flashwiz_fe.presentation.components.group.GroupItem
-import com.example.flashwiz_fe.presentation.components.home.SearchBar
-import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
@@ -275,3 +271,4 @@ fun StudyGroupScreen(navController: NavController,
         }
     }
 }
+
