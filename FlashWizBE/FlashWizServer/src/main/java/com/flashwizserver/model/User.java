@@ -40,6 +40,9 @@ public class User implements UserDetails  {
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private Set<Role> roles = new HashSet();
+	
+    private Set<Folder> folders = new HashSet<>(); 
+
 
 	public User() {}
 
@@ -163,7 +166,9 @@ public class User implements UserDetails  {
 		return null;
 	}
 
-
+	public void addFolder(Folder folder) {
+	    this.folders.add(folder);
+	}
 	
 
 

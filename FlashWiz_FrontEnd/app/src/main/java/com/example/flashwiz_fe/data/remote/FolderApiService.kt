@@ -2,6 +2,7 @@ package com.example.flashwiz_fe.data.remote
 
 import com.example.flashwiz_fe.domain.model.Folder
 import com.example.flashwiz_fe.domain.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.User
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -18,8 +19,12 @@ interface FolderApiService {
         @Body folder: Folder,
         @Query("userId") userId: Int
     ): Folder
-
+    @GET("/folder/get/{userId}")
+    suspend fun getFoldersByUserId(@Path("userId") userId: Int?): List<FolderDetail>
     @DELETE("/folder/delete/{id}")
     suspend fun deleteFolder(@Path("id") id: Int): List<FolderDetail>
+
+    @GET("/folder/get-by-id/{id}")
+    suspend fun getFolderById(@Path("id") id: Int): FolderDetail
 
 }

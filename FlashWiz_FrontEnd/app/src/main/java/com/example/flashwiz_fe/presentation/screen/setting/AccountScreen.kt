@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -32,16 +33,14 @@ import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelpe
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
-
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
-import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 
@@ -49,16 +48,17 @@ import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
-
-fun AccountScreen(
-    logoutViewModel: LogoutViewModel = hiltViewModel(),
-    navController: NavController
+fun AccountScreen(logoutViewModel: LogoutViewModel = hiltViewModel(),
+                  navController: NavController
 ) {
-    var darkTheme by remember { mutableStateOf(false) }
-    AppTheme(darkTheme = darkTheme) {
+    val viewModel: ThemeViewModel = viewModel()
+
+    AppTheme(darkTheme = viewModel.darkThemeEnabled.observeAsState(false).value) {
         NavDestinationHelper(
             shouldNavigate = {
                 logoutViewModel.logoutState.isSuccessfullyLoggedOut
@@ -75,12 +75,15 @@ fun AccountScreen(
 //            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it } #Phu Le Comment
             GeneralOptionsUI()
             ChangePasswordUI()
-            LogoutUI(
-                onLogoutButtonClick = logoutViewModel::logoutClick
-            )
+            LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
         }
+        NofiticaionScreen()
     }
+
 }
+
+
+
 @Composable
 fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
     val colors = if (darkTheme) DarkColors else LightColors
@@ -91,15 +94,13 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
         shapes = Shapes,
         content = {
             Box(modifier = Modifier.fillMaxSize().background(color = colors.background)) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = colors.background)
-                ) {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = colors.background)) {
                     content()
                 }
-            }
-        }
+            }}
+
     )
 }
 
@@ -121,6 +122,20 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
 //
 //    }
 
+@Composable
+fun AccountText() {
+    Text(
+        text = "Account",
+        fontFamily = Poppins,
+        color = MaterialTheme.colors.onSurface,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 30.dp, bottom = 10.dp),
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 20.sp
+    )
+}
 
 
 

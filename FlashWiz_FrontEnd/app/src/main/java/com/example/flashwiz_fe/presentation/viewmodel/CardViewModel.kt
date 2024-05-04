@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.remote.CardApiService
 import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.domain.model.RatingStatistics
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.state.EnumReviewCard
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CardViewModel @Inject constructor(private val cardRepository: CardRepository) : ViewModel() {
+    // Lấy FlashCard ID của Flash Card
     private var initialFlashcardId: Int? = null
     private val _selectedCard = MutableLiveData<CardDetail>()
     val selectedCard: LiveData<CardDetail> = _selectedCard
@@ -59,6 +61,16 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
     private var goodRatingList: MutableList<CardDetail> = mutableListOf()
     private var easyRatingList: MutableList<CardDetail> = mutableListOf()
 
+    private val _ratingStatistics = MutableLiveData<RatingStatistics>()
+    val ratingStatistics: LiveData<RatingStatistics> = _ratingStatistics
+
+    private val _stopRandomCard = MutableStateFlow(false)
+    val stopRandomCard: StateFlow<Boolean> = _stopRandomCard
+
+    fun setStopRandomCard(stop: Boolean) {
+        _stopRandomCard.value = stop
+    }
+
     fun setFlashcardId(id: Int) {
         _flashcardId.value = id
         Log.d("ID FlashCard is:", "hello FlashCard ID: $id")
@@ -82,7 +94,8 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         return cardRepository.getCardsByFlashcardId(flashcardId)
     }
 
-    fun deleteCard(cardId: Int) {
+
+    private fun deleteCard(cardId: Int) {
         viewModelScope.launch {
             try {
                 cardRepository.deleteCard(cardId)
@@ -172,7 +185,6 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
                     val randomCard = randomCardFromList(easyRatingList)
                     Log.d("Test Rating Phân ra", "Good Rating List: $easyRatingList")
                     Log.d("Test Rating: ", "Random card from Easy Rating List: $randomCard")
-
                 }
 
             } catch (e: Exception) {
@@ -186,6 +198,7 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
         _cardsLiveData.value = listOf(randomCard)
     }
 
+    // *** REMOVE AND UPDATE THEO RATING ***
     fun removeCurrentCardFromRatingList() {
         val currentCard = cardsLiveData.value?.firstOrNull() ?: return
         val ratingList = when (currentCard.rating) {
@@ -209,14 +222,16 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
                 randomCardFromList(nextRatingList)
                 Log.d("Test Rating: ", "Next Rating List: $nextRatingList")
             } else {
-                Log.d("ReviewCardScreen", "Bạn đã học hết Card. Xin chúc mừng!")
+                // CHUYỂN TRANG THỐNG KÊ kietbui
+                _stopRandomCard.value = true
+                Log.d("Test Something", "---------------------------------------------------------------")
             }
         } else {
             randomCardFromList(ratingList)
-            Log.d("Test Rating: ", "Random card from $currentCard.rating Rating List: $ratingList")
+            Log.d("Test Rating: ", "Next Rating List: $ratingList")
         }
-
         _cardState.value = EnumReviewCard.FRONT
+
     }
 
     private fun getNextRatingList(currentRating: String): List<CardDetail> {
@@ -231,6 +246,36 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
             }
         }
         return emptyList()
+    }
+
+    private fun fetchDataToAnalyst() {
+        val flashcardId = initialFlashcardId
+        viewModelScope.launch {
+            val allCards = flashcardId?.let { getCardsByFlashcardId(it) }
+            Log.d("ReviewCardScreen", "Bạn đã học hết Card. Xin chúc mừng!")
+            Log.d("Id FlashCard", "FlashCard Id mới?: $flashcardId")
+            Log.d("Test allCards w ID", "All cards updated: $allCards")
+
+            allCards?.let { cards ->
+                val failRatingList = cards.filter { it.rating == "fail" }
+                val hardRatingList = cards.filter { it.rating == "hard" }
+                val goodRatingList = cards.filter { it.rating == "good" }
+                val easyRatingList = cards.filter { it.rating == "easy" }
+
+                logCardList(failRatingList, "Fail")
+                logCardList(hardRatingList, "Hard")
+                logCardList(goodRatingList, "Good")
+                logCardList(easyRatingList, "Easy")
+            }
+        }
+    }
+
+    private fun logCardList(ratingList: List<CardDetail>, rating: String) {
+        Log.d("Test Something", "*************************************************************")
+        Log.d("Test Rating: ", "$rating Rating List:")
+        ratingList.forEachIndexed { index, card ->
+            Log.d("Test Rating: ", "Card ${index + 1}: $card")
+        }
     }
 
     // ** END **
@@ -248,12 +293,34 @@ class CardViewModel @Inject constructor(private val cardRepository: CardReposito
     private suspend fun updateCardRating(cardId: Int, newRating: String) {
         cardRepository.updateCardRating(cardId, newRating)
         Log.d("Test New Rating Cards", "New Rating Updated!!!: $newRating")
+        fetchDataToAnalyst()
     }
 
     fun onCardFlipped() {
         _cardState.value = EnumReviewCard.BACK
     }
 
+    fun getCardById(cardId: Int) {
+        viewModelScope.launch {
+            val response = cardRepository.getCardById(cardId)
+            if (response.isSuccessful) {
+                _selectedCard.value = response.body()
+            } else {
 
+            }
+        }
+    }
+    fun updateCard(cardId: Int, updatedCard: CardDetail) {
+        viewModelScope.launch {
+            try {
+                cardRepository.updateCard(cardId, updatedCard)
+                Log.d("CardViewModel", "Card updated successfully")
+                _updatedCard.value = updatedCard
+            } catch (e: Exception) {
+                Log.e("CardViewModel", "Error updating card: $e")
+            }
+        }
+    }
 
 }
+

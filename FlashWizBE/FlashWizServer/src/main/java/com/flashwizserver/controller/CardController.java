@@ -99,24 +99,40 @@ public class CardController {
 		card = cardService.updateCard(id, card);
 		return ResponseEntity.ok().body(card);
 	}
-	
+
 	@GetMapping("/card/{flashcardId}/statistic")
 	public ResponseEntity<Map<String, Integer>> getCardStatistics(@PathVariable("flashcardId") Integer flashcardId) {
-	    Flashcard flashcard = flashcardService.findById(flashcardId);
-	    if (flashcard == null) {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+		Flashcard flashcard = flashcardService.findById(flashcardId);
+		if (flashcard == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
-	    List<Card> cards = flashcard.getCard();
+		List<Card> cards = flashcard.getCard();
 
-	    Map<String, Integer> statistics = new LinkedHashMap<>();
-	    statistics.put("totalCard", (int) cards.size());
-	    statistics.put("newCard",   (int) cards.stream().filter(card -> "new".equals(card.getRating())).count());
-	    statistics.put("failCard",  (int) cards.stream().filter(card -> "fail".equals(card.getRating())).count());
-	    statistics.put("hardCard",  (int) cards.stream().filter(card -> "hard".equals(card.getRating())).count());
-	    statistics.put("goodCard",  (int) cards.stream().filter(card -> "good".equals(card.getRating())).count());
-	    statistics.put("easyCard",  (int) cards.stream().filter(card -> "easy".equals(card.getRating())).count());
+		Map<String, Integer> statistics = new LinkedHashMap<>();
+		statistics.put("totalCard", (int) cards.size());
+		statistics.put("newCard", (int) cards.stream().filter(card -> "new".equals(card.getRating())).count());
+		statistics.put("failCard", (int) cards.stream().filter(card -> "fail".equals(card.getRating())).count());
+		statistics.put("hardCard", (int) cards.stream().filter(card -> "hard".equals(card.getRating())).count());
+		statistics.put("goodCard", (int) cards.stream().filter(card -> "good".equals(card.getRating())).count());
+		statistics.put("easyCard", (int) cards.stream().filter(card -> "easy".equals(card.getRating())).count());
 
-	    return new ResponseEntity<>(statistics, HttpStatus.OK);
+		return new ResponseEntity<>(statistics, HttpStatus.OK);
 	}
+
+	@PutMapping("/card/{id}/update")
+	public ResponseEntity<Card> updateCard(@PathVariable(name = "id") Integer id, @RequestBody Card updatedCard) {
+		Optional<Card> cardOptional = cardService.getCardById(id);
+		if (!cardOptional.isPresent()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		Card existingCard = cardOptional.get();
+		existingCard.setFront(updatedCard.getFront());
+		existingCard.setBack(updatedCard.getBack());
+
+		Card savedCard = cardService.updateCard(id, existingCard);
+		return ResponseEntity.ok().body(savedCard);
+	}
+
 }

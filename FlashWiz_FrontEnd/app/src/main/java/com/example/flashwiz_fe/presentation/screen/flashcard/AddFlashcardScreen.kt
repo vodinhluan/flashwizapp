@@ -2,6 +2,7 @@
 package com.example.flashwiz_fe.presentation.screen.flashcard
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +34,7 @@ import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 
 @Composable
 fun AddFlashcardScreen(
-    onNavigateBack: () -> Unit,
+    onNavigateBack: (Int?) -> Unit,
     initialFolderId: Int?,
     navController: NavHostController
 
@@ -77,6 +81,14 @@ fun AddFlashcardScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .clickable {
+                            onNavigateBack(initialFolderId)                }
+                        .padding(16.dp)
+                )
 
 //            BackIconComponent(onNavigateBack) #Phu Le Comment
 
@@ -91,7 +103,7 @@ fun AddFlashcardScreen(
                             flashcardDescription,
                             initialFolderId
                         ) {
-                            onNavigateBack()
+                            onNavigateBack(initialFolderId)
                         }
                     }
                 }

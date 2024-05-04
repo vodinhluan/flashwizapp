@@ -120,4 +120,7 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_ui_version"
 
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    implementation "androidx.compose.runtime:runtime-livedata:1.0.1"
+
 }

@@ -1,5 +1,6 @@
 package com.flashwizserver.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "folder")
-public class Folder {
+public class Folder implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
@@ -27,8 +28,8 @@ public class Folder {
 	private User user;
 	
 
-	@OneToMany(mappedBy = "folder") // Một folder có nhiều flashcard
-    private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
+	@OneToMany(mappedBy = "folder",cascade = CascadeType.ALL, orphanRemoval = true) 
+    private List<Flashcard> flashcards = new ArrayList<>(); 
 
 
 	public Integer getId() {

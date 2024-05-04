@@ -40,6 +40,8 @@ public class FolderDAO {
 		Optional<Folder> optionalFolder = folderRepo.findById(folderId);
 		return optionalFolder.orElse(null);
 	}
+	
+	
 	public void delete(Integer id){
 		Long countById=folderRepo.countById(id);
 	
@@ -47,9 +49,9 @@ public class FolderDAO {
 	
 }
 
-	public List<Folder> getAllFoldersForUser(Integer userId) {
-		return folderRepo.findByUserId(userId);
-	}
+	public List<Folder> getFolderByUserId(Integer userId) {
+        return folderRepo.findByUserId(userId);
+    }
 
 }
 

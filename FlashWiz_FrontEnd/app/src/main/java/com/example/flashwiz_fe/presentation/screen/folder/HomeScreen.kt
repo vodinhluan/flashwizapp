@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.folder
 
+import FolderItem
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,10 +14,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.RemoveRedEye
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +29,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,26 +43,29 @@ import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
-import com.example.flashwiz_fe.presentation.components.FolderItem
+
+import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
-
-import com.example.flashwiz_fe.presentation.components.FolderItem
-
 import com.example.flashwiz_fe.presentation.screen.flashcard.FolderDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.green
+import com.example.flashwiz_fe.ui.theme.white
+import DeleteDialog as DeleteDialog
 
 @Composable
-fun HomeScreen(navController: NavController, apiService: FolderApiService) {
+fun HomeScreen(navController: NavController, apiService: FolderApiService, userId: Int?) {
     val viewModel: FolderViewModel = viewModel()
     var originalFolders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var folders by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
     var selectedFolder by remember { mutableStateOf<FolderDetail?>(null) }
     var isDataLoaded by remember { mutableStateOf(false) }
     val showHeaderState = remember { mutableStateOf(true) }
-    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
-
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var folderIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var headerText by remember { mutableStateOf("Your Folders") }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -67,94 +76,105 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
             modifier = Modifier.fillMaxSize()
         ) {
             if (showHeaderState.value) {
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Cyan),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    if (selectedFolder == null) {
-                        Text(
-                            text = "HOME",
-                            style = TextStyle(
-                                color = Color.Black,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            textAlign = TextAlign.Left,
-                            modifier = Modifier.padding(16.dp)
+                        .background(
+                            brightBlue,
+                            RoundedCornerShape(
+                                topStart = 0.dp,
+                                topEnd = 0.dp,
+                                bottomStart = 20.dp,
+                                bottomEnd = 20.dp
+                            )
                         )
-
-//                        AddItemComponent(navController = navController, "Folder", null) #Phu Le Comment
-
-
-//                        AddItemComponent(navController = navController, "Folder", null, null)  #Phu Le Comment
-
-                    } else {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Cyan),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back",
-                                tint = Color.Black,
-                                modifier = Modifier
-                                    .clickable {
-                                        selectedFolder = null
-                                    }
-                                    .padding(16.dp)
-                            )
+                        .padding(0.dp, 0.dp, 0.dp, 20.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (selectedFolder == null) {
                             Text(
-                                text = "Flashcard",
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.Bold
-                                ),
-                                textAlign = TextAlign.Left,
-                                modifier = Modifier.padding(16.dp)
+                                text = "Home",
+                                style = MaterialTheme.typography.h4,
+                                fontFamily = FontFamily.Cursive,
+                                modifier = Modifier.padding(16.dp),
+                                color = white,
+                                fontWeight = FontWeight.SemiBold
                             )
-                            selectedFolder?.let { folder ->
 
-//       #Phu Le Comment               AddItemComponent(navController = navController, "Flashcard", folderId = folder.id)
+                            AddItemComponent(
+                                navController = navController,
+                                "Folder",
+                                null,
+                                null,
+                                userId
+                            )
+                        } else {
+                            isFolderSelected = true
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = Color.Black,
+                                    modifier = Modifier
+                                        .clickable {
+                                            selectedFolder = null
+                                        }
+                                        .padding(16.dp)
+                                )
+                                Text(
+                                    text = "Flashcard",
+                                    style = MaterialTheme.typography.h4,
+                                    fontFamily = FontFamily.Cursive,
+                                    color = white,
+                                    modifier = Modifier.padding(16.dp),
+                                    textAlign = TextAlign.Left,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                selectedFolder?.let { folder ->
 
-
-//        #Phu Le Comment                        AddItemComponent(
-//                                    navController = navController,
-//                                    "Flashcard",
-//                                    folderId = folder.id,
-//                                    null
-//                                )
-
+                                    AddItemComponent(
+                                        navController = navController,
+                                        "Flashcard",
+                                        folderId = folder.id,
+                                        null, null
+                                    )
+                                }
                             }
                         }
                     }
+                    SearchBar(
+                        description = "Tìm kiếm",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp, 0.dp, 10.dp, 0.dp),
+                        hint = "Tìm kiếm",
+                        textValue = searchQuery,
+                        textColor = Color.Black,
+                        cursorColor = Color.Black,
+                        onValueChanged = { newValue ->
+                            searchQuery = newValue
+                        },
+                        trailingIcon = Icons.Default.Search,
+                        onTrailingIconClick = {}
+                    )
                 }
-                SearchBar(
-                    description = "Search",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 0.dp, 10.dp, 5.dp),
-                    hint = "Search",
-                    textValue = searchQuery,
-                    textColor = Color.Black,
-                    cursorColor = Color.LightGray,
-                    onValueChanged = { newValue ->
-                        searchQuery = newValue
-                    }, trailingIcon = Icons.Filled.RemoveRedEye,
-                    onTrailingIconClick = {}
-                )
-            }
 
+            }
             LaunchedEffect(Unit) {
-                originalFolders = apiService.getAllFolders()
+                originalFolders = apiService.getFoldersByUserId(userId)
                 folders = originalFolders
                 isDataLoaded = true
             }
-
             if (isDataLoaded) {
                 LazyColumn(
                     modifier = Modifier.weight(1f)
@@ -178,19 +198,34 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                                 }
                             },
                             onDeleteClick = { folderId ->
-                                viewModel.deleteFolderAndUpdateList(
-                                    folderId = folderId,
-                                    viewModel = viewModel,
-                                    apiService = RetrofitInstance.folderApiService,
-                                    originalFolders = originalFolders
-                                ) { updatedFlashcards ->
-                                    folders = updatedFlashcards
-                                }
+                                folderIdToDelete = folderId
+                                showDeleteDialog = true
                             }
+
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
                     }
+                }
+            }
+            if (showDeleteDialog) {
+                folderIdToDelete?.let {
+                    DeleteDialog(
+                        IdtoDelete = it,
+                        onDismiss = { showDeleteDialog = false },
+                        itemType = "folder",
+                        onChangeSuccess = { folderId ->
+                            viewModel.deleteFolderAndUpdateList(
+                                folderId = folderId,
+                                viewModel = viewModel,
+                                apiService = RetrofitInstance.folderApiService,
+                                originalFolders = originalFolders
+                            ) { updatedFolders ->
+                                folders = updatedFolders
+                            }
+                            showDeleteDialog = false
+                        }
+                    )
                 }
             }
             selectedFolder?.let { folder ->
@@ -205,7 +240,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService) {
                     showHeader = showHeaderState
                 )
             }
-
         }
     }
 }
+
+

@@ -2,9 +2,11 @@ package com.flashwizserver.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,26 +26,26 @@ public class Flashcard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
-	
+
 	@Column(length = 128, nullable = false)
 	private String name;
-	
+
 	@Column(length = 128, nullable = false)
 	private String descriptions;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "folder_id")
 	private Folder folder;
 
-	
-	@OneToMany(mappedBy = "flashcard") 
-    private List<Card> Card = new ArrayList<>(); 
-	
+	@OneToMany(mappedBy = "flashcard", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Card> Card = new ArrayList<>();
+
+
 	public List<Card> getCard() {
 		return Card;
 	}
@@ -91,7 +93,5 @@ public class Flashcard {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	
 
 }

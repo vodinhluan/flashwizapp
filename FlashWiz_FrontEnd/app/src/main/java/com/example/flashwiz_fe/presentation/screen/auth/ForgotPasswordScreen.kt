@@ -1,9 +1,11 @@
 package com.example.flashwiz_fe.presentation.screen.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,7 +38,8 @@ import com.example.flashwiz_fe.ui.theme.whiteGray
 
 @Composable
 fun ForgotPasswordScreen(
-    onForgotPasswordSuccessNavigation:() -> Unit,
+    onForgotPasswordSuccessNavigation: () -> Unit,
+    onNavigateToLoginScreen: () -> Unit,
     forgotPasswordViewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     NavDestinationHelper(
@@ -96,13 +99,31 @@ fun ForgotPasswordScreen(
                 .align(Alignment.TopCenter)
             )
         BubbleAnimation(
-            bubbleColor1 = brightBlue,
-            bubbleColor2 = blue,
+            bubbleColor1 = white,
+            bubbleColor2 = brightBlue,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(200.dp)
                 .align(Alignment.BottomCenter)
         )
+        Row(
+            modifier = Modifier
+                .padding(bottom = 10.dp)
+                .align(Alignment.BottomCenter),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                "<- Quay lại trang đăng nhập",
+                modifier = Modifier
+                    .padding(start = 5.dp)
+                    .clickable {
+                        onNavigateToLoginScreen()
+                    },
+                color = blue,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.body2
+            )
+        }
     }
 
 }

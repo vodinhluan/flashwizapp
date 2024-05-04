@@ -1,3 +1,6 @@
+import android.util.Log
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,8 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,10 +28,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.flashwiz_fe.presentation.components.BackIconComponent
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
+import com.example.flashwiz_fe.util.ScreenRoutes
+
 @Composable
 fun AddFolderScreen(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    initialUserId: Int?,
+    navController: NavHostController
 ) {
     val viewModel: FolderViewModel = viewModel()
     var folderName by remember { mutableStateOf("") }
@@ -37,7 +50,6 @@ fun AddFolderScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
 
         Text(
             text = "Add Folder",
@@ -68,6 +80,14 @@ fun AddFolderScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                modifier = Modifier
+                    .clickable {
+                        onNavigateBack()                }
+                    .padding(16.dp)
+            )
 
 //            BackIconComponent(onNavigateBack) #Phu Le Comment
 
@@ -75,11 +95,15 @@ fun AddFolderScreen(
 
             Button(
                 onClick = {
-                    viewModel.addFolder(folderName, folderDescription) { isSuccess ->
-                        if (isSuccess) {
-                            onNavigateBack()
-                        } else {
-
+                    Log.d("AddFlashcardScreen", "Folder ID: $initialUserId")
+                    if (initialUserId != null) {
+                        viewModel.addFolder(
+                            folderName,
+                            folderDescription,
+                            initialUserId
+                        ) {
+                            Log.d("AddFolderScreen", "onNavigateBack is called")
+                            onNavigateBack() // Gọi hàm onNavigateBack
                         }
                     }
                 }

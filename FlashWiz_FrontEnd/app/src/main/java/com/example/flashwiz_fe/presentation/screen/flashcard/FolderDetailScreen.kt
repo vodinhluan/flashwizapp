@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.flashcard
 
+import DeleteDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
@@ -34,11 +36,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.RetrofitInstance.flashcardApiService
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.presentation.components.FlashcardItem
+import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
+import com.example.flashwiz_fe.presentation.state.EnumScreenState
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import com.example.flashwiz_fe.ui.theme.brightBlue
 
 @Composable
 fun FolderDetailScreen(
@@ -53,6 +59,8 @@ fun FolderDetailScreen(
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var selectedFlashcard by remember { mutableStateOf<FlashcardDetail?>(null) }
+    var flashcardIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         originalFlashcard = flashcardApiService.getFlashcardsByFolderId(folderId)
@@ -83,31 +91,59 @@ fun FolderDetailScreen(
                             selectedFlashcardId.let { flashcardId ->
                                 selectedFlashcard = flashcards.find { it.id == flashcardId }
                                 showHeader.value =
-                                    false // Ẩn header khi chuyển sang màn hình chi tiết flashcard
+                                    false
                             }
                         },
                         onDeleteClick = { flashcardId ->
-                            viewModel.deleteFlashcardAndUpdateList(
-                                flashcardId = flashcardId,
-                                viewModel = viewModel,
-                                apiService = flashcardApiService,
-                                originalFlashcard = originalFlashcard
-                            ) { updatedFlashcards ->
-                                flashcards = updatedFlashcards
-                            }
+                            flashcardIdToDelete=flashcardId
+                            showDeleteDialog = true
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
+            // kietbui
+            if (showDeleteDialog) {
+                flashcardIdToDelete?.let {
+                    DeleteDialog(
+                        IdtoDelete = it,
+                        onDismiss = { showDeleteDialog = false },
+                        itemType="flashcard",
+                        onChangeSuccess = { flashcardId ->
+                            viewModel.deleteFlashcardAndUpdateList(
+                                flashcardId = flashcardId,
+                                viewModel = viewModel,
+                                apiService = RetrofitInstance.flashcardApiService,
+                                originalFlashcard = originalFlashcard
+                            ) { updatedFlashcards ->
+                                flashcards = updatedFlashcards
+                            }
+                            showDeleteDialog = false
+                        }
+                    )
+                }
+            }
         } else {
-            // Header của card
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Cyan),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+                    .background(
+                        brightBlue,
+                        RoundedCornerShape(
+                            topStart = 0.dp,
+                            topEnd = 0.dp,
+                            bottomStart = 20.dp,
+                            bottomEnd = 20.dp
+                        )
+                    )
+                    .padding(0.dp, 0.dp, 0.dp, 20.dp)
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
@@ -116,7 +152,7 @@ fun FolderDetailScreen(
                         .clickable {
                             selectedFlashcard = null
                             showHeader.value =
-                                true // Hiển thị lại header khi quay lại từ màn hình chi tiết flashcard
+                                true
                         }
                         .padding(16.dp)
                 )
@@ -130,19 +166,15 @@ fun FolderDetailScreen(
                     textAlign = TextAlign.Left,
                     modifier = Modifier.padding(16.dp)
                 )
-
-//        #Phu Le Comment    AddItemComponent(navController = navController,"Card",null)
-//                selectedFlashcard?.let { flashcard ->
-//                    AddItemComponent(
-//                        navController = navController,
-//                        "Card",
-//                        null,
-//                        flashcardId = flashcard.id
-//                    )
-//                }
-
-
-            }
+                selectedFlashcard?.let { flashcard ->
+                    AddItemComponent(
+                        navController = navController,
+                        "Card",
+                        null,
+                        flashcardId = flashcard.id,null
+                    )
+                }
+            }}
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(
                     flashcardId = flashcard.id,

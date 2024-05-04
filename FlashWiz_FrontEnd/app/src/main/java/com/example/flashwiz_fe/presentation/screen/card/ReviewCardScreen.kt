@@ -154,12 +154,11 @@ fun FlippingCard(
             randomCard?.let { card ->
                 cardViewModel.removeCurrentCardFromRatingList()
                 cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
-//                if (cardViewModel.stopRandomCard.value) {
-////                    cardViewModel.setStopRandomCard(false)
-//                    cardViewModel.setFlashcardId(initialFlashcardId)
-//                    navController.navigate("${ScreenRoutes.StatisticScreen.route}/$initialFlashcardId") {
-//                    }
-//                }
+                if (cardViewModel.stopRandomCard.value) {
+                    cardViewModel.setStopRandomCard(false)
+                    cardViewModel.setFlashcardId(initialFlashcardId)
+                    navController.navigate("${ScreenRoutes.StatisticScreen.route}/$initialFlashcardId") {}
+                }
                 cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
                 rotated = false // Reset trạng thái của card khi random card mới
                 showEvaluationBar = false // Ẩn evaluation bar khi random card mới
@@ -240,4 +239,5 @@ fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> U
         Text(text = text, color = Color.Black)
     }
 }
+
 

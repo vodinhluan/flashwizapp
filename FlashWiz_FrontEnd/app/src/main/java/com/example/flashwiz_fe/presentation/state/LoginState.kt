@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.presentation.state
 
 data class LoginState(
+    val userId:String = "",
     val emailInput:String = "",
     val passwordInput:String = "",
     val isInputValid:Boolean = false,

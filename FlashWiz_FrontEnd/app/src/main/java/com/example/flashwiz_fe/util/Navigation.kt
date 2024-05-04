@@ -1,21 +1,15 @@
 @file:Suppress("NAME_SHADOWING")
-
 package com.example.flashwiz_fe.util
-
 import AddFolderScreen
+import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.flashwiz_fe.data.CardRepositoryImpl
@@ -32,9 +26,10 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
+import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import androidx.compose.runtime.LaunchedEffect as LaunchedEffect
 
 @Composable
 fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
@@ -43,24 +38,30 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
     var showHeader: MutableState<Boolean>
     val cardViewModel: CardViewModel = hiltViewModel()
 
+    val userPreferences = remember { UserPreferences(context) }
 
     LaunchedEffect(Unit) {
-        val userPreferences = UserPreferences(context)
         println("Email đang đăng nhập: ${userPreferences.getUserEmail()}")
+        println("User Id đang đăng nhập: ${userPreferences.getUserId()}")
+
         if (userPreferences.getIsLoggedIn()) {
-            navController.navigate(ScreenRoutes.MainScreen.route) {
+            val userId = userPreferences.getUserId() ?: "0"
+            navController.navigate("${ScreenRoutes.MainScreen.route}/$userId") {
                 popUpTo(0)
             }
         }
     }
+
     NavHost(
         navController = navController,
         startDestination = ScreenRoutes.LoginScreen.route
     ) {
+
         composable(ScreenRoutes.LoginScreen.route) {
             LoginScreen(
-                onLoginSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.MainScreen.route) {
+                onLoginSuccessNavigation = { userId ->
+                    println("UserId login: $userId")
+                    navController.navigate("${ScreenRoutes.MainScreen.route}/$userId") {
                         popUpTo(0)
                     }
                 },
@@ -82,7 +83,13 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                     navController.navigate(ScreenRoutes.InsertOTPScreen.route) {
                         popUpTo(0)
                     }
+                },
+                onNavigateToLoginScreen = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                        popUpTo(0)
+                    }
                 }
+
             )
         }
         composable(ScreenRoutes.InsertOTPScreen.route) {
@@ -103,6 +110,8 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                 }
             )
         }
+
+
         composable(ScreenRoutes.RegisterScreen.route) {
             RegisterScreen(
                 onRegisterSuccessNavigation = {
@@ -117,28 +126,44 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                 }
             )
         }
-        composable(ScreenRoutes.MainScreen.route) {
-            MainScreen(navController)
+        composable(ScreenRoutes.MainScreen.route + "/{userId}") { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: "0"
+            val userIdInt = if (userId.matches("\\d+".toRegex())) {
+                userId.toInt()
+            } else {
+               0
+            }
+            MainScreen(navController, userIdInt)
         }
-        composable(ScreenRoutes.AddFolderScreen.route) {
+
+        composable(ScreenRoutes.AddFolderScreen.route+ "/{userId}") { backStackEntry ->
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                Log.d("Navigation", "Navigated to ${destination.route}")
+            }
+            val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull()
             AddFolderScreen(
                 onNavigateBack = {
-                    navController.popBackStack()
-                }
+                    navController.navigateUp()
+                },
+                initialUserId = userId,
+                navController = navController
             )
         }
 
         // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
-            val navController = rememberNavController()
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
 
             AddFlashcardScreen(
-                onNavigateBack = { navController.popBackStack() },
+                onNavigateBack = { folderId ->
+                    // Quay lại màn hình trước đó với thông tin về folderId
+                    navController.popBackStack()
+                },
                 initialFolderId = folderId,
                 navController = navController
             )
         }
+
 
         composable(
             route = "${ScreenRoutes.ReviewCardScreen.route}/{flashcardId}",
@@ -155,21 +180,23 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
 
             val cardViewModel: CardViewModel = remember {
-                val cardRepository: CardRepository =
+            val cardRepository: CardRepository =
                     CardRepositoryImpl(RetrofitInstance.cardApiService)
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-            AddCardScreen(
+
+            AddCardScreen( onNavigateBack = {
+                navController.navigateUp()
+            },
                 cardViewModel = cardViewModel,
                 navController = navController,
-                initialFlashcardId = flashcardId
-            )
+                initialFlashcardId = flashcardId)
         }
 
 
         composable(ScreenRoutes.ReviewCardScreen.route) {
-//            ReviewCardScreen() Phu Le comment
+//            ReviewCardScreen()
         }
 
         composable(ScreenRoutes.NotificationScreen.route) {
@@ -182,8 +209,25 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             val cardApiService = RetrofitInstance.cardApiService
 
             flashcardId?.let {
-                StatisticScreen(cardApiService = cardApiService, flashcardId = it)
+                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
             }
+        }
+
+        composable(ScreenRoutes.StatisticScreen.route + "/{flashcardId}") { backStackEntry ->
+            val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
+
+            val cardApiService = RetrofitInstance.cardApiService
+
+            flashcardId?.let {
+                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
+            }
+        }
+
+        // ** GROUP **
+        composable(ScreenRoutes.AddStudyGroupScreen.route) {
+            AddStudyGroupScreen(onNavigateBack = {
+                navController.navigateUp()
+            })
         }
     }
 
