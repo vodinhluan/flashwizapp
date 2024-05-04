@@ -96,12 +96,12 @@ fun UpdateCardDialog(
     )
 
 }
-@Preview
-@Composable
-fun UpdateCardDialogPreview() {
-    UpdateCardDialog(
-        card = CardDetail(1, "Front Content", "Back Content","null"),
-        onDismiss = {},
-        onChangeSuccess = {}
-    )
-}
+//@Preview
+//@Composable
+//fun UpdateCardDialogPreview() {
+//    UpdateCardDialog(
+//        card = CardDetail(1, "Front Content", "Back Content","null",),
+//        onDismiss = {},
+//        onChangeSuccess = {}
+//    )
+//}

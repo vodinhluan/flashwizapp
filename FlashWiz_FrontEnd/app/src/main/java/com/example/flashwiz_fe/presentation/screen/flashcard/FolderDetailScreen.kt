@@ -43,6 +43,7 @@ import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import com.example.flashwiz_fe.ui.theme.SecondaryColor
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
@@ -54,8 +55,10 @@ fun FolderDetailScreen(
     onNavigateUp: () -> Unit,
     navController: NavController,
     showHeader: MutableState<Boolean>,
-    isFolderSelected:Boolean
+    isFolderSelected:Boolean,
+    isDarkModeEnabled: Boolean
 ) {
+    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
     val viewModel: FlashcardViewModel = viewModel()
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
@@ -186,7 +189,8 @@ fun FolderDetailScreen(
                         selectedFlashcard = null
                         showHeader.value = true
                     },
-                    navController
+                    navController,
+                    isDarkModeEnabled
                 )
             }
         }

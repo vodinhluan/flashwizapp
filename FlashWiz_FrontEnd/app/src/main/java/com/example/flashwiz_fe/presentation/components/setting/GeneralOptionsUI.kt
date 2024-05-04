@@ -38,12 +38,6 @@ fun GeneralOptionsUI() {
             .padding(top = 10.dp)
     ) {
         GeneralSettingItem(
-            icon = R.drawable.ic_rounded_notification,
-            mainText = "Notifications",
-            subText = "Customize notifications",
-            onClick = {}
-        )
-        GeneralSettingItem(
             icon = R.drawable.ic_more,
             mainText = "More customization",
             subText = "Customize it more to fit your usage",

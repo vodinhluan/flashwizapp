@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.components.group
 
+import StudyGroupViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,9 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.GroupDTO
-import com.example.flashwiz_fe.presentation.viewmodel.StudyGroupViewModel
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
+import com.example.flashwiz_fe.ui.theme.Poppins
+import com.example.flashwiz_fe.ui.theme.SecondaryColor
+
 @Composable
 fun GroupDialogComponent(
     userId: Int?,
@@ -44,6 +47,7 @@ fun GroupDialogComponent(
 ) {
     var groupField by remember { mutableStateOf("") } // Biến lưu trữ giá trị của TextField
     val groupViewModel: StudyGroupViewModel = hiltViewModel()
+
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = {
@@ -63,7 +67,7 @@ fun GroupDialogComponent(
                 onValueChange = { groupField = it }, // Cập nhật giá trị của groupCode khi có thay đổi
                 enabled = true, // Cho phép nhập dữ liệu
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                label = { Text("Group ${textfield.trim()}") } // Sử dụng phương thức trim() để loại bỏ khoảng trắng
+                label = { Text("Group $textfield") }
             )
         },
         confirmButton = {
@@ -137,3 +141,4 @@ fun GroupDialogComponent(
         contentColor = Color.Black
     )
 }
+

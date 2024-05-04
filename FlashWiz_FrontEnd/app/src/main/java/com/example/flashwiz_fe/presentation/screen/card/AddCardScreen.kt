@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Icon
@@ -24,11 +25,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,6 +47,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
+
+
 @Composable
 fun AddCardScreen(    onNavigateBack: () -> Unit,
 //                      onNavigateUp: () ->Unit,
@@ -51,6 +56,12 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
     val cardState = remember { mutableStateOf(CardState()) }
     val saveSuccess by cardViewModel.saveSuccess.collectAsState()
     val context = LocalContext.current
+    var isBoldFront by remember { mutableStateOf(false) }
+    var isItalicFront by remember { mutableStateOf(false) }
+    var isBoldBack by remember { mutableStateOf(false) }
+    var isItalicBack by remember { mutableStateOf(false) }
+    var textAlignFront by remember { mutableStateOf(TextAlign.Start) }
+    var textAlignBack by remember { mutableStateOf(TextAlign.Start) }
 
 
     Surface(
@@ -89,8 +100,7 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
                     modifier = Modifier.padding(16.dp)
                 )
             }
-
-            // FRONT CARD
+// FRONT CARD
             Text(
                 text = "FRONT CARD",
                 style = TextStyle(
@@ -102,13 +112,50 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
                 modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
             )
 
+// Add B and I Buttons for Front End
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                IconButtonWithText(
+                    text = "B",
+                    isBold = isBoldFront,
+                    onClick = { isBoldFront = !isBoldFront }
+                )
+                IconButtonWithText(
+                    text = "I",
+                    isItalic = isItalicFront,
+                    onClick = { isItalicFront = !isItalicFront }
+                )
+                IconButtonWithText(
+                    text = "L",
+                    onClick = { textAlignFront = TextAlign.Start }
+                )
+                IconButtonWithText(
+                    text = "C",
+                    onClick = { textAlignFront = TextAlign.Center }
+                )
+                IconButtonWithText(
+                    text = "R",
+                    onClick = { textAlignFront = TextAlign.End }
+                )
+            }
+
             TextField(
                 value = cardState.value.frontText,
                 onValueChange = { cardState.value = cardState.value.copy(frontText = it) },
                 label = { Text("") },
+                textStyle = TextStyle.Default.copy(
+                    fontSize = 20.sp,
+                    fontWeight = if (isBoldFront) FontWeight.Bold else FontWeight.Normal,
+                    fontStyle = if (isItalicFront) FontStyle.Italic else FontStyle.Normal,
+                    textAlign = textAlignFront
+                ),
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
+                    .height(175.dp)
             )
+
 
             // BACK CARD
             Text(
@@ -119,16 +166,51 @@ fun AddCardScreen(    onNavigateBack: () -> Unit,
                     fontWeight = FontWeight.Bold
                 ),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(5.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 25.dp)
             )
+
+// Add B and I Buttons for Back End
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                IconButtonWithText(
+                    text = "B",
+                    isBold = isBoldBack,
+                    onClick = { isBoldBack = !isBoldBack }
+                )
+                IconButtonWithText(
+                    text = "I",
+                    isItalic = isItalicBack,
+                    onClick = { isItalicBack = !isItalicBack }
+                )
+                IconButtonWithText(
+                    text = "L",
+                    onClick = { textAlignBack = TextAlign.Start }
+                )
+                IconButtonWithText(
+                    text = "C",
+                    onClick = { textAlignBack = TextAlign.Center }
+                )
+                IconButtonWithText(
+                    text = "R",
+                    onClick = { textAlignBack = TextAlign.End }
+                )
+            }
 
             TextField(
                 value = cardState.value.backText,
                 onValueChange = { cardState.value = cardState.value.copy(backText = it) },
                 label = { Text("") },
+                textStyle = TextStyle.Default.copy(
+                    fontSize = 20.sp,
+                    fontWeight = if (isBoldBack) FontWeight.Bold else FontWeight.Normal,
+                    fontStyle = if (isItalicBack) FontStyle.Italic else FontStyle.Normal,
+                    textAlign = textAlignBack
+                ),
                 modifier = Modifier.padding(8.dp)
                     .align(Alignment.CenterHorizontally)
+                    .height(175.dp)
             )
 
             Row (

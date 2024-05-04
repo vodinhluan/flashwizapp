@@ -21,22 +21,13 @@ import com.flashwizserver.model.Folder;
 import com.flashwizserver.model.User;
 import com.flashwizserver.service.FolderDAO;
 import com.flashwizserver.service.UserDAO;
+
 @RestController
 public class FolderController {
-    @Autowired
-    private FolderDAO folderDAO;
-    @Autowired
-    private UserDAO userDAO;
-    @GetMapping("/folder/get-all")
-    public ResponseEntity<List<Folder>> getAllFolder() {
-        List<Folder> folder = folderDAO.getAllFolder();
-        return new ResponseEntity<>(folder, HttpStatus.OK);
-    }
-    @GetMapping("/folder/get/{userId}")
-    public ResponseEntity<List<Folder>> getFolderByUserId(@PathVariable("userId") Integer userId) {
-        List<Folder> folders = folderDAO.getFolderByUserId(userId);
-        return ResponseEntity.ok(folders);
-    }
+	@Autowired
+	private FolderDAO folderDAO;
+	@Autowired
+	private UserDAO userDAO;
 
     @PostMapping("/folder/save")
     public ResponseEntity<Folder> saveFolder(@RequestBody Folder folder, @RequestParam("userId") Integer userId) {
@@ -62,8 +53,17 @@ public class FolderController {
             return ResponseEntity.notFound().build();
         }
     }
+	@GetMapping("/folder/get-all")
+	public ResponseEntity<List<Folder>> getAllFolder() {
+		List<Folder> folder = folderDAO.getAllFolder();
+		return new ResponseEntity<>(folder, HttpStatus.OK);
+	}
+
+	@GetMapping("/folder/get/{userId}")
+	public ResponseEntity<List<Folder>> getFolderByUserId(@PathVariable("userId") Integer userId) {
+		List<Folder> folders = folderDAO.getFolderByUserId(userId);
+		return ResponseEntity.ok(folders);
+	}
+
+
 }
-
-
-
-

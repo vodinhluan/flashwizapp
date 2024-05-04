@@ -1,6 +1,6 @@
 package com.example.flashwiz_fe.data
 
-import GroupApiService
+import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.GroupDTO
 import com.example.flashwiz_fe.domain.repository.GroupRepository
 import retrofit2.Response
@@ -24,5 +24,9 @@ class GroupRepositoryImpl(private val groupApiService: GroupApiService) : GroupR
 
     override suspend fun getGroup(groupId: Int): Map<String, Any> {
         return groupApiService.getGroup(groupId)
+    }
+
+    override suspend fun shareFolder(userId: Int, groupId: Int, folderId: Int): Response<Int> {
+        return groupApiService.shareFolder(userId, groupId, folderId)
     }
 }

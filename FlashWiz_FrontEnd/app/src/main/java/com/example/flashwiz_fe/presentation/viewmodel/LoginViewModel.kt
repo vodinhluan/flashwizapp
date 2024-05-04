@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.model.LoginInputValidationType
+import com.example.flashwiz_fe.domain.model.TokenResponse
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.domain.use_case.ValidateLoginInputUseCase
 import com.example.flashwiz_fe.presentation.state.LoginState
@@ -26,6 +27,8 @@ class LoginViewModel @Inject constructor(
         private set
     var userId by mutableStateOf<String?>(null)
         private set
+
+    var tokenResponse by mutableStateOf<TokenResponse?>(null)
     fun onEmailInputChange(newValue: String){
         loginState = loginState.copy(emailInput = newValue)
         checkInputValidation()
@@ -66,6 +69,19 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun getUserById(userId: Int) {
+        viewModelScope.launch {
+            try {
+                // Gọi phương thức trong AuthRepository để lấy thông tin người dùng
+                val user = authRepository.getUserById_Token(userId)
+                // Xử lý kết quả, ví dụ: lưu vào biến userId
+                tokenResponse = user
+            } catch (e: Exception) {
+                // Xử lý lỗi nếu có
+                // Ví dụ: hiển thị thông báo lỗi
+            }
+        }
+    }
 
 
 

@@ -41,4 +41,7 @@ interface CardApiService {
     ): Response<CardDetail>
     @GET("/card/{id}")
     suspend fun getCardById(@Path("id") id: Int): Response<CardDetail>
+
+    @GET("/card/{flashcardId}/static")
+    suspend fun getCardStatistics(@Path("flashcardId") flashcardId: Int): Response<Map<String, Int>>
 }

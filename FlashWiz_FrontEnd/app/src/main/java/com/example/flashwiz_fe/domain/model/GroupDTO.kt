@@ -5,3 +5,4 @@ data class GroupDTO (
     val groupName: String,
     val groupCode: String
 )
+

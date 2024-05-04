@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.group
 
-import DeleteDialog
-import GroupApiService
+
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,6 +30,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
+import com.example.flashwiz_fe.data.remote.FolderApiService
+import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.GroupDTO
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
@@ -41,7 +42,11 @@ import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
-fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, userId: Int?) {
+
+fun StudyGroupScreen(navController: NavController,
+                     groupApiService: GroupApiService,
+                     folderApiService: FolderApiService,
+                     userId: Int?) {
     val context = LocalContext.current
     val userPreferences = remember { UserPreferences(context) }
     var originalGroups by remember { mutableStateOf<List<GroupDTO>>(emptyList()) }
@@ -58,7 +63,7 @@ fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, 
 
 
     LaunchedEffect(Unit) {
-        originalGroups = apiService.getUserGroups(userId)
+        originalGroups = groupApiService.getUserGroups(userId)
         groups = originalGroups
         isDataLoaded = true
     }
@@ -100,11 +105,6 @@ fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, 
                             fontWeight = FontWeight.SemiBold
                         )
 
-                        AddItemNewGroup(
-                            navController = navController,
-                            itemType = "Group",
-                            groupId = null
-                        )
                     }
 
                     SearchBar(
@@ -141,10 +141,12 @@ fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, 
                                 selectedGroupId.let { groupId ->
                                     isGroupSelected = true
                                     selectedGroup = groups.find { it.id == groupId }
+
                                     Log.d(
                                         "Group ItemClicked",
                                         "Clicked on group with ID: $groupId"
                                     )
+
                                 }
                             },
                             onDeleteClick = { groupId ->
@@ -230,6 +232,7 @@ fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, 
                 )
             }
 
+
 //            if (showDeleteDialog) {
 //                groupIdToDelete?.let {
 //                    DeleteDialog(
@@ -258,8 +261,10 @@ fun StudyGroupScreen(navController: NavController, apiService: GroupApiService, 
                         groupName = group.groupName,
                         groupCode = group.groupCode,
                         navController = navController,
-                        groupApiService = apiService,
-                        context = context
+                        groupApiService = groupApiService,
+                        folderApiService = folderApiService,
+                        context = context,
+                        userId = userId
                     )
                 }
             }

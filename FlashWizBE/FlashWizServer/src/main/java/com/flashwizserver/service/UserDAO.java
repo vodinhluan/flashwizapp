@@ -87,7 +87,6 @@ public class UserDAO {
 	        Optional<User> userOptional = userRepo.findById(id);
 	        return userOptional.orElse(null);
 	    }
-
   
 
 }

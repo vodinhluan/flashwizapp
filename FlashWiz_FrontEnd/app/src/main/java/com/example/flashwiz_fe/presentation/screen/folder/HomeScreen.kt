@@ -55,7 +55,7 @@ import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
-fun HomeScreen(navController: NavController, apiService: FolderApiService,userId: Int?) {
+fun HomeScreen(navController: NavController, apiService: FolderApiService,userId: Int?, isDarkMode: Boolean) {
     val context = LocalContext.current
     val userPreferences = remember { UserPreferences(context) }
     val viewModel: FolderViewModel = viewModel()
@@ -66,8 +66,16 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
     val showHeaderState = remember { mutableStateOf(true) }
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
+
+//    val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
+
+
+
     var showDeleteDialog by remember { mutableStateOf(false) }
     var folderIdToDelete by remember { mutableStateOf<Int?>(null) }
+    var headerText by remember { mutableStateOf("Your Folders") }
+
+
     val userNameState = remember { mutableStateOf("") }
 
     LaunchedEffect(userNameState.value) {
@@ -78,7 +86,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = if (isDarkMode) Color.Black else Color.White
     ) {
         val expanded = remember { mutableStateOf(false) }
 
@@ -252,7 +260,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                         },
                         isFolderSelected = true,
                         navController = navController,
-                        showHeader = showHeaderState
+                        showHeader = showHeaderState,
+                        isDarkModeEnabled = isDarkMode
                     )
                 }
         }

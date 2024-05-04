@@ -23,7 +23,18 @@ public class GroupFolder {
 	@JoinColumn(name = "folder_id", nullable = false)
 	private Folder folder;
 
+	@ManyToOne
+	private User user;
+	
+	
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Integer getId() {
 		return id;

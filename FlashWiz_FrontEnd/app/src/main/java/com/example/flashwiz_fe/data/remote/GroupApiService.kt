@@ -1,3 +1,7 @@
+
+package com.example.flashwiz_fe.data.remote
+
+import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.GroupDTO
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,4 +24,11 @@ interface GroupApiService {
 
     @GET("/group/{groupId}")
     suspend fun getGroup(@Path("groupId") groupId: Int): Map<String, Any>
+
+
+    @POST("/{userId}/groups/{groupId}/folders/{folderId}/share")
+    suspend fun shareFolder(@Path("userId") userId: Int, @Path("groupId") groupId: Int, @Path("folderId") folderId: Int): Response<Int>
+
+    @GET("/group/{groupId}/folders")
+    suspend fun getListFolderByGroupId(@Path("groupId") groupId: Int): Set<FolderDetail>
 }
