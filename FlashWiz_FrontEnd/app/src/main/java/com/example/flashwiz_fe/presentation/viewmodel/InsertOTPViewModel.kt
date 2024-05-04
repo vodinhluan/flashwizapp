@@ -37,7 +37,7 @@ class InsertOTPViewModel @Inject constructor(
                 val statusResult = authRepository.verifiedOtp(
                     otp = insertOTPState.otpInput
                 )
-                println("gia tri cua statusResult: $statusResult")
+                
                 insertOTPState.copy(isSuccessfullyVerifyOTP = statusResult)
             }catch(e: Exception){
                 insertOTPState.copy(errorMessageVerifyOTPProcess = "Could not verified")

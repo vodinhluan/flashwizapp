@@ -21,7 +21,6 @@ class LoginViewModel @Inject constructor(
     private val userPreferences: UserPreferences
 
 ): ViewModel() {
-
     var loginState by mutableStateOf(LoginState())
         private set
     var userId by mutableStateOf<String?>(null)
@@ -40,7 +39,7 @@ class LoginViewModel @Inject constructor(
         loginState = loginState.copy(isPasswordShown = !loginState.isPasswordShown)
     }
 
-    fun onLoginClick(){
+    fun onLoginClick() {
         loginState = loginState.copy(isLoading = true)
         viewModelScope.launch {
             try {
@@ -48,26 +47,36 @@ class LoginViewModel @Inject constructor(
                     email = loginState.emailInput,
                     password = loginState.passwordInput
                 )
-                val newLoginState = if (loginResult) {
+                if (loginResult) {
                     val userId = userPreferences.getUserId().toString()
                     println("${userId}")
                     this@LoginViewModel.userId = userId
-                        loginState.copy(isSuccessfullyLoggedIn = true, errorMessageLoginProcess = null,userId = userId)
-                    ?: throw IllegalStateException("User id is null")
+                    loginState = loginState.copy(
+                        isSuccessfullyLoggedIn = true,
+                        errorMessageLoginProcess = null,
+                        userId = userId,
+                        isLoading = false
+                    )
+
                 } else {
-                    loginState.copy(isSuccessfullyLoggedIn = false, errorMessageLoginProcess = "Incorrect email or password")
+
+                    loginState = loginState.copy(
+                        isSuccessfullyLoggedIn = false,
+                        errorMessageLoginProcess = "Incorrect email or password",
+                        isLoading = false
+                    )
+
                 }
-                loginState = newLoginState
-            } catch(e: Exception){
-                loginState = loginState.copy(isSuccessfullyLoggedIn = false, errorMessageLoginProcess = "Could not login")
-            } finally {
-                loginState = loginState.copy(isLoading = false)
+            } catch (e: Exception) {
+                loginState = loginState.copy(
+                    isSuccessfullyLoggedIn = false,
+                    errorMessageLoginProcess = "Could not login",
+                    isLoading = false
+                )
+
             }
         }
     }
-
-
-
 
     private fun checkInputValidation(){
         val validationResult = validateLoginInputUseCase(

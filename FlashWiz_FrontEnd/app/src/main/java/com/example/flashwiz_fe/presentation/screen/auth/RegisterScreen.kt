@@ -48,7 +48,6 @@ fun RegisterScreen(
     onNavigateToLoginScreen: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
-
     NavDestinationHelper(
         shouldNavigate = {
             registerViewModel.registerState.isSuccessfullyRegistered

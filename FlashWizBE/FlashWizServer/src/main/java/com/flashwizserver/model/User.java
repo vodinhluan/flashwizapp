@@ -27,9 +27,9 @@ public class User implements UserDetails  {
 	public String email;
 	@Column(length=64, nullable=false)
 	public String password;
-	@Column(length=64, nullable=false)
+	@Column(length=64, nullable=true)
 	private String resetPasswordOTP;
-	@Column(name = "reset_password_OTP")
+	
 	
 	
 	
@@ -109,6 +109,7 @@ public class User implements UserDetails  {
 				+ " , Roles=" + roles
 				+ "]";
 	}
+	
 
 	
 

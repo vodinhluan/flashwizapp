@@ -6,6 +6,7 @@ public class AuthResponse {
 	private String email;
 	private String accessToken;
 
+
 	
 	
 	public AuthResponse() {}
@@ -20,6 +21,7 @@ public class AuthResponse {
 	public Integer getId() {
 		return id;
 	}
+
 
 	public void setId(Integer id) {
 		this.id = id;

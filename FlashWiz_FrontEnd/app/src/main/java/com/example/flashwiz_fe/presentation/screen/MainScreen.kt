@@ -1,5 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen
 
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,11 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.presentation.components.home.BottomNavigationBar
-
-
-import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen
-
 import com.example.flashwiz_fe.presentation.screen.folder.HomeScreen
 import com.example.flashwiz_fe.presentation.screen.group.StudyGroupScreen
 import com.example.flashwiz_fe.presentation.screen.setting.AccountScreen

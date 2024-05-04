@@ -1,60 +1,44 @@
 package com.example.flashwiz_fe.presentation.screen.setting
 
+
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-
 import androidx.compose.runtime.livedata.observeAsState
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
-
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
-
-
-
-import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
-import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
-import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
-import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 
 @Composable
-fun AccountScreen(logoutViewModel: LogoutViewModel = hiltViewModel(),
-                  navController: NavController
+fun AccountScreen(
+    logoutViewModel: LogoutViewModel = hiltViewModel(),
+            navController : NavController,
 ) {
     val viewModel: ThemeViewModel = viewModel()
 
@@ -70,7 +54,7 @@ fun AccountScreen(logoutViewModel: LogoutViewModel = hiltViewModel(),
             }
         )
         Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
-//            AccountText() #Phu Le Comment
+            AccountText()
             ProfileCardUI()
 //            DarkModeSwitch(isDarkMode = darkTheme) { darkTheme = it } #Phu Le Comment
             GeneralOptionsUI()
@@ -93,7 +77,9 @@ fun AppTheme(darkTheme: Boolean, content: @Composable () -> Unit) {
         typography = MaterialTheme.typography,
         shapes = Shapes,
         content = {
-            Box(modifier = Modifier.fillMaxSize().background(color = colors.background)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(color = colors.background)) {
                 Box(modifier = Modifier
                     .fillMaxSize()
                     .background(color = colors.background)) {

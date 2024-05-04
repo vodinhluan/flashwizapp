@@ -36,7 +36,6 @@ import com.example.flashwiz_fe.domain.model.Card
 import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
 import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
 import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.presentation.screen.auth.ChangePasswordDialog
 import com.example.flashwiz_fe.presentation.screen.setting.ChangePassword
 import com.example.flashwiz_fe.presentation.screen.setting.ChangePasswordUI
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel

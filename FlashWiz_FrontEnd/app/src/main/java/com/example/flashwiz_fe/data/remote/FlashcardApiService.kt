@@ -2,7 +2,7 @@ package com.example.flashwiz_fe.data.remote
 
 import com.example.flashwiz_fe.domain.model.Flashcard
 import com.example.flashwiz_fe.domain.model.FlashcardDetail
-import com.example.flashwiz_fe.domain.model.FolderDetail
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -20,7 +20,7 @@ interface FlashcardApiService {
 
         @Query("userId") userId: Int,
         @Query("folderId") folderId: Int
-    ): Flashcard
+    ): Response<Flashcard>
 
     @DELETE("/flashcard/delete/{id}")
     suspend fun deleteFlashcard(@Path("id") id: Int): List<FlashcardDetail>
