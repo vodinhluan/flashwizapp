@@ -3,6 +3,7 @@ package com.example.flashwiz_fe.util
 import AddFolderScreen
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -17,7 +18,6 @@ import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.domain.repository.CardRepository
 import com.example.flashwiz_fe.presentation.screen.MainScreen
-import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.ReviewCardScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ForgotPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.auth.InsertOTPScreen
@@ -26,18 +26,14 @@ import com.example.flashwiz_fe.presentation.screen.auth.RegisterScreen
 import com.example.flashwiz_fe.presentation.screen.auth.ResetPasswordScreen
 import com.example.flashwiz_fe.presentation.screen.card.AddCardScreen
 import com.example.flashwiz_fe.presentation.screen.flashcard.AddFlashcardScreen
-import com.example.flashwiz_fe.presentation.screen.group.AddStudyGroupScreen
 import com.example.flashwiz_fe.presentation.screen.statistic.StatisticScreen
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
-import androidx.compose.runtime.LaunchedEffect as LaunchedEffect
 
 @Composable
 fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
     val navController = rememberNavController()
     val context = LocalContext.current
     var showHeader: MutableState<Boolean>
-    val cardViewModel: CardViewModel = hiltViewModel()
-
     val userPreferences = remember { UserPreferences(context) }
 
     LaunchedEffect(Unit) {
@@ -77,10 +73,10 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
                 }
             )
         }
-        composable(ScreenRoutes.ForgotPasswordScreen.route) {
+        composable(ScreenRoutes.ForgotPasswordScreen.route){
             ForgotPasswordScreen(
                 onForgotPasswordSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.InsertOTPScreen.route) {
+                    navController.navigate(ScreenRoutes.InsertOTPScreen.route){
                         popUpTo(0)
                     }
                 },
@@ -92,19 +88,19 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
 
             )
         }
-        composable(ScreenRoutes.InsertOTPScreen.route) {
+        composable(ScreenRoutes.InsertOTPScreen.route){
             InsertOTPScreen(
                 onVerifiedOTPSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route) {
+                    navController.navigate(ScreenRoutes.ResetPasswordScreen.route){
                         popUpTo(0)
                     }
                 }
             )
         }
-        composable(ScreenRoutes.ResetPasswordScreen.route) {
+        composable(ScreenRoutes.ResetPasswordScreen.route){
             ResetPasswordScreen(
                 onChangePasswordSuccessNavigation = {
-                    navController.navigate(ScreenRoutes.LoginScreen.route) {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
                         popUpTo(0)
                     }
                 }
@@ -131,7 +127,7 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             val userIdInt = if (userId.matches("\\d+".toRegex())) {
                 userId.toInt()
             } else {
-               0
+                0
             }
             MainScreen(navController, userIdInt)
         }
@@ -153,7 +149,6 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
         // ** CHECK THIS **
         composable(ScreenRoutes.AddFlashcardScreen.route + "/{folderId}") { backStackEntry ->
             val folderId = backStackEntry.arguments?.getString("folderId")?.toIntOrNull()
-
             AddFlashcardScreen(
                 onNavigateBack = { folderId ->
                     // Quay lại màn hình trước đó với thông tin về folderId
@@ -174,18 +169,25 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
             ReviewCardScreen(cardViewModel, flashcardId, navController = navController)
         }
 
+        composable(ScreenRoutes.StatisticScreen.route + "/{flashcardId}") { backStackEntry ->
+            val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
 
-        composable(ScreenRoutes.AddCardScreen.route + "/{flashcardId}") { backStackEntry ->
-            val navController = rememberNavController()
+            val cardApiService = RetrofitInstance.cardApiService
+
+            flashcardId?.let {
+                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
+            }
+        }
+
+
+        composable(ScreenRoutes.AddCardScreen.route+"/{flashcardId}") { backStackEntry ->
             val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
 
             val cardViewModel: CardViewModel = remember {
-            val cardRepository: CardRepository =
-                    CardRepositoryImpl(RetrofitInstance.cardApiService)
+                val cardRepository: CardRepository = CardRepositoryImpl(RetrofitInstance.cardApiService)
 
                 CardViewModel(cardRepository)
             } ?: error("Cannot create CardViewModel")
-
             AddCardScreen( onNavigateBack = {
                 navController.navigateUp()
             },
@@ -195,41 +197,14 @@ fun Navigation(darkTheme: Boolean, onToggleTheme: () -> Unit) {
         }
 
 
+
+
         composable(ScreenRoutes.ReviewCardScreen.route) {
-//            ReviewCardScreen()
+//            ReviewCardScreen() Phu Le comment
         }
 
-        composable(ScreenRoutes.NotificationScreen.route) {
+        composable(ScreenRoutes.NotificationScreen.route){
         }
 
-        // review chuyen trang thong ke
-        composable(ScreenRoutes.StatisticScreen.route + "/{flashcardId}") { backStackEntry ->
-            val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
-
-            val cardApiService = RetrofitInstance.cardApiService
-
-            flashcardId?.let {
-                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
-            }
-        }
-
-        composable(ScreenRoutes.StatisticScreen.route + "/{flashcardId}") { backStackEntry ->
-            val flashcardId = backStackEntry.arguments?.getString("flashcardId")?.toIntOrNull()
-
-            val cardApiService = RetrofitInstance.cardApiService
-
-            flashcardId?.let {
-                StatisticScreen(cardApiService = cardApiService, flashcardId = it, navController)
-            }
-        }
-
-        // ** GROUP **
-        composable(ScreenRoutes.AddStudyGroupScreen.route) {
-            AddStudyGroupScreen(onNavigateBack = {
-                navController.navigateUp()
-            })
-        }
     }
-
 }
-

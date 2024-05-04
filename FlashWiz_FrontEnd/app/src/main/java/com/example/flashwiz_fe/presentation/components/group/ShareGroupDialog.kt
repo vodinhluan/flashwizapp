@@ -39,7 +39,7 @@ fun ShareGroupDialog(
     viewModel: StudyGroupViewModel = StudyGroupViewModel(),
     navController: NavController,
     groupId: Int?
-    ) {
+) {
     // Trạng thái để lưu danh sách folder
     var folderList by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
 

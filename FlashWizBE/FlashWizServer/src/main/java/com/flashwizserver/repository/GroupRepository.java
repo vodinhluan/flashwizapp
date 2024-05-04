@@ -10,4 +10,5 @@ import com.flashwizserver.model.Group;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
     Optional<Group> findByGroupCode(String groupCode);
+
 }

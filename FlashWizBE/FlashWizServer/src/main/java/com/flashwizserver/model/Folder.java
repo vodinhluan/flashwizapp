@@ -28,8 +28,8 @@ public class Folder implements Serializable {
 	private User user;
 	
 
-	@OneToMany(mappedBy = "folder",cascade = CascadeType.ALL, orphanRemoval = true) 
-    private List<Flashcard> flashcards = new ArrayList<>(); 
+	@OneToMany(mappedBy = "folder",cascade = CascadeType.ALL, orphanRemoval = true) // Một folder có nhiều flashcard
+    private List<Flashcard> flashcards = new ArrayList<>(); // Thay vì Set<Flashcard>
 
 
 	public Integer getId() {

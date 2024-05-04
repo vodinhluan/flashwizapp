@@ -24,7 +24,7 @@ import com.flashwizserver.repository.UserRepository;
 public class UserDAO {
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private GroupUserRepository groupUserRepo;
 
@@ -94,8 +94,8 @@ public class UserDAO {
 	}
 
 	public User getUserById(Integer id) {
-        Optional<User> userOptional = userRepo.findById(id);
-        return userOptional.orElse(null);
-    }
+		Optional<User> userOptional = userRepo.findById(id);
+		return userOptional.orElse(null);
+	}
 
 }

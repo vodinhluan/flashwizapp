@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
 import DeleteDialog
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -10,7 +9,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
@@ -32,15 +29,6 @@ import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.domain.model.Card
-import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
-import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
-import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.presentation.screen.auth.ChangePasswordDialog
-import com.example.flashwiz_fe.presentation.screen.setting.ChangePassword
-import com.example.flashwiz_fe.presentation.screen.setting.ChangePasswordUI
-import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
-import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.Column as Column
 
 @Composable
@@ -97,7 +85,7 @@ fun FlashcardDetailScreen(
                             cardViewModel.getCardById(card.id)
                             selectedCard = card
                             showUpdateCardDialog = true
-                                        },
+                        },
                         onDeleteClick = { cardId ->
                             cardIdToDelete=cardId
                             showDeleteDialog = true
@@ -135,18 +123,22 @@ fun FlashcardDetailScreen(
                 }
             }
         }
-        CustomButtonComponent(
-            text = "Review Cards",
-            onClick = {
-                cardViewModel.setFlashcardId(flashcardId)
-                navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 16.dp),
-            backgroundColor = Color.Blue,
-            contentColor = Color.White,
-            borderColor = Color.Black
-        )
+
+
+        if (cards.isNotEmpty()) {
+            CustomButtonComponent(
+                text = "Review Cards",
+                onClick = {
+                    cardViewModel.setFlashcardId(flashcardId)
+                    navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 16.dp),
+                backgroundColor = Color.Blue,
+                contentColor = Color.White,
+                borderColor = Color.Black
+            )
+        }
     }
 }

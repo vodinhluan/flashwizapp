@@ -1,6 +1,5 @@
 package com.example.flashwiz_fe.presentation.screen.statistic
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,9 +16,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,16 +56,13 @@ fun StaticText(navController: NavController) {
             fontSize = 20.sp
         )
     }
-//    Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
 
-
-    }
+}
 
 @Composable
 fun StatisticScreen(cardApiService: CardApiService, flashcardId: Int, navController: NavController) {
     val statisticViewModel = remember { StatisticViewModel(cardApiService, flashcardId) }
     val totalCard = statisticViewModel.totalCard
-    val newCard = statisticViewModel.newCard
     val failCard = statisticViewModel.failCard
     val hardCard = statisticViewModel.hardCard
     val goodCard = statisticViewModel.goodCard
@@ -83,12 +76,6 @@ fun StatisticScreen(cardApiService: CardApiService, flashcardId: Int, navControl
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item { StaticText(navController = navController) }
-
-            Log.d("test", "totalCard: $totalCard")
-            Log.d("test", "failCard: $failCard")
-            Log.d("test", "hardCard: $hardCard")
-            Log.d("test", "goodCard: $goodCard")
-            Log.d("test", "easyCard: $easyCard")
 
             item { StatisticDetails("Total Rating", totalCard) }
             item { StatisticDetails("Fail Rating", failCard) }

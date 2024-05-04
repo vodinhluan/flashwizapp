@@ -24,18 +24,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.GroupDTO
-import com.example.flashwiz_fe.domain.repository.AuthRepository
-import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.components.group.GroupDialogComponent
 import com.example.flashwiz_fe.presentation.components.group.GroupItem
-import com.example.flashwiz_fe.presentation.components.home.SearchBar
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
@@ -55,7 +50,8 @@ fun StudyGroupScreen(navController: NavController,
     var isGroupSelected by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var groupIdToDelete by remember { mutableStateOf<Int?>(null) }
-    var showDialog by remember { mutableStateOf(false) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
+    var showAddDialog by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(Unit) {
@@ -149,7 +145,7 @@ fun StudyGroupScreen(navController: NavController,
                     ) {
                         Button(
                             onClick = {
-
+                                showAddDialog=true
                             },
                             modifier = Modifier.weight(1f)
                         ) {
@@ -160,7 +156,7 @@ fun StudyGroupScreen(navController: NavController,
 
                         Button(
                             onClick = {
-                                showDialog=true
+                                showUpdateDialog=true
                             },
                             modifier = Modifier.weight(1f)
                         ) {
@@ -169,22 +165,47 @@ fun StudyGroupScreen(navController: NavController,
                     }
                 }
             }
-            if(showDialog){
+            if(showUpdateDialog){
                 GroupDialogComponent (
                     userId = userId,
                     onDismiss = {
-                        showDialog = false
+                        showUpdateDialog = false
                     },
                     onSuccess = {
-                        showDialog = false
+                        showUpdateDialog = false
                     },
                     onFailure = {
-                        showDialog = false
+                        showUpdateDialog = false
                     },
                     groups = groups, // Truyền giá trị groups từ StudyGroupScreen
                     updateGroups = { updatedGroups -> // Truyền hàm cập nhật danh sách nhóm
                         groups = updatedGroups // Cập nhật danh sách nhóm mới
-                    }
+                    },
+                    title="Join",
+                    textfield="Code",
+                    isJoinDialog = true
+                )
+            }
+
+            if(showAddDialog){
+                GroupDialogComponent (
+                    userId = userId,
+                    onDismiss = {
+                        showAddDialog = false
+                    },
+                    onSuccess = {
+                        showAddDialog = false
+                    },
+                    onFailure = {
+                        showAddDialog = false
+                    },
+                    groups = groups, // Truyền giá trị groups từ StudyGroupScreen
+                    updateGroups = { updatedGroups -> // Truyền hàm cập nhật danh sách nhóm
+                        groups = updatedGroups // Cập nhật danh sách nhóm mới
+                    },
+                    title="Create",
+                    textfield="Name",
+                    isJoinDialog = false
                 )
             }
 

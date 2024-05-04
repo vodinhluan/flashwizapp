@@ -67,5 +67,4 @@ public class FolderController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
 }

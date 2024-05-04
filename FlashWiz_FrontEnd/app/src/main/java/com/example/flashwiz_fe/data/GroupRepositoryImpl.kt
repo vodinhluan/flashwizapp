@@ -6,7 +6,7 @@ import com.example.flashwiz_fe.domain.repository.GroupRepository
 import retrofit2.Response
 
 class GroupRepositoryImpl(private val groupApiService: GroupApiService) : GroupRepository {
-    override suspend fun createGroup(userId: Int, groupName: String): Response<GroupDTO> {
+    override suspend fun createGroup(userId: Int, groupName: GroupDTO): Response<GroupDTO> {
         return groupApiService.createGroup(userId, groupName)
     }
 

@@ -4,8 +4,7 @@ import com.example.flashwiz_fe.domain.model.GroupDTO
 import retrofit2.Response
 
 interface GroupRepository {
-    suspend fun createGroup(userId: Int, groupName: String): Response<GroupDTO>
-
+    suspend fun createGroup(userId: Int, groupName: GroupDTO): Response<GroupDTO>
     suspend fun getAllGroups(): List<GroupDTO>
 
     suspend fun getUserGroups(userId: Int): List<GroupDTO>

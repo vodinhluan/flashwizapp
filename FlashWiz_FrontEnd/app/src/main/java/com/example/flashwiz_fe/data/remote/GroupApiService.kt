@@ -10,8 +10,7 @@ import retrofit2.http.Path
 
 interface GroupApiService {
     @POST("/{userId}/group/create")
-    suspend fun createGroup(@Path("userId") userId: Int, @Body groupName: String): Response<GroupDTO>
-
+    suspend fun createGroup(@Path("userId") userId: Int, @Body groupName: GroupDTO): Response<GroupDTO>
     @GET("/group/list")
     suspend fun getAllGroups(): List<GroupDTO>
 

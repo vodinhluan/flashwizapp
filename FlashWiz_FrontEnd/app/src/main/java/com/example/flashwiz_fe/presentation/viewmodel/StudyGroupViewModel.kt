@@ -56,5 +56,22 @@ class StudyGroupViewModel : ViewModel() {
             }
         }
     }
+    fun createGroup(userId: Int, groupName: String, onSuccess: () -> Unit, onFailure: () -> Unit,updateGroups: (List<GroupDTO>) -> Unit) {
+        val groupDTO = GroupDTO(id=userId, groupName=groupName, groupCode = "" )
+        viewModelScope.launch {
+            try {
+                val response = groupService.createGroup(userId, groupDTO)
+                if (response.isSuccessful) {
+                    val updatedGroups = groupService.getUserGroups(userId)
+                    updateGroups(updatedGroups)
+                    onSuccess()
+                } else {
+                    onFailure()
+                }
+            } catch (e: Exception) {
+                onFailure()
+            }
+        }
+    }
 
 }

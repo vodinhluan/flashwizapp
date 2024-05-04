@@ -13,7 +13,7 @@ sealed class ScreenRoutes(val route: String) {
     object AccountScreen : ScreenRoutes("account_screen")
     object AddStudyGroupScreen : ScreenRoutes("add_study_group_screen")
 
-
+    object FolderDetailScreen : ScreenRoutes("folder_detail_screen")
     object InsertOTPScreen : ScreenRoutes("insert_otp_screen")
     object ForgotPasswordScreen : ScreenRoutes("forgot_password_screen")
     object ReviewCardScreen : ScreenRoutes("review_card_screen")

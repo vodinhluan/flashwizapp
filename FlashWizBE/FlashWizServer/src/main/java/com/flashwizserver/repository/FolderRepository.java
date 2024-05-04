@@ -16,10 +16,9 @@ import com.flashwizserver.model.User;
 
 @Repository
 public interface FolderRepository extends CrudRepository<Folder, Integer> {
-	public Long countById(Integer id);
+    Optional<Folder> findByIdAndUser(Integer id, User user); 
+	public Integer countById(Integer id);
 
 	@Query("SELECT f FROM Folder f WHERE f.user.id = :userId")
 	List<Folder> findByUserId(@Param("userId") Integer userId);
-
-    Optional<Folder> findByIdAndUser(Integer id, User user); 
 }
