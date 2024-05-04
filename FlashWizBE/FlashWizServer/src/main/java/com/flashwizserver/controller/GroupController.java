@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -206,6 +207,28 @@ public class GroupController {
 
 		// Trả về danh sách folder không trùng lặp
 		return new ResponseEntity<>(folderSet, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/group/delete/{groupId}")
+	public ResponseEntity<?> deleteGroup(@PathVariable("groupId") Integer groupId) {
+	    Optional<Group> optionalGroup = groupRepository.findById(groupId);
+	    if (!optionalGroup.isPresent()) {
+	        return new ResponseEntity<>("Nhóm không tồn tại", HttpStatus.NOT_FOUND);
+	    }
+	    Group group = optionalGroup.get();
+
+	    // Xóa tất cả các bản ghi GroupFolder của nhóm
+	    List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
+	    groupFolderRepository.deleteAll(groupFolders);
+
+	    // Xóa tất cả các bản ghi GroupUser của nhóm
+	    List<GroupUser> groupUsers = groupUserRepository.findByGroup(group);
+	    groupUserRepository.deleteAll(groupUsers);
+
+	    // Xóa nhóm
+	    groupRepository.delete(group);
+
+	    return new ResponseEntity<>("Nhóm đã được xóa thành công", HttpStatus.OK);
 	}
 
 }

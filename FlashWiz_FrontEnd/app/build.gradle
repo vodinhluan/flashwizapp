@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.4.1'
     def compose_version = "1.2.1"
 
     implementation 'androidx.core:core-ktx:1.12.0'
@@ -121,8 +120,10 @@ dependencies {
 
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_ui_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.4.1'
 
 }

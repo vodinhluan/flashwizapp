@@ -1,6 +1,8 @@
 package com.example.flashwiz_fe.presentation.screen.group
 
 
+import DeleteDialog
+import StudyGroupViewModel
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -38,6 +40,7 @@ import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.components.group.GroupDialogComponent
 import com.example.flashwiz_fe.presentation.components.group.GroupItem
 import com.example.flashwiz_fe.presentation.components.home.SearchBar
+import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
@@ -60,6 +63,7 @@ fun StudyGroupScreen(navController: NavController,
     var groupIdToDelete by remember { mutableStateOf<Int?>(null) }
     var showUpdateDialog by remember { mutableStateOf(false) }
     var showAddDialog by remember { mutableStateOf(false) }
+    val groupViewModel: StudyGroupViewModel = viewModel()
 
 
     LaunchedEffect(Unit) {
@@ -107,21 +111,21 @@ fun StudyGroupScreen(navController: NavController,
 
                     }
 
-                    SearchBar(
-                        description = "Search",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp, 0.dp, 10.dp, 0.dp),
-                        hint = "Search",
-                        textValue = searchQuery,
-                        textColor = Color.Black,
-                        cursorColor = Color.Black,
-                        onValueChanged = { newValue ->
-                            searchQuery = newValue
-                        },
-                        trailingIcon = Icons.Default.Search,
-                        onTrailingIconClick = {}
-                    )
+//                    SearchBar(
+//                        description = "Search",
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(10.dp, 0.dp, 10.dp, 0.dp),
+//                        hint = "Search",
+//                        textValue = searchQuery,
+//                        textColor = Color.Black,
+//                        cursorColor = Color.Black,
+//                        onValueChanged = { newValue ->
+//                            searchQuery = newValue
+//                        },
+//                        trailingIcon = Icons.Default.Search,
+//                        onTrailingIconClick = {}
+//                    )
                 }
             }
 
@@ -233,26 +237,26 @@ fun StudyGroupScreen(navController: NavController,
             }
 
 
-//            if (showDeleteDialog) {
-//                groupIdToDelete?.let {
-//                    DeleteDialog(
-//                        IdtoDelete = it,
-//                        onDismiss = { showDeleteDialog = false },
-//                        itemType = "group",
-//                        onChangeSuccess = { groupId ->
-//                            viewModel.deleteGroupAndUpdateList(
-//                                groupId = groupId,
-//                                viewModel = viewModel,
-//                                apiService = RetrofitInstance.groupApiService,
-//                                originalGroups = originalGroups
-//                            ) { updatedGroups ->
-//                                groups = updatedGroups
-//                            }
-//                            showDeleteDialog = false
-//                        }
-//                    )
-//                }
-//            }
+            if (showDeleteDialog) {
+                groupIdToDelete?.let {
+                    DeleteDialog(
+                        IdtoDelete = it,
+                        onDismiss = { showDeleteDialog = false },
+                        itemType = "group",
+                        onChangeSuccess = { groupId ->
+                            groupViewModel.deleteGroupAndUpdateList(
+                                groupId = groupId,
+                                viewModel = groupViewModel,
+                                apiService = RetrofitInstance.groupApiService,
+                                originalGroup = originalGroups
+                            ) { updatedGroups ->
+                                groups = updatedGroups
+                            }
+                            showDeleteDialog = false
+                        }
+                    )
+                }
+            }
 
             if (isGroupSelected) {
                 selectedGroup?.let { group ->

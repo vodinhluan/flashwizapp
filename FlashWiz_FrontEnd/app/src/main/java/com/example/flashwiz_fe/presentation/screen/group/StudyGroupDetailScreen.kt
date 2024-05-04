@@ -48,7 +48,6 @@ import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
-
 @Composable
 fun StudyGroupDetailScreen(
     groupId: Int,
@@ -60,8 +59,10 @@ fun StudyGroupDetailScreen(
     context: Context,
     userId: Int?
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    if (expanded) Icons.AutoMirrored.Filled.PlaylistAddCheck else Icons.AutoMirrored.Filled.PlaylistAdd
+    // Biến mutable state để lưu trữ folder được chọn
+    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
+    var selectedFlashcardId by remember { mutableStateOf<Int?>(null) }
+
     val userIdsState = mutableStateOf<List<Int>>(emptyList())
     var usersState by remember { mutableStateOf<List<User>>(emptyList()) }
     val userRepository = remember { AuthRepositoryImpl(context) }
@@ -69,32 +70,18 @@ fun StudyGroupDetailScreen(
     val folderIdsState = mutableStateOf<List<Int>>(emptyList())
     val folderRepository = remember { FolderRepositoryImpl(folderApiService) }
 
-
     // Khai báo viewModel và các mutableState
     val folderViewModel: FolderViewModel = viewModel()
     var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
-    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
-
-    var cardState by remember {
-        mutableStateOf<List<CardDetail>>(emptyList())
-    }
-
     // Hàm để lấy danh sách flashcard khi nhấp vào folder
     fun getFlashcardsByFolderId(folderId: Int) {
         folderViewModel.getFlashcardsByFolderId(folderId)
-        folderViewModel.flashcardsState.value.let {
-            flashcardState = it
-        }
+
     }
 
     fun getCardsByFlashcardId(flashCardId: Int) {
         folderViewModel.getCardsByFolderId(flashCardId)
-        folderViewModel.cardState.value.let {
-            cardState = it
-        }
     }
-
-
     LaunchedEffect(groupId) {
         // Gọi phương thức từ GroupApiService để lấy dữ liệu từ backend
         val groupInfo = groupApiService.getGroup(groupId)
@@ -107,7 +94,7 @@ fun StudyGroupDetailScreen(
             users.add(user)
         }
         usersState = users
-        // test folder
+
         val folderIds = groupInfo["folderIds"] as? List<Int> ?: emptyList()
         folderIdsState.value = folderIds
         Log.d("FolderIds", "$folderIds")
@@ -225,8 +212,11 @@ fun StudyGroupDetailScreen(
                             .padding(4.dp)
                             .clickable {
                                 getFlashcardsByFolderId(folder.id)
+                                selectedFolderId = folder.id
+                                Log.d("FolderId when click", "$selectedFolderId")
+                                folderViewModel.cardState.value= emptyList()
                             },
-                        color = Color.Blue,
+                        color = if (folder.id == selectedFolderId) Color.Green else Color.Blue,
                         shape = MaterialTheme.shapes.small
                     ) {
                         Text(
@@ -239,37 +229,23 @@ fun StudyGroupDetailScreen(
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
-                    flashcardState.forEach { flashcard ->
-                        Surface(
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .clickable {
-                                    getCardsByFlashcardId(flashcard.id)
-                                },
-                            color = Color.Cyan,
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Text(
-                                text = flashcard.name,
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Normal
-                                ),
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
-                        }
 
-                        cardState.forEach {
-                                card ->
+                    // Chỉ hiển thị danh sách flashcard của folder được chọn
+                    if (folder.id == selectedFolderId) {
+                        folderViewModel.flashcardsState.value.forEach { flashcard ->
                             Surface(
                                 modifier = Modifier
-                                    .padding(4.dp),
-                                color = Color.Yellow,
+                                    .padding(4.dp)
+                                    .clickable {
+                                        getCardsByFlashcardId(flashcard.id)
+                                        selectedFlashcardId = flashcard.id
+                                        Log.d("FlashcardId when click", "$selectedFlashcardId")
+                                    },
+                                color = Color.Cyan,
                                 shape = MaterialTheme.shapes.small
                             ) {
                                 Text(
-                                    text = card.front +": "+card.back,
+                                    text = flashcard.name,
                                     style = TextStyle(
                                         color = Color.Black,
                                         fontSize = 12.sp,
@@ -278,6 +254,48 @@ fun StudyGroupDetailScreen(
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                                 )
                             }
+                            if(flashcard.id == selectedFlashcardId){
+                                folderViewModel.cardState.value.forEach  { card ->
+                                    Surface(
+                                        modifier = Modifier.padding(4.dp),
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                        ) {
+                                            // Hiển thị từ vựng "a:"
+                                            Text(
+                                                text = card.front,
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            )
+                                            // Icon hoặc ký tự dấu hai chấm ":"
+                                            Text(
+                                                text = ":",
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                ),
+                                                modifier = Modifier.padding(horizontal = 4.dp)
+                                            )
+                                            // Hiển thị nghĩa "b"
+                                            Text(
+                                                text = card.back,
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.Normal
+                                                )
+                                            )
+                                        }
+                                    }
+
+                                }}
+
                         }
                     }
                 }
@@ -287,4 +305,3 @@ fun StudyGroupDetailScreen(
 
     }
 }
-

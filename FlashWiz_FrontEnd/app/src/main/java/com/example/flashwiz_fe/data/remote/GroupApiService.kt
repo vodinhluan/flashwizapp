@@ -1,10 +1,12 @@
 
 package com.example.flashwiz_fe.data.remote
 
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.GroupDTO
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -31,4 +33,6 @@ interface GroupApiService {
 
     @GET("/group/{groupId}/folders")
     suspend fun getListFolderByGroupId(@Path("groupId") groupId: Int): Set<FolderDetail>
+    @DELETE("/group/delete/{id}")
+    suspend fun deleteGroup(@Path("id") id: Int): List<GroupDTO>
 }

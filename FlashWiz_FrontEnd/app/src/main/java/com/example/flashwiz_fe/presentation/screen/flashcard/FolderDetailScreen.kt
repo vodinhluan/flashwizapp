@@ -190,7 +190,7 @@ fun FolderDetailScreen(
                         showHeader.value = true
                     },
                     navController,
-                    isDarkModeEnabled
+//                    isDarkModeEnabled
                 )
             }
         }

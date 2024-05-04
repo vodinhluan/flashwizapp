@@ -5,52 +5,42 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.state.EnumReviewCard
-import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId: Int) {
+fun ReviewCardScreen(
+    cardViewModel: CardViewModel = hiltViewModel(),
+    flashcardId: Int,
+    navController: NavController
+) {
     val cards by cardViewModel.cardsLiveData.observeAsState()
     val randomCard = cards?.firstOrNull()
 
     val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
     val cardState: LiveData<EnumReviewCard> = _cardState
-    // Lưu giá trị của flashcard ID ban đầu
     val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
 
 
@@ -67,17 +57,29 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FlippingCard(randomCard = randomCard, cardViewModel = cardViewModel)
+            FlippingCard(
+                randomCard = randomCard,
+                cardViewModel = cardViewModel,
+                navController = navController,
+                flashcardId = flashcardId
+            )
         }
     }
 
 }
 
 @Composable
-fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
+fun FlippingCard(
+    randomCard: CardDetail?,
+    cardViewModel: CardViewModel,
+    navController: NavController,
+    flashcardId: Int
+) {
     var rotated by remember { mutableStateOf(false) }
     var showEvaluationBar by remember { mutableStateOf(false) }
     var showBackContent by remember { mutableStateOf(false) }
+    val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
+
 
     val rotate by animateFloatAsState(
         targetValue = if (rotated) 180f else 0f,
@@ -110,7 +112,6 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
             val frontText = randomCard?.front ?: "Front text not available"
             val backText = randomCard?.back ?: "Back text not available"
             if (rotate < 90f) {
-
                 Text(
                     text = randomCard?.id?.toString() ?: "",
                     modifier = Modifier
@@ -151,9 +152,14 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
         EvaluationBar(onEvaluationClick = { rating ->
             cardViewModel.setCurrentRating(rating)
             randomCard?.let { card ->
-//                cardViewModel.onRatingSubmitted(rating) // Gọi lại hàm onRatingSubmitted sau khi người dùng đánh giá
                 cardViewModel.removeCurrentCardFromRatingList()
                 cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
+                if (cardViewModel.stopRandomCard.value) {
+                    cardViewModel.setStopRandomCard(false)
+                    cardViewModel.setFlashcardId(initialFlashcardId)
+                    navController.navigate("${ScreenRoutes.StatisticScreen.route}/$initialFlashcardId") {
+                    }
+                }
                 cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
                 rotated = false // Reset trạng thái của card khi random card mới
                 showEvaluationBar = false // Ẩn evaluation bar khi random card mới
@@ -189,46 +195,38 @@ fun EvaluationBar(
     ) {
         EvaluationButton(
             text = "Fail",
-            emoji = "❎",
             color = Color.Red,
             weight = 6f
         ) {
             onEvaluationClick("fail")
-//            cardViewModel.onRatingSubmitted("fail")
         }
         EvaluationButton(
             text = "Hard",
-            emoji = "\uD83D\uDCAA",
             color = Color.Yellow,
             weight = 6f
         ) {
             onEvaluationClick("hard")
-//            cardViewModel.onRatingSubmitted("hard")
         }
         EvaluationButton(
             text = "Good",
-            emoji = "\uD83D\uDC4D",
             color = Color.Cyan,
             weight = 6f
         ) {
             onEvaluationClick("good")
-//            cardViewModel.onRatingSubmitted("good")
         }
         EvaluationButton(
             text = "Easy",
-            emoji = "\uD83D\uDE0A",
             color = Color.Green,
             weight = 6f
         ) {
             onEvaluationClick("easy")
-//            cardViewModel.onRatingSubmitted("easy")
         }
     }
 
 }
 
 @Composable
-fun EvaluationButton(text: String,emoji: String, color: Color, weight: Float, onClick: () -> Unit) {
+fun EvaluationButton(text: String, color: Color, weight: Float, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .width(80.dp)
@@ -239,23 +237,8 @@ fun EvaluationButton(text: String,emoji: String, color: Color, weight: Float, on
             .padding(horizontal = 3.dp),
         contentAlignment = Alignment.Center
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = text)
-            Spacer(modifier = Modifier.width(4.dp)) // Add space between text and emoji
-            Text(text = emoji)
-        }
+        Text(text = text, color = Color.Black)
     }
 }
-@Preview
-@Composable
-fun EvaluationButtonPreview() {
-    Column {
-        EvaluationButton(
-            text = "Good",
-            emoji = "\u274E",
-            color = Color.Cyan,
-            weight = 6f,
-            onClick = {}
-        )
-    }
-}
+
+

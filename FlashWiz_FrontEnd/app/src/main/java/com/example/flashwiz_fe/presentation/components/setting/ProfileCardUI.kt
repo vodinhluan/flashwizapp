@@ -74,7 +74,7 @@ fun ProfileCardUI() {
                 Text(
                     text = " Hello, $userName",
                     fontFamily = Poppins,
-                    color = Color.Black,
+                    color = MaterialTheme.colors.onSurface,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.SemiBold,
                 )

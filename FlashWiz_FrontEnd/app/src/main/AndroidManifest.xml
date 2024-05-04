@@ -44,8 +44,8 @@
             android:theme="@style/Theme.AuthModuleYT">
         </activity>
         <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false">
+            android:name="com.example.flashwiz_fe.MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

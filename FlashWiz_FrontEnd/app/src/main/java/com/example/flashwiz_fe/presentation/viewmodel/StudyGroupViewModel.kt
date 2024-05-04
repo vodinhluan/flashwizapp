@@ -5,8 +5,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.remote.FlashcardApiService
+import com.example.flashwiz_fe.data.remote.GroupApiService
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.GroupDTO
+import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
 import kotlinx.coroutines.launch
 
 class StudyGroupViewModel : ViewModel() {
@@ -73,5 +77,19 @@ class StudyGroupViewModel : ViewModel() {
             }
         }
     }
-
+    private fun deleteGroup(groupId: Int) {
+        viewModelScope.launch {
+            try {
+                groupService.deleteGroup(groupId)
+                // Gọi API để lấy danh sách mới sau khi xóa thành công
+            } catch (_: Exception) {
+                // Xử lý lỗi nếu cần
+            }
+        }
+    }
+    fun deleteGroupAndUpdateList(groupId: Int, viewModel: StudyGroupViewModel, apiService: GroupApiService, originalGroup: List<GroupDTO>, updateFlashcards: (List<GroupDTO>) -> Unit) {
+        viewModel.deleteGroup(groupId)
+        val updatedFlashcard = originalGroup.filterNot { it.id == groupId }
+        updateFlashcards(updatedFlashcard)
+    }
 }

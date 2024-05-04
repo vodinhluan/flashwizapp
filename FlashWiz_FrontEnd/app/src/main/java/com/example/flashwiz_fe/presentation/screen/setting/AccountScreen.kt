@@ -3,8 +3,10 @@ package com.example.flashwiz_fe.presentation.screen.setting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 
 import androidx.compose.material.MaterialTheme
@@ -61,7 +63,9 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
                 }
             )
 
-            Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
+            Column(modifier = Modifier
+//                .background(MaterialTheme.colors.background)
+            ) {
                 AccountText()
                 if (userId != null) {
                     ProfileCardUI()
@@ -72,6 +76,7 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
                 Notification()
                 GeneralOptionsUI()
                 ChangePasswordUI()
+                Spacer(modifier = Modifier.height(150.dp))
                 LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
             }
         }

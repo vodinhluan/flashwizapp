@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "849439490795",
-    "project_id": "flashwiz-9670e",
-    "storage_bucket": "flashwiz-9670e.appspot.com"
+    "project_number": "616039416306",
+    "project_id": "flashwiz-3a538",
+    "storage_bucket": "flashwiz-3a538.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:849439490795:android:0a8a994cceeef82e0cf4ae",
+        "mobilesdk_app_id": "1:616039416306:android:ae1f8c26d9fe23adc2eb6b",
         "android_client_info": {
           "package_name": "com.example.flashwiz_fe"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDajxcZKDX--HsIHo9wLEZ6w-gv2yjQsiw"
+          "current_key": "AIzaSyB2X_cmaoMbrmHSm636vRtumKWoovFuTis"
         }
       ],
       "services": {

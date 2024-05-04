@@ -34,4 +34,8 @@ class CardRepositoryImpl(private val cardApiService: CardApiService) : CardRepos
         return cardApiService.getCardById(id)
     }
 
+    override suspend fun getCardStatistics(flashcardId: Int): Response<Map<String, Int>> {
+        return cardApiService.getCardStatistics(flashcardId)
+    }
+
 }
