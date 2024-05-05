@@ -80,7 +80,8 @@ fun LoginScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp), contentAlignment = Alignment.Center
+                .height(120.dp),
+            contentAlignment = Alignment.Center
         ) {
             HeaderBackground(
                 leftColor = blue, rightColor = brightBlue, modifier = Modifier.fillMaxSize()

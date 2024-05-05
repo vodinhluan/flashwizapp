@@ -1,29 +1,10 @@
-package com.example.flashwiz_fe.presentation.screen.setting
+package com.example.flashwiz_fe.presentation.screen.auth
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,8 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,10 +23,9 @@ import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
 
 @Composable
-fun ChangePasswordUI(
-    changePasswordViewModel: ChangePasswordViewModel = hiltViewModel()
-) {
+fun ChangePasswordUI(changePasswordViewModel: ChangePasswordViewModel = hiltViewModel()) {
     var showChangePasswordDialog by remember { mutableStateOf(false) }
+    var snackbarMessage by remember { mutableStateOf("") }
 
     Column(modifier = Modifier
         .padding(horizontal = 14.dp)
@@ -71,10 +50,21 @@ fun ChangePasswordUI(
                 onChangePasswordButtonClick = changePasswordViewModel::onChangePasswordClick,
                 onDismiss = { showChangePasswordDialog = false },
                 onChangeSuccess = {
-                    showChangePasswordDialog = false
-                    // Possibly show a snackbar in the main UI or simply rely on dialog's own notification
-                }
+                    showChangePasswordDialog = false}
             )
+        }
+    }
+
+    if (snackbarMessage.isNotEmpty()) {
+        Snackbar(
+            modifier = Modifier.padding(8.dp),
+            action = {
+                Button(onClick = { snackbarMessage = "" }) {
+                    Text("OK", color = Color.White)
+                }
+            }
+        ) {
+            Text(snackbarMessage)
         }
     }
 }
@@ -141,17 +131,6 @@ fun ChangePassword(icon: Int, mainText: String, subText: String, onClick: () -> 
         }
     }
 }
-@Preview
-@Composable
-fun ChangePasswordPreview() {
-    // Thay đổi dữ liệu để phản ánh các giá trị bạn muốn hiển thị trong Composable ChangePassword
-    ChangePassword(
-        icon = R.drawable.ic_changepassword, // Thay đổi biểu tượng nếu cần
-        mainText = "Thay đổi mật khẩu", // Văn bản chính
-        subText = "Nhấn vào để thay đổi mật khẩu của bạn", // Văn bản phụ
-        onClick = { /* Xử lý sự kiện khi bấm vào card */ }
-    )
-}
 
 @Composable
 fun ChangePasswordDialog(
@@ -162,12 +141,12 @@ fun ChangePasswordDialog(
     newPasswordValue: () -> String,
     onOldPasswordChanged: (String) -> Unit,
     onNewPasswordChanged: (String) -> Unit,
-) {
+    )
+{
     var oldPassword by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var snackbarMessage by remember { mutableStateOf("") }
-    var successMessage by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
@@ -184,36 +163,17 @@ fun ChangePasswordDialog(
                     value = newPasswordValue(),
                     onValueChange = onNewPasswordChanged
                 )
-                if (snackbarMessage.isNotEmpty()) {
-                    Text(snackbarMessage, color = MaterialTheme.colors.error)
-                }
-                if (successMessage.isNotEmpty()) {
-                    Text(successMessage, color = MaterialTheme.colors.primary)
-                }
             }
         },
         confirmButton = {
             Button(
-                onClick = {
-                    if (newPassword != confirmPassword) {
-                        snackbarMessage = "Mật khẩu không khớp"
-                        successMessage = ""  // Xóa tin nhắn thành công nếu có
-                    } else {
-                        // Gọi hàm onChangePasswordClick của ViewModel
-                        onChangePasswordButtonClick()
-                    }
-                }
+                onClick = { onChangePasswordButtonClick() }
             ) {
                 Text("Đổi")
             }
         },
         dismissButton = {
-            Button(
-                onClick = {
-                    onDismiss()
-                    snackbarMessage = ""  // Xóa tin nhắn khi hủy bỏ
-                    successMessage = ""
-                }) {
+            Button(onClick = { onDismiss() }) {
                 Text("Hủy")
             }
         }
@@ -226,7 +186,7 @@ fun PasswordInput(label: String, value: String, onValueChange: (String) -> Unit)
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        visualTransformation = VisualTransformation.None,
+        visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         modifier = Modifier.fillMaxWidth()
     )

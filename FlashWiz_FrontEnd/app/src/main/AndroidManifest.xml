@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -11,7 +12,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo4_round"
         android:label="FlashWiz"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
@@ -21,9 +22,17 @@
 
 
         <activity
-            android:name=".SplashActivity"
+            android:name="com.example.flashwiz_fe.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AuthModuleYT">
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_baseline_notifications_24" />
+            <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+                 notification message. See README(https://goo.gl/6BKBk7) for more. -->
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/WhiteGray" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,6 +43,14 @@
             android:exported="true"
             android:theme="@style/Theme.AuthModuleYT">
         </activity>
+        <service
+            android:name="com.example.flashwiz_fe.MyFirebaseMessagingService"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

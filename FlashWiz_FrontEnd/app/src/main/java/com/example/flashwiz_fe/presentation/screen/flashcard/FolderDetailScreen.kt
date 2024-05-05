@@ -42,6 +42,7 @@ import com.example.flashwiz_fe.presentation.components.FlashcardItem
 import com.example.flashwiz_fe.presentation.components.home.AddItemComponent
 import com.example.flashwiz_fe.presentation.screen.card.FlashcardDetailScreen
 import com.example.flashwiz_fe.presentation.viewmodel.FlashcardViewModel
+import com.example.flashwiz_fe.ui.theme.SecondaryColor
 import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
@@ -52,8 +53,11 @@ fun FolderDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController,
-    showHeader: MutableState<Boolean>
+    showHeader: MutableState<Boolean>,
+    isFolderSelected:Boolean,
+    isDarkModeEnabled: Boolean
 ) {
+    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
     val viewModel: FlashcardViewModel = viewModel()
     var originalFlashcard by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
     var flashcards by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
@@ -77,7 +81,7 @@ fun FolderDetailScreen(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Button back và các phần khác giữ nguyên
+
             }
         }
 
@@ -94,7 +98,7 @@ fun FolderDetailScreen(
                             }
                         },
                         onDeleteClick = { flashcardId ->
-                            flashcardIdToDelete=flashcardId
+                            flashcardIdToDelete = flashcardId
                             showDeleteDialog = true
                         }
                     )
@@ -106,7 +110,7 @@ fun FolderDetailScreen(
                     DeleteDialog(
                         IdtoDelete = it,
                         onDismiss = { showDeleteDialog = false },
-                        itemType="flashcard",
+                        itemType = "flashcard",
                         onChangeSuccess = { flashcardId ->
                             viewModel.deleteFlashcardAndUpdateList(
                                 flashcardId = flashcardId,
@@ -134,14 +138,14 @@ fun FolderDetailScreen(
                             bottomEnd = 20.dp
                         )
                     )
-                    .padding(0.dp, 0.dp, 0.dp, 20.dp)
-            ){
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
@@ -168,10 +172,12 @@ fun FolderDetailScreen(
                         navController = navController,
                         "Card",
                         null,
-                        flashcardId = flashcard.id,null
-                    )
+                        flashcardId = flashcard.id, null
+                     )
+
+                    }
                 }
-            }}
+            }
             selectedFlashcard?.let { flashcard ->
                 FlashcardDetailScreen(
                     flashcardId = flashcard.id,
@@ -181,7 +187,8 @@ fun FolderDetailScreen(
                         selectedFlashcard = null
                         showHeader.value = true
                     },
-                    navController
+                    navController,
+//                    isDarkModeEnabled
                 )
             }
         }

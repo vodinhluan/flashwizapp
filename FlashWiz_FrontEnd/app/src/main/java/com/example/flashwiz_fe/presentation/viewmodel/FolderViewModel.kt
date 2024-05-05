@@ -1,45 +1,78 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.RetrofitInstance
+import com.example.flashwiz_fe.data.RetrofitInstance.cardApiService
+import com.example.flashwiz_fe.data.UserPreferences
+import com.example.flashwiz_fe.data.remote.FlashcardApiService
 import com.example.flashwiz_fe.data.remote.FolderApiService
-import com.example.flashwiz_fe.domain.model.Folder
+import com.example.flashwiz_fe.domain.model.CardDetail
+import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
+import com.example.flashwiz_fe.domain.model.Folder
 import kotlinx.coroutines.launch
 
 
 class FolderViewModel() : ViewModel() {
-
     private val folderService = RetrofitInstance.folderApiService
     private val _folders = mutableStateOf<List<FolderDetail>>(emptyList())
-    val folders: State<List<FolderDetail>> = _folders// Các thành phần khác của ViewModel
+    val folders: State<List<FolderDetail>> = _folders
+    private val flashcardApiService = RetrofitInstance.flashcardApiService
 
-    private val _toastMessage = mutableStateOf<String?>(null)
-    val toastMessage: State<String?> = _toastMessage
+    private val _flashcardsState = mutableStateOf<List<FlashcardDetail>>(emptyList())
+    val flashcardsState: State<List<FlashcardDetail>> = _flashcardsState
 
-    // Hàm thêm thư mục mới
-    fun addFolder(name: String, description: String, userId: Int, onResult: (Boolean) -> Unit) {
+    private val _cardsState = mutableStateOf<List<CardDetail>>(emptyList())
+    val cardState: MutableState<List<CardDetail>> = _cardsState
+
+    fun getFlashcardsByFolderId(folderId: Int) {
+        viewModelScope.launch {
+            try {
+                val flashcards = flashcardApiService.getFlashcardsByFolderId(folderId)
+                _flashcardsState.value = flashcards
+                Log.d("FlashCard123456", "DanhSachFlashCard: $_flashcardsState")
+            } catch (e: Exception) {
+                // Xử lý lỗi khi gọi API
+                Log.e("FolderViewModel", "Error getting flashcards: ${e.message}")
+            }
+        }
+    }
+
+
+    fun getCardsByFolderId(flashCardId: Int) {
+        viewModelScope.launch {
+            try {
+                val cards = cardApiService.getCardsByFlashcardId(flashCardId)
+                _cardsState.value = cards
+                Log.d("FlashCard123456", "DanhSach Card: $_cardsState")
+            } catch (e: Exception) {
+                // Xử lý lỗi khi gọi API
+                Log.e("FolderViewModel", "Error getting cards: ${e.message}")
+            }
+        }
+    }
+
+    fun addFolder(name: String, description: String,userId: Int, onResult: (Boolean) -> Unit) {
         val folder = Folder(name = name, descriptions = description, userId = userId)
         viewModelScope.launch {
             try {
                 val response = folderService.saveFolder(folder, userId)
-                if (response.isSuccessful) {
-                    _toastMessage.value = "Thêm Folder thành công!"
+                if (response.equals("ok")) {
                     onResult(true)
                 } else {
-                    _toastMessage.value = "Thêm Folder thất bại!"
                     onResult(false)
                 }
             } catch (e: Exception) {
-                _toastMessage.value = "An error occurred while adding folder!"
                 onResult(false)
             }
         }
     }
-    fun deleteFolder(folderId: Int) {
+    private fun deleteFolder(folderId: Int) {
         viewModelScope.launch {
             try {
                 folderService.deleteFolder(folderId)
@@ -54,4 +87,3 @@ class FolderViewModel() : ViewModel() {
     }
 
 }
-

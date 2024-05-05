@@ -16,7 +16,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
@@ -39,18 +42,23 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.state.EnumReviewCard
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
-fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId: Int) {
+fun ReviewCardScreen(
+    cardViewModel: CardViewModel = hiltViewModel(),
+    flashcardId: Int,
+    navController: NavController
+) {
     val cards by cardViewModel.cardsLiveData.observeAsState()
     val randomCard = cards?.firstOrNull()
 
     val _cardState = MutableLiveData<EnumReviewCard>(EnumReviewCard.FRONT)
     val cardState: LiveData<EnumReviewCard> = _cardState
-    // Lưu giá trị của flashcard ID ban đầu
     val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
 
 
@@ -63,21 +71,34 @@ fun ReviewCardScreen(cardViewModel: CardViewModel = hiltViewModel(), flashcardId
         modifier = Modifier.fillMaxSize(),
         color = Color.DarkGray
     ) {
+
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FlippingCard(randomCard = randomCard, cardViewModel = cardViewModel)
+            FlippingCard(
+                randomCard = randomCard,
+                cardViewModel = cardViewModel,
+                navController = navController,
+                flashcardId = flashcardId
+            )
         }
     }
 
 }
 
 @Composable
-fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
+fun FlippingCard(
+    randomCard: CardDetail?,
+    cardViewModel: CardViewModel,
+    navController: NavController,
+    flashcardId: Int
+) {
     var rotated by remember { mutableStateOf(false) }
     var showEvaluationBar by remember { mutableStateOf(false) }
     var showBackContent by remember { mutableStateOf(false) }
+    val initialFlashcardId by rememberSaveable { mutableStateOf(flashcardId) }
+
 
     val rotate by animateFloatAsState(
         targetValue = if (rotated) 180f else 0f,
@@ -85,82 +106,99 @@ fun FlippingCard(randomCard: CardDetail?, cardViewModel: CardViewModel) {
     )
 
     val flashcardId = randomCard?.id ?: 0
-
-    Card(
-        shape = RoundedCornerShape(30.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xffEFEFEF)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-        modifier = Modifier
-            .padding(10.dp)
-            .height(320.dp)
-            .graphicsLayer {
-                rotationY = rotate
-                cameraDistance = 10 * density
-            }
-            .fillMaxWidth()
-            .clickable {
-                if (!rotated) {
-                    rotated = true
-                    cardViewModel.onCardFlipped()
-                    showEvaluationBar = true // Hiển thị evaluation bar khi lật card
+    Column {
+        Icon(
+            imageVector = Icons.Rounded.ArrowBack,
+            contentDescription = "Back",
+            tint = Color.White,
+            modifier = Modifier
+                .padding(10.dp)
+                .clickable {
+                    navController.navigateUp()
                 }
-            }
-    ) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            val frontText = randomCard?.front ?: "Front text not available"
-            val backText = randomCard?.back ?: "Back text not available"
-            if (rotate < 90f) {
 
-                Text(
-                    text = randomCard?.id?.toString() ?: "",
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(top = 16.dp, start = 16.dp),
-                    style = MaterialTheme.typography.h4,
-                    color = Color.Blue
-                )
+        )
 
-                Text(
-                    text = randomCard?.rating ?: "",
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(top = 16.dp, start = 76.dp),
-                    style = MaterialTheme.typography.h4,
-                    color = Color.Blue
-                )
-
-                Text(
-                    text = frontText,
-                    fontSize = 24.sp,
-                    color = Color.Black
-                )
-            } else {
-                if (showBackContent && cardViewModel.cardState.value == EnumReviewCard.BACK) {
+        Card(
+            shape = RoundedCornerShape(30.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xffEFEFEF)),
+            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .height(320.dp)
+                .graphicsLayer {
+                    rotationY = rotate
+                    cameraDistance = 10 * density
+                }
+                .fillMaxWidth()
+                .clickable {
+                    if (!rotated) {
+                        rotated = true
+                        cardViewModel.onCardFlipped()
+                        showEvaluationBar = true // Hiển thị evaluation bar khi lật card
+                    }
+                }
+        ) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                val frontText = randomCard?.front ?: "Front text not available"
+                val backText = randomCard?.back ?: "Back text not available"
+                if (rotate < 90f) {
                     Text(
-                        text = backText,
-                        fontSize = 24.sp,
-                        color = Color.Black,
-                        modifier = Modifier.graphicsLayer { rotationY = 180f }
+                        text = randomCard?.id?.toString() ?: "",
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(top = 16.dp, start = 16.dp),
+                        style = MaterialTheme.typography.h5,
+                        color = Color.Blue
                     )
+
+                    Text(
+                        text = randomCard?.rating ?: "",
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(top = 16.dp, start = 76.dp),
+                        style = MaterialTheme.typography.h5,
+                        color = Color.Blue
+                    )
+
+                    Text(
+                        text = frontText,
+                        fontSize = 24.sp,
+                        color = Color.Black
+                    )
+                } else {
+                    if (showBackContent && cardViewModel.cardState.value == EnumReviewCard.BACK) {
+                        Text(
+                            text = backText,
+                            fontSize = 24.sp,
+                            color = Color.Black,
+                            modifier = Modifier.graphicsLayer { rotationY = 180f }
+                        )
+                    }
                 }
             }
         }
-    }
 
-    if (showEvaluationBar) { // Chỉ hiển thị evaluation bar khi cần thiết
-        EvaluationBar(onEvaluationClick = { rating ->
-            cardViewModel.setCurrentRating(rating)
-            randomCard?.let { card ->
-//                cardViewModel.onRatingSubmitted(rating) // Gọi lại hàm onRatingSubmitted sau khi người dùng đánh giá
-                cardViewModel.removeCurrentCardFromRatingList()
-                cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
-                cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
-                rotated = false // Reset trạng thái của card khi random card mới
-                showEvaluationBar = false // Ẩn evaluation bar khi random card mới
-                showBackContent = false // Ẩn mặt sau của thẻ khi random card mới
+        if (showEvaluationBar) { // Chỉ hiển thị evaluation bar khi cần thiết
+            EvaluationBar(onEvaluationClick = { rating ->
+                cardViewModel.setCurrentRating(rating)
+                randomCard?.let { card ->
+                    cardViewModel.removeCurrentCardFromRatingList()
+                    cardViewModel.updateCardRatingInViewModelScope(card.id, rating)
+                    if (cardViewModel.stopRandomCard.value) {
+                        cardViewModel.setStopRandomCard(false)
+                        cardViewModel.setFlashcardId(initialFlashcardId)
+                        navController.navigate("${ScreenRoutes.StatisticScreen.route}/$initialFlashcardId") {
+                        }
+                    }
+                    cardViewModel.getRandomCardsByFlashcardId(card.id) // Random card mới sau khi rating
+                    rotated = false // Reset trạng thái của card khi random card mới
+                    showEvaluationBar = false // Ẩn evaluation bar khi random card mới
+                    showBackContent = false // Ẩn mặt sau của thẻ khi random card mới
 
-            }
-        }, cardViewModel = cardViewModel, flashcardId = flashcardId)
+                }
+            }, cardViewModel = cardViewModel, flashcardId = flashcardId)
+        }
     }
 
     // Sử dụng MutableState để điều khiển việc hiển thị của mặt sau
@@ -194,16 +232,14 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("fail")
-//            cardViewModel.onRatingSubmitted("fail")
         }
         EvaluationButton(
             text = "Hard",
             emoji = "\uD83D\uDCAA",
             color = Color.Yellow,
             weight = 6f
-        ) {
+        ){
             onEvaluationClick("hard")
-//            cardViewModel.onRatingSubmitted("hard")
         }
         EvaluationButton(
             text = "Good",
@@ -212,16 +248,14 @@ fun EvaluationBar(
             weight = 6f
         ) {
             onEvaluationClick("good")
-//            cardViewModel.onRatingSubmitted("good")
         }
         EvaluationButton(
             text = "Easy",
             emoji = "\uD83D\uDE0A",
             color = Color.Green,
             weight = 6f
-        ) {
+        )  {
             onEvaluationClick("easy")
-//            cardViewModel.onRatingSubmitted("easy")
         }
     }
 
@@ -246,6 +280,7 @@ fun EvaluationButton(text: String,emoji: String, color: Color, weight: Float, on
         }
     }
 }
+
 @Preview
 @Composable
 fun EvaluationButtonPreview() {

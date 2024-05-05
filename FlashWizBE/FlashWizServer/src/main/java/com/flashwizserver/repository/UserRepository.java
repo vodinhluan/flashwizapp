@@ -21,30 +21,23 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	public Long countById(Integer id);
 
 //	public User findByEmail(String email); 
-     
+
 	Optional<User> findByResetPasswordOTP(String OTP);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "INSERT INTO USERS(name, email, password) VALUES(:name, :email, :password)", nativeQuery = true)
 	int registerNewUser(@Param("name") String name, @Param("email") String email, @Param("password") String password);
-	
+
 	@Query(value = "SELECT email FROM users WHERE email = :email ", nativeQuery = true)
-    List<String> checkUserEmail(@Param("email") String email);
+	List<String> checkUserEmail(@Param("email") String email);
 
-    @Query(value = "SELECT password FROM users WHERE email = :email", nativeQuery = true)
-    String checkUserPasswordByEmail(@Param("email") String email);
-    
-    
-    Optional<User> findByEmail(String email);
+	@Query(value = "SELECT password FROM users WHERE email = :email", nativeQuery = true)
+	String checkUserPasswordByEmail(@Param("email") String email);
 
+	Optional<User> findByEmail(String email);
 
-	
-
-	
-
-    @Query("SELECT u.id FROM User u WHERE u.email = :email")
-    Integer findUserIdByEmail(@Param("email") String email);
+	@Query("SELECT u.id FROM User u WHERE u.email = :email")
+	Integer findUserIdByEmail(@Param("email") String email);
 
 }
-

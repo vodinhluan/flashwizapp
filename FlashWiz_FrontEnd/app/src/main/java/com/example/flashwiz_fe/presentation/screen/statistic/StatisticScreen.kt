@@ -1,7 +1,7 @@
 package com.example.flashwiz_fe.presentation.screen.statistic
 
-
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,13 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-
-import androidx.compose.foundation.layout.width
-
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,34 +24,50 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-//import com.example.flashwiz_fe.presentation.components.statistic.BarChart
-//import com.example.flashwiz_fe.presentation.components.static.BarChartData
-//import com.example.flashwiz_fe.presentation.components.static.StatisticDetails
-//import com.example.flashwiz_fe.presentation.components.static.StatisticSummaryItem
-
-import androidx.compose.ui.unit.times
-
+import androidx.navigation.NavController
+import com.example.flashwiz_fe.data.remote.CardApiService
+import com.example.flashwiz_fe.presentation.viewmodel.StatisticViewModel
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.SecondaryColor
+
 @Composable
-fun StaticText() {
-    androidx.compose.material.Text(
-        text = "Static",
-        fontFamily = Poppins,
-        color = SecondaryColor,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 30.dp, bottom = 10.dp),
-        fontWeight = FontWeight.ExtraBold,
-        fontSize = 20.sp
-    )
+fun StaticText(navController: NavController) {
+
+    Row {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "Back",
+            tint = Color.Black,
+            modifier = Modifier
+                .clickable {
+                    navController.navigateUp()
+                }
+//            .padding(16.dp)
+        )
+        androidx.compose.material.Text(
+            text = "DATA ANALYST",
+            fontFamily = Poppins,
+            color = SecondaryColor,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp, bottom = 10.dp),
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 20.sp
+        )
+    }
+
 }
 
-
 @Composable
-fun StatisticScreen() {
+fun StatisticScreen(cardApiService: CardApiService, flashcardId: Int, navController: NavController) {
+    val statisticViewModel = remember { StatisticViewModel(cardApiService, flashcardId) }
+    val totalCard = statisticViewModel.totalCard
+    val failCard = statisticViewModel.failCard
+    val hardCard = statisticViewModel.hardCard
+    val goodCard = statisticViewModel.goodCard
+    val easyCard = statisticViewModel.easyCard
+
     Column(modifier = Modifier.background(androidx.compose.material.MaterialTheme.colors.background)) {
         LazyColumn(
             modifier = Modifier
@@ -58,35 +75,26 @@ fun StatisticScreen() {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item { StaticText() }
+            item { StaticText(navController = navController) }
 
+            item { StatisticDetails("Total Rating", totalCard) }
+            item { StatisticDetails("Fail Rating", failCard) }
+            item { StatisticDetails("Hard Rating", hardCard) }
+            item { StatisticDetails("Good Rating", goodCard) }
+            item { StatisticDetails("Easy Rating", easyCard) }
 
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    StatisticSummaryItem("Reviews Today", "2/10", Modifier.weight(1f))
-                    StatisticSummaryItem("Streak (Days)", "32", Modifier.weight(1f))
-                }
-            }
-
-            item { StatisticDetails("Cards Studied", 150) }
-            item { StatisticDetails("Hours Studied", 12) }
-            item { StatisticDetails("Average Score", 85) }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Daily Statistics", style = MaterialTheme.typography.titleLarge)
+                Text(text = "BIỂU ĐỒ", style = MaterialTheme.typography.titleLarge)
                 BarChart(
                     data = listOf(
-                        BarChartData("Mon", 10),
-                        BarChartData("Tue", 20),
-                        BarChartData("Wed", 30),
-                        BarChartData("Thu", 40),
-                        BarChartData("Fri", 50),
-                        BarChartData("Sat", 35),
-                        BarChartData("Sun", 25)
+                        BarChartData("Fail", failCard),
+                        BarChartData("Hard", hardCard),
+                        BarChartData("Good", goodCard),
+                        BarChartData("Easy", easyCard),
                     ),
-                    maxValue = 50, barColor = Color.Black
+                    maxValue = listOf(failCard, hardCard, goodCard, easyCard).maxOrNull() ?: 1,
+                    barColor = Color.Black
                 )
             }
         }

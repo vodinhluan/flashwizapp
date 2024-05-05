@@ -8,17 +8,17 @@ import com.example.flashwiz_fe.domain.model.ForgotPasswordResponse
 import com.example.flashwiz_fe.domain.model.LoginRequest
 import com.example.flashwiz_fe.domain.model.RegisterResponse
 import com.example.flashwiz_fe.domain.model.TokenResponse
+import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import retrofit2.Response
 
-@Suppress("UNREACHABLE_CODE")
 class AuthRepositoryImpl(context: Context) : AuthRepository {
     private val authApiService = RetrofitInstance.authApiService
     private val userPreferences = UserPreferences(context)
     private var savedOTP: String? = null
     override suspend fun login(email: String, password: String): Boolean {
-        delay(5000)
+        delay(1000)
         return try {
             val requestBody = LoginRequest(email, password)
             val response: Response<TokenResponse> = authApiService.login(requestBody)
@@ -34,7 +34,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val userName = tokenResponseBody.name
 
                     println("Lưu thông tin email và token")
-                // Lưu access token vào DataStore
+                    // Lưu access token vào DataStore
                     if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty()) {
                         userPreferences.saveUserToken(accessToken)
                         userPreferences.saveUserEmail(userEmail)
@@ -46,7 +46,6 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                         println("Thông tin Email: ${userPreferences.getUserEmail()}")
                         println("Thông tin UserId: ${userPreferences.getUserId()}")
                         println("Thông tin Name: ${userPreferences.getUserName()}")
-
                         true
                     } else {
                         println("Lỗi: Thiếu dữ liệu token hoặc email")
@@ -72,31 +71,6 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
         userPreferences.clearData()
     }
 
-    override suspend fun changePassword(oldPassword: String, newPassword: String): Boolean {
-        return try {
-            val userEmail = userPreferences.getUserEmail()
-
-            if (userEmail.isNullOrEmpty()) {
-                println("Lỗi: Không tìm thấy email người dùng đã lưu trữ")
-                return false
-            }
-
-            val requestBody = ChangePasswordRequest(userEmail, oldPassword, newPassword)
-            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(requestBody)
-
-            if (response.isSuccessful) {
-                println("Đổi mật khẩu thành công")
-                return true
-            } else {
-                val errorMsg = response.errorBody()?.string() ?: "Lỗi không xác định khi đổi mật khẩu"
-                println("Lỗi khi đổi mật khẩu: $errorMsg")
-                return false
-            }
-        } catch (e: Exception) {
-            println("Xảy ra lỗi: ${e.message}")
-            return false
-        }
-    }
 
     override suspend fun forgot(email: String): Boolean {
         return try {
@@ -165,5 +139,52 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
             println("Xảy ra lỗi: ${e.message}")
             false
         }
+    }
+    // NOTE: CỦA QUANG NHẬT
+//    override suspend fun getUserById(id: Int): TokenResponse {
+//        return try {
+//            val response: Response<TokenResponse> = authApiService.getUserById(id)
+//            if (response.isSuccessful) {
+//                response.body() ?: throw NullPointerException("Response body is null")
+//            } else {
+//                throw Exception("Failed to fetch user by id: ${response.code()}")
+//            }
+//        } catch (e: Exception) {
+//            throw Exception("Error fetching user by id: ${e.message}")
+//        }
+//    }
+
+    override suspend fun changePassword(oldPassword: String, newPassword: String): Boolean {
+        return try {
+            val userEmail = userPreferences.getUserEmail()
+
+            if (userEmail.isNullOrEmpty()) {
+                println("Lỗi: Không tìm thấy email người dùng đã lưu trữ")
+                return false
+            }
+
+
+            val requestBody = ChangePasswordRequest(userEmail, oldPassword, newPassword)
+            val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(requestBody)
+
+            if (response.isSuccessful) {
+                println("Đổi mật khẩu thành công")
+                return true
+            } else {
+                val errorMsg = response.errorBody()?.string() ?: "Lỗi không xác định khi đổi mật khẩu"
+                println("Lỗi khi đổi mật khẩu: $errorMsg")
+                return false
+            }
+        } catch (e: Exception) {
+            println("Xảy ra lỗi: ${e.message}")
+            return false
+        }
+    }
+
+    override suspend fun getUserById_Token(id: Int): TokenResponse {
+        return authApiService.getUserById_Token(id)
+    }
+    override suspend fun getUserById(id: Int): User {
+        return authApiService.getUserById(id)
     }
 }

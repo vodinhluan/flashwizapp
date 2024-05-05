@@ -1,7 +1,6 @@
 
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -41,12 +39,7 @@ fun AddFolderScreen(
     val viewModel: FolderViewModel = viewModel()
     var folderName by remember { mutableStateOf("") }
     var folderDescription by remember { mutableStateOf("") }
-    val context = LocalContext.current
-    val toastMessage by viewModel.toastMessage
 
-    if (!toastMessage.isNullOrEmpty()) {
-        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,7 +100,7 @@ fun AddFolderScreen(
                             initialUserId
                         ) {
                             Log.d("AddFolderScreen", "onNavigateBack is called")
-                            onNavigateBack() // Gọi hàm onNavigateBack
+                            onNavigateBack()
                         }
                     }
                 }

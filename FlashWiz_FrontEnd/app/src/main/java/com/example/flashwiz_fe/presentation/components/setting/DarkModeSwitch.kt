@@ -27,9 +27,10 @@ import androidx.compose.runtime.livedata.observeAsState
 
 
 @Composable
-fun DarkModeSwitch(viewModel: ThemeViewModel = viewModel()) {
-    val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
-
+fun DarkModeSwitch(
+    isDarkMode: Boolean,
+    onDarkModeToggle: (Boolean) -> Unit
+) {
     Card(
         backgroundColor = MaterialTheme.colors.surface,
         modifier = Modifier
@@ -40,8 +41,8 @@ fun DarkModeSwitch(viewModel: ThemeViewModel = viewModel()) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { viewModel.toggleTheme() }
-                .padding(vertical = 10.dp, horizontal = 14.dp),
+                .clickable { onDarkModeToggle(!isDarkMode) }
+                .padding(vertical = 18.dp, horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -53,7 +54,7 @@ fun DarkModeSwitch(viewModel: ThemeViewModel = viewModel()) {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                imageVector = if (isDarkMode) Icons.Filled.LightMode else Icons.Filled.Nightlight,
+                imageVector = if (isDarkMode) Icons.Filled.Nightlight else Icons.Filled.LightMode,
                 contentDescription = if (isDarkMode) "Switch to light mode" else "Switch to dark mode",
                 modifier = Modifier.size(20.dp),
                 tint = MaterialTheme.colors.onSurface

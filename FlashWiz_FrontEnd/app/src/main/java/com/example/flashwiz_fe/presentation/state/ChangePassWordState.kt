@@ -6,3 +6,4 @@ data class ChangePassWordState(
     val isSuccessfullyChangePassword:Boolean = false,
     val isPasswordShown:Boolean = false
 )
+

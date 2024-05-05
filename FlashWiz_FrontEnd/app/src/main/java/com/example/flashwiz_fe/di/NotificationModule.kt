@@ -26,13 +26,13 @@ object NotificationModule {
     fun provideNotificationBuilder(
         @ApplicationContext context: Context
     ): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context, "Main Channel ID").setContentTitle("Welcome")
-            .setContentText("YouTube Channel: Stevdza-San")
+        return NotificationCompat.Builder(context, "Main Channel ID").setContentTitle("Nhắc nhở")
+            .setContentText("Hôm nay bạn đã học từ vựng mới với FlashWiz chưa")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT).setVisibility(VISIBILITY_PRIVATE)
             .setPublicVersion(
                 NotificationCompat.Builder(context, "Main Channel ID").setContentTitle("Hidden")
-                    .setContentText("Unlock to see the message.").build()
+                    .setContentText("Mở khóa để xem thông báo").build()
             )
     }
 
@@ -50,5 +50,4 @@ object NotificationModule {
         }
         return notificationManager
     }
-
 }

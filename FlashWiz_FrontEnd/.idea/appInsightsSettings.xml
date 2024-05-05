@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.flashwiz_fe" />
+                  <option name="mobileSdkAppId" value="1:616039416306:android:ae1f8c26d9fe23adc2eb6b" />
+                  <option name="projectId" value="flashwiz-3a538" />
+                  <option name="projectNumber" value="616039416306" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

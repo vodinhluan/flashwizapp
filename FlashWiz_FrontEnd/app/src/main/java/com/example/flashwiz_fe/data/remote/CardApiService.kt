@@ -34,6 +34,9 @@ interface CardApiService {
         @Path("id") cardId: Int,
         @Query("rating") newRating: String
     ): Response<Card>
+
+    @GET("/card/{flashcardId}/statistic")
+    suspend fun getCardStatistics(@Path("flashcardId") flashcardId: Int): Response<Map<String, Int>>
     @PUT("/card/{id}/update")
     suspend fun updateCard(
         @Path("id") cardId: Int,
