@@ -38,29 +38,6 @@ public class UserController {
 		userDAO.saveUser(user);
 	}
 
-	
-//	 @PostMapping("/user/register")
-//	    public ResponseEntity registerNewUser(@RequestParam("name") String name,
-//	                                          @RequestParam("email")String email,
-//	                                          @RequestParam("password")String password){
-//
-//	        if(name.isEmpty() || email.isEmpty() || password.isEmpty()){
-//	            return new ResponseEntity<>("Hãy điền đầy đủ thông tin ", HttpStatus.BAD_REQUEST);
-//	        } 	
-//
-//	        // Encrypt / Hash Password:
-//	        String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
-//
-//	        // Register New User:
-//	        int result = userDAO.registerNewUserServiceMethod(name, email, hashed_password);
-//
-//	        if(result != 1){
-//	            return new ResponseEntity<>("failed", HttpStatus.BAD_REQUEST);
-//	        }
-//
-//	        return new ResponseEntity<>("success", HttpStatus.OK);
-//
-//	    }
 	@PostMapping("/user/register")
 	public ResponseEntity registerNewUser(@RequestParam("name") String name,
 	                                      @RequestParam("email") String email,
@@ -85,44 +62,47 @@ public class UserController {
 	    return ResponseEntity.ok(newUser);
 	}
 	
-	@GetMapping("/user/get/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) {
-        User user = userDAO.getUserById(id);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-	
 	@PostMapping("/user/change_password_request")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
-        Map<String, String> response = new HashMap<>();
+	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+	    Map<String, String> response = new HashMap<>();
 
-        // Lấy thông tin người dùng từ cơ sở dữ liệu
-        User user = userDAO.getUserByEmail(request.getEmail());
-        if (user == null) {
-            response.put("status", "error");
-            response.put("message", "User not found");
-            return ResponseEntity.badRequest().body(response);
-        }
+	    // Lấy thông tin người dùng từ cơ sở dữ liệu
+	    User user = userDAO.getUserByEmail(request.getEmail());
+	    if (user == null) {
+	        response.put("status", "error");
+	        response.put("message", "User not found");
+	        return ResponseEntity.badRequest().body(response);
+	    }
 
-        // Xác minh mật khẩu cũ
-        if (!PasswordEncoder.matches(request.getOldPassword(), user.getPassword())) {
-            response.put("status", "error");
-            response.put("message", "Incorrect old password");
-            return ResponseEntity.badRequest().body(response);
-        }
+	    // Xác minh mật khẩu cũ
+	    if (!PasswordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+	        response.put("status", "error");
+	        response.put("message", "Incorrect old password");
+	        return ResponseEntity.badRequest().body(response);
+	    }
 
-        // Mật khẩu cũ đã được xác minh, cập nhật mật khẩu mới
-        String newPassword = request.getNewPassword();
-        String encodedNewPassword = PasswordEncoder.encode(newPassword);
-        user.setPassword(encodedNewPassword);
-        userDAO.saveUser(user);
+	    // Mật khẩu cũ đã được xác minh, cập nhật mật khẩu mới
+	    String newPassword = request.getNewPassword();
+	    String encodedNewPassword = PasswordEncoder.encode(newPassword);
+	    user.setPassword(encodedNewPassword);
+	    userDAO.saveUser(user);
 
-        response.put("status", "success");
-        response.put("message", "Password changed successfully");
-        return ResponseEntity.ok(response);
-    }
+	    response.put("status", "success");
+	    response.put("message", "Password changed successfully");
+	    return ResponseEntity.ok(response);
+	}
+	
+	 @GetMapping("/user/get/{id}")
+	    public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) {
+	        User user = userDAO.getUserById(id);
+	        if (user != null) {
+	            return ResponseEntity.ok(user);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+	
+	
+
 	
 }

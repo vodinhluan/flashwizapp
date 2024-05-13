@@ -43,12 +43,13 @@ class FolderViewModel() : ViewModel() {
         }
     }
 
+
     fun getCardsByFolderId(flashCardId: Int) {
         viewModelScope.launch {
             try {
                 val cards = cardApiService.getCardsByFlashcardId(flashCardId)
-                cardState.value = cards
-                Log.d("FlashCard123456", "DanhSach Card: $cardState")
+                _cardsState.value = cards
+                Log.d("FlashCard123456", "DanhSach Card: $_cardsState")
             } catch (e: Exception) {
                 // Xử lý lỗi khi gọi API
                 Log.e("FolderViewModel", "Error getting cards: ${e.message}")

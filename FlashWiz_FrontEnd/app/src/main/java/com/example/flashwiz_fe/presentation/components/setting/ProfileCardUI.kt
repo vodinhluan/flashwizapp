@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +30,9 @@ import androidx.compose.ui.unit.sp
 import com.example.flashwiz_fe.R
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.ui.theme.Poppins
-import com.example.flashwiz_fe.ui.theme.PrimaryColor
-import com.example.flashwiz_fe.ui.theme.SecondaryColor
 import com.example.flashwiz_fe.ui.theme.Shapes
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun ProfileCardUI() {
@@ -65,16 +64,16 @@ fun ProfileCardUI() {
         ) {
             Column() {
                 Text(
-                    text = "Check Your Profile",
+                    text = "Thông tin chi tiết",
                     fontFamily = Poppins,
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = " Hello, $userName",
+                    text = " Xin chào, $userName",
                     fontFamily = Poppins,
-                    color = Color.Black,
+                    color = MaterialTheme.colors.onSurface,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -82,7 +81,7 @@ fun ProfileCardUI() {
                     modifier = Modifier.padding(top = 10.dp),
                     onClick = { showDetails = !showDetails },
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = PrimaryColor
+                        backgroundColor = brightBlue
                     ),
                     contentPadding = PaddingValues(horizontal = 30.dp),
                     elevation = ButtonDefaults.elevation(
@@ -94,7 +93,7 @@ fun ProfileCardUI() {
                     Text(
                         text = "View",
                         fontFamily = Poppins,
-                        color = SecondaryColor,
+                        color = white,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -110,18 +109,15 @@ fun ProfileCardUI() {
     if (showDetails) {
         DetailDialog(
             userEmail = userEmail,
-            userName = userName,
-            onDismiss = { showDetails = false },
-            onChangeName = {
-                // Xử lý sự kiện thay đổi tên người dùng ở đây
-            }
-        )
+            userName = userName
+        ) { showDetails = false }
+
     }
 
 }
 
 @Composable
-fun DetailDialog(userEmail: String, userName: String, onDismiss: () -> Unit, onChangeName: () -> Unit) {
+fun DetailDialog(userEmail: String, userName: String, onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
@@ -144,9 +140,6 @@ fun DetailDialog(userEmail: String, userName: String, onDismiss: () -> Unit, onC
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = { onChangeName() }) {
-                    Text("Change Name")
-                }
                 Button(onClick = { onDismiss() }) {
                     Text("Close")
                 }

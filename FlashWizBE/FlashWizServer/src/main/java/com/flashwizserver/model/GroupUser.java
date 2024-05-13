@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @Entity
 public class GroupUser {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     @ManyToOne
@@ -47,3 +47,5 @@ public class GroupUser {
 	}
         
 }
+
+

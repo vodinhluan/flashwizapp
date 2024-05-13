@@ -1,6 +1,7 @@
 package com.example.flashwiz_fe.presentation.screen.card
 
 import DeleteDialog
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -22,15 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.flashwiz_fe.data.RetrofitInstance
 import com.example.flashwiz_fe.domain.model.CardDetail
 import com.example.flashwiz_fe.presentation.components.CustomButtonComponent
 import com.example.flashwiz_fe.presentation.components.folder.CardItemComponent
 import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
+import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.util.ScreenRoutes
-import androidx.navigation.NavController
-import com.example.flashwiz_fe.ui.theme.SecondaryColor
-import androidx.compose.foundation.layout.Column as Column
 
 @Composable
 fun FlashcardDetailScreen(
@@ -39,9 +39,8 @@ fun FlashcardDetailScreen(
     description: String,
     onNavigateUp: () -> Unit,
     navController: NavController, // điều hướng
-    isDarkModeEnabled: Boolean
+    isDarkModeEnabled:Boolean
 ) {
-    val textColor = if (isDarkModeEnabled) Color.White else SecondaryColor
     var originalCard by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var cards by remember { mutableStateOf<List<CardDetail>>(emptyList()) }
     var isDataLoaded by remember { mutableStateOf(false) }
@@ -71,9 +70,9 @@ fun FlashcardDetailScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)) {
-        Text(text = flashcardName, style = MaterialTheme.typography.h4, color = textColor)
+        Text(text = flashcardName, style = MaterialTheme.typography.h4, color = if (isDarkModeEnabled) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = description, style = MaterialTheme.typography.body1, color = textColor)
+        Text(text = description, style = MaterialTheme.typography.body1,color = if (isDarkModeEnabled) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
         Spacer(modifier = Modifier.height(16.dp))
 
         if (isDataLoaded) {
@@ -88,7 +87,7 @@ fun FlashcardDetailScreen(
                             cardViewModel.getCardById(card.id)
                             selectedCard = card
                             showUpdateCardDialog = true
-                                        },
+                        },
                         onDeleteClick = { cardId ->
                             cardIdToDelete=cardId
                             showDeleteDialog = true
@@ -126,18 +125,22 @@ fun FlashcardDetailScreen(
                 }
             }
         }
-        CustomButtonComponent(
-            text = "Review Cards",
-            onClick = {
-                cardViewModel.setFlashcardId(flashcardId)
-                navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 16.dp),
-            backgroundColor = Color.Blue,
-            contentColor = Color.White,
-            borderColor = Color.Black
-        )
+
+
+        if (cards.isNotEmpty()) {
+            CustomButtonComponent(
+                text = "Review Cards",
+                onClick = {
+                    cardViewModel.setFlashcardId(flashcardId)
+                    navController.navigate("${ScreenRoutes.ReviewCardScreen.route}/$flashcardId")
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 16.dp),
+                backgroundColor = brightBlue,
+                contentColor = Color.White,
+                borderColor = Color.Black
+            )
+        }
     }
 }

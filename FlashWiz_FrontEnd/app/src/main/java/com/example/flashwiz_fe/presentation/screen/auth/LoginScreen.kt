@@ -20,15 +20,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,8 +36,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-
-import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.data.UserPreferences
 import com.example.flashwiz_fe.presentation.components.login.AuthButton
 import com.example.flashwiz_fe.presentation.components.login.BubbleAnimation
@@ -57,7 +48,6 @@ import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.darkGray
 import com.example.flashwiz_fe.ui.theme.white
 import com.example.flashwiz_fe.ui.theme.whiteGray
-import com.example.flashwiz_fe.util.ScreenRoutes
 
 @Composable
 fun LoginScreen(
@@ -69,7 +59,6 @@ fun LoginScreen(
     onNavigateToForgotPasswordScreen: () -> Unit,
 
 ) {
-
     val userIdState = remember { mutableStateOf<String?>(null) }
     LaunchedEffect(loginViewModel.userId) {
         userIdState.value = loginViewModel.userId
@@ -82,6 +71,7 @@ fun LoginScreen(
         onLoginSuccessNavigation(userIdState.value)
     })
 
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -90,7 +80,8 @@ fun LoginScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp), contentAlignment = Alignment.Center
+                .height(120.dp),
+            contentAlignment = Alignment.Center
         ) {
             HeaderBackground(
                 leftColor = blue, rightColor = brightBlue, modifier = Modifier.fillMaxSize()

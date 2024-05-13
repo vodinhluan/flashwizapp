@@ -27,7 +27,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     }
     fun getRemoteView(title: String, message: String): RemoteViews{
-        val remoteView = RemoteViews("com.example.flashwiz_fep", androidx.core.R.layout.custom_dialog)
+        val remoteView = RemoteViews("com.example.flashwiz_fe", androidx.core.R.layout.custom_dialog)
 
         remoteView.setTextViewText(R.id.title, title)
         remoteView.setTextViewText(R.id.message, message)

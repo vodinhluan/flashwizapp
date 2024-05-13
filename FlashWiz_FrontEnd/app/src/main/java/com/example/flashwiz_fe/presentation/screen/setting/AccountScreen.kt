@@ -1,12 +1,15 @@
 package com.example.flashwiz_fe.presentation.screen.setting
 
+
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -22,21 +25,18 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.flashwiz_fe.domain.repository.AuthRepository
 import com.example.flashwiz_fe.presentation.components.login.NavDestinationHelper
+import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
+import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
+import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
+import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
+import com.example.flashwiz_fe.presentation.screen.auth.ChangePasswordUI
+import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.ThemeViewModel
 import com.example.flashwiz_fe.ui.theme.DarkColors
 import com.example.flashwiz_fe.ui.theme.LightColors
 import com.example.flashwiz_fe.ui.theme.Poppins
 import com.example.flashwiz_fe.ui.theme.Shapes
-
-
-
-import com.example.flashwiz_fe.presentation.components.setting.DarkModeSwitch
-import com.example.flashwiz_fe.presentation.components.setting.GeneralOptionsUI
-import com.example.flashwiz_fe.presentation.components.setting.LogoutUI
-import com.example.flashwiz_fe.presentation.components.setting.ProfileCardUI
-import com.example.flashwiz_fe.presentation.viewmodel.LogoutViewModel
 import com.example.flashwiz_fe.util.ScreenRoutes
 
 
@@ -61,7 +61,9 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
                 }
             )
 
-            Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
+            Column(modifier = Modifier
+
+            ) {
                 AccountText()
                 if (userId != null) {
                     ProfileCardUI()
@@ -72,6 +74,7 @@ fun AccountScreen(themeViewModel: ThemeViewModel = viewModel(), logoutViewModel:
                 Notification()
                 GeneralOptionsUI()
                 ChangePasswordUI()
+                Spacer(modifier = Modifier.height(125.dp))
                 LogoutUI(onLogoutButtonClick = logoutViewModel::logoutClick)
             }
         }

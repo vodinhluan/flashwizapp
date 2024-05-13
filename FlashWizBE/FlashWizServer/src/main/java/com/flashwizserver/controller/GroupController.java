@@ -11,20 +11,20 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.flashwizserver.model.Flashcard;
 import com.flashwizserver.model.Folder;
 import com.flashwizserver.model.Group;
 import com.flashwizserver.model.GroupDTO;
-import com.flashwizserver.model.GroupFolder;
 import com.flashwizserver.model.GroupUser;
 import com.flashwizserver.model.User;
-import com.flashwizserver.repository.FlashcardRepository;
+import com.flashwizserver.model.Folder;
+import com.flashwizserver.model.GroupFolder;
 import com.flashwizserver.repository.FolderRepository;
 import com.flashwizserver.repository.GroupFolderRepository;
 import com.flashwizserver.repository.GroupRepository;
@@ -38,10 +38,10 @@ public class GroupController {
 	private GroupRepository groupRepository;
 
 	@Autowired
-	private GroupFolderRepository groupFolderRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private GroupFolderRepository groupFolderRepository;
 
 	@Autowired
 	private FolderRepository folderRepository;
@@ -105,7 +105,6 @@ public class GroupController {
 		// Tìm group từ groupCode
 		Group group = groupRepository.findByGroupCode(groupCode)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid group code:" + groupCode));
-
 		// Kiểm tra xem user đã trong group chưa
 		List<GroupUser> userGroups = groupUserRepository.findByUserAndGroup(user, group);
 		if (!userGroups.isEmpty()) {
@@ -212,4 +211,27 @@ public class GroupController {
 		return new ResponseEntity<>(folderSet, HttpStatus.OK);
 	}
 
+	@DeleteMapping("/group/delete/{groupId}")
+	public ResponseEntity<?> deleteGroup(@PathVariable("groupId") Integer groupId) {
+	    Optional<Group> optionalGroup = groupRepository.findById(groupId);
+	    if (!optionalGroup.isPresent()) {
+	        return new ResponseEntity<>("Nhóm không tồn tại", HttpStatus.NOT_FOUND);
+	    }
+	    Group group = optionalGroup.get();
+
+	    // Xóa tất cả các bản ghi GroupFolder của nhóm
+	    List<GroupFolder> groupFolders = groupFolderRepository.findByGroup(group);
+	    groupFolderRepository.deleteAll(groupFolders);
+
+	    // Xóa tất cả các bản ghi GroupUser của nhóm
+	    List<GroupUser> groupUsers = groupUserRepository.findByGroup(group);
+	    groupUserRepository.deleteAll(groupUsers);
+
+	    // Xóa nhóm
+	    groupRepository.delete(group);
+
+	    return new ResponseEntity<>("Nhóm đã được xóa thành công", HttpStatus.OK);
+	}
+
 }
+

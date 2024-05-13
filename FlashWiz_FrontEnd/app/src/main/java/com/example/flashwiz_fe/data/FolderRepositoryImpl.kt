@@ -1,7 +1,6 @@
 package com.example.flashwiz_fe.data
 
 import com.example.flashwiz_fe.data.remote.FolderApiService
-import com.example.flashwiz_fe.data.remote.GroupApiService
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.repository.FolderRepository
 

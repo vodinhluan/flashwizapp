@@ -85,22 +85,10 @@ fun CardItemComponent(
         }
     }
 }
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun CardItemPreview() {
-    // Tạo một ví dụ CardDetail để truyền vào CardItemComponent
-    val sampleCard = CardDetail(
-        id = 1,
-        front = "Sample Front Content",
-        back = "Sample Back Content",
-        rating = "Good"
-    )
-
-    // Gọi CardItemComponent với ví dụ CardDetail và các hàm xử lý tương ứng
-    CardItemComponent(
-        card = sampleCard,
-        onCardClicked = { /* Xử lý khi thẻ được nhấp */ },
-        onDeleteClick = { /* Xử lý khi nút xóa được nhấp */ }
-    )
+    val card = CardDetail(id = 1, front = "Front of the card", back = "alo", rating = "", flashcardId = 1)
+    CardItemComponent(card = card, onCardClicked = {}, onDeleteClick = {})
 }
 

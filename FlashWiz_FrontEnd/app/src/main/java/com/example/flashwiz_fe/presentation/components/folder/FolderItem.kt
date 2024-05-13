@@ -14,8 +14,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DeleteOutline
-import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.rounded.DeleteOutline
+import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +49,6 @@ fun FolderItem(
                 .clip(RoundedCornerShape(20.dp)), // Áp dụng clip cho nội dung bên trong Card
             backgroundColor = Color.White,
             elevation = 4.dp
-
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -78,12 +77,12 @@ fun FolderItem(
                     IconButton(
                         onClick = { onDeleteClick(folder.id) }
                     ) {
-                        Icon(Icons.Outlined.DeleteOutline, contentDescription = "Delete")
+                        Icon(Icons.Rounded.DeleteOutline, contentDescription = "Delete")
                     }
                     IconButton(
                         onClick =  { onItemClick(folder.id) }
                     ) {
-                        Icon(Icons.Outlined.PlayArrow, contentDescription = "PlayArrow")
+                        Icon(Icons.Rounded.PlayCircleOutline, contentDescription = "PlayArrow")
                     }
                 }
             }

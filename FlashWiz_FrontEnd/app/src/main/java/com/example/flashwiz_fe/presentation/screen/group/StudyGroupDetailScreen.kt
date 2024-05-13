@@ -3,22 +3,20 @@ package com.example.flashwiz_fe.presentation.screen.group
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
-import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,13 +36,12 @@ import com.example.flashwiz_fe.data.AuthRepositoryImpl
 import com.example.flashwiz_fe.data.FolderRepositoryImpl
 import com.example.flashwiz_fe.data.remote.FolderApiService
 import com.example.flashwiz_fe.data.remote.GroupApiService
-import com.example.flashwiz_fe.domain.model.CardDetail
-import com.example.flashwiz_fe.domain.model.FlashcardDetail
 import com.example.flashwiz_fe.domain.model.FolderDetail
 import com.example.flashwiz_fe.domain.model.User
 import com.example.flashwiz_fe.presentation.components.group.AddItemNewGroup
-import com.example.flashwiz_fe.presentation.viewmodel.CardViewModel
 import com.example.flashwiz_fe.presentation.viewmodel.FolderViewModel
+import com.example.flashwiz_fe.ui.theme.brightBlue
+import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
 fun StudyGroupDetailScreen(
@@ -56,10 +52,13 @@ fun StudyGroupDetailScreen(
     groupApiService: GroupApiService,
     folderApiService: FolderApiService,
     context: Context,
-    userId: Int?
+    userId: Int?,
+    onNavigateUp: () ->Unit
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    if (expanded) Icons.AutoMirrored.Filled.PlaylistAddCheck else Icons.AutoMirrored.Filled.PlaylistAdd
+    // Biến mutable state để lưu trữ folder được chọn
+    var selectedFolderId by remember { mutableStateOf<Int?>(null) }
+    var selectedFlashcardId by remember { mutableStateOf<Int?>(null) }
+
     val userIdsState = mutableStateOf<List<Int>>(emptyList())
     var usersState by remember { mutableStateOf<List<User>>(emptyList()) }
     val userRepository = remember { AuthRepositoryImpl(context) }
@@ -67,32 +66,18 @@ fun StudyGroupDetailScreen(
     val folderIdsState = mutableStateOf<List<Int>>(emptyList())
     val folderRepository = remember { FolderRepositoryImpl(folderApiService) }
 
-
     // Khai báo viewModel và các mutableState
     val folderViewModel: FolderViewModel = viewModel()
     var folderState by remember { mutableStateOf<List<FolderDetail>>(emptyList()) }
-    var flashcardState by remember { mutableStateOf<List<FlashcardDetail>>(emptyList()) }
-
-    var cardState by remember {
-        mutableStateOf<List<CardDetail>>(emptyList())
-    }
-
     // Hàm để lấy danh sách flashcard khi nhấp vào folder
     fun getFlashcardsByFolderId(folderId: Int) {
         folderViewModel.getFlashcardsByFolderId(folderId)
-        folderViewModel.flashcardsState.value.let {
-            flashcardState = it
-        }
+
     }
 
     fun getCardsByFlashcardId(flashCardId: Int) {
         folderViewModel.getCardsByFolderId(flashCardId)
-        folderViewModel.cardState.value.let {
-            cardState = it
-        }
     }
-
-
     LaunchedEffect(groupId) {
         // Gọi phương thức từ GroupApiService để lấy dữ liệu từ backend
         val groupInfo = groupApiService.getGroup(groupId)
@@ -105,7 +90,7 @@ fun StudyGroupDetailScreen(
             users.add(user)
         }
         usersState = users
-        // test folder
+
         val folderIds = groupInfo["folderIds"] as? List<Int> ?: emptyList()
         folderIdsState.value = folderIds
         Log.d("FolderIds", "$folderIds")
@@ -130,7 +115,7 @@ fun StudyGroupDetailScreen(
                 style = TextStyle(
                     color = Color.Black,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.SemiBold
                 ),
                 modifier = Modifier.padding(16.dp)
             )
@@ -146,7 +131,9 @@ fun StudyGroupDetailScreen(
                 TextField(
                     value = groupCode ?: "",
                     onValueChange = {},
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f) // Dùng weight để chiếm toàn bộ phần còn lại của Row
+                        .padding(end = 16.dp), // Khoảng cách giữa TextField và các phần tử khác
                     enabled = false,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     label = { Text(text = "Group Code") }
@@ -159,24 +146,28 @@ fun StudyGroupDetailScreen(
                 style = TextStyle(
                     color = Color.Black,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.SemiBold
                 ),
                 modifier = Modifier.padding(16.dp)
             )
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp)
+
+            Row(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 usersState.forEach { user ->
                     Surface(
-                        modifier = Modifier.padding(4.dp),
+                        modifier = Modifier.padding(horizontal = 4.dp),
                         color = Color.Gray,
-                        shape = MaterialTheme.shapes.small
+                        shape = MaterialTheme.shapes.medium
                     ) {
                         Text(
                             text = user.name,
                             style = TextStyle(
                                 color = Color.White,
-                                fontSize = 12.sp,
+                                fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
                             ),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -184,10 +175,10 @@ fun StudyGroupDetailScreen(
                     }
                 }
             }
+
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -200,7 +191,6 @@ fun StudyGroupDetailScreen(
                     ),
                     modifier = Modifier.padding(16.dp)
                 )
-
                 // AddItemNewGroup
                 AddItemNewGroup(
                     navController = navController,
@@ -217,62 +207,92 @@ fun StudyGroupDetailScreen(
                 folderState.forEach { folder ->
                     Surface(
                         modifier = Modifier
-                            .padding(4.dp)
+                            .padding(10.dp)
                             .clickable {
                                 getFlashcardsByFolderId(folder.id)
+                                selectedFolderId = folder.id
+                                Log.d("FolderId when click", "$selectedFolderId")
+                                folderViewModel.cardState.value= emptyList()
                             },
-                        color = Color.Blue,
-                        shape = MaterialTheme.shapes.small
+                        color = if (folder.id == selectedFolderId) Color.Green else Color.Blue,
+                        shape = MaterialTheme.shapes.extraSmall
                     ) {
                         Text(
                             text = folder.name,
                             style = TextStyle(
                                 color = Color.White,
-                                fontSize = 12.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.Normal
                             ),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
-                    flashcardState.forEach { flashcard ->
-                        Surface(
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .clickable {
-                                    getCardsByFlashcardId(flashcard.id)
-                                },
-                            color = Color.Cyan,
-                            shape = MaterialTheme.shapes.small
-                        ) {
-                            Text(
-                                text = flashcard.name,
-                                style = TextStyle(
-                                    color = Color.Black,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Normal
-                                ),
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
-                        }
 
-                        cardState.forEach {
-                                card ->
+                    // Chỉ hiển thị danh sách flashcard của folder được chọn
+                    if (folder.id == selectedFolderId) {
+                        folderViewModel.flashcardsState.value.forEach { flashcard ->
                             Surface(
                                 modifier = Modifier
-                                    .padding(4.dp),
-                                color = Color.Yellow,
-                                shape = MaterialTheme.shapes.small
+                                    .padding(10.dp)
+                                    .clickable {
+                                        getCardsByFlashcardId(flashcard.id)
+                                        selectedFlashcardId = flashcard.id
+                                        Log.d("FlashcardId when click", "$selectedFlashcardId")
+                                    },
+                                color = brightBlue,
+                                shape = MaterialTheme.shapes.medium
                             ) {
                                 Text(
-                                    text = card.front +": "+card.back,
+                                    text = flashcard.name,
                                     style = TextStyle(
-                                        color = Color.Black,
-                                        fontSize = 12.sp,
+                                        color = white,
+                                        fontSize = 18.sp,
                                         fontWeight = FontWeight.Normal
                                     ),
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                                 )
                             }
+                            if(flashcard.id == selectedFlashcardId){
+                                folderViewModel.cardState.value.forEach  { card ->
+                                    Surface(
+                                        modifier = Modifier.padding(10.dp),
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                        ) {
+                                            // Hiển thị từ vựng "a:"
+                                            Text(
+                                                text = card.front,
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 14.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            )
+                                            // Icon hoặc ký tự dấu hai chấm ":"
+                                            Text(
+                                                text = ":",
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 14.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                ),
+                                                modifier = Modifier.padding(horizontal = 4.dp)
+                                            )
+                                            // Hiển thị nghĩa "b"
+                                            Text(
+                                                text = card.back,
+                                                style = TextStyle(
+                                                    color = Color.Black,
+                                                    fontSize = 14.sp,
+                                                    fontWeight = FontWeight.Normal
+                                                )
+                                            )
+                                        }
+                                    }
+
+                                }}
                         }
                     }
                 }
@@ -282,4 +302,3 @@ fun StudyGroupDetailScreen(
 
     }
 }
-

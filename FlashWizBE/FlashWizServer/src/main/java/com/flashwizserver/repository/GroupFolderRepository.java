@@ -16,3 +16,4 @@ public interface GroupFolderRepository extends JpaRepository<GroupFolder, Intege
 	Boolean existsByFolderAndGroup(Folder folder, Group group);
 
 }
+

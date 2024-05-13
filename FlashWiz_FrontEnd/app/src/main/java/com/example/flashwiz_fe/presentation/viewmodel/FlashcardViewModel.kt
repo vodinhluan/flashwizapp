@@ -1,5 +1,7 @@
 package com.example.flashwiz_fe.presentation.viewmodel
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashwiz_fe.data.RetrofitInstance
@@ -10,15 +12,18 @@ import kotlinx.coroutines.launch
 
 class FlashcardViewModel: ViewModel() {
     private val flashcardService = RetrofitInstance.flashcardApiService
-
+    private val _toastMessage = mutableStateOf<String?>(null)
+    val toastMessage: State<String?> = _toastMessage
     fun addFlashcard(name: String, description: String, folderId: Int, onResult: (Boolean) -> Unit) {
         val flashcard = Flashcard(name = name, descriptions = description, userId = 2, folderId = folderId)
         viewModelScope.launch {
             try {
                 val response = flashcardService.saveFlashcard(flashcard, 2, folderId)
-                if (response.equals("ok")) {
+                if (response.isSuccessful) {
+                    _toastMessage.value = "Thêm Flashcard thành công!"
                     onResult(true)
                 } else {
+                    _toastMessage.value = "Thêm Flashcard thất bại!"
                     onResult(false)
                 }
             } catch (e: Exception) {

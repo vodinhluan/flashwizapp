@@ -29,7 +29,7 @@ import androidx.compose.runtime.livedata.observeAsState
 @Composable
 fun DarkModeSwitch(
     isDarkMode: Boolean,
-    onDarkModeToggle: (Boolean) -> Unit // Callback để thông báo việc thay đổi chế độ tối
+    onDarkModeToggle: (Boolean) -> Unit
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.surface,
@@ -41,8 +41,8 @@ fun DarkModeSwitch(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onDarkModeToggle(!isDarkMode) } // Khi bấm nút, gọi hàm callback
-                .padding(vertical = 10.dp, horizontal = 14.dp),
+                .clickable { onDarkModeToggle(!isDarkMode) }
+                .padding(vertical = 18.dp, horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -54,7 +54,7 @@ fun DarkModeSwitch(
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                imageVector = if (isDarkMode) Icons.Filled.LightMode else Icons.Filled.Nightlight,
+                imageVector = if (isDarkMode) Icons.Filled.Nightlight else Icons.Filled.LightMode,
                 contentDescription = if (isDarkMode) "Switch to light mode" else "Switch to dark mode",
                 modifier = Modifier.size(20.dp),
                 tint = MaterialTheme.colors.onSurface

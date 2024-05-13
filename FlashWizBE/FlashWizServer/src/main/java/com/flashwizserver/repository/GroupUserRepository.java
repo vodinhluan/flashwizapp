@@ -1,8 +1,10 @@
 package com.flashwizserver.repository;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import com.flashwizserver.model.Group;
 import com.flashwizserver.model.GroupUser;
 import com.flashwizserver.model.User;

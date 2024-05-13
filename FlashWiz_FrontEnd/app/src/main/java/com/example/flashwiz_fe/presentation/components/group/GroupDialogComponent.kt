@@ -138,4 +138,3 @@ fun GroupDialogComponent(
         contentColor = Color.Black
     )
 }
-

@@ -19,7 +19,6 @@ class RegisterViewModel @Inject constructor(
     private val validateRegisterInputUseCase: ValidateRegisterInputUseCase,
     private val authRepository: AuthRepository
 ): ViewModel() {
-
     var registerState by mutableStateOf(RegisterState())
         private set
     fun onNameInputChange(newValue: String){
@@ -51,24 +50,6 @@ class RegisterViewModel @Inject constructor(
             isPasswordRepeatedShown = !registerState.isPasswordRepeatedShown
         )
     }
-//    Backup Register Code
-//    fun onRegisterClick(){
-//        registerState = registerState.copy(isLoading = true)
-//        viewModelScope.launch {
-//            registerState = try{
-//                val registerResult = authRepository.register(
-//                    name = registerState.nameInput,
-//                    email = registerState.emailInput,
-//                    password = registerState.passwordInput
-//                )
-//                registerState.copy(isSuccessfullyRegistered = registerResult)
-//            }catch(e: Exception){
-//                registerState.copy(errorMessageRegisterProcess = "Could not login")
-//            }finally {
-//                registerState = registerState.copy(isLoading = false)
-//            }
-//        }
-//    }
     fun onRegisterClick() {
         registerState = registerState.copy(isLoading = true)
         viewModelScope.launch {
@@ -78,12 +59,11 @@ class RegisterViewModel @Inject constructor(
                     email = registerState.emailInput,
                     password = registerState.passwordInput
                 )
-                println("Giá trị result: $result")
                 registerState = registerState.copy(
                     isSuccessfullyRegistered = result,
                     isLoading = false
                 )
-                println("Giá trị isSuccessfullyRegistered: ${registerState.isSuccessfullyRegistered}")
+
 
             } catch (e: Exception) {
                 registerState = registerState.copy(

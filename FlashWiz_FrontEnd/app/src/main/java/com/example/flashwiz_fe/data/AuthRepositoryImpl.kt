@@ -34,7 +34,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                     val userName = tokenResponseBody.name
 
                     println("Lưu thông tin email và token")
-                // Lưu access token vào DataStore
+                    // Lưu access token vào DataStore
                     if (!accessToken.isNullOrEmpty() && !userEmail.isNullOrEmpty()) {
                         userPreferences.saveUserToken(accessToken)
                         userPreferences.saveUserEmail(userEmail)
@@ -140,7 +140,6 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
             false
         }
     }
-
     // NOTE: CỦA QUANG NHẬT
 //    override suspend fun getUserById(id: Int): TokenResponse {
 //        return try {
@@ -164,6 +163,7 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
                 return false
             }
 
+
             val requestBody = ChangePasswordRequest(userEmail, oldPassword, newPassword)
             val response: Response<ChangePasswordSuccessfully> = authApiService.changePassword(requestBody)
 
@@ -184,7 +184,6 @@ class AuthRepositoryImpl(context: Context) : AuthRepository {
     override suspend fun getUserById_Token(id: Int): TokenResponse {
         return authApiService.getUserById_Token(id)
     }
-
     override suspend fun getUserById(id: Int): User {
         return authApiService.getUserById(id)
     }

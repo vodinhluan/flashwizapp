@@ -13,6 +13,7 @@ interface GroupRepository {
 
     suspend fun getGroup(groupId: Int): Map<String, Any>
 
+
     suspend fun shareFolder(userId: Int, groupId: Int, folderId: Int): Response<Int>
 
 }

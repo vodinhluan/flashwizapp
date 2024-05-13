@@ -30,8 +30,8 @@ public class User implements UserDetails  {
 	@Column(length=64, nullable=true)
 	private String resetPasswordOTP;
 
-	
-	
+
+
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -40,7 +40,9 @@ public class User implements UserDetails  {
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private Set<Role> roles = new HashSet();
-	private Set<Folder> folders = new HashSet<>();
+	
+    private Set<Folder> folders = new HashSet<>(); 
+
 
 	public User() {}
 
@@ -110,6 +112,7 @@ public class User implements UserDetails  {
 				+ " , Roles=" + roles
 				+ "]";
 	}
+	
 
 	
 
@@ -160,7 +163,6 @@ public class User implements UserDetails  {
 	}
 
 	public Object orElseThrow(Object object) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

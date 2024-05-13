@@ -19,8 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,12 +55,6 @@ import com.example.flashwiz_fe.ui.theme.brightBlue
 import com.example.flashwiz_fe.ui.theme.white
 
 @Composable
-
-
-
-
-
-
 fun HomeScreen(navController: NavController, apiService: FolderApiService,userId: Int?, isDarkMode: Boolean) {
     val context = LocalContext.current
     val userPreferences = remember { UserPreferences(context) }
@@ -73,7 +67,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
     var searchQuery by remember { mutableStateOf("") }
     var isFolderSelected by remember { mutableStateOf(false) }
 
-    val apiService = RetrofitInstance.folderApiService
 //    val isDarkMode by viewModel.darkThemeEnabled.observeAsState(false)
 
 
@@ -89,8 +82,8 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
         val userName = userPreferences.getUserName()
         userNameState.value = (userName ?: "").toString()
     }
-
     val userName by remember { derivedStateOf { userNameState.value } }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = if (isDarkMode) Color.Black else Color.White
@@ -126,7 +119,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
                                     append("Welcome, ")
                                 }
-                                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal)) { // Đổi màu của userName thành màu đỏ
+                                withStyle(style = SpanStyle(fontWeight = FontWeight.Normal)) {
                                     append(userName)
                                 }
                             }
@@ -155,7 +148,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    imageVector = Icons.Rounded.ArrowBack,
                                     contentDescription = "Back",
                                     tint = Color.White,
                                     modifier = Modifier
@@ -201,9 +194,6 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                     )
                 }
             }
-
-
-
                 LaunchedEffect(Unit) {
                     originalFolders = apiService.getFoldersByUserId(userId)
                     folders = originalFolders
@@ -235,9 +225,7 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                     folderIdToDelete = folderId
                                     showDeleteDialog = true
                                 }
-
                             )
-
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
@@ -259,7 +247,10 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                                 }
                                 showDeleteDialog = false
                             }
+
                         )
+
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
                 selectedFolder?.let { folder ->
@@ -270,14 +261,14 @@ fun HomeScreen(navController: NavController, apiService: FolderApiService,userId
                         onNavigateUp = {
                             selectedFolder = null
                         },
+                        isFolderSelected = true,
                         navController = navController,
                         showHeader = showHeaderState,
-                        isDarkMode
+                        isDarkModeEnabled = isDarkMode
                     )
                 }
-            }
         }
     }
-
+}
 
 

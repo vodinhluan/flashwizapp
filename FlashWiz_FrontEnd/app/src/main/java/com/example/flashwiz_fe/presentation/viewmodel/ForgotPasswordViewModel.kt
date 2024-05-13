@@ -33,7 +33,7 @@ class ForgotPasswordViewModel @Inject constructor(
                 val statusResult = authRepository.forgot(
                     email = forgotPasswordState.emailInput
                 )
-                println("gia tri cua statusResult: $statusResult")
+
                 forgotPasswordState.copy(isSuccessfullySendEmail = statusResult)
             }catch(e: Exception){
                 forgotPasswordState.copy(errorMessageSendEmailProcess = "Could not send email")
@@ -42,6 +42,7 @@ class ForgotPasswordViewModel @Inject constructor(
             }
         }
     }
+
     private fun checkInputValidation(){
         val validationResult = validateForgotPasswordEmailInputUseCase(
             forgotPasswordState.emailInput,

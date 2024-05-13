@@ -85,7 +85,6 @@ fun StatisticDetails(title: String, data: Int) {
         }
     }
 }
-
 data class BarChartData(val label: String, val value: Int)
 @Composable
 fun BarChart(
