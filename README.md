@@ -11,13 +11,13 @@ FlashWizApp is an android application that helps you learn English effectively u
 - Learn English effectively and efficiently  
   
 # UI  
-<img width="899" alt="add_card" src="https://github.com/user-attachments/assets/395eba74-49fc-445a-a46c-5c4fb35cecbc">  
-<img width="899" alt="data" src="https://github.com/user-attachments/assets/c0a7a471-1179-4119-91df-dfb9ab468272">  
-<img width="899" alt="flashcard" src="https://github.com/user-attachments/assets/764afe7f-4acd-4a23-bb64-aa83efd2dd2c">  
-<img width="899" alt="group" src="https://github.com/user-attachments/assets/82976c31-fb2f-419c-9430-c0f872616c2e">  
-<img width="899" alt="home" src="https://github.com/user-attachments/assets/762a24d4-ad9c-432f-a3f1-df232b74ec57">  
-<img width="899" alt="login" src="https://github.com/user-attachments/assets/d02d9e09-9267-4bbf-8c7a-7e8c0ba958c2">  
-<img width="899" alt="review_card" src="https://github.com/user-attachments/assets/950701a2-ace8-4e91-a4c9-6d04cd992a82">  
+<img width="139" alt="add_card" src="https://github.com/user-attachments/assets/34d1795e-1968-4a9d-a6cd-c3c9292928fd">  
+<img width="143" alt="data" src="https://github.com/user-attachments/assets/6b66d7d3-cc1d-4d0a-bc63-98ee54472735">  
+<img width="142" alt="flashcard" src="https://github.com/user-attachments/assets/b01787dd-7333-4bb4-8814-700b4c2f8ac8">  
+<img width="142" alt="group" src="https://github.com/user-attachments/assets/8e158038-0bdb-44e3-8fc1-b77eeea0f202">  
+<img width="142" alt="home" src="https://github.com/user-attachments/assets/478a806e-6580-4c42-b1c3-953cdbebcc15">  
+<img width="141" alt="login" src="https://github.com/user-attachments/assets/ef146a57-3c67-40e8-905e-e6d87f002def">  
+
   
 # CLONE PROJECT  
  https://github.com/vodinhluan/flashwizapp.git  
