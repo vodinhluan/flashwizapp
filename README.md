@@ -12,8 +12,9 @@ FlashWizApp is an android application that helps you learn English effectively u
   
 # UI  
 <img width="141" alt="login" src="https://github.com/user-attachments/assets/ef146a57-3c67-40e8-905e-e6d87f002def">  
-<img width="142" alt="home" src="https://github.com/user-attachments/assets/478a806e-6580-4c42-b1c3-953cdbebcc15">  
+<img width="143" alt="home" src="https://github.com/user-attachments/assets/3799b7a1-444c-4579-9c5e-01e71c8f31ab">  
 <img width="142" alt="flashcard" src="https://github.com/user-attachments/assets/b01787dd-7333-4bb4-8814-700b4c2f8ac8">  
+<img width="140" alt="review_card" src="https://github.com/user-attachments/assets/4d30734e-d5be-4f09-9415-adbd80ff273f">  
 <img width="142" alt="group" src="https://github.com/user-attachments/assets/8e158038-0bdb-44e3-8fc1-b77eeea0f202">  
 
   
